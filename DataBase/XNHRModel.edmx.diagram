@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9823f7ebcc4a4bc2a7a76c47086953a3" Name="关系图1" ZoomLevel="83">
+        <EntityTypeShape EntityType="XNHRModel.ehr_employee" Width="1.5" PointX="6.625" PointY="0.875" />
+        <EntityTypeShape EntityType="XNHRModel.ehr_department" Width="1.5" PointX="7.9199099670722664" PointY="27.002140400466576" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

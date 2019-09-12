@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="05eb9f24ef804fcc822e883f0d9ae8a1" Name="关系图1">
+        <EntityTypeShape EntityType="XNGYPModel.WorkLogs" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Menu" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Role" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Menu_XNGYP_Menu" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Customers" Width="1.5" PointX="7.25" PointY="0.75" />
+        <EntityTypeShape EntityType="XNGYPModel.Contract_Detail" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="XNGYPModel.Contract_Header" Width="1.5" PointX="12" PointY="0.5" />
+        <AssociationConnector Association="XNGYPModel.FK_Contract_Detail_Contract_Header" />
+        <AssociationConnector Association="XNGYPModel.FK_Contract_Header_XNGYP_Customers" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products" Width="1.5" PointX="0.625" PointY="3.375" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_SN" Width="1.5" PointX="3.625" PointY="4.875" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_WorkFrom" Width="1.5" PointX="6.25" PointY="5.125" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_WorkFrom_Price" Width="1.5" PointX="0.625" PointY="7.75" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

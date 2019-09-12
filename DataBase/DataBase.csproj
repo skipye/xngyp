@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{851B7929-D64B-4445-839E-E3BCF4EBF006}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataBase</RootNamespace>
+    <AssemblyName>DataBase</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contract_Detail.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contract_Header.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ehr_department.cs">
+      <DependentUpon>XNHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ehr_employee.cs">
+      <DependentUpon>XNHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INV_wood_type.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SYS_colors.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkLogs.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNERPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNERPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNERPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNERPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNERPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNGYP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNGYP.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Customers.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Menu.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Products.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Products_SN.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Products_WorkFrom.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Products_WorkFrom_Price.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Role.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNHRModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNHRModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNHRModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNHRModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNHRModel.edmx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="XNHRModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XNHRModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="XNGYP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XNGYP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="XNERPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XNERPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="XNERPModel.edmx.diagram">
+      <DependentUpon>XNERPModel.edmx</DependentUpon>
+    </None>
+    <None Include="XNGYP.edmx.diagram">
+      <DependentUpon>XNGYP.edmx</DependentUpon>
+    </None>
+    <None Include="XNHRModel.edmx.diagram">
+      <DependentUpon>XNHRModel.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XNERPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNERPModel.edmx</DependentUpon>
+      <LastGenOutput>XNERPModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNERPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNERPModel.edmx</DependentUpon>
+      <LastGenOutput>XNERPModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNGYP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNGYP.edmx</DependentUpon>
+      <LastGenOutput>XNGYP.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNGYP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNGYP.edmx</DependentUpon>
+      <LastGenOutput>XNGYP.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNHRModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNHRModel.edmx</DependentUpon>
+      <LastGenOutput>XNHRModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNHRModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNHRModel.edmx</DependentUpon>
+      <LastGenOutput>XNHRModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

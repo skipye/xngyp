@@ -1,0 +1,78 @@
+﻿@model ModelProject.SUsersModel
+@{
+    Layout = null;
+}
+@Html.Action("_Meta", "Home")
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>系统管理<span class="c-gray en">&gt;</span>日志列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    @*<div class="text-c">
+        @Html.TextBoxFor(k => k.Name, new { @placeholder = "用户名", @style = "width:250px", @class = "input-text" })
+        <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+    </div>*@
+    @*<div class="cl pd-5 bg-1 bk-gray mt-20">
+        <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Users")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+        <a href="javascript:void(0);" onclick="add('添加用户', '/Users/Add', '600', '400')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加用户</a>
+    </div>*@
+    <div class="mt-20 checkmodel">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+                <tr class="text-l">
+                    <th width="80">用户</th>
+                    <th width="140">操作时间</th>
+                    <th>事件</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Action("_Footer", "Home")
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=2"></script>
+<script type="text/javascript">
+
+    var param = {};
+    $(function () { search(param); });
+    $("#btnSearch").click(function () {
+        //搜索条件
+        var Name = $("#Name").val().trim();
+        //搜索
+        param["Name"] = Name;
+        //初始化，然后绑定
+        $('.table-sort').DataTable().destroy();
+        search(param);
+    });
+
+    function search(param) {
+        $('.table-sort').dataTable({
+            "bStateSave": true,
+            "pading": false,
+            "destroy": true,
+            "searching": true,
+            "autoWidth": true,
+            "ajax": function (data, callback, settings) {
+                ajaxRequest("post", "/Users/LogsPgae", param, function (result) {
+                    //封装返回数据
+                    var returnData = {};
+                    returnData.data = result;
+                    callback(returnData);
+                });
+            },
+            "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
+                        { "data": "UserName", "className": "text-overflow" },
+                        { "data": "CreateTime", "render": function (data) {
+                                var NewTime = parseInt(data.replace(/\D/igm, ""));
+                                return formatDate(NewTime);
+                            }
+                        },
+                        { "data": "MSG", "defaultContent": "" },
+                        
+            ]
+        });
+    };
+</script> 

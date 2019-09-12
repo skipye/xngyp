@@ -1,0 +1,773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="XNGYPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="XNGYPModelStoreContainer">
+          <EntitySet Name="Contract_Detail" EntityType="XNGYPModel.Store.Contract_Detail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Contract_Header" EntityType="XNGYPModel.Store.Contract_Header" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="WorkLogs" EntityType="XNGYPModel.Store.WorkLogs" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Customers" EntityType="XNGYPModel.Store.XNGYP_Customers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Menu" EntityType="XNGYPModel.Store.XNGYP_Menu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Products" EntityType="XNGYPModel.Store.XNGYP_Products" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Products_SN" EntityType="XNGYPModel.Store.XNGYP_Products_SN" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="XNGYPModel.Store.XNGYP_Products_WorkFrom" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="XNGYPModel.Store.XNGYP_Products_WorkFrom_Price" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XNGYP_Role" EntityType="XNGYPModel.Store.XNGYP_Role" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="XNGYPModel.Store.FK_Contract_Detail_Contract_Header">
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="XNGYPModel.Store.FK_Contract_Header_XNGYP_Customers">
+            <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Menu_XNGYP_Menu" Association="XNGYPModel.Store.FK_XNGYP_Menu_XNGYP_Menu">
+            <End Role="XNGYP_Menu" EntitySet="XNGYP_Menu" />
+            <End Role="XNGYP_Menu1" EntitySet="XNGYP_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" Association="XNGYPModel.Store.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" Association="XNGYPModel.Store.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
+            <End Role="XNGYP_Products_WorkFrom" EntitySet="XNGYP_Products_WorkFrom" />
+            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_XNGYP_Products_SN" Association="XNGYPModel.Store.FK_XNGYP_Products_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Contract_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContractHeadId" Type="int" />
+          <Property Name="Labels" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ProductSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="WoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="WoodId" Type="int" />
+          <Property Name="CustomFlag" Type="bit" />
+          <Property Name="length" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="width" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="height" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="hardware_part" Type="nvarchar" MaxLength="50" />
+          <Property Name="decoration_part" Type="nvarchar" MaxLength="100" />
+          <Property Name="req_others" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Contract_Header">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="varchar" MaxLength="15" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="DeliveryDate" Type="datetime" />
+          <Property Name="DeliveryAddress" Type="nchar" MaxLength="10" />
+          <Property Name="DeliveryLinkTel" Type="nchar" MaxLength="10" />
+          <Property Name="DeliveryLinkMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="Prepay" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="SaleUserId" Type="int" />
+          <Property Name="SaleUserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SaleDepartmentId" Type="int" />
+          <Property Name="SaleDepartment" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CheckedUserId" Type="int" />
+          <Property Name="CheckedUserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheckedTime" Type="datetime" />
+          <Property Name="HTDate" Type="datetime" />
+          <Property Name="FRFlag" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="500" />
+          <Property Name="CWCheckStatus" Type="bit" />
+          <Property Name="CWCheckName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CWCheckId" Type="int" />
+          <Property Name="CWCheckTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkLogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MSG" Type="nvarchar" MaxLength="500" />
+          <Property Name="MSGStatus" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="XNGYP_Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address_Delivery" Type="nvarchar" MaxLength="200" />
+          <Property Name="LinkMan" Type="nvarchar" MaxLength="20" />
+          <Property Name="LinkTel" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="BelongUserId" Type="int" />
+          <Property Name="BelongUserName" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="Remarks" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="XNGYP_Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Action" Type="nvarchar" MaxLength="50" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="500" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductsSNId" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="length" Type="int" />
+          <Property Name="width" Type="int" />
+          <Property Name="height" Type="int" />
+          <Property Name="picture" Type="varchar" MaxLength="50" />
+          <Property Name="paper_path" Type="varchar" MaxLength="50" />
+          <Property Name="BOM_path" Type="varchar" MaxLength="50" />
+          <Property Name="volume" Type="decimal" Precision="16" Scale="4" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" />
+          <Property Name="delete_flag" Type="bit" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products_SN">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" />
+          <Property Name="delete_flag" Type="bit" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products_WorkFrom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products_WorkFrom_Price">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductsId" Type="int" Nullable="false" />
+          <Property Name="WorkFrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="WorkFromId" Type="int" />
+          <Property Name="WorkFromPrice" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="XNGYP_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MenuList" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Contract_Detail_Contract_Header">
+          <End Role="Contract_Header" Type="XNGYPModel.Store.Contract_Header" Multiplicity="0..1" />
+          <End Role="Contract_Detail" Type="XNGYPModel.Store.Contract_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Header">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Detail">
+              <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Header_XNGYP_Customers">
+          <End Role="XNGYP_Customers" Type="XNGYPModel.Store.XNGYP_Customers" Multiplicity="0..1" />
+          <End Role="Contract_Header" Type="XNGYPModel.Store.Contract_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Header">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Menu_XNGYP_Menu">
+          <End Role="XNGYP_Menu" Type="XNGYPModel.Store.XNGYP_Menu" Multiplicity="0..1" />
+          <End Role="XNGYP_Menu1" Type="XNGYPModel.Store.XNGYP_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Menu1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
+          <End Role="XNGYP_Products" Type="XNGYPModel.Store.XNGYP_Products" Multiplicity="1" />
+          <End Role="XNGYP_Products_WorkFrom_Price" Type="XNGYPModel.Store.XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Products_WorkFrom_Price">
+              <PropertyRef Name="ProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
+          <End Role="XNGYP_Products_WorkFrom" Type="XNGYPModel.Store.XNGYP_Products_WorkFrom" Multiplicity="0..1" />
+          <End Role="XNGYP_Products_WorkFrom_Price" Type="XNGYPModel.Store.XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_WorkFrom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Products_WorkFrom_Price">
+              <PropertyRef Name="WorkFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Products_XNGYP_Products_SN">
+          <End Role="XNGYP_Products_SN" Type="XNGYPModel.Store.XNGYP_Products_SN" Multiplicity="1" />
+          <End Role="XNGYP_Products" Type="XNGYPModel.Store.XNGYP_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Products">
+              <PropertyRef Name="ProductsSNId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XNGYPModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="XNGYPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="WorkLogs" EntityType="XNGYPModel.WorkLogs" />
+          <EntitySet Name="XNGYP_Menu" EntityType="XNGYPModel.XNGYP_Menu" />
+          <EntitySet Name="XNGYP_Role" EntityType="XNGYPModel.XNGYP_Role" />
+          <AssociationSet Name="FK_XNGYP_Menu_XNGYP_Menu" Association="XNGYPModel.FK_XNGYP_Menu_XNGYP_Menu">
+            <End Role="XNGYP_Menu" EntitySet="XNGYP_Menu" />
+            <End Role="XNGYP_Menu1" EntitySet="XNGYP_Menu" />
+          </AssociationSet>
+          <EntitySet Name="XNGYP_Customers" EntityType="XNGYPModel.XNGYP_Customers" />
+          <EntitySet Name="Contract_Detail" EntityType="XNGYPModel.Contract_Detail" />
+          <EntitySet Name="Contract_Header" EntityType="XNGYPModel.Contract_Header" />
+          <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="XNGYPModel.FK_Contract_Detail_Contract_Header">
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="XNGYPModel.FK_Contract_Header_XNGYP_Customers">
+            <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+          </AssociationSet>
+          <EntitySet Name="XNGYP_Products" EntityType="XNGYPModel.XNGYP_Products" />
+          <EntitySet Name="XNGYP_Products_SN" EntityType="XNGYPModel.XNGYP_Products_SN" />
+          <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="XNGYPModel.XNGYP_Products_WorkFrom" />
+          <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="XNGYPModel.XNGYP_Products_WorkFrom_Price" />
+          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_XNGYP_Products_SN" Association="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
+            <End Role="XNGYP_Products_WorkFrom" EntitySet="XNGYP_Products_WorkFrom" />
+            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="WorkLogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="MSG" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="MSGStatus" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="XNGYP_Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Action" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Controller" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Remark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="Icon" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="XNGYP_Menu1" Relationship="XNGYPModel.FK_XNGYP_Menu_XNGYP_Menu" FromRole="XNGYP_Menu" ToRole="XNGYP_Menu1" />
+          <NavigationProperty Name="XNGYP_Menu2" Relationship="XNGYPModel.FK_XNGYP_Menu_XNGYP_Menu" FromRole="XNGYP_Menu1" ToRole="XNGYP_Menu" />
+        </EntityType>
+        <EntityType Name="XNGYP_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="MenuList" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_XNGYP_Menu_XNGYP_Menu">
+          <End Type="XNGYPModel.XNGYP_Menu" Role="XNGYP_Menu" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_Menu" Role="XNGYP_Menu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Menu1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="XNGYP_Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ShortName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address_Delivery" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LinkMan" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LinkTel" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="BelongUserId" />
+          <Property Type="String" Name="BelongUserName" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DepartmentId" />
+          <Property Type="String" Name="Department" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="DeleteFlag" />
+          <Property Type="String" Name="Remarks" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contract_Header" Relationship="XNGYPModel.FK_Contract_Header_XNGYP_Customers" FromRole="XNGYP_Customers" ToRole="Contract_Header" />
+        </EntityType>
+        <EntityType Name="Contract_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ContractHeadId" />
+          <Property Type="Int32" Name="Labels" />
+          <Property Type="Int32" Name="ProductId" />
+          <Property Type="String" Name="ProductSN" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Color" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ColorId" />
+          <Property Type="String" Name="WoodName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="WoodId" />
+          <Property Type="Boolean" Name="CustomFlag" />
+          <Property Type="Decimal" Name="length" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="width" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="height" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="Price" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="Status" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="DeleteFlag" />
+          <NavigationProperty Name="Contract_Header" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Detail" ToRole="Contract_Header" />
+          <Property Type="String" Name="hardware_part" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="decoration_part" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="req_others" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Contract_Header">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SN" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="CustomerId" />
+          <Property Type="DateTime" Name="DeliveryDate" Precision="3" />
+          <Property Type="String" Name="DeliveryAddress" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="DeliveryLinkTel" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="DeliveryLinkMan" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Amount" Precision="16" Scale="2" />
+          <Property Type="Decimal" Name="Prepay" Precision="16" Scale="2" />
+          <Property Type="Int32" Name="SaleUserId" />
+          <Property Type="String" Name="SaleUserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="SaleDepartmentId" />
+          <Property Type="String" Name="SaleDepartment" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Status" />
+          <Property Type="Int32" Name="CheckedUserId" />
+          <Property Type="String" Name="CheckedUserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CheckedTime" Precision="3" />
+          <Property Type="DateTime" Name="HTDate" Precision="3" />
+          <Property Type="Int32" Name="FRFlag" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="DeleteFlag" />
+          <Property Type="String" Name="Remark" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_Detail" />
+          <NavigationProperty Name="XNGYP_Customers" Relationship="XNGYPModel.FK_Contract_Header_XNGYP_Customers" FromRole="Contract_Header" ToRole="XNGYP_Customers" />
+          <Property Type="Boolean" Name="CWCheckStatus" />
+          <Property Type="String" Name="CWCheckName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CWCheckId" />
+          <Property Type="DateTime" Name="CWCheckTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Contract_Detail_Contract_Header">
+          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
+          <End Type="XNGYPModel.Contract_Detail" Role="Contract_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Header">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Detail">
+              <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Header_XNGYP_Customers">
+          <End Type="XNGYPModel.XNGYP_Customers" Role="XNGYP_Customers" Multiplicity="0..1" />
+          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Header">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="XNGYP_Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductsSNId" Nullable="false" />
+          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="length" />
+          <Property Type="Int32" Name="width" />
+          <Property Type="Int32" Name="height" />
+          <Property Type="String" Name="picture" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="paper_path" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BOM_path" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="volume" Precision="16" Scale="4" />
+          <Property Type="String" Name="remark" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="created_time" Precision="3" />
+          <Property Type="Boolean" Name="delete_flag" />
+          <NavigationProperty Name="XNGYP_Products_WorkFrom_Price" Relationship="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_Products_WorkFrom_Price" />
+          <NavigationProperty Name="XNGYP_Products_SN" Relationship="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" FromRole="XNGYP_Products" ToRole="XNGYP_Products_SN" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products_SN">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SN" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="remark" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="created_time" Precision="3" />
+          <Property Type="Boolean" Name="delete_flag" />
+          <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" FromRole="XNGYP_Products_SN" ToRole="XNGYP_Products" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products_WorkFrom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Sort" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="DeleteFlag" />
+          <NavigationProperty Name="XNGYP_Products_WorkFrom_Price" Relationship="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" FromRole="XNGYP_Products_WorkFrom" ToRole="XNGYP_Products_WorkFrom_Price" />
+        </EntityType>
+        <EntityType Name="XNGYP_Products_WorkFrom_Price">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductsId" Nullable="false" />
+          <Property Type="String" Name="WorkFrom" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="WorkFromId" />
+          <Property Type="Decimal" Name="WorkFromPrice" Precision="16" Scale="2" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="DeleteFlag" />
+          <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" FromRole="XNGYP_Products_WorkFrom_Price" ToRole="XNGYP_Products" />
+          <NavigationProperty Name="XNGYP_Products_WorkFrom" Relationship="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" FromRole="XNGYP_Products_WorkFrom_Price" ToRole="XNGYP_Products_WorkFrom" />
+        </EntityType>
+        <Association Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
+          <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="1" />
+          <End Type="XNGYPModel.XNGYP_Products_WorkFrom_Price" Role="XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Products_WorkFrom_Price">
+              <PropertyRef Name="ProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Products_XNGYP_Products_SN">
+          <End Type="XNGYPModel.XNGYP_Products_SN" Role="XNGYP_Products_SN" Multiplicity="1" />
+          <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Products">
+              <PropertyRef Name="ProductsSNId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
+          <End Type="XNGYPModel.XNGYP_Products_WorkFrom" Role="XNGYP_Products_WorkFrom" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_Products_WorkFrom_Price" Role="XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_WorkFrom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Products_WorkFrom_Price">
+              <PropertyRef Name="WorkFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XNGYPModelStoreContainer" CdmEntityContainer="XNGYPEntities">
+          <EntitySetMapping Name="WorkLogs">
+            <EntityTypeMapping TypeName="XNGYPModel.WorkLogs">
+              <MappingFragment StoreEntitySet="WorkLogs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MSG" ColumnName="MSG" />
+                <ScalarProperty Name="MSGStatus" ColumnName="MSGStatus" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Menu">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Menu">
+              <MappingFragment StoreEntitySet="XNGYP_Menu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Role">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Role">
+              <MappingFragment StoreEntitySet="XNGYP_Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MenuList" ColumnName="MenuList" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Customers">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Customers">
+              <MappingFragment StoreEntitySet="XNGYP_Customers">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="BelongUserName" ColumnName="BelongUserName" />
+                <ScalarProperty Name="BelongUserId" ColumnName="BelongUserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LinkTel" ColumnName="LinkTel" />
+                <ScalarProperty Name="LinkMan" ColumnName="LinkMan" />
+                <ScalarProperty Name="Address_Delivery" ColumnName="Address_Delivery" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract_Detail">
+            <EntityTypeMapping TypeName="XNGYPModel.Contract_Detail">
+              <MappingFragment StoreEntitySet="Contract_Detail">
+                <ScalarProperty Name="req_others" ColumnName="req_others" />
+                <ScalarProperty Name="decoration_part" ColumnName="decoration_part" />
+                <ScalarProperty Name="hardware_part" ColumnName="hardware_part" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="CustomFlag" ColumnName="CustomFlag" />
+                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
+                <ScalarProperty Name="WoodName" ColumnName="WoodName" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductSN" ColumnName="ProductSN" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Labels" ColumnName="Labels" />
+                <ScalarProperty Name="ContractHeadId" ColumnName="ContractHeadId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract_Header">
+            <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
+              <MappingFragment StoreEntitySet="Contract_Header">
+                <ScalarProperty Name="CWCheckTime" ColumnName="CWCheckTime" />
+                <ScalarProperty Name="CWCheckId" ColumnName="CWCheckId" />
+                <ScalarProperty Name="CWCheckName" ColumnName="CWCheckName" />
+                <ScalarProperty Name="CWCheckStatus" ColumnName="CWCheckStatus" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="FRFlag" ColumnName="FRFlag" />
+                <ScalarProperty Name="HTDate" ColumnName="HTDate" />
+                <ScalarProperty Name="CheckedTime" ColumnName="CheckedTime" />
+                <ScalarProperty Name="CheckedUserName" ColumnName="CheckedUserName" />
+                <ScalarProperty Name="CheckedUserId" ColumnName="CheckedUserId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SaleDepartment" ColumnName="SaleDepartment" />
+                <ScalarProperty Name="SaleDepartmentId" ColumnName="SaleDepartmentId" />
+                <ScalarProperty Name="SaleUserName" ColumnName="SaleUserName" />
+                <ScalarProperty Name="SaleUserId" ColumnName="SaleUserId" />
+                <ScalarProperty Name="Prepay" ColumnName="Prepay" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DeliveryLinkMan" ColumnName="DeliveryLinkMan" />
+                <ScalarProperty Name="DeliveryLinkTel" ColumnName="DeliveryLinkTel" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Products">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Products">
+              <MappingFragment StoreEntitySet="XNGYP_Products">
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="BOM_path" ColumnName="BOM_path" />
+                <ScalarProperty Name="paper_path" ColumnName="paper_path" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ProductsSNId" ColumnName="ProductsSNId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Products_SN">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Products_SN">
+              <MappingFragment StoreEntitySet="XNGYP_Products_SN">
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Products_WorkFrom">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Products_WorkFrom">
+              <MappingFragment StoreEntitySet="XNGYP_Products_WorkFrom">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Products_WorkFrom_Price">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Products_WorkFrom_Price">
+              <MappingFragment StoreEntitySet="XNGYP_Products_WorkFrom_Price">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="WorkFromPrice" ColumnName="WorkFromPrice" />
+                <ScalarProperty Name="WorkFromId" ColumnName="WorkFromId" />
+                <ScalarProperty Name="WorkFrom" ColumnName="WorkFrom" />
+                <ScalarProperty Name="ProductsId" ColumnName="ProductsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

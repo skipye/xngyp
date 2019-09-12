@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="XNERPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="XNERPModelStoreContainer">
+          <EntitySet Name="INV_wood_type" EntityType="XNERPModel.Store.INV_wood_type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SYS_colors" EntityType="XNERPModel.Store.SYS_colors" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="INV_wood_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="nickname" Type="nvarchar" MaxLength="100" />
+          <Property Name="place" Type="nvarchar" MaxLength="100" />
+          <Property Name="safe_stock_max" Type="int" Nullable="false" />
+          <Property Name="safe_stock_min" Type="int" Nullable="false" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+          <Property Name="g_ccl" Type="decimal" Scale="2" />
+          <Property Name="g_bz" Type="decimal" Scale="2" />
+          <Property Name="q_ccl" Type="decimal" Scale="2" />
+          <Property Name="q_bz" Type="decimal" Scale="2" />
+          <Property Name="prcie" Type="decimal" Scale="2" />
+          <Property Name="cc_prcie" Type="decimal" Scale="2" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="PersonPrice" Type="decimal" Scale="2" />
+        </EntityType>
+        <EntityType Name="SYS_colors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="varchar" MaxLength="10" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="RGB" Type="varchar" MaxLength="7" />
+          <Property Name="img" Type="varchar" MaxLength="50" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XNERPModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="XNERPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="INV_wood_type" EntityType="XNERPModel.INV_wood_type" />
+          <EntitySet Name="SYS_colors" EntityType="XNERPModel.SYS_colors" />
+        </EntityContainer>
+        <EntityType Name="INV_wood_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="nickname" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="place" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="safe_stock_max" Type="Int32" Nullable="false" />
+          <Property Name="safe_stock_min" Type="Int32" Nullable="false" />
+          <Property Name="remark" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <Property Name="g_ccl" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="g_bz" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="q_ccl" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="q_bz" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="prcie" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="cc_prcie" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="PersonPrice" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="SYS_colors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="RGB" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
+          <Property Name="img" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="remark" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XNERPModelStoreContainer" CdmEntityContainer="XNERPEntities">
+          <EntitySetMapping Name="INV_wood_type">
+            <EntityTypeMapping TypeName="XNERPModel.INV_wood_type">
+              <MappingFragment StoreEntitySet="INV_wood_type">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="safe_stock_max" ColumnName="safe_stock_max" />
+                <ScalarProperty Name="safe_stock_min" ColumnName="safe_stock_min" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="g_ccl" ColumnName="g_ccl" />
+                <ScalarProperty Name="g_bz" ColumnName="g_bz" />
+                <ScalarProperty Name="q_ccl" ColumnName="q_ccl" />
+                <ScalarProperty Name="q_bz" ColumnName="q_bz" />
+                <ScalarProperty Name="prcie" ColumnName="prcie" />
+                <ScalarProperty Name="cc_prcie" ColumnName="cc_prcie" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="PersonPrice" ColumnName="PersonPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_colors">
+            <EntityTypeMapping TypeName="XNERPModel.SYS_colors">
+              <MappingFragment StoreEntitySet="SYS_colors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="RGB" ColumnName="RGB" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
