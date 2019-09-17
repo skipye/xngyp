@@ -21,6 +21,14 @@
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" />
+        <EntityTypeShape EntityType="XNGYPModel.INV_Name" Width="1.5" PointX="5.625" PointY="9" />
+        <EntityTypeShape EntityType="XNGYPModel.INV_Name_Type" Width="1.5" PointX="3.375" PointY="9" />
+        <AssociationConnector Association="XNGYPModel.FK_INV_Name_INV_Name_Type" />
+        <AssociationConnector Association="XNGYPModel.FK_INV_Name_Type_INV_Name_Type" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_INV_Labels" Width="1.5" PointX="8.875" PointY="6.875" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_INV_Name" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

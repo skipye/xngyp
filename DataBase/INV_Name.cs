@@ -12,22 +12,22 @@ namespace DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class XNGYP_Products_SN
+    public partial class INV_Name
     {
-        public XNGYP_Products_SN()
+        public INV_Name()
         {
-            this.XNGYP_Products = new HashSet<XNGYP_Products>();
             this.XNGYP_INV_Labels = new HashSet<XNGYP_INV_Labels>();
         }
     
         public int Id { get; set; }
-        public string SN { get; set; }
-        public string name { get; set; }
-        public string remark { get; set; }
-        public Nullable<System.DateTime> created_time { get; set; }
-        public Nullable<bool> delete_flag { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> Type { get; set; }
+        public string Address { get; set; }
+        public string Remark { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<bool> DeleteFlag { get; set; }
     
-        public virtual ICollection<XNGYP_Products> XNGYP_Products { get; set; }
+        public virtual INV_Name_Type INV_Name_Type { get; set; }
         public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
     }
 }

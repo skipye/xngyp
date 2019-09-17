@@ -48,6 +48,9 @@
   <ItemGroup>
     <Compile Include="ContractHeaderService.cs" />
     <Compile Include="CustomerService.cs" />
+    <Compile Include="LabelsService.cs" />
+    <Compile Include="ProductsService.cs" />
+    <Compile Include="INVService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleService.cs" />

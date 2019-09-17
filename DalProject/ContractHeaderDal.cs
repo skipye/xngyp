@@ -250,6 +250,25 @@ namespace DalProject
             }
             return items;
         }
+        public List<SelectListItem> GetCKDrolist(int? pId, int? CKType)
+        {
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "请选择仓库", Value = "" });
+            using (var db = new XNGYPEntities())
+            {
+                List<INV_Name> model = db.INV_Name.Where(b => b.DeleteFlag == false).OrderBy(k => k.CreateTime).ToList();
+                if (CKType != null && CKType > 0)
+                {
+                    model = db.INV_Name.Where(b => b.DeleteFlag == false && b.Type == CKType).OrderBy(k => k.CreateTime).ToList();
+                }
+                foreach (var item in model)
+                {
+                    items.Add(new SelectListItem() { Text = "╋" + item.Name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
+                }
+            }
+            return items;
+        }
         public string GetProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
         {
             using (var db = new XNGYPEntities())

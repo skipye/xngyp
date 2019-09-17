@@ -35,5 +35,8 @@ namespace DataBase
         public DbSet<XNGYP_Products_SN> XNGYP_Products_SN { get; set; }
         public DbSet<XNGYP_Products_WorkFrom> XNGYP_Products_WorkFrom { get; set; }
         public DbSet<XNGYP_Products_WorkFrom_Price> XNGYP_Products_WorkFrom_Price { get; set; }
+        public DbSet<INV_Name> INV_Name { get; set; }
+        public DbSet<INV_Name_Type> INV_Name_Type { get; set; }
+        public DbSet<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
     }
 }

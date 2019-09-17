@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="ContractHeaderDal.cs" />
     <Compile Include="CustomerDal.cs" />
+    <Compile Include="LabelsDal.cs" />
+    <Compile Include="ProductsDal.cs" />
+    <Compile Include="INVDal.cs" />
     <Compile Include="MenuDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleDal.cs" />

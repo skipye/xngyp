@@ -91,6 +91,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<SelectListItem> GetCKDrolist(int? pId, int? CKType)
+        {
+            try { return CHDal.GetCKDrolist(pId, CKType); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public string GetProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
         {
             try { return CHDal.GetProNameDrolistBySNAndArea(ProSN, ProProArea); }

@@ -4,48 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="XNGYPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="XNGYPModelStoreContainer">
-          <EntitySet Name="Contract_Detail" EntityType="XNGYPModel.Store.Contract_Detail" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Contract_Header" EntityType="XNGYPModel.Store.Contract_Header" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="WorkLogs" EntityType="XNGYPModel.Store.WorkLogs" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Customers" EntityType="XNGYPModel.Store.XNGYP_Customers" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Menu" EntityType="XNGYPModel.Store.XNGYP_Menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Products" EntityType="XNGYPModel.Store.XNGYP_Products" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Products_SN" EntityType="XNGYPModel.Store.XNGYP_Products_SN" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="XNGYPModel.Store.XNGYP_Products_WorkFrom" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="XNGYPModel.Store.XNGYP_Products_WorkFrom_Price" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="XNGYP_Role" EntityType="XNGYPModel.Store.XNGYP_Role" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="XNGYPModel.Store.FK_Contract_Detail_Contract_Header">
-            <End Role="Contract_Header" EntitySet="Contract_Header" />
-            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="XNGYPModel.Store.FK_Contract_Header_XNGYP_Customers">
-            <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
-            <End Role="Contract_Header" EntitySet="Contract_Header" />
-          </AssociationSet>
-          <AssociationSet Name="FK_XNGYP_Menu_XNGYP_Menu" Association="XNGYPModel.Store.FK_XNGYP_Menu_XNGYP_Menu">
-            <End Role="XNGYP_Menu" EntitySet="XNGYP_Menu" />
-            <End Role="XNGYP_Menu1" EntitySet="XNGYP_Menu" />
-          </AssociationSet>
-          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" Association="XNGYPModel.Store.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
-            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
-            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
-          </AssociationSet>
-          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" Association="XNGYPModel.Store.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
-            <End Role="XNGYP_Products_WorkFrom" EntitySet="XNGYP_Products_WorkFrom" />
-            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
-          </AssociationSet>
-          <AssociationSet Name="FK_XNGYP_Products_XNGYP_Products_SN" Association="XNGYPModel.Store.FK_XNGYP_Products_XNGYP_Products_SN">
-            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
-            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="XNGYPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Contract_Detail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ContractHeadId" Type="int" />
           <Property Name="Labels" Type="int" />
           <Property Name="ProductId" Type="int" />
@@ -71,7 +35,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SN" Type="varchar" MaxLength="15" />
           <Property Name="CustomerId" Type="int" />
           <Property Name="DeliveryDate" Type="datetime" />
@@ -98,11 +62,33 @@
           <Property Name="CWCheckId" Type="int" />
           <Property Name="CWCheckTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="INV_Name">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="INV_Name_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
         <EntityType Name="WorkLogs">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="MSG" Type="nvarchar" MaxLength="500" />
@@ -113,7 +99,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" />
           <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
@@ -129,11 +115,40 @@
           <Property Name="DeleteFlag" Type="bit" />
           <Property Name="Remarks" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="XNGYP_INV_Labels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductsId" Type="int" Nullable="false" />
+          <Property Name="ProductsSNId" Type="int" />
+          <Property Name="SN" Type="varchar" MaxLength="30" />
+          <Property Name="Length" Type="int" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Height" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="WoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="INVId" Type="int" />
+          <Property Name="ContractDetailId" Type="int" />
+          <Property Name="WIPContractIid" Type="int" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="InputDateTime" Type="datetime" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Company" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="WebSite" Type="varchar" MaxLength="50" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="WoodId" Type="int" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="Grade" Type="int" />
+        </EntityType>
         <EntityType Name="XNGYP_Menu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="ParentId" Type="int" />
           <Property Name="Action" Type="nvarchar" MaxLength="50" />
@@ -148,7 +163,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductsSNId" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="length" Type="int" />
@@ -166,7 +181,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SN" Type="varchar" MaxLength="50" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
           <Property Name="remark" Type="text" />
@@ -177,7 +192,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Sort" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
@@ -187,7 +202,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductsId" Type="int" Nullable="false" />
           <Property Name="WorkFrom" Type="nvarchar" MaxLength="50" />
           <Property Name="WorkFromId" Type="int" />
@@ -199,7 +214,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="MenuList" Type="nvarchar" MaxLength="500" />
@@ -207,8 +222,8 @@
           <Property Name="DeleteFlag" Type="bit" />
         </EntityType>
         <Association Name="FK_Contract_Detail_Contract_Header">
-          <End Role="Contract_Header" Type="XNGYPModel.Store.Contract_Header" Multiplicity="0..1" />
-          <End Role="Contract_Detail" Type="XNGYPModel.Store.Contract_Detail" Multiplicity="*" />
+          <End Role="Contract_Header" Type="Self.Contract_Header" Multiplicity="0..1" />
+          <End Role="Contract_Detail" Type="Self.Contract_Detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contract_Header">
               <PropertyRef Name="Id" />
@@ -219,8 +234,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Contract_Header_XNGYP_Customers">
-          <End Role="XNGYP_Customers" Type="XNGYPModel.Store.XNGYP_Customers" Multiplicity="0..1" />
-          <End Role="Contract_Header" Type="XNGYPModel.Store.Contract_Header" Multiplicity="*" />
+          <End Role="XNGYP_Customers" Type="Self.XNGYP_Customers" Multiplicity="0..1" />
+          <End Role="Contract_Header" Type="Self.Contract_Header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="XNGYP_Customers">
               <PropertyRef Name="Id" />
@@ -230,9 +245,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_INV_Name_INV_Name_Type">
+          <End Role="INV_Name_Type" Type="Self.INV_Name_Type" Multiplicity="0..1" />
+          <End Role="INV_Name" Type="Self.INV_Name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="INV_Name">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_Name_Type_INV_Name_Type">
+          <End Role="INV_Name_Type" Type="Self.INV_Name_Type" Multiplicity="1" />
+          <End Role="INV_Name_Type1" Type="Self.INV_Name_Type" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="INV_Name_Type1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Labels_INV_Name">
+          <End Role="INV_Name" Type="Self.INV_Name" Multiplicity="0..1" />
+          <End Role="XNGYP_INV_Labels" Type="Self.XNGYP_INV_Labels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Labels">
+              <PropertyRef Name="INVId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Labels_XNGYP_Products">
+          <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="1" />
+          <End Role="XNGYP_INV_Labels" Type="Self.XNGYP_INV_Labels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Labels">
+              <PropertyRef Name="ProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Labels_XNGYP_Products_SN">
+          <End Role="XNGYP_Products_SN" Type="Self.XNGYP_Products_SN" Multiplicity="0..1" />
+          <End Role="XNGYP_INV_Labels" Type="Self.XNGYP_INV_Labels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Labels">
+              <PropertyRef Name="ProductsSNId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_XNGYP_Menu_XNGYP_Menu">
-          <End Role="XNGYP_Menu" Type="XNGYPModel.Store.XNGYP_Menu" Multiplicity="0..1" />
-          <End Role="XNGYP_Menu1" Type="XNGYPModel.Store.XNGYP_Menu" Multiplicity="*" />
+          <End Role="XNGYP_Menu" Type="Self.XNGYP_Menu" Multiplicity="0..1" />
+          <End Role="XNGYP_Menu1" Type="Self.XNGYP_Menu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="XNGYP_Menu">
               <PropertyRef Name="Id" />
@@ -243,8 +318,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
-          <End Role="XNGYP_Products" Type="XNGYPModel.Store.XNGYP_Products" Multiplicity="1" />
-          <End Role="XNGYP_Products_WorkFrom_Price" Type="XNGYPModel.Store.XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
+          <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="1" />
+          <End Role="XNGYP_Products_WorkFrom_Price" Type="Self.XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="XNGYP_Products">
               <PropertyRef Name="Id" />
@@ -255,8 +330,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
-          <End Role="XNGYP_Products_WorkFrom" Type="XNGYPModel.Store.XNGYP_Products_WorkFrom" Multiplicity="0..1" />
-          <End Role="XNGYP_Products_WorkFrom_Price" Type="XNGYPModel.Store.XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
+          <End Role="XNGYP_Products_WorkFrom" Type="Self.XNGYP_Products_WorkFrom" Multiplicity="0..1" />
+          <End Role="XNGYP_Products_WorkFrom_Price" Type="Self.XNGYP_Products_WorkFrom_Price" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="XNGYP_Products_WorkFrom">
               <PropertyRef Name="Id" />
@@ -267,8 +342,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_XNGYP_Products_XNGYP_Products_SN">
-          <End Role="XNGYP_Products_SN" Type="XNGYPModel.Store.XNGYP_Products_SN" Multiplicity="1" />
-          <End Role="XNGYP_Products" Type="XNGYPModel.Store.XNGYP_Products" Multiplicity="*" />
+          <End Role="XNGYP_Products_SN" Type="Self.XNGYP_Products_SN" Multiplicity="1" />
+          <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="XNGYP_Products_SN">
               <PropertyRef Name="Id" />
@@ -278,6 +353,65 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="XNGYPModelStoreContainer">
+          <EntitySet Name="Contract_Detail" EntityType="Self.Contract_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract_Header" EntityType="Self.Contract_Header" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INV_Name" EntityType="Self.INV_Name" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INV_Name_Type" EntityType="Self.INV_Name_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkLogs" EntityType="Self.WorkLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Customers" EntityType="Self.XNGYP_Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_INV_Labels" EntityType="Self.XNGYP_INV_Labels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Menu" EntityType="Self.XNGYP_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Products" EntityType="Self.XNGYP_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Products_SN" EntityType="Self.XNGYP_Products_SN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="Self.XNGYP_Products_WorkFrom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="Self.XNGYP_Products_WorkFrom_Price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Role" EntityType="Self.XNGYP_Role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="Self.FK_Contract_Detail_Contract_Header">
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="Self.FK_Contract_Header_XNGYP_Customers">
+            <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_Name_INV_Name_Type" Association="Self.FK_INV_Name_INV_Name_Type">
+            <End Role="INV_Name_Type" EntitySet="INV_Name_Type" />
+            <End Role="INV_Name" EntitySet="INV_Name" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_Name_Type_INV_Name_Type" Association="Self.FK_INV_Name_Type_INV_Name_Type">
+            <End Role="INV_Name_Type" EntitySet="INV_Name_Type" />
+            <End Role="INV_Name_Type1" EntitySet="INV_Name_Type" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Labels_INV_Name" Association="Self.FK_XNGYP_INV_Labels_INV_Name">
+            <End Role="INV_Name" EntitySet="INV_Name" />
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Labels_XNGYP_Products" Association="Self.FK_XNGYP_INV_Labels_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Labels_XNGYP_Products_SN" Association="Self.FK_XNGYP_INV_Labels_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Menu_XNGYP_Menu" Association="Self.FK_XNGYP_Menu_XNGYP_Menu">
+            <End Role="XNGYP_Menu" EntitySet="XNGYP_Menu" />
+            <End Role="XNGYP_Menu1" EntitySet="XNGYP_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" Association="Self.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" Association="Self.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
+            <End Role="XNGYP_Products_WorkFrom" EntitySet="XNGYP_Products_WorkFrom" />
+            <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Products_XNGYP_Products_SN" Association="Self.FK_XNGYP_Products_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -316,6 +450,29 @@
           <AssociationSet Name="FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom" Association="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products_WorkFrom">
             <End Role="XNGYP_Products_WorkFrom" EntitySet="XNGYP_Products_WorkFrom" />
             <End Role="XNGYP_Products_WorkFrom_Price" EntitySet="XNGYP_Products_WorkFrom_Price" />
+          </AssociationSet>
+          <EntitySet Name="INV_Name" EntityType="XNGYPModel.INV_Name" />
+          <EntitySet Name="INV_Name_Type" EntityType="XNGYPModel.INV_Name_Type" />
+          <AssociationSet Name="FK_INV_Name_INV_Name_Type" Association="XNGYPModel.FK_INV_Name_INV_Name_Type">
+            <End Role="INV_Name_Type" EntitySet="INV_Name_Type" />
+            <End Role="INV_Name" EntitySet="INV_Name" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_Name_Type_INV_Name_Type" Association="XNGYPModel.FK_INV_Name_Type_INV_Name_Type">
+            <End Role="INV_Name_Type" EntitySet="INV_Name_Type" />
+            <End Role="INV_Name_Type1" EntitySet="INV_Name_Type" />
+          </AssociationSet>
+          <EntitySet Name="XNGYP_INV_Labels" EntityType="XNGYPModel.XNGYP_INV_Labels" />
+          <AssociationSet Name="FK_XNGYP_INV_Labels_INV_Name" Association="XNGYPModel.FK_XNGYP_INV_Labels_INV_Name">
+            <End Role="INV_Name" EntitySet="INV_Name" />
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Labels_XNGYP_Products" Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Labels_XNGYP_Products_SN" Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
@@ -493,6 +650,7 @@
           <Property Type="Boolean" Name="delete_flag" />
           <NavigationProperty Name="XNGYP_Products_WorkFrom_Price" Relationship="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_Products_WorkFrom_Price" />
           <NavigationProperty Name="XNGYP_Products_SN" Relationship="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" FromRole="XNGYP_Products" ToRole="XNGYP_Products_SN" />
+          <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_INV_Labels" />
         </EntityType>
         <EntityType Name="XNGYP_Products_SN">
           <Key>
@@ -505,6 +663,7 @@
           <Property Type="DateTime" Name="created_time" Precision="3" />
           <Property Type="Boolean" Name="delete_flag" />
           <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" FromRole="XNGYP_Products_SN" ToRole="XNGYP_Products" />
+          <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN" FromRole="XNGYP_Products_SN" ToRole="XNGYP_INV_Labels" />
         </EntityType>
         <EntityType Name="XNGYP_Products_WorkFrom">
           <Key>
@@ -564,6 +723,125 @@
             </Principal>
             <Dependent Role="XNGYP_Products_WorkFrom_Price">
               <PropertyRef Name="WorkFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INV_Name">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="INV_Name_Type" Relationship="XNGYPModel.FK_INV_Name_INV_Name_Type" FromRole="INV_Name" ToRole="INV_Name_Type" />
+          <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_INV_Name" FromRole="INV_Name" ToRole="XNGYP_INV_Labels" />
+        </EntityType>
+        <EntityType Name="INV_Name_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="INV_Name" Relationship="XNGYPModel.FK_INV_Name_INV_Name_Type" FromRole="INV_Name_Type" ToRole="INV_Name" />
+          <NavigationProperty Name="INV_Name_Type1" Relationship="XNGYPModel.FK_INV_Name_Type_INV_Name_Type" FromRole="INV_Name_Type" ToRole="INV_Name_Type1" />
+          <NavigationProperty Name="INV_Name_Type2" Relationship="XNGYPModel.FK_INV_Name_Type_INV_Name_Type" FromRole="INV_Name_Type1" ToRole="INV_Name_Type" />
+        </EntityType>
+        <Association Name="FK_INV_Name_INV_Name_Type">
+          <End Type="XNGYPModel.INV_Name_Type" Role="INV_Name_Type" Multiplicity="0..1" />
+          <End Type="XNGYPModel.INV_Name" Role="INV_Name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="INV_Name">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_Name_Type_INV_Name_Type">
+          <End Type="XNGYPModel.INV_Name_Type" Role="INV_Name_Type" Multiplicity="1" />
+          <End Type="XNGYPModel.INV_Name_Type" Role="INV_Name_Type1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="INV_Name_Type1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="XNGYP_INV_Labels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductsId" Type="Int32" Nullable="false" />
+          <Property Name="ProductsSNId" Type="Int32" />
+          <Property Name="SN" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Height" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="WoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="INVId" Type="Int32" />
+          <Property Name="ContractDetailId" Type="Int32" />
+          <Property Name="WIPContractIid" Type="Int32" />
+          <Property Name="CheckDate" Type="DateTime" Precision="3" />
+          <Property Name="InputDateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Company" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WebSite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="INV_Name" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_INV_Name" FromRole="XNGYP_INV_Labels" ToRole="INV_Name" />
+          <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products" FromRole="XNGYP_INV_Labels" ToRole="XNGYP_Products" />
+          <NavigationProperty Name="XNGYP_Products_SN" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN" FromRole="XNGYP_INV_Labels" ToRole="XNGYP_Products_SN" />
+          <Property Name="WoodId" Type="Int32" />
+          <Property Name="ColorId" Type="Int32" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_XNGYP_INV_Labels_INV_Name">
+          <End Type="XNGYPModel.INV_Name" Role="INV_Name" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_INV_Labels" Role="XNGYP_INV_Labels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Labels">
+              <PropertyRef Name="INVId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Labels_XNGYP_Products">
+          <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="1" />
+          <End Type="XNGYPModel.XNGYP_INV_Labels" Role="XNGYP_INV_Labels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Labels">
+              <PropertyRef Name="ProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Labels_XNGYP_Products_SN">
+          <End Type="XNGYPModel.XNGYP_Products_SN" Role="XNGYP_Products_SN" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_INV_Labels" Role="XNGYP_INV_Labels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Labels">
+              <PropertyRef Name="ProductsSNId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -748,6 +1026,60 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="INV_Name">
+            <EntityTypeMapping TypeName="XNGYPModel.INV_Name">
+              <MappingFragment StoreEntitySet="INV_Name">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INV_Name_Type">
+            <EntityTypeMapping TypeName="XNGYPModel.INV_Name_Type">
+              <MappingFragment StoreEntitySet="INV_Name_Type">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_INV_Labels">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_INV_Labels">
+              <MappingFragment StoreEntitySet="XNGYP_INV_Labels">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="InputDateTime" ColumnName="InputDateTime" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="WIPContractIid" ColumnName="WIPContractIid" />
+                <ScalarProperty Name="ContractDetailId" ColumnName="ContractDetailId" />
+                <ScalarProperty Name="INVId" ColumnName="INVId" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="WoodName" ColumnName="WoodName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="ProductsSNId" ColumnName="ProductsSNId" />
+                <ScalarProperty Name="ProductsId" ColumnName="ProductsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -765,6 +1097,7 @@
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

@@ -17,6 +17,7 @@ namespace DataBase
         public XNGYP_Products()
         {
             this.XNGYP_Products_WorkFrom_Price = new HashSet<XNGYP_Products_WorkFrom_Price>();
+            this.XNGYP_INV_Labels = new HashSet<XNGYP_INV_Labels>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,6 @@ namespace DataBase
     
         public virtual ICollection<XNGYP_Products_WorkFrom_Price> XNGYP_Products_WorkFrom_Price { get; set; }
         public virtual XNGYP_Products_SN XNGYP_Products_SN { get; set; }
+        public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
     }
 }

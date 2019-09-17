@@ -58,6 +58,12 @@
     <Compile Include="ehr_employee.cs">
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="INV_Name.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INV_Name_Type.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
     <Compile Include="INV_wood_type.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
@@ -99,6 +105,9 @@
       <DependentUpon>XNGYP.edmx</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_Customers.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_INV_Labels.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_Menu.cs">
