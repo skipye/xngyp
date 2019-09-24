@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace XiangNingSale.Controllers
+namespace XNGYP.Controllers
 {
     public class FileManageController : Controller
     {

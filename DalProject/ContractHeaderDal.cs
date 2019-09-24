@@ -73,12 +73,10 @@ namespace DalProject
                     var table = db.Contract_Header.Where(k => k.Id == Models.Id).SingleOrDefault();
                     table.CustomerId = Models.CustomerId;
                     table.DeliveryDate = Models.DeliveryDate;
-                    table.Prepay = Models.Prepay;
                     table.DeliveryAddress = Models.DeliveryAddress;
-                    table.SaleUserId = Models.SaleUserId;
-                    table.SaleUserName = Models.SaleUserName;
-                    table.SaleDepartmentId = Models.SaleDepartmentId;
-                    table.SaleDepartment = Models.SaleDepartment;
+                    table.DeliveryLinkTel = Models.DeliveryLinkTel;
+                    table.DeliveryLinkMan = Models.DeliveryLinkMan;
+                    table.Prepay = Models.Prepay;
                     table.HTDate = Convert.ToDateTime(Models.HTDate);
                 }
                 else
@@ -87,9 +85,11 @@ namespace DalProject
                     table.SN = Models.SN;
                     table.CustomerId = Models.CustomerId;
                     table.DeliveryDate = Models.DeliveryDate;
+                    table.DeliveryAddress = Models.DeliveryAddress;
+                    table.DeliveryLinkTel = Models.DeliveryLinkTel;
+                    table.DeliveryLinkMan = Models.DeliveryLinkMan;
                     table.Amount = 0;
                     table.Prepay = Models.Prepay;
-                    table.DeliveryAddress = Models.DeliveryAddress;
                     table.SaleUserId = Models.SaleUserId;
                     table.SaleUserName = Models.SaleUserName;
                     table.SaleDepartmentId = Models.SaleDepartmentId;
@@ -133,6 +133,8 @@ namespace DalProject
                                   FRFlag = p.FRFlag,
                                   OrderTime = p.HTDate,
                                   CheckedTime = p.CheckedTime,
+                                  DeliveryLinkMan=p.DeliveryLinkMan,
+                                  DeliveryLinkTel=p.DeliveryLinkTel,
                               }).SingleOrDefault();
                 return tables;
             }
@@ -307,7 +309,9 @@ namespace DalProject
                 table.ProductId = Models.ProductId;
                 table.ProductSN = Models.ProductSN;
                 table.ProductName = Models.ProductName;
+                table.ColorId = Models.ColorId;
                 table.Color = Models.Color;
+                table.WoodId = Models.WoodId;
                 table.WoodName = Models.WoodName;
                 table.CustomFlag = Models.CustomFlag;
                 table.length = Models.length;
@@ -320,10 +324,11 @@ namespace DalProject
                 table.CreateTime = DateTime.Now;
                 table.DeleteFlag = false;
                 table.Status = 0;
+                table.Qty = Models.Qty;
                 db.Contract_Detail.Add(table);
 
                 var HeadTable = db.Contract_Header.Where(k => k.Id == Models.ContractHeadId).SingleOrDefault();
-                HeadTable.Amount = HeadTable.Amount + price * Models.qty;
+                HeadTable.Amount = HeadTable.Amount + price * Models.Qty;
                 db.SaveChanges();
 
             }
@@ -337,8 +342,9 @@ namespace DalProject
 
                 var HeadId = tables.ContractHeadId;
                 var HeadTable = db.Contract_Header.Where(k => k.Id == HeadId).FirstOrDefault();
-                HeadTable.Amount = HeadTable.Amount - tables.Price.Value;
-
+                if(HeadTable.Amount>= tables.Price.Value*tables.Qty) { 
+                   HeadTable.Amount = HeadTable.Amount - tables.Price.Value * tables.Qty;
+                }
                 db.SaveChanges();
             }
         }
@@ -364,7 +370,8 @@ namespace DalProject
                                 hardware_part = p.hardware_part,
                                 decoration_part = p.decoration_part,
                                 req_others = p.req_others,
-                                status = p.Contract_Header.Status,
+                                Status = p.Contract_Header.Status,
+                                Qty=p.Qty,
                             }).ToList();
                 return List;
             }

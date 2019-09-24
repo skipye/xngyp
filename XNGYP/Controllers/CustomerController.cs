@@ -106,6 +106,10 @@ namespace XNGYP.Controllers
             }
             else { return View(Models); }
         }
-
+        public ActionResult GetCuDrolistByCId(int? CId)
+        {
+            var List = NSer.GetCuDrolistByCId(CId);
+            return Content(List.ToString());
+        }
     }
 }

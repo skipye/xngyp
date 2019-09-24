@@ -172,5 +172,24 @@ namespace DalProject
             }
             return items;
         }
+        public string GetCuDrolistByCId(int? CId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var list = (from p in db.XNGYP_Customers.Where(k => k.DeleteFlag == false)
+                            where CId > 0 ? p.Id == CId : true
+                            orderby p.CreateTime descending
+                            select new CRMItem
+                            {
+                                Id = p.Id,
+                                Name = p.ShortName,
+                                tel = p.LinkTel,
+                                Address = p.Address,
+                                department=p.LinkMan,
+                            }).FirstOrDefault();
+                var strText = list.Name + "_" + list.tel + "_" + list.department + "_" + list.Address;
+                return strText;
+            }
+        }
     }
 }

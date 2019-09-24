@@ -57,6 +57,16 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        
+        public string GetCuDrolistByCId(int? CId)
+        {
+            try
+            {
+                return IDal.GetCuDrolistByCId(CId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

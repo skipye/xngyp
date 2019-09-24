@@ -70,8 +70,8 @@
        
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预付款金额：</label>
-            <div class="formControls col-xs-8 col-sm-3">
-                @Html.TextBoxFor(k => k.Prepay, new { @class = "input-text number" }) 元
+            <div class="formControls col-xs-8 col-sm-9">
+                @Html.TextBoxFor(k => k.Prepay, new { @class = "input-text number", @style="width:150px;" }) 元
             </div>
         </div>
         <div class="row cl">
@@ -101,25 +101,29 @@
 
 $(function(){
     $("#CustomerId").change(function () {
-        var Id = $(this).value();
-        ajaxRequest("post", "/Order/PostAdd", { Id: Id }, function (d) {
-            alert(d);
+        var CustomerId = $("#CustomerId").val();
+        var ProUrl = "@Url.Action("GetCuDrolistByCId","Customer")";
+        $.post(ProUrl, { CId: CustomerId }, function (data) {
+            if (data != "")
+            { 
+                var Item = data.split('_');
+                var DeliveryLinkTel = Item[1];
+                var DeliveryLinkMan = Item[0];
+                var DeliveryAddress = Item[3];
+                $("#DeliveryLinkTel").val(DeliveryLinkTel);
+                $("#DeliveryLinkMan").val(DeliveryLinkMan);
+                $("#DeliveryAddress").val(DeliveryAddress);
+            }
         });
     });
 	//表单验证
 	$("#formadd").validate({
 		rules:{
-		    CustomerId: {
-				required:true,
-			},
-		    DeliveryAddress: {
-				required:true,
-		    },
-		    delivery_channel: { required: true },
-		    delivery_date: { required: true },
-		    MeasureFlag: { required: true },
-		    FreightCarrier: { required: true },
-		    Prepay: { required: true, isIntGteZero:true },
+		    CustomerId: {required:true,},
+		    DeliveryAddress: {required:true, },
+		    DeliveryDate: { required: true },
+		    DeliveryLinkTel: { required: true },
+		    DeliveryLinkMan: { required: true },
 		},
 		onkeyup: false,
 		focusCleanup:true,

@@ -47,6 +47,7 @@
     <Compile Include="CategoryModel.cs" />
     <Compile Include="ContractModel.cs" />
     <Compile Include="CustomerModel.cs" />
+    <Compile Include="PreCastModel.cs" />
     <Compile Include="LabelsModel.cs" />
     <Compile Include="ProductsModel.cs" />
     <Compile Include="INVModel.cs" />

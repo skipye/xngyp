@@ -13,8 +13,7 @@
     <p class="ditem">合同编号：@Model.SN</p>
     <p class="ditem">客户姓名：@Model.Customer</p>
     <p class="ditem">业务员：@Model.SaleUserName</p>
-    <p class="ditem">送货日期：@Convert.ToDateTime(Model.delivery_date).ToString("yyyy-MM-dd")</p>
-    <p class="ditem">是否上门测量：@(Model.MeasureFlag != null && Model.MeasureFlag == true ? "是" : "否")</p>
+    <p class="ditem">送货日期：@Convert.ToDateTime(Model.DeliveryDate).ToString("yyyy-MM-dd")</p>
     <p class="ditem">合同总金额：@Model.Amount</p>
     <p class="ditem">送货地址：@Model.DeliveryAddress</p>
     <div style="clear:both"></div>

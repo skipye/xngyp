@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SaleStartDal.cs" />
     <Compile Include="ContractHeaderDal.cs" />
     <Compile Include="CustomerDal.cs" />
+    <Compile Include="PreCastDal.cs" />
     <Compile Include="LabelsDal.cs" />
     <Compile Include="ProductsDal.cs" />
     <Compile Include="INVDal.cs" />

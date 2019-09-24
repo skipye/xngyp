@@ -38,14 +38,11 @@
                     <th>合同总金额</th>
                     <th>预付款</th>
                     <th>付款状态</th>
-                    <th>送货通道</th>
-                    <th>运费承担方</th>
-                    <th width="50px">是否需要上门测量</th>
                     <th width="50px">是否审核</th>
                     <th>送货地址</th>
                     <th>销售人员</th>
                     <th>财务是否审核</th>
-                    <th width="100">上传时间</th>
+                    <th width="100">操作时间</th>
                     <th width="120">操作</th>
                 </tr>
             </thead>
@@ -106,7 +103,7 @@
                         }
                     }
                 }, {
-                    targets: 15,//把第九列的样式改为超链接
+                    targets: 12,//把第九列的样式改为超链接
                     render: function (data, type, row) {
                         var StrCheck = "";
                         if (row.Status == 0)
@@ -128,10 +125,10 @@
                         { "data": "Customer", "className": "textoverflow" },
                         {
                             "data": "SN", "defaultContent": "", "render": function (data, type, row) {
-                                return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','1200','600')\">" + data + "</u>";
+                                return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','900','600')\">" + data + "</u>";
                         } },
                         {
-                            "data": "delivery_date", "render": function (data) {
+                            "data": "DeliveryDate", "render": function (data) {
                                 var NewTime = parseInt(data.replace(/\D/igm, ""));
                                 return formatDate(NewTime);
                             }
@@ -146,16 +143,6 @@
                                 if (data == 2) { StatusName = "<span class=\"label label-danger radius\">已付全款</span>"; }
                                 return StatusName;
                             }, "className": "checkedstatus",
-                        },
-                        { "data": "delivery_channel", "defaultContent": "" },
-                        { "data": "FreightCarrier", "defaultContent": "" },
-                        {
-                            "data": "MeasureFlag", "render": function (data) {
-                                var StrStatus = "<b class='c-warning'>否</b>";
-                                if (data == true)
-                                { StrStatus = "<b class='c-green'>是</b>"; }
-                                return StrStatus;
-                            }
                         },
                         {
                             "data": "Status", "render": function (data) {

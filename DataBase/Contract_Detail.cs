@@ -35,6 +35,7 @@ namespace DataBase
         public string hardware_part { get; set; }
         public string decoration_part { get; set; }
         public string req_others { get; set; }
+        public Nullable<int> Qty { get; set; }
     
         public virtual Contract_Header Contract_Header { get; set; }
     }

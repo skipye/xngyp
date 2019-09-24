@@ -113,7 +113,6 @@ namespace ModelProject
         public string headerName { get; set; }
         public int ProductId { get; set; }
         public int productAreaId { get; set; }
-        public string ProductArea { get; set; }
         public int ProductSNId { get; set; }
         public string ProductSN { get; set; }
         public string ProductName { get; set; }
@@ -126,14 +125,14 @@ namespace ModelProject
         public decimal? width { get; set; }//预付款比例
         public decimal? height { get; set; }//预付款金额
         public decimal? price { get; set; }//预付款金额
-        public int? qty { get; set; }
+        public int? Qty { get; set; }
         public string hardware_part { get; set; }
         public string decoration_part { get; set; }
         public string req_carve { get; set; }
         public string req_others { get; set; }
         public DateTime? created_time { get; set; }
         public string SN { get; set; }
-        public string customer { get; set; }
+        public string Customer { get; set; }
         public DateTime? delivery_date { get; set; }
         public DateTime? checked_date { get; set; }
         public string Remark { get; set; }
@@ -148,8 +147,16 @@ namespace ModelProject
         public List<SelectListItem> WoodDroList { get; set; }
         public List<SelectListItem> colorDroList { get; set; }
         public int? WorkCount { get; set; }
-        public int? status { get; set; }
+        public int? Status { get; set; }
         public string OrderNum { get; set; }
+    }
+    public class SContractProductsModel
+    {
+        public string SN { get; set; }
+        public string Customer { get; set; }
+        public string ProductName { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
     }
     public class FR_contract
     {

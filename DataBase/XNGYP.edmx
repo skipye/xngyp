@@ -30,6 +30,7 @@
           <Property Name="hardware_part" Type="nvarchar" MaxLength="50" />
           <Property Name="decoration_part" Type="nvarchar" MaxLength="100" />
           <Property Name="req_others" Type="nvarchar" MaxLength="500" />
+          <Property Name="Qty" Type="int" />
         </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
@@ -39,8 +40,8 @@
           <Property Name="SN" Type="varchar" MaxLength="15" />
           <Property Name="CustomerId" Type="int" />
           <Property Name="DeliveryDate" Type="datetime" />
-          <Property Name="DeliveryAddress" Type="nchar" MaxLength="10" />
-          <Property Name="DeliveryLinkTel" Type="nchar" MaxLength="10" />
+          <Property Name="DeliveryAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeliveryLinkTel" Type="nvarchar" MaxLength="50" />
           <Property Name="DeliveryLinkMan" Type="nvarchar" MaxLength="50" />
           <Property Name="Amount" Type="decimal" Precision="16" Scale="2" />
           <Property Name="Prepay" Type="decimal" Precision="16" Scale="2" />
@@ -143,6 +144,36 @@
           <Property Name="ColorId" Type="int" />
           <Property Name="Flag" Type="int" />
           <Property Name="Grade" Type="int" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="XNGYP_INV_Semi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSNId" Type="int" />
+          <Property Name="ProductSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="WoodId" Type="int" />
+          <Property Name="WoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="ColorName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Length" Type="int" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Height" Type="int" />
+          <Property Name="INVId" Type="int" />
+          <Property Name="InputDate" Type="datetime" />
+          <Property Name="InputUserId" Type="int" />
+          <Property Name="InputUserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="OutDate" Type="datetime" />
+          <Property Name="OutUserId" Type="int" />
+          <Property Name="OutUserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CDetailId" Type="int" />
+          <Property Name="WPCastId" Type="int" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="DeleteFlag" Type="bit" />
         </EntityType>
         <EntityType Name="XNGYP_Menu">
           <Key>
@@ -218,6 +249,26 @@
           <Property Name="UserId" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="MenuList" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="XNGYP_WIP_PreCas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductSNId" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+          <Property Name="WoodId" Type="int" />
+          <Property Name="WoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="ColorName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Length" Type="int" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Height" Type="int" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Staute" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="DeleteFlag" Type="bit" />
         </EntityType>
@@ -361,12 +412,14 @@
           <EntitySet Name="WorkLogs" EntityType="Self.WorkLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Customers" EntityType="Self.XNGYP_Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_INV_Labels" EntityType="Self.XNGYP_INV_Labels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_INV_Semi" EntityType="Self.XNGYP_INV_Semi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Menu" EntityType="Self.XNGYP_Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Products" EntityType="Self.XNGYP_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Products_SN" EntityType="Self.XNGYP_Products_SN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="Self.XNGYP_Products_WorkFrom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="Self.XNGYP_Products_WorkFrom_Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Role" EntityType="Self.XNGYP_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_WIP_PreCas" EntityType="Self.XNGYP_WIP_PreCas" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="Self.FK_Contract_Detail_Contract_Header">
             <End Role="Contract_Header" EntitySet="Contract_Header" />
             <End Role="Contract_Detail" EntitySet="Contract_Detail" />
@@ -474,6 +527,8 @@
             <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
           </AssociationSet>
+          <EntitySet Name="XNGYP_WIP_PreCas" EntityType="XNGYPModel.XNGYP_WIP_PreCas" />
+          <EntitySet Name="XNGYP_INV_Semi" EntityType="XNGYPModel.XNGYP_INV_Semi" />
         </EntityContainer>
         <EntityType Name="WorkLogs">
           <Key>
@@ -573,6 +628,7 @@
           <Property Type="String" Name="hardware_part" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="decoration_part" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="req_others" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
         </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
@@ -582,8 +638,8 @@
           <Property Type="String" Name="SN" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="CustomerId" />
           <Property Type="DateTime" Name="DeliveryDate" Precision="3" />
-          <Property Type="String" Name="DeliveryAddress" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Type="String" Name="DeliveryLinkTel" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="DeliveryAddress" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DeliveryLinkTel" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="DeliveryLinkMan" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Decimal" Name="Amount" Precision="16" Scale="2" />
           <Property Type="Decimal" Name="Prepay" Precision="16" Scale="2" />
@@ -808,6 +864,7 @@
           <Property Name="ColorId" Type="Int32" />
           <Property Name="Flag" Type="Int32" />
           <Property Name="Grade" Type="Int32" />
+          <Property Name="Picture" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_XNGYP_INV_Labels_INV_Name">
           <End Type="XNGYPModel.INV_Name" Role="INV_Name" Multiplicity="0..1" />
@@ -845,6 +902,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="XNGYP_WIP_PreCas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductSNId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WoodId" Type="Int32" />
+          <Property Name="WoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColorId" Type="Int32" />
+          <Property Name="ColorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Height" Type="Int32" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Staute" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="XNGYP_INV_Semi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSNId" Type="Int32" />
+          <Property Name="ProductSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WoodId" Type="Int32" />
+          <Property Name="WoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColorId" Type="Int32" />
+          <Property Name="ColorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Height" Type="Int32" />
+          <Property Name="INVId" Type="Int32" />
+          <Property Name="InputDate" Type="DateTime" Precision="3" />
+          <Property Name="InputUserId" Type="Int32" />
+          <Property Name="InputUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OutDate" Type="DateTime" Precision="3" />
+          <Property Name="OutUserId" Type="Int32" />
+          <Property Name="OutUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CDetailId" Type="Int32" />
+          <Property Name="WPCastId" Type="Int32" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -915,6 +1021,7 @@
           <EntitySetMapping Name="Contract_Detail">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Detail">
               <MappingFragment StoreEntitySet="Contract_Detail">
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="req_others" ColumnName="req_others" />
                 <ScalarProperty Name="decoration_part" ColumnName="decoration_part" />
                 <ScalarProperty Name="hardware_part" ColumnName="hardware_part" />
@@ -1053,6 +1160,7 @@
           <EntitySetMapping Name="XNGYP_INV_Labels">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_INV_Labels">
               <MappingFragment StoreEntitySet="XNGYP_INV_Labels">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="ColorId" ColumnName="ColorId" />
@@ -1076,6 +1184,57 @@
                 <ScalarProperty Name="SN" ColumnName="SN" />
                 <ScalarProperty Name="ProductsSNId" ColumnName="ProductsSNId" />
                 <ScalarProperty Name="ProductsId" ColumnName="ProductsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_WIP_PreCas">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_WIP_PreCas">
+              <MappingFragment StoreEntitySet="XNGYP_WIP_PreCas">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Staute" ColumnName="Staute" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="WoodName" ColumnName="WoodName" />
+                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductSNId" ColumnName="ProductSNId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_INV_Semi">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_INV_Semi">
+              <MappingFragment StoreEntitySet="XNGYP_INV_Semi">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="WPCastId" ColumnName="WPCastId" />
+                <ScalarProperty Name="CDetailId" ColumnName="CDetailId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OutUserName" ColumnName="OutUserName" />
+                <ScalarProperty Name="OutUserId" ColumnName="OutUserId" />
+                <ScalarProperty Name="OutDate" ColumnName="OutDate" />
+                <ScalarProperty Name="InputUserName" ColumnName="InputUserName" />
+                <ScalarProperty Name="InputUserId" ColumnName="InputUserId" />
+                <ScalarProperty Name="InputDate" ColumnName="InputDate" />
+                <ScalarProperty Name="INVId" ColumnName="INVId" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="WoodName" ColumnName="WoodName" />
+                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
+                <ScalarProperty Name="ProductSN" ColumnName="ProductSN" />
+                <ScalarProperty Name="ProductSNId" ColumnName="ProductSNId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -110,6 +110,9 @@
     <Compile Include="XNGYP_INV_Labels.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
+    <Compile Include="XNGYP_INV_Semi.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
     <Compile Include="XNGYP_Menu.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
@@ -126,6 +129,9 @@
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_Role.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_WIP_PreCas.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNHRModel.Context.cs">

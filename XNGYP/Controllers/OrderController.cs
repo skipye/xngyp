@@ -46,7 +46,7 @@ namespace XNGYP.Controllers
             if (Id != null && Id > 0)
             {
                 Models = NSer.GetDetailById(Id.Value);
-                Models.HTDate = Convert.ToDateTime(Models.OrderTime).ToString("yyyy-MM-dd");
+                Models.HTDate = Convert.ToDateTime(Models.HTDate).ToString("yyyy-MM-dd");
             }
             else
             {
@@ -147,11 +147,6 @@ namespace XNGYP.Controllers
                 return Content("1");
             }
             else { return View(Models); }
-        }
-        public ActionResult GetProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
-        {
-            var List = NSer.GetProNameDrolistBySNAndArea(ProSN, ProProArea);
-            return Content(List.ToString());
         }
         public ActionResult ProductListByOrder(int Id)
         {

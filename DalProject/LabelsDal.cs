@@ -84,7 +84,7 @@ namespace DalProject
                     for (int i = 0; i < Models.qty; i++)
                     {
                         XNGYP_INV_Labels table = new XNGYP_INV_Labels();
-                        table.SN= "XN" + GenerateTimeStamp()+"_"+Models.Grade;
+                        table.SN= "XN" + GenerateTimeStamp()+i+"_"+Models.Grade;
                         table.ProductsId = Models.ProductId;
                         table.ProductsSNId = Models.ProductSNId;
                         table.Length = Models.Length;
@@ -139,7 +139,22 @@ namespace DalProject
                 return tables;
             }
         }
-
-
+        public void DeleteMore(string ListId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                string[] ArrId = ListId.Split('$');
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
+                        tables.DeleteFlag = true;
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }

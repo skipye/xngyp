@@ -29,6 +29,8 @@
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_INV_Name" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_WIP_PreCas" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_INV_Semi" Width="1.5" PointX="11.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

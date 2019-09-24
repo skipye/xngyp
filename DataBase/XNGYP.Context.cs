@@ -38,5 +38,7 @@ namespace DataBase
         public DbSet<INV_Name> INV_Name { get; set; }
         public DbSet<INV_Name_Type> INV_Name_Type { get; set; }
         public DbSet<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
+        public DbSet<XNGYP_WIP_PreCas> XNGYP_WIP_PreCas { get; set; }
+        public DbSet<XNGYP_INV_Semi> XNGYP_INV_Semi { get; set; }
     }
 }

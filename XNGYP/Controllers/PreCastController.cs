@@ -6,22 +6,21 @@ using System.Web.Script.Serialization;
 
 namespace XNGYP.Controllers
 {
-    public class LabelsController : Controller
+    public class PreCastController : Controller
     {
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
-        private static readonly LabelsService LSer = new LabelsService();
+        private static readonly PreCastService LSer = new PreCastService();
         public ActionResult Index()
         {
-            SLabelsModel Models = new SLabelsModel();
+            SPreCastModel Models = new SPreCastModel();
             Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
             Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
-        public ActionResult PageList(SLabelsModel SModels)
+        public ActionResult PageList(SPreCastModel SModels)
         {
-            var PageList = LSer.GetLabelsList(SModels);
+            var PageList = LSer.GetList(SModels);
             return new ContentResult
             {
                 Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
@@ -30,41 +29,24 @@ namespace XNGYP.Controllers
         }
         public ActionResult Add(int? Id)
         {
-            LabelsModel Models = new LabelsModel();
-            Models.qty = 1;
+            PreCastModel Models = new PreCastModel();
             if (Id > 0)
             {
                 Models = LSer.GetDetailById(Id.Value);
             }
             Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
             Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
         [ValidateInput(false)]
-        public ActionResult PostAdd(LabelsModel Models)
+        public ActionResult PostAdd(PreCastModel Models)
         {
             if (LSer.AddOrUpdate(Models) == true)
             {
                 return Content("1");
             }
             else { return View(Models); }
-        }
-        public ActionResult Delete(string ListId)
-        {
-            if (string.IsNullOrEmpty(ListId) == true)
-            {
-                return Content("False");
-            }
-            else
-            {
-                if (LSer.DeleteMore(ListId) == true)
-                {
-                    return Content("True");
-                }
-                else return Content("False");
-            }
         }
     }
 }

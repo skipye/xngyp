@@ -38,6 +38,7 @@ namespace DataBase
         public Nullable<int> ColorId { get; set; }
         public Nullable<int> Flag { get; set; }
         public Nullable<int> Grade { get; set; }
+        public string Picture { get; set; }
     
         public virtual INV_Name INV_Name { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }

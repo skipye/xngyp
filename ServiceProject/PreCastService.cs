@@ -8,18 +8,18 @@ using System.Web.Mvc;
 
 namespace ServiceProject
 {
-    public class LabelsService
+    public class PreCastService
     {
-        private static readonly LabelsDal CDal = new LabelsDal();
-        public List<LabelsModel> GetLabelsList(SLabelsModel SModel)
+        private static readonly PreCastDal CDal = new PreCastDal();
+        public List<PreCastModel> GetList(SPreCastModel SModel)
         {
-            try { return CDal.GetLabelsList(SModel); }
+            try { return CDal.GetList(SModel); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public LabelsModel GetDetailById(int Id)
+        public PreCastModel GetDetailById(int Id)
         {
             try { return CDal.GetDetailById(Id); }
             catch (Exception ex)
@@ -27,17 +27,9 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public bool AddOrUpdate(LabelsModel Models)
+        public bool AddOrUpdate(PreCastModel Models)
         {
             try { CDal.AddOrUpdate(Models); return true; }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public bool DeleteMore(string ListId)
-        {
-            try { CDal.DeleteMore(ListId); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

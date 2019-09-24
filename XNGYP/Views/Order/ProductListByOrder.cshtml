@@ -13,16 +13,11 @@
                     <th>产品名称</th>
                     <th>木材</th>
                     <th>色号</th>
-                    <th>是否定制</th>
                     <th>长</th>
                     <th>宽</th>
                     <th>高</th>
                     <th>单价（元）</th>
                     <th>数量</th>
-                    <th>五金配件</th>
-                    <th>配饰</th>
-                    <th>雕花要求</th>
-                    <th>其他要求</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -34,18 +29,13 @@
                         <td>@item.ProductSN _ @item.ProductName </td>
                         <td>@item.WoodName </td>
                         <td>@item.Color</td>
-                        <td>@(item.CustomFlag != null && item.CustomFlag == true ? "是" : "否")</td>
                         <td>@item.length </td>
                         <td>@item.width </td>
                         <td>@item.height </td>
                         <td>@item.price</td>
-                        <td>@item.qty</td>
-                        <td>@item.hardware_part</td>
-                        <td><div class="tw" title="@item.decoration_part">@item.decoration_part</div></td>
-                        <td><div class="tw" title="@item.req_carve">@item.req_carve</div></td>
-                        <td><div class="tw" title="@item.req_others">@item.req_others</div></td>
+                        <td>@item.Qty</td>
                         <td>
-                            @if (item.status == 0)
+                            @if (item.Status == 0)
                             {
                                 <a href="javascript:void(0)" class="delone" ref="@item.Id" url="@Url.Action("DeleteProduct", "Order")">删除</a>
                             }

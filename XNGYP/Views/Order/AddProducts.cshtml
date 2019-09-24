@@ -20,15 +20,14 @@
 
 <article class="page-container">
     <form class="form form-horizontal" id="formadd">
-        @Html.HiddenFor(k => k.SaleContractHeadId)
+        @Html.HiddenFor(k => k.ContractHeadId)
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box inline">
                     @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
-                    @Html.DropDownListFor(k => k.productAreaId, Model.AreaDroList, new { @class = "select", @style = "width:150px;" })
-                    @Html.DropDownListFor(k => k.ProductName, ArrProName, new { @class = "select", @style = "width:180px;" })
-                    @Html.HiddenFor(k => k.ProductId)
+                    @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:180px;" })
+                    @Html.HiddenFor(k => k.ProductName)
                     @Html.HiddenFor(k=>k.ProductArea)
                     @Html.HiddenFor(k => k.ProductSN)
                 </span>
@@ -67,7 +66,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box inline">
                     @Html.TextBoxFor(k => k.price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
-                    -  @Html.TextBoxFor(k => k.qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
+                    -  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
                 </span>
             </div>
         </div>
@@ -115,17 +114,12 @@ $(function(){
 	//表单验证
 	$("#formadd").validate({
 		rules:{
-		    ProductSNId: {
-				required:true,
-			},
-		    productAreaId: {
-				required:true,
-		    },
+		    ProductSNId: {required:true,},
 		    ProductName: { required: true },
 		    WoodId: { required: true },
 		    Color: { required: true },
 		    price: { required: true },
-		    qty: { required: true, isIntGteZero: true },
+		    Qty: { required: true, isIntGteZero: true },
 		},
 		onkeyup: false,
 		focusCleanup:true,
@@ -176,42 +170,28 @@ $(function(){
     });
     $("#ProductSNId").change(function () {
         var ProductSNId = $("#ProductSNId").val();
-        var Strtext = $("#ProductSNId").find("option:selected").text().replace("╋", "");
-        $("#ProductSN").val(Strtext);
-        var productAreaId = $("#productAreaId").val();
-        var ProUrl = "@Url.Action("GetProNameDrolistBySNAndArea","Order")";
-        $.post(ProUrl, { ProSN: ProductSNId, ProProArea: productAreaId }, function (data) {
-            $('#ProductName').empty();
-            $('#ProductName').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
-            $('#ProductName').append(data);
+        var StrText = $(this).find("option:selected").text().replace('╋', "");
+        $("#ProductSN").val(StrText);
+        var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
+        $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
+            $('#ProductId').empty();
+            $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+            $('#ProductId').append(data);
         });
     });
-    $("#productAreaId").change(function () {
-        var Strtext = $("#productAreaId").find("option:selected").text().replace("╋", "");
-        $("#ProductArea").val(Strtext);
-        var ProductSNId = $("#ProductSNId").val();
-        var productAreaId = $("#productAreaId").val();
-        var ProUrl = "@Url.Action("GetProNameDrolistBySNAndArea", "Order")";
-            $.post(ProUrl, { ProSN: ProductSNId, ProProArea: productAreaId }, function (data) {
-                $('#ProductName').empty();
-                $('#ProductName').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
-                $('#ProductName').append(data);
-        });
-    });
-
       
-    $("#ProductName").change(function () {
-    var _this = $(this);
-    var Id = _this.val();
-    var StrText = $(this).find("option:selected").text();
-    var length = StrText.split('_')[1];
-    var width = StrText.split('_')[2];
-    var height = StrText.split('_')[3];
-    $("#ProductId").val(Id);
-    $("#length").val(length);
-    $("#width").val(width);
-    $("#height").val(height);
-});
+    $("#ProductId").change(function () {
+        var _this = $(this);
+        var StrText = $(this).find("option:selected").text();
+        var ProductName = StrText.split('_')[0];
+        var length = StrText.split('_')[1];
+        var width = StrText.split('_')[2];
+        var height = StrText.split('_')[3];
+        $("#ProductName").val(ProductName);
+        $("#length").val(length);
+        $("#width").val(width);
+        $("#height").val(height);
+    });
 
     //$("#CustomFlag").click(function () {
     //    var StrVal = $(this).val();
