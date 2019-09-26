@@ -16,6 +16,11 @@ namespace XNGYP.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            var Models = USer.GetCurrentUserName();
+            if (Models == null)
+            {
+                return RedirectToAction("Login","Account");
+            }
             return View();
         }
         //欢迎页面

@@ -93,7 +93,7 @@
                 }, {
                     targets: 14,
                     render: function (data, type, row) {
-                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
+                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe637;</i></a>';
                     }
                 }
             ],
@@ -110,9 +110,9 @@
                 { "data": "height", "defaultContent": "" },
                 { "data": "Qty", "defaultContent": "" },
                 { "data": "Staute",  "render": function (data) {
-                        var GradeName = "未开工";
-                    if (data == 1) { GradeName = "已开工"; }
-                    if (data == 2) { GradeName = "已完成";}
+                        var GradeName = "<span class=\"label label-warning radius\">未开工</span>";
+                    if (data == 1) { GradeName = "<span class=\"label label-success radius\">已开工</span>"; }
+                    if (data == 2) { GradeName = "<span class=\"label label-danger radius\">已完成</span>";}
                     return GradeName;
                     } },
                 { "data": "SemiCount", "defaultContent": "" },
