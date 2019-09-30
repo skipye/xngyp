@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class XNGYP_WIP_PreCas
     {
+        public XNGYP_WIP_PreCas()
+        {
+            this.XNGYP_WorkOrder = new HashSet<XNGYP_WorkOrder>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> ProductSNId { get; set; }
         public Nullable<int> ProductId { get; set; }
@@ -29,5 +34,8 @@ namespace DataBase
         public Nullable<int> Staute { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
+    
+        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
+        public virtual XNGYP_Products XNGYP_Products { get; set; }
     }
 }

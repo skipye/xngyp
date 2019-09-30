@@ -205,7 +205,7 @@ namespace DalProject
         {
             using (var db = new XNGYPEntities())
             {
-                var List = db.Contract_Header.Where(k => k.CreateTime > CreateTime && k.DeleteFlag==false).Count();
+                var List = db.Contract_Header.Where(k => k.CreateTime > CreateTime).Count();
                 return List;
             }
         }
@@ -325,6 +325,7 @@ namespace DalProject
                 table.DeleteFlag = false;
                 table.Status = 0;
                 table.Qty = Models.Qty;
+                table.LabelseCount = 0;
                 db.Contract_Detail.Add(table);
 
                 var HeadTable = db.Contract_Header.Where(k => k.Id == Models.ContractHeadId).SingleOrDefault();

@@ -40,5 +40,6 @@ namespace DataBase
         public DbSet<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
         public DbSet<XNGYP_WIP_PreCas> XNGYP_WIP_PreCas { get; set; }
         public DbSet<XNGYP_INV_Semi> XNGYP_INV_Semi { get; set; }
+        public DbSet<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
     }
 }

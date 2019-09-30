@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class Contract_Detail
     {
+        public Contract_Detail()
+        {
+            this.XNGYP_WorkOrder = new HashSet<XNGYP_WorkOrder>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> ContractHeadId { get; set; }
         public Nullable<int> Labels { get; set; }
@@ -36,7 +41,10 @@ namespace DataBase
         public string decoration_part { get; set; }
         public string req_others { get; set; }
         public Nullable<int> Qty { get; set; }
+        public Nullable<int> LabelseCount { get; set; }
     
         public virtual Contract_Header Contract_Header { get; set; }
+        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
+        public virtual XNGYP_Products XNGYP_Products { get; set; }
     }
 }

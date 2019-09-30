@@ -9,6 +9,7 @@ namespace XNGYP.Controllers
     public class PreCastController : Controller
     {
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
+        private static readonly WorkOrderService WOSer = new WorkOrderService();
         private static readonly PreCastService LSer = new PreCastService();
         public ActionResult Index()
         {
@@ -47,6 +48,20 @@ namespace XNGYP.Controllers
                 return Content("1");
             }
             else { return View(Models); }
+        }
+        public ActionResult Work()
+        {
+            SWorkOrderModel Models = new SWorkOrderModel();
+            return View(Models);
+        }
+        public ActionResult WorkPage(int? Status)
+        {
+            var PageList = WOSer.GetPageList(Status, false);
+            return new ContentResult
+            {
+                Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
+                ContentType = "application/json"
+            };
         }
     }
 }

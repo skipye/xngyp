@@ -1,0 +1,128 @@
+﻿@model ModelProject.SWorkOrderModel
+@{
+    Layout = null;
+    List<SelectListItem> LItem = new List<SelectListItem>();
+    LItem.Add(new SelectListItem { Value = "", Text = "全部工单" });
+    LItem.Add(new SelectListItem { Value = "0", Text = "已开工单" });
+    LItem.Add(new SelectListItem { Value = "1", Text = "图纸料单就绪" });
+    LItem.Add(new SelectListItem { Value = "2", Text = "开料完成" });
+    LItem.Add(new SelectListItem { Value = "3", Text = "雕花完成" });
+    LItem.Add(new SelectListItem { Value = "4", Text = "木工完成" });
+    LItem.Add(new SelectListItem { Value = "5", Text = "刮磨完成" });
+    LItem.Add(new SelectListItem { Value = "6", Text = "油漆完成" });
+    LItem.Add(new SelectListItem { Value = "7", Text = "配件安装完成" });
+    string[] Arritem = {"已开工单","图纸料单就绪","开料完成","雕花完成","木工完成","刮磨完成","油漆完成","配件安装完成" };
+}
+@Html.Action("_Meta", "Home")
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>销售任务管理
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <div class="text-c">
+        <span class="select-box inline">
+            @Html.DropDownListFor(k => k.Status, LItem, new { @class = "select" })
+        </span>
+        <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <a href="javascript:void(0);" onclick="add('选中开工', '/PreCast/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中开工</a>
+    </div>
+    <div class="mt-20 checkmodel">
+        @*@Html.Action("PageList","Article")*@
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+                <tr class="text-l">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th>客户</th>
+                    <th>合同号</th>
+                    <th>产品系列</th>
+                    <th>产品名称</th>
+                    <th>长（mm）</th>
+                    <th>宽（mm）</th>
+                    <th>高（mm）</th>
+                    <th>数量（件）</th>
+                    <th>状态</th>
+                    <th>开工时间</th>
+                    <th width="120">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Action("_Footer", "Home")
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
+<script type="text/javascript">
+
+    var param = {};
+    $(function () { search(param); });
+    $("#btnSearch").click(function () {
+        //搜索条件
+        var Status = $("#Status").val().trim();
+        //搜索
+        param["Status"] = Status;
+        //初始化，然后绑定
+        $('.table-sort').DataTable().destroy();
+        search(param);
+    });
+
+    function search(param) {
+        $('.table-sort').dataTable({
+            "bStateSave": true,
+            "pading": false,
+            "destroy": true,
+            "scrollX": true,
+            "searching": true,
+            "ajax": function (data, callback, settings) {
+                ajaxRequest("post", "/SaleStart/WorkPage", param, function (result) {
+                    //封装返回数据
+                    var returnData = {};
+                    returnData.data = result;
+                    callback(returnData);
+                });
+            },
+            "columnDefs": [//对table格式的定义（表格的列从0开始）
+                {
+                    targets: 0,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<input type="checkbox" value="' + row.Id + '" >';
+                    }
+                }, {
+                    targets: 11,
+                    render: function (data, type, row) {
+                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe637;</i></a>';
+                    }
+                }
+            ],
+            "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
+                { "data": "Id" },
+                { "data": "Customer", "defaultContent": "" },
+                { "data": "SN", "defaultContent": "" },
+                { "data": "ProductSN", "defaultContent": "" },
+                { "data": "ProductName", "defaultContent": "" },
+                { "data": "length", "defaultContent": "" },
+                { "data": "width", "defaultContent": "" },
+                { "data": "height", "defaultContent": "" },
+                { "data": "Qty", "defaultContent": "" },
+                { "data": "Staute",  "render": function (data) {
+                    return Arritem[data];
+                    } },
+                {
+                    "data": "CreateTime", "render": function (data) {
+                        var NewTime = parseInt(data.replace(/\D/igm, ""));
+                        return formatDateTime(NewTime);
+                    },
+                }
+
+
+            ]
+        });
+    };
+
+
+</script> 

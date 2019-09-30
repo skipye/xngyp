@@ -644,6 +644,9 @@
     <Content Include="Views\PreCast\Index.cshtml" />
     <Content Include="Views\SaleStart\Add.cshtml" />
     <Content Include="Views\SaleStart\Index.cshtml" />
+    <Content Include="Views\SaleStart\Add - 复制.cshtml" />
+    <Content Include="Views\SaleStart\Work.cshtml" />
+    <Content Include="Views\PreCast\Work.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

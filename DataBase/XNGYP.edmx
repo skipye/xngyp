@@ -31,6 +31,7 @@
           <Property Name="decoration_part" Type="nvarchar" MaxLength="100" />
           <Property Name="req_others" Type="nvarchar" MaxLength="500" />
           <Property Name="Qty" Type="int" />
+          <Property Name="LabelseCount" Type="int" />
         </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
@@ -272,6 +273,25 @@
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="DeleteFlag" Type="bit" />
         </EntityType>
+        <EntityType Name="XNGYP_WorkOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="WorkOrder" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contract_Detail_Id" Type="int" />
+          <Property Name="WIP_PreCast_Id" Type="int" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="BOM_ready_date" Type="datetime" />
+          <Property Name="BOM_over_date" Type="datetime" />
+          <Property Name="Paper_path" Type="varchar" MaxLength="50" />
+          <Property Name="BOM_path" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ClosedFlag" Type="bit" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="ProductId" Type="int" />
+        </EntityType>
         <Association Name="FK_Contract_Detail_Contract_Header">
           <End Role="Contract_Header" Type="Self.Contract_Header" Multiplicity="0..1" />
           <End Role="Contract_Detail" Type="Self.Contract_Detail" Multiplicity="*" />
@@ -281,6 +301,18 @@
             </Principal>
             <Dependent Role="Contract_Detail">
               <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Detail_XNGYP_Products">
+          <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="0..1" />
+          <End Role="Contract_Detail" Type="Self.Contract_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Detail">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -404,6 +436,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_XNGYP_WIP_PreCas_XNGYP_Products">
+          <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="0..1" />
+          <End Role="XNGYP_WIP_PreCas" Type="Self.XNGYP_WIP_PreCas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WIP_PreCas">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_WorkOrder_Contract_Detail">
+          <End Role="Contract_Detail" Type="Self.Contract_Detail" Multiplicity="0..1" />
+          <End Role="XNGYP_WorkOrder" Type="Self.XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Detail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="Contract_Detail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_WorkOrder_XNGYP_Products">
+          <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="0..1" />
+          <End Role="XNGYP_WorkOrder" Type="Self.XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas">
+          <End Role="XNGYP_WIP_PreCas" Type="Self.XNGYP_WIP_PreCas" Multiplicity="0..1" />
+          <End Role="XNGYP_WorkOrder" Type="Self.XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_WIP_PreCas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="WIP_PreCast_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="XNGYPModelStoreContainer">
           <EntitySet Name="Contract_Detail" EntityType="Self.Contract_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contract_Header" EntityType="Self.Contract_Header" Schema="dbo" store:Type="Tables" />
@@ -420,8 +500,13 @@
           <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="Self.XNGYP_Products_WorkFrom_Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Role" EntityType="Self.XNGYP_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_WIP_PreCas" EntityType="Self.XNGYP_WIP_PreCas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_WorkOrder" EntityType="Self.XNGYP_WorkOrder" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="Self.FK_Contract_Detail_Contract_Header">
             <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Detail_XNGYP_Products" Association="Self.FK_Contract_Detail_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
             <End Role="Contract_Detail" EntitySet="Contract_Detail" />
           </AssociationSet>
           <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="Self.FK_Contract_Header_XNGYP_Customers">
@@ -463,6 +548,22 @@
           <AssociationSet Name="FK_XNGYP_Products_XNGYP_Products_SN" Association="Self.FK_XNGYP_Products_XNGYP_Products_SN">
             <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WIP_PreCas_XNGYP_Products" Association="Self.FK_XNGYP_WIP_PreCas_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_WIP_PreCas" EntitySet="XNGYP_WIP_PreCas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WorkOrder_Contract_Detail" Association="Self.FK_XNGYP_WorkOrder_Contract_Detail">
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WorkOrder_XNGYP_Products" Association="Self.FK_XNGYP_WorkOrder_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas" Association="Self.FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas">
+            <End Role="XNGYP_WIP_PreCas" EntitySet="XNGYP_WIP_PreCas" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -529,6 +630,27 @@
           </AssociationSet>
           <EntitySet Name="XNGYP_WIP_PreCas" EntityType="XNGYPModel.XNGYP_WIP_PreCas" />
           <EntitySet Name="XNGYP_INV_Semi" EntityType="XNGYPModel.XNGYP_INV_Semi" />
+          <EntitySet Name="XNGYP_WorkOrder" EntityType="XNGYPModel.XNGYP_WorkOrder" />
+          <AssociationSet Name="FK_XNGYP_WorkOrder_Contract_Detail" Association="XNGYPModel.FK_XNGYP_WorkOrder_Contract_Detail">
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas" Association="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas">
+            <End Role="XNGYP_WIP_PreCas" EntitySet="XNGYP_WIP_PreCas" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Detail_XNGYP_Products" Association="XNGYPModel.FK_Contract_Detail_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WIP_PreCas_XNGYP_Products" Association="XNGYPModel.FK_XNGYP_WIP_PreCas_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_WIP_PreCas" EntitySet="XNGYP_WIP_PreCas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WorkOrder_XNGYP_Products" Association="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_Products">
+            <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
           <Key>
@@ -629,6 +751,9 @@
           <Property Type="String" Name="decoration_part" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="req_others" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Qty" Type="Int32" />
+          <NavigationProperty Name="XNGYP_WorkOrder" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_Contract_Detail" FromRole="Contract_Detail" ToRole="XNGYP_WorkOrder" />
+          <Property Name="LabelseCount" Type="Int32" />
+          <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_Contract_Detail_XNGYP_Products" FromRole="Contract_Detail" ToRole="XNGYP_Products" />
         </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
@@ -707,6 +832,9 @@
           <NavigationProperty Name="XNGYP_Products_WorkFrom_Price" Relationship="XNGYPModel.FK_XNGYP_Products_WorkFrom_Price_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_Products_WorkFrom_Price" />
           <NavigationProperty Name="XNGYP_Products_SN" Relationship="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN" FromRole="XNGYP_Products" ToRole="XNGYP_Products_SN" />
           <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_INV_Labels" />
+          <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_Contract_Detail_XNGYP_Products" FromRole="XNGYP_Products" ToRole="Contract_Detail" />
+          <NavigationProperty Name="XNGYP_WIP_PreCas" Relationship="XNGYPModel.FK_XNGYP_WIP_PreCas_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_WIP_PreCas" />
+          <NavigationProperty Name="XNGYP_WorkOrder" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_Products" FromRole="XNGYP_Products" ToRole="XNGYP_WorkOrder" />
         </EntityType>
         <EntityType Name="XNGYP_Products_SN">
           <Key>
@@ -921,6 +1049,8 @@
           <Property Name="Staute" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="XNGYP_WorkOrder" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas" FromRole="XNGYP_WIP_PreCas" ToRole="XNGYP_WorkOrder" />
+          <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_WIP_PreCas_XNGYP_Products" FromRole="XNGYP_WIP_PreCas" ToRole="XNGYP_Products" />
         </EntityType>
         <EntityType Name="XNGYP_INV_Semi">
           <Key>
@@ -951,6 +1081,88 @@
           <Property Name="Flag" Type="Int32" />
           <Property Name="DeleteFlag" Type="Boolean" />
         </EntityType>
+        <EntityType Name="XNGYP_WorkOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="WorkOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contract_Detail_Id" Type="Int32" />
+          <Property Name="WIP_PreCast_Id" Type="Int32" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="BOM_ready_date" Type="DateTime" Precision="3" />
+          <Property Name="BOM_over_date" Type="DateTime" Precision="3" />
+          <Property Name="Paper_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BOM_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ClosedFlag" Type="Boolean" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_Contract_Detail" FromRole="XNGYP_WorkOrder" ToRole="Contract_Detail" />
+          <NavigationProperty Name="XNGYP_WIP_PreCas" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas" FromRole="XNGYP_WorkOrder" ToRole="XNGYP_WIP_PreCas" />
+          <Property Name="ProductId" Type="Int32" />
+          <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_Products" FromRole="XNGYP_WorkOrder" ToRole="XNGYP_Products" />
+        </EntityType>
+        <Association Name="FK_XNGYP_WorkOrder_Contract_Detail">
+          <End Type="XNGYPModel.Contract_Detail" Role="Contract_Detail" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_WorkOrder" Role="XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Detail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="Contract_Detail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_WorkOrder_XNGYP_WIP_PreCas">
+          <End Type="XNGYPModel.XNGYP_WIP_PreCas" Role="XNGYP_WIP_PreCas" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_WorkOrder" Role="XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_WIP_PreCas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="WIP_PreCast_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Detail_XNGYP_Products">
+          <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="0..1" />
+          <End Type="XNGYPModel.Contract_Detail" Role="Contract_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Detail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_WIP_PreCas_XNGYP_Products">
+          <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_WIP_PreCas" Role="XNGYP_WIP_PreCas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WIP_PreCas">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_WorkOrder_XNGYP_Products">
+          <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_WorkOrder" Role="XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1021,6 +1233,7 @@
           <EntitySetMapping Name="Contract_Detail">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Detail">
               <MappingFragment StoreEntitySet="Contract_Detail">
+                <ScalarProperty Name="LabelseCount" ColumnName="LabelseCount" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="req_others" ColumnName="req_others" />
                 <ScalarProperty Name="decoration_part" ColumnName="decoration_part" />
@@ -1235,6 +1448,26 @@
                 <ScalarProperty Name="ProductSNId" ColumnName="ProductSNId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_WorkOrder">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_WorkOrder">
+              <MappingFragment StoreEntitySet="XNGYP_WorkOrder">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="ClosedFlag" ColumnName="ClosedFlag" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="BOM_path" ColumnName="BOM_path" />
+                <ScalarProperty Name="Paper_path" ColumnName="Paper_path" />
+                <ScalarProperty Name="BOM_over_date" ColumnName="BOM_over_date" />
+                <ScalarProperty Name="BOM_ready_date" ColumnName="BOM_ready_date" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="WIP_PreCast_Id" ColumnName="WIP_PreCast_Id" />
+                <ScalarProperty Name="Contract_Detail_Id" ColumnName="Contract_Detail_Id" />
+                <ScalarProperty Name="WorkOrder" ColumnName="WorkOrder" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

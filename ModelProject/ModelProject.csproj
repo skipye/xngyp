@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="UserModel.cs" />
+    <Compile Include="WorkOrderModel.cs" />
     <Compile Include="WorkLogsModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

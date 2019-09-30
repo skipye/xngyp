@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ContractHeaderService.cs" />
     <Compile Include="CustomerService.cs" />
+    <Compile Include="WorkOrderService.cs" />
     <Compile Include="SaleStartService.cs" />
     <Compile Include="PreCastService.cs" />
     <Compile Include="LabelsService.cs" />
