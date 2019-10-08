@@ -647,6 +647,7 @@
     <Content Include="Views\SaleStart\Add - 复制.cshtml" />
     <Content Include="Views\SaleStart\Work.cshtml" />
     <Content Include="Views\PreCast\Work.cshtml" />
+    <Content Include="Views\Labels\MoveINV.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

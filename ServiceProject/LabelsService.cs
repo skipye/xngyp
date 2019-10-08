@@ -43,5 +43,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        //移库操作
+        public bool MoveINV(string ListId, int INVId)
+        {
+            try { CDal.MoveINV(ListId, INVId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

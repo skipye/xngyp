@@ -156,5 +156,23 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
+        //移库操作
+        public void MoveINV(string ListId,int INVId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                string[] ArrId = ListId.Split('$');
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
+                        tables.INVId = INVId;
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }

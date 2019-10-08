@@ -98,9 +98,11 @@
                 {
                     targets: 0,
                     render: function (data, type, row) {
+                        var StrArr = "";
                         if (row.CWCheckStatus == 0) {
-                            return '<input type="checkbox" value="' + row.Id + '" >';
+                            StrArr= '<input type="checkbox" value="' + row.Id + '" >';
                         }
+                        return StrArr;
                     }
                 }, {
                     targets: 12,//把第九列的样式改为超链接

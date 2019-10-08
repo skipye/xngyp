@@ -28,7 +28,6 @@
                     @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
                     @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:180px;" })
                     @Html.HiddenFor(k => k.ProductName)
-                    @Html.HiddenFor(k=>k.ProductArea)
                     @Html.HiddenFor(k => k.ProductSN)
                 </span>
             </div>
@@ -70,20 +69,7 @@
                 </span>
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>五金配件：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                <span class="select-box inline">
-                    @Html.DropDownListFor(k => k.hardware_part, ArrWJ, new { @class = "select" })
-                </span>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>配饰：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                   @Html.TextBoxFor(k => k.decoration_part, new { @class = "input-text" })
-            </div>
-        </div>
+        
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">其他要求：</label>
             <div class="formControls col-xs-8 col-sm-9">

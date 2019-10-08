@@ -66,5 +66,20 @@ namespace XNGYP.Controllers
                 else return Content("False");
             }
         }
+        public ActionResult MoveINV(string ListId)
+        {
+            LabelsModel Models = new LabelsModel();
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.ListId = ListId;
+            return View(Models);
+        }
+        public ActionResult PostMoveINV(string ListId,int INVId)
+        {
+            if (LSer.MoveINV(ListId, INVId) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
     }
 }
