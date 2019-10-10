@@ -28,6 +28,7 @@ namespace DataBase
         public Nullable<bool> ClosedFlag { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
         public Nullable<int> ProductId { get; set; }
+        public Nullable<int> Flag { get; set; }
     
         public virtual Contract_Detail Contract_Detail { get; set; }
         public virtual XNGYP_WIP_PreCas XNGYP_WIP_PreCas { get; set; }

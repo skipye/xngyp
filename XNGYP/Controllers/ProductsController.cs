@@ -12,6 +12,7 @@ namespace XNGYP.Controllers
     public class ProductsController : Controller
     {
         private static readonly ProductsService CSer = new ProductsService();
+        private static readonly ContractHeaderService NSer = new ContractHeaderService();
         public ActionResult Name()
         {
             return View();
@@ -32,7 +33,7 @@ namespace XNGYP.Controllers
             {
                 Models = CSer.GetDetailById(Id.Value);
             }
-            Models.XLDroList = CSer.GetPorductsSNDroList(Models.ProductsSNId);
+            Models.XLDroList = NSer.GetProSNDrolist(Models.ProductsSNId);
             return View(Models);
         }
         [ValidateInput(false)]
@@ -79,6 +80,7 @@ namespace XNGYP.Controllers
             {
                 Models = CSer.GetSNDetailById(Id.Value);
             }
+            Models.ProXLDroList = NSer.GetProSNDrolist(Models.Id);
             return View(Models);
         }
         [ValidateInput(false)]
@@ -108,6 +110,11 @@ namespace XNGYP.Controllers
         public ActionResult GetProNameDrolistBySN(int? ProSN)
         {
             var List = CSer.GetProNameDrolistBySN(ProSN);
+            return Content(List.ToString());
+        }
+        public ActionResult GetSecSNDrolistByFatherId(int? FatherId)
+        {
+            var List = CSer.GetSecSNDrolistByFatherId(FatherId);
             return Content(List.ToString());
         }
     }

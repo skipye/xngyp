@@ -212,13 +212,13 @@ namespace DalProject
         public List<SelectListItem> GetProSNDrolist(int? pId)
         {
             List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "请选择产品系列", Value = "" });
+            items.Add(new SelectListItem() { Text = "请选择系列一级", Value = "" });
             using (var db = new XNGYPEntities())
             {
-                List<XNGYP_Products_SN> model = db.XNGYP_Products_SN.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
+                List<XNGYP_Products_SN> model = db.XNGYP_Products_SN.Where(b => b.delete_flag == false && b.FatherId ==null).OrderBy(k => k.created_time).ToList();
                 foreach (var item in model)
                 {
-                    items.Add(new SelectListItem() { Text = "╋" + item.name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
+                    items.Add(new SelectListItem() { Text = item.name+"_"+item.SN, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
                 }
             }
             return items;
@@ -230,10 +230,10 @@ namespace DalProject
             items.Add(new SelectListItem() { Text = "请选择材质", Value = "" });
             using (var db = new XNERPEntities())
             {
-                List<INV_wood_type> model = db.INV_wood_type.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
+                List<INV_wood_type> model = db.INV_wood_type.Where(b => b.delete_flag == false && b.SN!=null).OrderBy(k => k.SN).ToList();
                 foreach (var item in model)
                 {
-                    items.Add(new SelectListItem() { Text = "╋" + item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
+                    items.Add(new SelectListItem() { Text = item.name + "_" + item.SN, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
                 }
             }
             return items;
@@ -247,7 +247,7 @@ namespace DalProject
                 List<SYS_colors> model = db.SYS_colors.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
                 foreach (var item in model)
                 {
-                    items.Add(new SelectListItem() { Text = "╋" + item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
+                    items.Add(new SelectListItem() { Text = item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
                 }
             }
             return items;
@@ -266,7 +266,7 @@ namespace DalProject
                 }
                 foreach (var item in model)
                 {
-                    items.Add(new SelectListItem() { Text = "╋" + item.Name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
+                    items.Add(new SelectListItem() { Text =item.Name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
                 }
             }
             return items;

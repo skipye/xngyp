@@ -11,17 +11,10 @@ namespace ServiceProject
     public class ProductsService
     {
         private static readonly ProductsDal CDal = new ProductsDal();
+
         public List<ProductsNameModel> GetPageList()
         {
             try { return CDal.GetPageList(); }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public List<SelectListItem> GetPorductsSNDroList(int? pId)
-        {
-            try { return CDal.GetPorductsSNDroList(pId); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -89,6 +82,17 @@ namespace ServiceProject
             try
             {
                 return CDal.GetProNameDrolistBySN(ProSN);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string GetSecSNDrolistByFatherId(int? FatherId)
+        {
+            try
+            {
+                return CDal.GetSecSNDrolistByFatherId(FatherId);
             }
             catch (Exception ex)
             {

@@ -29,22 +29,23 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th>标签编码</th>
-                    <th>产品名称</th>
-                    <th>材质</th>
-                    <th>色号</th>
-                    <th>长（mm）</th>
-                    <th>宽（mm）</th>
-                    <th>高（mm）</th>
-                    <th>产品级别</th>
-                    <th>所入仓库</th>
-                    <th>进库日期</th>
-                    <th>状态</th>
-                    <th>所属方式</th>
-                    <th width="120">操作</th>
-                </tr>
+				<tr class="text-l">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th>标签编码</th>
+					<th>产品编码</th>
+					<th>产品名称</th>
+					<th>材质</th>
+					<th>色号</th>
+					<th>长（mm）</th>
+					<th>宽（mm）</th>
+					<th>高（mm）</th>
+					<th>产品级别</th>
+					<th>所入仓库</th>
+					<th>进库日期</th>
+					<th>状态</th>
+					<th>所属方式</th>
+					<th width="120">操作</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -95,7 +96,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 13,
+                    targets: 14,
                     render: function (data, type, row) {
                         return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/Labels/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
                                '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Labels/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
@@ -104,7 +105,8 @@
             ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
-                { "data": "SN", "className": "text-overflow" },
+				{ "data": "SN", "className": "text-overflow" },
+				{ "data": "ProductSN", "className": "text-overflow" },
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "Color", "defaultContent": "" },

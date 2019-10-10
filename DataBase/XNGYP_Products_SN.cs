@@ -18,6 +18,9 @@ namespace DataBase
         {
             this.XNGYP_Products = new HashSet<XNGYP_Products>();
             this.XNGYP_INV_Labels = new HashSet<XNGYP_INV_Labels>();
+            this.XNGYP_Products_SN1 = new HashSet<XNGYP_Products_SN>();
+            this.XNGYP_INV_Labels1 = new HashSet<XNGYP_INV_Labels>();
+            this.XNGYP_Products1 = new HashSet<XNGYP_Products>();
         }
     
         public int Id { get; set; }
@@ -26,8 +29,13 @@ namespace DataBase
         public string remark { get; set; }
         public Nullable<System.DateTime> created_time { get; set; }
         public Nullable<bool> delete_flag { get; set; }
+        public Nullable<int> FatherId { get; set; }
     
         public virtual ICollection<XNGYP_Products> XNGYP_Products { get; set; }
         public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
+        public virtual ICollection<XNGYP_Products_SN> XNGYP_Products_SN1 { get; set; }
+        public virtual XNGYP_Products_SN XNGYP_Products_SN2 { get; set; }
+        public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels1 { get; set; }
+        public virtual ICollection<XNGYP_Products> XNGYP_Products1 { get; set; }
     }
 }

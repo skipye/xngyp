@@ -39,9 +39,12 @@ namespace DataBase
         public Nullable<int> Flag { get; set; }
         public Nullable<int> Grade { get; set; }
         public string Picture { get; set; }
+        public string ProductSN { get; set; }
+        public Nullable<int> FatherId { get; set; }
     
         public virtual INV_Name INV_Name { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
         public virtual XNGYP_Products_SN XNGYP_Products_SN { get; set; }
+        public virtual XNGYP_Products_SN XNGYP_Products_SN1 { get; set; }
     }
 }

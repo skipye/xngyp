@@ -31,5 +31,6 @@ namespace DataBase
         public Nullable<decimal> cc_prcie { get; set; }
         public Nullable<int> Sort { get; set; }
         public Nullable<decimal> PersonPrice { get; set; }
+        public string SN { get; set; }
     }
 }

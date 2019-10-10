@@ -36,6 +36,7 @@ namespace DataBase
         public string remark { get; set; }
         public Nullable<System.DateTime> created_time { get; set; }
         public Nullable<bool> delete_flag { get; set; }
+        public Nullable<int> FatherId { get; set; }
     
         public virtual ICollection<XNGYP_Products_WorkFrom_Price> XNGYP_Products_WorkFrom_Price { get; set; }
         public virtual XNGYP_Products_SN XNGYP_Products_SN { get; set; }
@@ -43,5 +44,6 @@ namespace DataBase
         public virtual ICollection<Contract_Detail> Contract_Detail { get; set; }
         public virtual ICollection<XNGYP_WIP_PreCas> XNGYP_WIP_PreCas { get; set; }
         public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
+        public virtual XNGYP_Products_SN XNGYP_Products_SN1 { get; set; }
     }
 }

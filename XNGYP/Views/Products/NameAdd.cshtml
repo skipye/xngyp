@@ -1,5 +1,8 @@
 ﻿@model ModelProject.ProductsNameModel
-@{Layout = null;}
+@{Layout = null;
+	List<SelectListItem> ArrSecPro = new List<SelectListItem>();
+    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+	}
 
 @Html.Action("_Meta", "Home")
 
@@ -9,11 +12,12 @@
         @Html.HiddenFor(k => k.Id)
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <span class="select-box" style="width:150px;">
-                    @Html.DropDownListFor(k => k.ProductsSNId, Model.XLDroList, new { @class = "select" })
-                </span>
-            </div>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.ProductsSNId, Model.XLDroList, new { @class = "select" })
+					@Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:180px;" })
+				</span>
+			</div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
@@ -37,12 +41,6 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>高（mm）：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 @Html.TextBoxFor(k => k.height, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材积：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.volume, new { @class = "input-text" })
             </div>
         </div>
         <div class="row cl">
@@ -125,7 +123,16 @@ $(function(){
 
 		}
 	});
-
+	$("#ProductsSNId").change(function () {
+            var FatherId = $("#ProductsSNId").val();
+			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+            $.post(ProUrl, { FatherId: FatherId }, function (data) {
+                //alert(data);
+                $('#FatherId').empty();
+                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
+                $('#FatherId').append(data);
+            });
+        });
 });
 
 

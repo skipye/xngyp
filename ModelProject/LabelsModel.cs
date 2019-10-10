@@ -15,6 +15,7 @@ namespace ModelProject
         public int ProductId { get; set; }
         public int? WoodId { get; set; }
         public string WoodName { get; set; }
+        public string WoodNameXL { get; set; }
         public string Color { get; set; }
         public int? ColorId { get; set; }
         public int? INVId { get; set; }
@@ -24,7 +25,6 @@ namespace ModelProject
         public int? CRM_Id { get; set; }
         public int? WIP_Id { get; set; }
         public int? ProductSNId { get; set; }
-        public string ProductSN { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
         public List<SelectListItem> MCDroList { get; set; }
         public List<SelectListItem> SHDroList { get; set; }
@@ -42,6 +42,8 @@ namespace ModelProject
         public int qty { get; set; }
         public int? Grade { get; set; }
         public string Picture { get; set; }
+        public int? FatherId { get; set; }
+        public string ProductSN { get; set; }//产品标签
     }
     public class SLabelsModel
     {

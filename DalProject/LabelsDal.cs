@@ -55,6 +55,8 @@ namespace DalProject
                                 Status=p.Status,
                                 flag=p.Flag,
                                 Grade = p.Grade,
+                                ProductSN=p.ProductSN,
+                                FatherId=p.FatherId,
                             }).ToList();
                 return List;
             }
@@ -78,6 +80,8 @@ namespace DalProject
                     table.Color = Models.Color;
                     table.CreateTime = DateTime.Now;
                     table.Grade = Models.Grade;
+                    table.FatherId = Models.FatherId;
+                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade;
                 }
                 else
                 {
@@ -106,6 +110,8 @@ namespace DalProject
                         table.ContractDetailId = 0;
                         table.WIPContractIid = 0;
                         table.Grade = Models.Grade;
+                        table.FatherId = Models.FatherId;
+                        table.ProductSN = Models.ProductXL+Models.ProductSN+Models.WoodNameXL+Models.Grade;
                         db.XNGYP_INV_Labels.Add(table);
                     }
                 }
@@ -134,7 +140,9 @@ namespace DalProject
                                   Height = p.Height,
                                   WoodId = p.WoodId,
                                   ColorId = p.ColorId,
-                                  Grade=p.Grade,
+                                  Grade = p.Grade,
+                                  ProductSN = p.ProductSN,
+                                  FatherId = p.FatherId,
                               }).SingleOrDefault();
                 return tables;
             }

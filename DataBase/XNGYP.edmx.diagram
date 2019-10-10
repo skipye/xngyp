@@ -37,6 +37,9 @@
         <AssociationConnector Association="XNGYPModel.FK_Contract_Detail_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_WIP_PreCas_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_Products" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_SN_XNGYP_Products_SN" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN1" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

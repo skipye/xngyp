@@ -25,6 +25,8 @@ namespace ModelProject
         public DateTime? created_time { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
         public int? PersonPrice { get; set; }
+        public int? FatherId { get; set; }
+        public string XLSecName { get; set; }
     }
     public class ProductsSNModel
     {
@@ -32,6 +34,9 @@ namespace ModelProject
         public string SN { get; set; }
         public string name { get; set; }
         public string remark { get; set; }
+        public string FatherName { get; set; }
+        public int? FatherId { get; set; }
         public DateTime? created_time { get; set; }
+        public List<SelectListItem> ProXLDroList { get; set; }
     }
 }

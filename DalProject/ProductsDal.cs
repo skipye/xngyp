@@ -30,25 +30,13 @@ namespace DalProject
                                 BOM_path=p.BOM_path,
                                 created_time=p.created_time,
                                 volume=p.volume,
+                                XLSecName=p.XNGYP_Products_SN1.name
                             }).ToList();
                 
                 return List;
             }
         }
-        public List<SelectListItem> GetPorductsSNDroList(int? pId)
-        {
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "请选择系列", Value = "" });
-            using (var db = new XNGYPEntities())
-            {
-                List<XNGYP_Products_SN> model = db.XNGYP_Products_SN.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
-                foreach (var item in model)
-                {
-                    items.Add(new SelectListItem() { Text = "╋" + item.name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
-                }
-            }
-            return items;
-        }
+        
         public void AddOrUpdate(ProductsNameModel Models)
         {
             using (var db = new XNGYPEntities())
@@ -66,6 +54,7 @@ namespace DalProject
                     table.BOM_path = Models.BOM_path;
                     table.remark = Models.remark;
                     table.volume = Models.volume;
+                    table.FatherId = Models.FatherId;
                 }
                 else
                 {
@@ -82,6 +71,7 @@ namespace DalProject
                     table.remark = Models.remark;
                     table.created_time = DateTime.Now;
                     table.delete_flag = false;
+                    table.FatherId = Models.FatherId;
                     db.XNGYP_Products.Add(table);
                 }
                 db.SaveChanges();
@@ -105,7 +95,8 @@ namespace DalProject
                                   paper_path = p.paper_path,
                                   BOM_path = p.BOM_path,
                                   created_time = p.created_time,
-                                  volume=p.volume,
+                                  volume = p.volume,
+                                  FatherId = p.FatherId,
                               }).SingleOrDefault();
                 return tables;
             }
@@ -141,6 +132,8 @@ namespace DalProject
                                 SN = p.SN,
                                 remark = p.remark,
                                 created_time = p.created_time,
+                                FatherId = p.FatherId,
+                                FatherName = p.XNGYP_Products_SN2.name,
                             }).ToList();
 
                 return List;
@@ -157,6 +150,7 @@ namespace DalProject
                     table.name = Models.name;
                     table.SN = Models.SN;
                     table.remark = Models.remark;
+                    table.FatherId = Models.FatherId;
                 }
                 else
                 {
@@ -166,6 +160,7 @@ namespace DalProject
                     table.remark = Models.remark;
                     table.created_time = DateTime.Now;
                     table.delete_flag = false;
+                    table.FatherId = Models.FatherId;
                     db.XNGYP_Products_SN.Add(table);
                 }
                 db.SaveChanges();
@@ -183,6 +178,8 @@ namespace DalProject
                                   name = p.name,
                                   remark = p.remark,
                                   created_time = p.created_time,
+                                  FatherId=p.FatherId,
+                                  
                               }).SingleOrDefault();
                 return tables;
             }
@@ -209,8 +206,8 @@ namespace DalProject
         {
             using (var db = new XNGYPEntities())
             {
-                var list = (from p in db.XNGYP_Products.Where(k => k.delete_flag == false)
-                            where ProSN > 0 ? p.ProductsSNId == ProSN : true
+                var list = (from p in db.XNGYP_Products.Where(k => k.delete_flag == false )
+                            where ProSN > 0 ? p.FatherId == ProSN : true
                             orderby p.created_time descending
                             select new CRMItem
                             {
@@ -224,6 +221,29 @@ namespace DalProject
                 foreach (var item in list)
                 {
                     var strText = item.Name + "_" + item.length + "_" + item.width + "_" + item.height;
+                    var IstrValue = item.Id;
+                    NewItme += "<option value=" + IstrValue + ">" + strText + "</option>";
+                }
+                return NewItme;
+            }
+        }
+        public string GetSecSNDrolistByFatherId(int? FatherId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var list = (from p in db.XNGYP_Products_SN.Where(k => k.delete_flag == false)
+                            where FatherId > 0 ? p.FatherId == FatherId : true
+                            orderby p.created_time descending
+                            select new CRMItem
+                            {
+                                Id = p.Id,
+                                Name = p.name,
+                                label = p.SN,
+                            }).ToList();
+                string NewItme = "";
+                foreach (var item in list)
+                {
+                    var strText = item.Name + "_" + item.label;
                     var IstrValue = item.Id;
                     NewItme += "<option value=" + IstrValue + ">" + strText + "</option>";
                 }

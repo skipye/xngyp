@@ -5,34 +5,42 @@
 
 <script type="text/javascript" src="~/js/jquery.min.js"></script>
 <article class="page-container">
-    <form class="form form-horizontal" id="formadd">
-        @Html.HiddenFor(k => k.Id)
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>编码：</label>
-            <div class="formControls col-xs-8 col-sm-5">
-                @Html.TextBoxFor(k => k.SN, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.name, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">备注说明：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextAreaFor(k => k.remark, new { @class = "textarea", @placeholder = "说点什么...！" })
-                <p class="textarea-numberbar"><em class="textarea-length">0</em>/400</p>
-            </div>
-        </div>
-        <div class="row cl">
-            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-                <button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-            </div>
-        </div>
-    </form>
+	<form class="form form-horizontal" id="formadd">
+		@Html.HiddenFor(k => k.Id)
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择父类：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.FatherId, Model.ProXLDroList, new { @class = "select", @style = "width:200px;" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>编码：</label>
+			<div class="formControls col-xs-8 col-sm-5">
+				@Html.TextBoxFor(k => k.SN, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.name, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">备注说明：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextAreaFor(k => k.remark, new { @class = "textarea", @placeholder = "说点什么...！" })
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/400</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
 </article>
 <script type="text/javascript" src="~/js/ajaxScript.js"></script>
 <script type="text/javascript" src="~/js/layer/layer.js"></script>
