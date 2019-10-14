@@ -151,6 +151,7 @@ namespace ModelProject
         public int? WorkCount { get; set; }
         public int? Status { get; set; }
         public string OrderNum { get; set; }
+        public int? FatherId { get; set; }
     }
     public class SContractProductsModel
     {

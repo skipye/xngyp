@@ -13,6 +13,8 @@
     ArrCL.Add(new SelectListItem { Text = "是否定制", Value = "" });
     ArrCL.Add(new SelectListItem { Text = "是", Value = "true" });
     ArrCL.Add(new SelectListItem { Text = "否", Value = "false",Selected=true });
+    List<SelectListItem> ArrSecPro = new List<SelectListItem>();
+    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
 }
 
 @Html.Action("_Meta", "Home")
@@ -29,12 +31,20 @@
             </div>
             <div class="tabCon">
                 @Html.HiddenFor(k => k.ContractHeadId)
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">产品编号：</label>
+                    <div class="formControls col-xs-8 col-sm-4">
+                            @Html.TextBoxFor(k => k.ProductSN, new { @class = "input-text", @style = "width:250px;" })
+                    </div>
+                </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <span class="select-box inline">
                             @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
-                            @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:180px;" })
+                            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px;" })
+                            @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:150px;" })
                             @Html.HiddenFor(k => k.ProductName)
                             @Html.HiddenFor(k => k.ProductSN)
                         </span>
@@ -49,14 +59,6 @@
                             @Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:130px;" })
                             @Html.TextBoxFor(k => k.Color, new { @class = "input-text", @style = "width:150px;" })
                             @Html.HiddenFor(k => k.WoodName)
-                        </span>
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">是否定制：</label>
-                    <div class="formControls col-xs-8 col-sm-4">
-                        <span class="select-box inline">
-                            @Html.DropDownListFor(k => k.CustomFlag, ArrCL, new { @class = "select" })
                         </span>
                     </div>
                 </div>
@@ -166,17 +168,30 @@ $(function(){
         { StrVal = ""; }
         $("#WoodName").val(StrVal);
     });
-    $("#ProductSNId").change(function () {
-        var ProductSNId = $("#ProductSNId").val();
-        var StrText = $(this).find("option:selected").text().replace('╋', "");
-        $("#ProductSN").val(StrText);
-        var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
-        $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
-            $('#ProductId').empty();
-            $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
-            $('#ProductId').append(data);
+   $("#FatherId").change(function () {
+            var ProductSNId = $("#FatherId").val();
+            var Vtext = $("#FatherId").find("option:selected").text();
+			$("#ProductSN").val(Vtext.split('_')[1]);
+            var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
+            $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
+                //alert(data);
+                $('#ProductId').empty();
+                $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+                $('#ProductId').append(data);
+            });
         });
-    });
+		$("#ProductSNId").change(function () {
+            var FatherId = $("#ProductSNId").val();
+			var Vtext = $("#ProductSNId").find("option:selected").text();
+			$("#ProductXL").val(Vtext.split('_')[1]);
+			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+            $.post(ProUrl, { FatherId: FatherId }, function (data) {
+                //alert(data);
+                $('#FatherId').empty();
+                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
+                $('#FatherId').append(data);
+            });
+        });
       
     $("#ProductId").change(function () {
         var _this = $(this);

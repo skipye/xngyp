@@ -18,7 +18,7 @@
 	<form class="form form-horizontal" id="formadd">
 		@Html.HiddenFor(k => k.Id)
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属一级：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属类别：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box inline">
 					@Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select" })

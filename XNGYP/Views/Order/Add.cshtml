@@ -71,13 +71,13 @@
         </div>
         <div id="SH2" class="sh">
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货地址：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货地址：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     @Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货联系电话：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
                 <div class="formControls col-xs-8 col-sm-4">
                     @Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
                 </div>
@@ -85,7 +85,7 @@
         </div>
         <div id="SH3" class="sh">
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货日期：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货日期：</label>
                 <div class="formControls col-xs-8 col-sm-4">
                     @*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
                     @Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;" })
