@@ -55,7 +55,10 @@ namespace DalProject
                                 OrderTime = p.HTDate,
                                 CheckedTime=p.CheckedTime,
                                 CreateTime = p.CreateTime,
-                                CWCheckStatus=p.CWCheckStatus
+                                CWCheckStatus=p.CWCheckStatus,
+                                SHFlag=p.SHFlag,
+                                DeliverChannel=p.DeliverChannel,
+                                ZTDFlag=p.ZTDFlag,
                             }).ToList();
                 ContractModel Models = new ContractModel();
                 Models.data = List;
@@ -78,6 +81,9 @@ namespace DalProject
                     table.DeliveryLinkMan = Models.DeliveryLinkMan;
                     table.Prepay = Models.Prepay;
                     table.HTDate = Convert.ToDateTime(Models.HTDate);
+                    table.DeliverChannel = Models.DeliverChannel;
+                    table.SHFlag = Models.SHFlag;
+                    table.ZTDFlag = Models.ZTDFlag;
                 }
                 else
                 {
@@ -100,6 +106,9 @@ namespace DalProject
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
                     table.CWCheckStatus = false;
+                    table.DeliverChannel = Models.DeliverChannel;
+                    table.SHFlag = Models.SHFlag;
+                    table.ZTDFlag = Models.ZTDFlag;
                     db.Contract_Header.Add(table);
                 }
                 db.SaveChanges();
@@ -135,6 +144,9 @@ namespace DalProject
                                   CheckedTime = p.CheckedTime,
                                   DeliveryLinkMan=p.DeliveryLinkMan,
                                   DeliveryLinkTel=p.DeliveryLinkTel,
+                                  SHFlag = p.SHFlag,
+                                  DeliverChannel=p.DeliverChannel,
+                                  ZTDFlag = p.ZTDFlag,
                               }).SingleOrDefault();
                 return tables;
             }

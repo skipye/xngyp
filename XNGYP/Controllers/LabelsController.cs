@@ -10,6 +10,7 @@ namespace XNGYP.Controllers
     {
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         private static readonly LabelsService LSer = new LabelsService();
+        private static readonly ToExcel ESer = new ToExcel();
         public ActionResult Index()
         {
             SLabelsModel Models = new SLabelsModel();
@@ -80,6 +81,11 @@ namespace XNGYP.Controllers
                 return Content("1");
             }
             else return Content("0");
+        }
+        public void ToExcelOut(SLabelsModel SModels)
+        {
+            var models = LSer.ToExcelOut(SModels);
+            ESer.CreateExcel(models, "成品库库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }
 }

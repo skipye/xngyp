@@ -67,7 +67,7 @@ namespace ModelProject
         public string TelPhone { get; set; }
         public DateTime? DeliveryDate { get; set; }//送货日期
         public decimal? Amount { get; set; }//合同总金额
-        public string delivery_channel { get; set; }//送货通道：楼梯/电梯
+        public string DeliverChannel { get; set; }//送货通道：楼梯/电梯
         public string FreightCarrier { get; set; }//运费承担方：甲/乙
         public decimal? Prepay_percent { get; set; }//预付款比例
         public decimal? Prepay { get; set; }//预付款金额
@@ -91,6 +91,8 @@ namespace ModelProject
         public string OrderMun { get; set; }
         public List<DeliveryModel> DePro { get; set; }//送货Model
         public bool? CWCheckStatus { get; set; }
+        public int? SHFlag { get; set; }
+        public string ZTDFlag { get; set; }
     }
     public class SContractHeaderModel
     {

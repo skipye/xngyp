@@ -63,6 +63,9 @@
           <Property Name="CWCheckName" Type="nvarchar" MaxLength="50" />
           <Property Name="CWCheckId" Type="int" />
           <Property Name="CWCheckTime" Type="datetime" />
+          <Property Name="SHFlag" Type="int" />
+          <Property Name="DeliverChannel" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZTDFlag" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="INV_Name">
           <Key>
@@ -852,6 +855,9 @@
           <Property Type="String" Name="CWCheckName" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="CWCheckId" />
           <Property Type="DateTime" Name="CWCheckTime" Precision="3" />
+          <Property Name="SHFlag" Type="Int32" />
+          <Property Name="DeliverChannel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZTDFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Contract_Detail_Contract_Header">
           <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
@@ -1374,6 +1380,9 @@
           <EntitySetMapping Name="Contract_Header">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
               <MappingFragment StoreEntitySet="Contract_Header">
+                <ScalarProperty Name="ZTDFlag" ColumnName="ZTDFlag" />
+                <ScalarProperty Name="DeliverChannel" ColumnName="DeliverChannel" />
+                <ScalarProperty Name="SHFlag" ColumnName="SHFlag" />
                 <ScalarProperty Name="CWCheckTime" ColumnName="CWCheckTime" />
                 <ScalarProperty Name="CWCheckId" ColumnName="CWCheckId" />
                 <ScalarProperty Name="CWCheckName" ColumnName="CWCheckName" />

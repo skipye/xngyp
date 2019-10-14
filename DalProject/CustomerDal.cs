@@ -50,7 +50,7 @@ namespace DalProject
             }
         }
 
-        public void AddOrUpdate(CustomerModel Models)
+        public void AddOrUpdate(CustomerModel Models,out int CustomId)
         {
             using (var db = new XNGYPEntities())
             {
@@ -69,6 +69,7 @@ namespace DalProject
                     table.DepartmentId = Models.DepartmentId;
                     table.Department = Models.Department;
                     db.SaveChanges();
+                    CustomId = Models.Id;
                 }
                 else
                 {
@@ -87,9 +88,9 @@ namespace DalProject
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
                     db.XNGYP_Customers.Add(table);
-
+                    db.SaveChanges();
+                    CustomId = table.Id;
                 }
-                db.SaveChanges();
             }
         }
         //根据文章Id获取内容

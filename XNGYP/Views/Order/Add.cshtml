@@ -9,10 +9,11 @@
     ArrYF.Add(new SelectListItem { Text = "请选择运费承担方", Value = "" });
     ArrYF.Add(new SelectListItem { Text = "甲方", Value = "甲方" });
     ArrYF.Add(new SelectListItem { Text = "乙方", Value = "乙方" });
-    List<SelectListItem> ArrCL = new List<SelectListItem>();
-    ArrCL.Add(new SelectListItem { Text = "是否上门测量", Value = "" });
-    ArrCL.Add(new SelectListItem { Text = "是", Value = "true" });
-    ArrCL.Add(new SelectListItem { Text = "否", Value = "false" });
+    List<SelectListItem> ArrSH = new List<SelectListItem>();
+    ArrSH.Add(new SelectListItem { Text = "送货方式", Value = "" });
+    ArrSH.Add(new SelectListItem { Text = "自提", Value = "1" });
+    ArrSH.Add(new SelectListItem { Text = "邮寄", Value = "2" });
+    ArrSH.Add(new SelectListItem { Text = "送货", Value = "3" });
   }
 
 @Html.Action("_Meta", "Home")
@@ -21,73 +22,104 @@
 <article class="page-container">
     <form class="form form-horizontal" id="formadd">
         @Html.HiddenFor(k => k.Id)
+        @Html.HiddenFor(k => k.SN)
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box inline">
+                    @Html.TextBoxFor(k => k.Customer, new { @class = "input-text", @style = "width:200px;" })
                     @Html.DropDownListFor(k => k.CustomerId, Model.CustomerDroList, new { @class = "select" })
+
                 </span>
             </div>
         </div>
+
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>合同编号：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.SN, new { @class = "input-text", @readonly= "readonly" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">合同日期：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>合同日期：</label>
             <div class="formControls col-xs-8 col-sm-4">
                 @*<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">*@
-                @Html.TextBoxFor(k => k.HTDate, new { @class = "input-text Wdate", @onfocus= "WdatePicker()", @style="width:150px;", @id = "logmin" })
+                @Html.TextBoxFor(k => k.HTDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;", @id = "logmin" })
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货地址：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货联系人：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货方式：</label>
             <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.DeliveryLinkMan, new { @class = "input-text" })
+                <span class="select-box inline">
+                    @Html.DropDownListFor(k => k.SHFlag, ArrSH, new { @class = "select" })
+                </span>
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货联系电话：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
+        <div id="SH1" class="sh">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自提点：</label>
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                    <div class="radio-box">
+                        @Html.RadioButtonFor(k => k.ZTDFlag, "1")
+                        <label for="sex-1">月星店</label>
+                    </div>
+                    <div class="radio-box">
+                        @Html.RadioButtonFor(k => k.ZTDFlag, "2")
+                        <label for="sex-1">红星店</label>
+                    </div>
+                    <div class="radio-box">
+                        @Html.RadioButtonFor(k => k.ZTDFlag, "3")
+                        <label for="sex-1">工厂店</label>
+                    </div>
+                   
+                </div>
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货日期：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
-                @Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;" })
+        <div id="SH2" class="sh">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货地址：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    @Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货联系电话：</label>
+                <div class="formControls col-xs-8 col-sm-4">
+                    @Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
+                </div>
             </div>
         </div>
-       
+        <div id="SH3" class="sh">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货日期：</label>
+                <div class="formControls col-xs-8 col-sm-4">
+                    @*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
+                    @Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;" })
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货通道：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span class="select-box inline">
+                        @Html.DropDownListFor(k => k.DeliverChannel, ArrBY, new { @class = "select" })
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预付款金额：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.Prepay, new { @class = "input-text number", @style="width:150px;" }) 元
+                @Html.TextBoxFor(k => k.Prepay, new { @class = "input-text", @style = "width:150px;" }) 元
             </div>
         </div>
         <div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">备注：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-                @Html.TextAreaFor(k=>k.Remark,new { @class = "textarea" })
-				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
-			</div>
-		</div>
+            <label class="form-label col-xs-4 col-sm-2">备注：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                @Html.TextAreaFor(k => k.Remark, new { @class = "textarea" })
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+            </div>
+        </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
                 <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
                 <button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
             </div>
         </div>
-    </form>
+</form>
 </article>
 
 @Html.Action("_Footer", "Home")
@@ -99,31 +131,51 @@
 <script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
 <script type="text/javascript">
 
-$(function(){
+    $(function () {
+        var SHFlag = '@Model.SHFlag';
+        if (parseInt(SHFlag) == 1) {
+            $("#SH1").show();$("#SH2").hide();$("#SH3").hide();
+        } else if (parseInt(SHFlag) == 2)
+        { $("#SH1").hide(); $("#SH2").show(); $("#SH3").hide(); }
+            else if (parseInt(SHFlag) == 3)
+        { $("#SH1").hide();$("#SH2").show();$("#SH3").show();}
+        else { $("#SH1").hide(); $("#SH2").hide(); $("#SH3").hide(); }
+    $('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
     $("#CustomerId").change(function () {
         var CustomerId = $("#CustomerId").val();
+        var Vtext = $("#CustomerId").find("option:selected").text();
+        $("#Customer").val(Vtext);
         var ProUrl = "@Url.Action("GetCuDrolistByCId","Customer")";
-        $.post(ProUrl, { CId: CustomerId }, function (data) {
-            if (data != "")
-            { 
-                var Item = data.split('_');
-                var DeliveryLinkTel = Item[1];
-                var DeliveryLinkMan = Item[0];
-                var DeliveryAddress = Item[3];
-                $("#DeliveryLinkTel").val(DeliveryLinkTel);
-                $("#DeliveryLinkMan").val(DeliveryLinkMan);
-                $("#DeliveryAddress").val(DeliveryAddress);
-            }
-        });
+        if (CustomerId != "") {
+            $.post(ProUrl, { CId: CustomerId }, function (data) {
+                if (data != "") {
+                    var Item = data.split('_');
+                    var DeliveryLinkTel = Item[1];
+                    var DeliveryAddress = Item[3];
+                    $("#DeliveryLinkTel").val(DeliveryLinkTel);
+                    $("#DeliveryAddress").val(DeliveryAddress);
+                }
+            });
+        } else {$("#Customer").val(""); $("#DeliveryLinkTel").val("");  $("#DeliveryAddress").val("");}
+    });
+    $("#SHFlag").change(function () {
+        var SHFlag = $("#SHFlag").val();
+        if (parseInt(SHFlag) == 1) {
+            $("#SH1").show();$("#SH2").hide();$("#SH3").hide();
+        } else if (parseInt(SHFlag) == 2)
+        { $("#SH1").hide(); $("#SH2").show(); $("#SH3").hide(); }
+            else if (parseInt(SHFlag) == 3)
+        { $("#SH1").hide();$("#SH2").show();$("#SH3").show();}
+        else { $("#SH1").hide(); $("#SH2").hide(); $("#SH3").hide(); }
     });
 	//表单验证
 	$("#formadd").validate({
 		rules:{
-		    CustomerId: {required:true,},
-		    DeliveryAddress: {required:true, },
-		    DeliveryDate: { required: true },
-		    DeliveryLinkTel: { required: true },
-		    DeliveryLinkMan: { required: true },
+		    Customer: {required:true,},
 		},
 		onkeyup: false,
 		focusCleanup:true,

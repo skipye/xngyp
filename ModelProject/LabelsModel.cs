@@ -53,6 +53,7 @@ namespace ModelProject
         public int? INVId { get; set; }
         public int? ColorId { get; set; }
         public int? ProductSNId { get; set; }
+        public int? FatherId { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
         public List<SelectListItem> SHDroList { get; set; }
         public List<SelectListItem> CKDroList { get; set; }

@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -47,6 +48,17 @@ namespace ServiceProject
         public bool MoveINV(string ListId, int INVId)
         {
             try { CDal.MoveINV(ListId, INVId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public DataTable ToExcelOut(SLabelsModel SModel)
+        {
+            try
+            {
+                return CDal.ToExcelOut(SModel);
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

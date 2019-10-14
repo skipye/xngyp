@@ -192,9 +192,9 @@
             var Vlength = Item[1];
             var Vwidth = Item[2];
             var Vheight = Item[3];
-            $("#Length").val(Vlength);
-            $("#Width").val(Vwidth);
-            $("#Height").val(Vheight);
+            if ($("#Length").val() == "") { $("#Length").val(Vlength); }
+            if ($("#Width").val() == "") { $("#Width").val(Vwidth);}
+            if ($("#Height").val() == "") { $("#Height").val(Vheight);}
         });
         $("#ColorId").change(function () {
             var Vtext = $("#ColorId").find("option:selected").text();

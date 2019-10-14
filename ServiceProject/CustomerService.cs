@@ -17,9 +17,9 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public bool AddOrUpdate(CustomerModel Models)
+        public bool AddOrUpdate(CustomerModel Models, out int CustomId)
         {
-            try {IDal.AddOrUpdate(Models); return true; }
+            try {IDal.AddOrUpdate(Models,out CustomId); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

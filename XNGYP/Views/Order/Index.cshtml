@@ -34,12 +34,12 @@
                     <th width="25"><input type="checkbox" name="" value=""></th>
                     <th>客户名称</th>
                     <th>合同编号</th>
-                    <th>送货日期</th>
+                    <th width="100">合同时间</th>
+                    <th>发货方式</th>
                     <th>合同总金额</th>
                     <th>预付款</th>
                     <th>付款状态</th>
-                    <th width="50px">是否审核</th>
-                    <th>送货地址</th>
+                    <th>是否审核</th>
                     <th>销售人员</th>
                     <th>财务是否审核</th>
                     <th width="100">操作时间</th>
@@ -62,12 +62,10 @@
     $(function () { search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
-        var DepartmentId = $("#DepartmentId").val().trim();
         var UserName = $("#UserName").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
         //搜索
-        param["DepartmentId"] = DepartmentId;
         param["UserName"] = UserName;
         param["StartTime"] = StartTime;
         param["EndTime"] = EndTime;
@@ -127,12 +125,22 @@
                         { "data": "Customer", "className": "textoverflow" },
                         {
                             "data": "SN", "defaultContent": "", "render": function (data, type, row) {
-                                return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','900','600')\">" + data + "</u>";
+                                return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','800','600')\">" + data + "</u>";
                         } },
                         {
-                            "data": "DeliveryDate", "render": function (data) {
+                            "data": "OrderTime", "render": function (data) {
                                 var NewTime = parseInt(data.replace(/\D/igm, ""));
                                 return formatDate(NewTime);
+                            }
+                        },
+                        {
+                            "data": "SHFlag", "render": function (data) {
+                                var StrStatus = "<b class='c-warning'>送货</b>";
+                                if (data == 1)
+                                { StrStatus = "<b class='c-green'>自提</b>"; }
+                                if (data == 2)
+                                { StrStatus = "<b class='c-green'>邮寄</b>"; }
+                                return StrStatus;
                             }
                         },
                         { "data": "Amount", "defaultContent": "", "className": "textoverflow" },
@@ -154,7 +162,6 @@
                                 return StrStatus;
                             }
                         },
-                        { "data": "DeliveryAddress", "defaultContent": "" },
                         { "data": "SaleUserName", "defaultContent": "" },
                         {
                             "data": "CWCheckStatus", "render": function (data) {

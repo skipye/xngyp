@@ -46,7 +46,7 @@ namespace XNGYP.Controllers
             if (Id != null && Id > 0)
             {
                 Models = NSer.GetDetailById(Id.Value);
-                Models.HTDate = Convert.ToDateTime(Models.HTDate).ToString("yyyy-MM-dd");
+                Models.HTDate = Convert.ToDateTime(Models.OrderTime).ToString("yyyy-MM-dd");
             }
             else
             {
@@ -66,6 +66,24 @@ namespace XNGYP.Controllers
             Models.SaleUserName = USer.GetCurrentUserName().UserName;
             Models.SaleDepartmentId = USer.GetCurrentUserName().departmentId;
             Models.SaleDepartment = USer.GetCurrentUserName().department;
+            Models.DeliveryLinkMan = Models.Customer;
+            int CustomId = 0;
+            if (Models.CustomerId == null || Models.CustomerId <= 0)//添加客户信息
+            {
+                CustomerModel CModels = new CustomerModel();
+                CModels.Name = Models.Customer;
+                CModels.ShortName = Models.Customer;
+                CModels.Address = Models.DeliveryAddress;
+                CModels.Address_Delivery = Models.DeliveryAddress;
+                CModels.LinkMan = Models.DeliveryLinkMan;
+                CModels.LinkTel = Models.DeliveryLinkTel;
+                CModels.BelongUserId = Models.SaleUserId;
+                CModels.BelongUserName = Models.SaleUserName;
+                CModels.DepartmentId = Models.SaleDepartmentId;
+                CModels.Department = Models.SaleDepartment;
+                CSer.AddOrUpdate(CModels, out CustomId);
+                Models.CustomerId = CustomId;
+            }
             if (NSer.AddOrUpdate(Models) == true)
             {
                 return Content("1");

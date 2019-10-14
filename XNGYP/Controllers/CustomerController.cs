@@ -55,7 +55,8 @@ namespace XNGYP.Controllers
             Models.BelongUserName = USer.GetCurrentUserName().UserName;
             Models.DepartmentId = USer.GetCurrentUserName().departmentId;
             Models.Department = USer.GetCurrentUserName().department;
-            if (NSer.AddOrUpdate(Models) == true)
+            int CustomId = 0;
+            if (NSer.AddOrUpdate(Models,out CustomId) == true)
             {
                 return Content("1");
             }

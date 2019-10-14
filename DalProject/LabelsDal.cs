@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -30,6 +31,7 @@ namespace DalProject
             {
                 var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductsSNId : true
+                            where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
                             where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.XNGYP_Products.name.Contains(SModel.ProductName) : true
                             where p.CreateTime > StartTime
@@ -181,6 +183,88 @@ namespace DalProject
                 }
                 db.SaveChanges();
             }
+        }
+        public DataTable ToExcelOut(SLabelsModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false)
+                            where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductsSNId : true
+                            where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
+                            where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
+                            where !string.IsNullOrEmpty(SModel.ProductName) ? p.XNGYP_Products.name.Contains(SModel.ProductName) : true
+                            where p.CreateTime > StartTime
+                            where p.CreateTime < EndTime
+                            orderby p.CreateTime descending
+                            select new LabelsModel
+                            {
+                                Id = p.Id,
+                                ProductId = p.ProductsId,
+                                ProductName = p.XNGYP_Products.name,
+                                ProductXL = p.XNGYP_Products_SN.name,
+                                Color = p.Color,
+                                WoodName = p.WoodName,
+                                INVId = p.INVId,
+                                INVName = p.INV_Name.Name,
+                                InputDateTime = p.InputDateTime,
+                                SN = p.SN,
+                                Length = p.Length,
+                                Width = p.Width,
+                                Height = p.Height,
+                                WoodId = p.WoodId,
+                                ColorId = p.ColorId,
+                                Status = p.Status,
+                                flag = p.Flag,
+                                Grade = p.Grade,
+                                ProductSN = p.ProductSN,
+                                FatherId = p.FatherId,
+                            }).ToList();
+            if (List != null && List.Any())
+                {
+                    Exceltable.Columns.Add("标签编码", typeof(string));
+                    Exceltable.Columns.Add("产品编码", typeof(string));
+                    Exceltable.Columns.Add("产品名称", typeof(string));
+                    Exceltable.Columns.Add("材质", typeof(string));
+                    Exceltable.Columns.Add("色号", typeof(string));
+                    Exceltable.Columns.Add("长", typeof(string));
+                    Exceltable.Columns.Add("宽", typeof(string));
+                    Exceltable.Columns.Add("高", typeof(string));
+                    Exceltable.Columns.Add("所入仓库", typeof(string));
+                    Exceltable.Columns.Add("进库日期", typeof(string));
+                    Exceltable.Columns.Add("状态", typeof(string));
+                    Exceltable.Columns.Add("所属方式", typeof(string));
+                    foreach (var item in List)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["标签编码"] = item.SN;
+                        row["产品编码"] = item.ProductSN;
+                        row["产品名称"] = item.ProductName;
+                        row["材质"] = item.WoodName;
+                        row["色号"] = item.Color;
+                        row["长"] = item.Length;
+                        row["宽"] = item.Width;
+                        row["高"] = item.Height;
+                        row["所入仓库"] = item.INVName;
+                        row["进库日期"] = Convert.ToDateTime(item.InputDateTime).ToString("yyyy-MM-dd"); ;
+                        row["状态"] = item.Status != null && item.Status == 2 ? "已出库" : item.Status == 1 ? "已入库" : "未确认";
+                        row["所属方式"] = item.flag != null && item.flag == 2 ? "销售产品" : item.flag != null && item.flag == 3 ? "预投产品" : "盘点产品";
+
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
         }
     }
 }
