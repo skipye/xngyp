@@ -20,70 +20,80 @@
 
 <article class="page-container">
     <form class="form form-horizontal" id="formadd">
-        @Html.HiddenFor(k => k.ContractHeadId)
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <span class="select-box inline">
-                    @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
-                    @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:180px;" })
-                    @Html.HiddenFor(k => k.ProductName)
-                    @Html.HiddenFor(k => k.ProductSN)
-                </span>
+        <div id="tab-system" class="HuiTab">
+            <div class="tabBar cl">
+                <span>家具</span>
+                <span>工艺品</span>
+            </div>
+            <div class="tabCon">
+            </div>
+            <div class="tabCon">
+                @Html.HiddenFor(k => k.ContractHeadId)
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <span class="select-box inline">
+                            @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
+                            @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:180px;" })
+                            @Html.HiddenFor(k => k.ProductName)
+                            @Html.HiddenFor(k => k.ProductSN)
+                        </span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质+色号：</label>
+                    <div class="formControls col-xs-8 col-sm-8">
+                        <span class="select-box inline">
+                            @Html.DropDownListFor(k => k.WoodId, Model.WoodDroList, new { @class = "select", @style = "width:150px;" })
+
+                            @Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:130px;" })
+                            @Html.TextBoxFor(k => k.Color, new { @class = "input-text", @style = "width:150px;" })
+                            @Html.HiddenFor(k => k.WoodName)
+                        </span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">是否定制：</label>
+                    <div class="formControls col-xs-8 col-sm-4">
+                        <span class="select-box inline">
+                            @Html.DropDownListFor(k => k.CustomFlag, ArrCL, new { @class = "select" })
+                        </span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>长+宽+高：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        @Html.TextBoxFor(k => k.length, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+                        @Html.TextBoxFor(k => k.width, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+                        @Html.TextBoxFor(k => k.height, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单价+数量：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <span class="select-box inline">
+                            @Html.TextBoxFor(k => k.price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
+                            -  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">其他要求：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        @Html.TextAreaFor(k => k.req_others, new { @class = "textarea" })
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                        <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+                        <button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质+色号：</label>
-            <div class="formControls col-xs-8 col-sm-8">
-                <span class="select-box inline">
-                    @Html.DropDownListFor(k => k.WoodId, Model.WoodDroList, new { @class = "select", @style = "width:150px;" })
-                    
-                    @Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:130px;" })
-                    @Html.TextBoxFor(k => k.Color, new { @class = "input-text", @style = "width:150px;" })
-                    @Html.HiddenFor(k => k.WoodName)
-                </span>
-           </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">是否定制：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                <span class="select-box inline">
-                    @Html.DropDownListFor(k => k.CustomFlag, ArrCL, new { @class = "select" })
-                </span>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>长+宽+高：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.length, new { @class = "input-text number", @style = "width:120px;"})<span>mm</span>
-                @Html.TextBoxFor(k => k.width, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-                @Html.TextBoxFor(k => k.height, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单价+数量：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <span class="select-box inline">
-                    @Html.TextBoxFor(k => k.price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
-                    -  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
-                </span>
-            </div>
-        </div>
-        
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">其他要求：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                    @Html.TextAreaFor(k => k.req_others, new { @class = "textarea" })
-            </div>
-        </div>
-       
-        <div class="row cl">
-            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-                <button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-            </div>
-        </div>
-    </form>
+</form>
 </article>
 
 @Html.Action("_Footer", "Home")
@@ -96,7 +106,9 @@
 <script type="text/javascript">
 
 $(function(){
-
+    $("#tab-system").Huitab({
+		index:0
+	});
 	//表单验证
 	$("#formadd").validate({
 		rules:{
