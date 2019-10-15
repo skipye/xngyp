@@ -28,6 +28,7 @@ namespace ModelProject
         public int? Qty { get; set; }
         public string Remark { get; set; }
         public DateTime? CreateTime { get; set; }
+        public int? FatherId { get; set; }
     }
     public class SPreCastModel
     {
@@ -41,6 +42,7 @@ namespace ModelProject
         public List<SelectListItem> MCDroList { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public int? FatherId { get; set; }
     }
 
 }

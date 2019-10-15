@@ -12,9 +12,9 @@ namespace DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class XNGYP_WIP_PreCas
+    public partial class XNGYP_WIP_PreCast
     {
-        public XNGYP_WIP_PreCas()
+        public XNGYP_WIP_PreCast()
         {
             this.XNGYP_WorkOrder = new HashSet<XNGYP_WorkOrder>();
         }
@@ -35,7 +35,7 @@ namespace DataBase
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
     
-        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
+        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
     }
 }

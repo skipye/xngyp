@@ -76,12 +76,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "searching": true,
-            "autoWidth": true,
-            "ordering": false, //设置所有不排序
+            "aaSorting": [[2, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Order/PageList", param, function (result) {
                     //封装返回数据
@@ -95,6 +91,7 @@
             "columnDefs": [//对table格式的定义（表格的列从0开始）
                 {
                     targets: 0,
+                    orderable: false,
                     render: function (data, type, row) {
                         var StrArr = "";
                         if (row.CWCheckStatus == 0) {
@@ -112,7 +109,7 @@
                         }
                         if (row.CWCheckStatus == 0) {
                             StrCheck += 
-                                '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'500\')" title="订单编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
+                                '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="订单编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
                                 '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Order/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
                         }
                         return StrCheck;

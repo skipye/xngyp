@@ -11,13 +11,25 @@
 //        console.log("XmlHttpRequest:" + xmlRequest + ", errorInfo:" + errorInfo + ", exception:" + exception);
 //    }
 //});
-//操作日志，MSGSTatus状态：登录：1，增加：2，删：3，改：4，审核：5，驳回：6，客户：7
+//操作日志，MSGSTatus状态：登录：1，增加：2，删：3，改：4，审核：5，驳回：6，客户：7,安排生产：8
 function AddWorkLogs(MSG, MSGSTatus)
 {
     var PostUrl = '/Users/AddWorkLogs';
     $.post(PostUrl, { MSG: MSG, MSGSTatus: MSGSTatus }, function (d) { });
 }
-
+function workorderp(Id) {
+    var ListId = Id + "w$";
+    var PostUrl = "/WorkOrder/Add/";
+    var MSG = "安排生产操作，操作ID：" + ListId + "，网址：" + PostUrl;
+    AddWorkLogs(MSG,8);
+    $.post(PostUrl, { ListId: ListId }, function (d) {
+        if (d == "1") {
+            AddWorkLogs(MSG, 8);
+            layer.msg('操作成功!', { icon: 1, time: 1000 });
+            ResetWindow();
+        }
+        else { layer.msg('服务器错误!', { icon: 2, time: 1000 }); }});
+}
 //删除
 function del(obj,id) {
     var ListId = "";
@@ -352,3 +364,5 @@ $(".number").keyup(function () {  //keyup事件处理
 }).bind("paste", function () {  //CTR+V事件处理
     $(this).val($(this).val().replace(/\D|^0/g, ''));
 }).css("number", "disabled");  //CSS设置输入法不可用
+
+var Arritem = new Array("已开工单", "图纸料单就绪", "开料完成", "雕花完成", "木工完成", "刮磨完成", "油漆完成", "配件安装完成");

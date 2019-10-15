@@ -23,15 +23,15 @@ namespace DataBase
         public Nullable<System.DateTime> BOM_over_date { get; set; }
         public string Paper_path { get; set; }
         public string BOM_path { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public Nullable<int> Flag { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<bool> ClosedFlag { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
-        public Nullable<int> ProductId { get; set; }
-        public Nullable<int> Flag { get; set; }
     
         public virtual Contract_Detail Contract_Detail { get; set; }
-        public virtual XNGYP_WIP_PreCas XNGYP_WIP_PreCas { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
+        public virtual XNGYP_WIP_PreCast XNGYP_WIP_PreCast { get; set; }
     }
 }

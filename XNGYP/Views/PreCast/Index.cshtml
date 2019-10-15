@@ -1,6 +1,8 @@
 ﻿@model ModelProject.SPreCastModel
 @{
     Layout = null;
+    List<SelectListItem> ArrSecPro = new List<SelectListItem>();
+    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
@@ -10,16 +12,17 @@
 <div class="page-container">
     <div class="text-c">
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select" })
+            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px", })
+            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select",@style = "width:150px", })
         </span>
-        @Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })
+        @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
         <span class="select-box inline">
             @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
         </span>
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="add('盘点入库', '/PreCast/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加预投</a>
+        <a href="javascript:void(0);" onclick="addwindow('添加预投', '/PreCast/Add', '700', '500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加预投</a>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -47,7 +50,7 @@
 @Html.Action("_Footer", "Home")
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=7"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -68,11 +71,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "scrollX": true,
-            "searching": true,
+            "aaSorting": [[9, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/PreCast/PageList", param, function (result) {
                     //封装返回数据
@@ -91,7 +91,9 @@
                 }, {
                     targets: 10,
                     render: function (data, type, row) {
-                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
+                        var strArr = "";
+                        if (row.Staute <= 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="workorderp(' + row.Id + ')" title="安排生产"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
+                        return strArr;
                     }
                 }
             ],
@@ -110,7 +112,7 @@
                     if (data == 2) { GradeName = "已生产"; }
                     if (data == 3) { GradeName = "已入半成品库"; }
                     if (data == 4) { GradeName = "已入成品库";}
-                    return GradeName;
+                    return "<b class='c-red'>"+GradeName+"</b>";
                     } },
                 {
                     "data": "CreateTime", "render": function (data) {
@@ -122,6 +124,15 @@
             ]
         });
     };
-
+    $("#ProductSNId").change(function () {
+            var FatherId = $("#ProductSNId").val();
+			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+            $.post(ProUrl, { FatherId: FatherId }, function (data) {
+                //alert(data);
+                $('#FatherId').empty();
+                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
+                $('#FatherId').append(data);
+            });
+    });
 
 </script> 

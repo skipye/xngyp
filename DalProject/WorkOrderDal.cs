@@ -48,7 +48,7 @@ namespace DalProject
                     {
                         XNGYP_WorkOrder WWTable = new XNGYP_WorkOrder();
                         int ProductId = 0;
-                        int Status = 1;
+                        int Status = 0;
                         int Qty = 1;
                         string WorkOrder = "";
                         int CId = 0;
@@ -65,27 +65,29 @@ namespace DalProject
                             ProductId = tabls.ProductId ?? 0;
                             Paper_path = tabls.XNGYP_Products.paper_path;
                             BOM_path = tabls.XNGYP_Products.BOM_path;
+                            tabls.Status = 2;
                         }
                         else {
                             int Id = Convert.ToInt32(item.Replace("w", ""));
                             WId = Id;
                             WorkOrder = "WP" + DateTime.Now.ToString("yyyyMMddfff") + i;
-                            var tabls = db.Contract_Detail.Where(k => k.Id == Id).SingleOrDefault();
-                            Qty = tabls.Qty - tabls.LabelseCount ?? 0;
+                            var tabls = db.XNGYP_WIP_PreCast.Where(k => k.Id == Id).SingleOrDefault();
+                            Qty = tabls.Qty??1;
                             ProductId = tabls.ProductId ?? 0;
                             Paper_path = tabls.XNGYP_Products.paper_path;
                             BOM_path = tabls.XNGYP_Products.BOM_path;
+                            tabls.Staute = 2;
                         }
                         if (!string.IsNullOrEmpty(BOM_path) && !string.IsNullOrEmpty(Paper_path))
                         {
                             WWTable.BOM_over_date = DateTime.Now;
                             WWTable.BOM_ready_date = DateTime.Now;
-                            Status = 2;
+                            Status = 1;
                         }
                         WWTable.WorkOrder = WorkOrder;
                         WWTable.ProductId = ProductId;
-                        WWTable.Contract_Detail_Id = CId;
-                        WWTable.WIP_PreCast_Id = WId;
+                        if (CId > 0) { WWTable.Contract_Detail_Id = CId;WWTable.Flag = 1; }
+                        if (WId > 0) { WWTable.WIP_PreCast_Id = WId; WWTable.Flag = 2; }
                         WWTable.Paper_path = Paper_path;
                         WWTable.BOM_path = BOM_path;
                         WWTable.Qty = Qty;

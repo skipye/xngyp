@@ -319,7 +319,7 @@ namespace DalProject
                 Contract_Detail table = new Contract_Detail();
                 table.ContractHeadId = Models.ContractHeadId;
                 table.ProductId = Models.ProductId;
-                table.ProductSN = Models.ProductSN;
+                table.ProductSN = Models.ProductXL+"_"+Models.ProductSN;
                 table.ProductName = Models.ProductName;
                 table.ColorId = Models.ColorId;
                 table.Color = Models.Color;

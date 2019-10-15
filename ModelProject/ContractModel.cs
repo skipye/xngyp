@@ -117,6 +117,7 @@ namespace ModelProject
         public int productAreaId { get; set; }
         public int ProductSNId { get; set; }
         public string ProductSN { get; set; }
+        public string ProductXL { get; set; }
         public string ProductName { get; set; }
         public int ColorId { get; set; }
         public string Color { get; set; }

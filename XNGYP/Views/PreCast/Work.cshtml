@@ -2,8 +2,8 @@
 @{
     Layout = null;
     List<SelectListItem> LItem = new List<SelectListItem>();
-    LItem.Add(new SelectListItem { Value = "", Text = "全部工单" });
-    LItem.Add(new SelectListItem { Value = "0", Text = "已开工单" });
+    LItem.Add(new SelectListItem { Value = "", Text = "全部任务单" });
+    LItem.Add(new SelectListItem { Value = "0", Text = "已开任务单" });
     LItem.Add(new SelectListItem { Value = "1", Text = "图纸料单就绪" });
     LItem.Add(new SelectListItem { Value = "2", Text = "开料完成" });
     LItem.Add(new SelectListItem { Value = "3", Text = "雕花完成" });
@@ -11,7 +11,6 @@
     LItem.Add(new SelectListItem { Value = "5", Text = "刮磨完成" });
     LItem.Add(new SelectListItem { Value = "6", Text = "油漆完成" });
     LItem.Add(new SelectListItem { Value = "7", Text = "配件安装完成" });
-    string[] Arritem = {"已开工单","图纸料单就绪","开料完成","雕花完成","木工完成","刮磨完成","油漆完成","配件安装完成" };
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
@@ -26,7 +25,7 @@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="add('选中开工', '/PreCast/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中开工</a>
+        <a href="javascript:void(0);" onclick="addwindow('选中生产', '/PreCast/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中生产</a>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -34,11 +33,9 @@
             <thead>
                 <tr class="text-l">
                     <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th>任务单号</th>
                     <th>产品系列</th>
                     <th>产品名称</th>
-                    <th>长（mm）</th>
-                    <th>宽（mm）</th>
-                    <th>高（mm）</th>
                     <th>数量（件）</th>
                     <th>状态</th>
                     <th>开工时间</th>
@@ -53,7 +50,7 @@
 @Html.Action("_Footer", "Home")
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=4"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -70,11 +67,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "scrollX": true,
-            "searching": true,
+             "aaSorting": [[6, "desc"]],//默认第几个排序
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/PreCast/WorkPage", param, function (result) {
                     //封装返回数据
@@ -91,7 +85,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 9,
+                    targets:7,
                     render: function (data, type, row) {
                         return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe637;</i></a>';
                     }
@@ -99,14 +93,12 @@
             ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
+                { "data": "WorkOrder" },
                 { "data": "ProductSN", "defaultContent": "" },
                 { "data": "ProductName", "defaultContent": "" },
-                { "data": "length", "defaultContent": "" },
-                { "data": "width", "defaultContent": "" },
-                { "data": "height", "defaultContent": "" },
                 { "data": "Qty", "defaultContent": "" },
-                { "data": "Staute",  "render": function (data) {
-                    return Arritem[data];
+                { "data": "Status",  "render": function (data) {
+                    return data;
                     } },
                 {
                     "data": "CreateTime", "render": function (data) {

@@ -35,7 +35,7 @@
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">产品编号：</label>
                     <div class="formControls col-xs-8 col-sm-4">
-                            @Html.TextBoxFor(k => k.ProductSN, new { @class = "input-text", @style = "width:250px;" })
+                            @Html.TextBoxFor(k => k.OrderNum, new { @class = "input-text", @style = "width:250px;" })
                     </div>
                 </div>
                 <div class="row cl">
@@ -45,6 +45,7 @@
                             @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
                             @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px;" })
                             @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:150px;" })
+                            @Html.HiddenFor(k => k.ProductXL)
                             @Html.HiddenFor(k => k.ProductName)
                             @Html.HiddenFor(k => k.ProductSN)
                         </span>
@@ -63,7 +64,7 @@
                     </div>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>长+宽+高：</label>
+                    <label class="form-label col-xs-4 col-sm-2">长+宽+高：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         @Html.TextBoxFor(k => k.length, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
                         @Html.TextBoxFor(k => k.width, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
@@ -73,7 +74,7 @@
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单价+数量：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <span class="select-box inline">
+                        <span class="inline">
                             @Html.TextBoxFor(k => k.price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
                             -  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
                         </span>
@@ -109,7 +110,7 @@
 
 $(function(){
     $("#tab-system").Huitab({
-		index:0
+		index:1
 	});
 	//表单验证
 	$("#formadd").validate({
@@ -117,7 +118,6 @@ $(function(){
 		    ProductSNId: {required:true,},
 		    ProductName: { required: true },
 		    WoodId: { required: true },
-		    Color: { required: true },
 		    price: { required: true },
 		    Qty: { required: true, isIntGteZero: true },
 		},
@@ -157,21 +157,21 @@ $(function(){
 });
 
     $("#ColorId").change(function () {
-        var StrVal = $(this).find("option:selected").text().replace("╋", "");
+        var StrVal = $(this).find("option:selected").text();
         if (StrVal == "请选择色号")
         { StrVal = "";}
         $("#Color").val(StrVal);
     });
     $("#WoodId").change(function () {
-        var StrVal = $(this).find("option:selected").text().replace("╋", "");
+        var StrVal = $(this).find("option:selected").text();
         if (StrVal == "请选择材质")
         { StrVal = ""; }
-        $("#WoodName").val(StrVal);
+        $("#WoodName").val(StrVal.split('_')[0]);
     });
    $("#FatherId").change(function () {
             var ProductSNId = $("#FatherId").val();
             var Vtext = $("#FatherId").find("option:selected").text();
-			$("#ProductSN").val(Vtext.split('_')[1]);
+			$("#ProductSN").val(Vtext.split('_')[0]);
             var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
             $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
                 //alert(data);
@@ -183,7 +183,7 @@ $(function(){
 		$("#ProductSNId").change(function () {
             var FatherId = $("#ProductSNId").val();
 			var Vtext = $("#ProductSNId").find("option:selected").text();
-			$("#ProductXL").val(Vtext.split('_')[1]);
+			$("#ProductXL").val(Vtext.split('_')[0]);
 			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
             $.post(ProUrl, { FatherId: FatherId }, function (data) {
                 //alert(data);

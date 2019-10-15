@@ -44,7 +44,7 @@ namespace DataBase
         public Nullable<int> LabelseCount { get; set; }
     
         public virtual Contract_Header Contract_Header { get; set; }
-        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
+        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
     }
 }

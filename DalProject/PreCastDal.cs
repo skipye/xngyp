@@ -24,7 +24,7 @@ namespace DalProject
             }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.XNGYP_WIP_PreCas.Where(k => k.DeleteFlag == false)
+                var List = (from p in db.XNGYP_WIP_PreCast.Where(k => k.DeleteFlag == false)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductSNId : true
                             where SModel.WoodId > 0 ? SModel.WoodId == p.WoodId : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.ProductName.Contains(SModel.ProductName) : true
@@ -56,7 +56,7 @@ namespace DalProject
             {
                 if (Models.Id > 0)
                 {
-                    var table = db.XNGYP_WIP_PreCas.Where(k => k.Id == Models.Id).SingleOrDefault();
+                    var table = db.XNGYP_WIP_PreCast.Where(k => k.Id == Models.Id).SingleOrDefault();
                     table.ProductName = Models.ProductName;
                     table.ProductId = Models.ProductId;
                     table.ProductSNId = Models.ProductSNId;
@@ -71,7 +71,7 @@ namespace DalProject
                 }
                 else
                 {
-                    XNGYP_WIP_PreCas table = new XNGYP_WIP_PreCas();
+                    XNGYP_WIP_PreCast table = new XNGYP_WIP_PreCast();
                     table.ProductName = Models.ProductName;
                     table.ProductId = Models.ProductId;
                     table.ProductSNId = Models.ProductSNId;
@@ -86,7 +86,7 @@ namespace DalProject
                     table.Qty = Models.Qty;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
-                    db.XNGYP_WIP_PreCas.Add(table);
+                    db.XNGYP_WIP_PreCast.Add(table);
                 }
                 db.SaveChanges();
             }
@@ -95,7 +95,7 @@ namespace DalProject
         {
             using (var db = new XNGYPEntities())
             {
-                var tables = (from p in db.XNGYP_WIP_PreCas.Where(k => k.Id == Id)
+                var tables = (from p in db.XNGYP_WIP_PreCast.Where(k => k.Id == Id)
                               select new PreCastModel
                               {
                                   Id = p.Id,

@@ -19,7 +19,7 @@ namespace DataBase
             this.XNGYP_Products_WorkFrom_Price = new HashSet<XNGYP_Products_WorkFrom_Price>();
             this.XNGYP_INV_Labels = new HashSet<XNGYP_INV_Labels>();
             this.Contract_Detail = new HashSet<Contract_Detail>();
-            this.XNGYP_WIP_PreCas = new HashSet<XNGYP_WIP_PreCas>();
+            this.XNGYP_WIP_PreCast = new HashSet<XNGYP_WIP_PreCast>();
             this.XNGYP_WorkOrder = new HashSet<XNGYP_WorkOrder>();
         }
     
@@ -42,8 +42,8 @@ namespace DataBase
         public virtual XNGYP_Products_SN XNGYP_Products_SN { get; set; }
         public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
         public virtual ICollection<Contract_Detail> Contract_Detail { get; set; }
-        public virtual ICollection<XNGYP_WIP_PreCas> XNGYP_WIP_PreCas { get; set; }
-        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
         public virtual XNGYP_Products_SN XNGYP_Products_SN1 { get; set; }
+        public virtual ICollection<XNGYP_WIP_PreCast> XNGYP_WIP_PreCast { get; set; }
+        public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
     }
 }

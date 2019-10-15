@@ -37,7 +37,7 @@
                     <th>是否审核</th>
                     <th>销售人员</th>
                     <th>财务是否审核</th>
-                    <th width="100">操作时间</th>
+                    <th>操作时间</th>
                     <th width="120">操作</th>
                 </tr>
             </thead>
@@ -77,12 +77,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "searching": true,
-            "autoWidth": true,
-           
+            "aaSorting": [[2, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Order/PageList", param, function (result) {
                     //封装返回数据
@@ -96,6 +92,7 @@
             "columnDefs": [
                 {
                     targets: 0,
+                    orderable: false,
                     render: function (data, type, row) {
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
@@ -115,62 +112,62 @@
                 }
             ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
-                      { "data": "Id" },
-                        { "data": "Customer", "className": "textoverflow" },
-                        {
-                            "data": "SN", "defaultContent": "", "render": function (data, type, row) {
-                                return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','800','600')\">" + data + "</u>";
-                        } },
-                        {
-                            "data": "OrderTime", "render": function (data) {
-                                var NewTime = parseInt(data.replace(/\D/igm, ""));
-                                return formatDate(NewTime);
-                            }
-                        },
-                        {
-                            "data": "SHFlag", "render": function (data) {
-                                var StrStatus = "<b class='c-warning'>送货</b>";
-                                if (data == 1)
-                                { StrStatus = "<b class='c-green'>自提</b>"; }
-                                if (data == 2)
-                                { StrStatus = "<b class='c-green'>邮寄</b>"; }
-                                return StrStatus;
-                            }
-                        },
-                        { "data": "Amount", "defaultContent": "", "className": "textoverflow" },
-                        { "data": "Prepay", "defaultContent": "", "className": "textoverflow" },
-                        {
-                            "data": "FRFlag", "render": function (data, type, row) {
-                                var StatusName = "<span class=\"label label-warning radius\">未付款</span>";
-                                if (data == 1)
-                                { StatusName = "<span class=\"label label-success radius\">已付预付款</span>"; }
-                                if (data == 2) { StatusName = "<span class=\"label label-danger radius\">已付全款</span>"; }
-                                return StatusName;
-                            }, "className": "checkedstatus",
-                        },
-                        {
-                            "data": "Status", "render": function (data) {
-                                var StrStatus = "<b class='c-warning'>否</b>";
-                                if (data == true)
-                                { StrStatus = "<b class='c-green'>是</b>"; }
-                                return StrStatus;
-                            }
-                        },
-                        { "data": "SaleUserName", "defaultContent": "" },
-                        {
-                            "data": "CWCheckStatus", "render": function (data) {
-                                var StrStatus = "<b class='c-warning'>否</b>";
-                                if (data == true)
-                                { StrStatus = "<b class='c-green'>是</b>"; }
-                                return StrStatus;
-                            }
-                        },
-                        {
-                            "data": "CreateTime", "render": function (data) {
-                                var NewTime = parseInt(data.replace(/\D/igm, ""));
-                                return formatDateTime(NewTime);
-                            }
-                        },
+                { "data": "Id" },
+                { "data": "Customer", "className": "textoverflow" },
+                {
+                    "data": "SN", "defaultContent": "", "render": function (data, type, row) {
+                        return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','800','600')\">" + data + "</u>";
+                } },
+                {
+                    "data": "OrderTime", "render": function (data) {
+                        var NewTime = parseInt(data.replace(/\D/igm, ""));
+                        return formatDate(NewTime);
+                    }
+                },
+                {
+                    "data": "SHFlag", "render": function (data) {
+                        var StrStatus = "<b class='c-warning'>送货</b>";
+                        if (data == 1)
+                        { StrStatus = "<b class='c-green'>自提</b>"; }
+                        if (data == 2)
+                        { StrStatus = "<b class='c-blue'>邮寄</b>"; }
+                        return StrStatus;
+                    }
+                },
+                { "data": "Amount", "defaultContent": "", "className": "textoverflow" },
+                { "data": "Prepay", "defaultContent": "", "className": "textoverflow" },
+                {
+                    "data": "FRFlag", "render": function (data, type, row) {
+                        var StatusName = "<span class=\"label label-warning radius\">未付款</span>";
+                        if (data == 1)
+                        { StatusName = "<span class=\"label label-success radius\">已付预付款</span>"; }
+                        if (data == 2) { StatusName = "<span class=\"label label-danger radius\">已付全款</span>"; }
+                        return StatusName;
+                    }, "className": "checkedstatus",
+                },
+                {
+                    "data": "Status", "render": function (data) {
+                        var StrStatus = "<b class='c-warning'>否</b>";
+                        if (data == true)
+                        { StrStatus = "<b class='c-green'>是</b>"; }
+                        return StrStatus;
+                    }
+                },
+                { "data": "SaleUserName", "defaultContent": "" },
+                {
+                    "data": "CWCheckStatus", "render": function (data) {
+                        var StrStatus = "<b class='c-warning'>否</b>";
+                        if (data == true)
+                        { StrStatus = "<b class='c-green'>是</b>"; }
+                        return StrStatus;
+                    }
+                },
+                {
+                    "data": "CreateTime", "render": function (data) {
+                        var NewTime = parseInt(data.replace(/\D/igm, ""));
+                        return formatDateTime(NewTime);
+                    }
+                },
 
             ]
         });

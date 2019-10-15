@@ -12,10 +12,10 @@
 <div class="page-container">
     <div class="text-c">
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select" })
-            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select" })
+            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
+            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
         </span>
-        @Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })
+        @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
         <span class="select-box inline">
             @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
         </span>

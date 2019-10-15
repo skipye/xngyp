@@ -131,7 +131,7 @@
     <Compile Include="XNGYP_Role.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
-    <Compile Include="XNGYP_WIP_PreCas.cs">
+    <Compile Include="XNGYP_WIP_PreCast.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_WorkOrder.cs">
