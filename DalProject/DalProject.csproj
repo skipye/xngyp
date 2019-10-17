@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CostDal.cs" />
     <Compile Include="WorkOrderDal.cs" />
     <Compile Include="SaleStartDal.cs" />
     <Compile Include="ContractHeaderDal.cs" />

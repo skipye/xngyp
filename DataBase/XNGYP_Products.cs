@@ -21,6 +21,8 @@ namespace DataBase
             this.Contract_Detail = new HashSet<Contract_Detail>();
             this.XNGYP_WIP_PreCast = new HashSet<XNGYP_WIP_PreCast>();
             this.XNGYP_WorkOrder = new HashSet<XNGYP_WorkOrder>();
+            this.XNGYP_Products_Price = new HashSet<XNGYP_Products_Price>();
+            this.XNGYP_WorkFrom = new HashSet<XNGYP_WorkFrom>();
         }
     
         public int Id { get; set; }
@@ -45,5 +47,7 @@ namespace DataBase
         public virtual XNGYP_Products_SN XNGYP_Products_SN1 { get; set; }
         public virtual ICollection<XNGYP_WIP_PreCast> XNGYP_WIP_PreCast { get; set; }
         public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
+        public virtual ICollection<XNGYP_Products_Price> XNGYP_Products_Price { get; set; }
+        public virtual ICollection<XNGYP_WorkFrom> XNGYP_WorkFrom { get; set; }
     }
 }

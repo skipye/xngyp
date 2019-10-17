@@ -91,12 +91,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "searching": true,
-            "autoWidth": true,
-
+            "aaSorting": [[11, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Labels/PageList", param, function (result) {
                     //封装返回数据
@@ -108,6 +104,7 @@
             "columnDefs": [//对table格式的定义（表格的列从0开始）
                 {
                     targets: 0,
+                    orderable: false,
                     render: function (data, type, row) {
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }

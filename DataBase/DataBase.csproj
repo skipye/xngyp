@@ -119,6 +119,9 @@
     <Compile Include="XNGYP_Products.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
+    <Compile Include="XNGYP_Products_Price.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
     <Compile Include="XNGYP_Products_SN.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
@@ -132,6 +135,12 @@
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_WIP_PreCast.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_WorkEven.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_WorkFrom.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_WorkOrder.cs">

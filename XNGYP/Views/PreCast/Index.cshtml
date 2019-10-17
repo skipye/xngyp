@@ -6,7 +6,7 @@
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>仓库管理<span class="c-gray en">&gt;</span>成品库管理
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>预投管理
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -71,8 +71,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[9, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
+            "aaSorting": [[8, "desc"]],//默认第几个排序
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/PreCast/PageList", param, function (result) {
                     //封装返回数据
@@ -92,7 +92,7 @@
                     targets: 10,
                     render: function (data, type, row) {
                         var strArr = "";
-                        if (row.Staute <= 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="workorderp(' + row.Id + ')" title="安排生产"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
+                        if (row.Staute <= 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="workorderp(' + row.Id + ',\'/WorkOrder/Add\')" title="开工"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
                         return strArr;
                     }
                 }
@@ -108,11 +108,11 @@
                 { "data": "Qty", "defaultContent": "" },
                 { "data": "Staute",  "render": function (data) {
                         var GradeName = "未确认";
-                    if (data == 1) { GradeName = "已确认"; }
-                    if (data == 2) { GradeName = "已生产"; }
-                    if (data == 3) { GradeName = "已入半成品库"; }
-                    if (data == 4) { GradeName = "已入成品库";}
-                    return "<b class='c-red'>"+GradeName+"</b>";
+                    if (data == 1) { GradeName = "<b class='c-red'>已确认</b>"; }
+                    if (data == 2) { GradeName = "<b class='c-success'>已生产</b>"; }
+                    if (data == 3) { GradeName = "<b class='c-success'>已入半成品库</b>"; }
+                    if (data == 4) { GradeName = "<b class='c-success'>已入成品库</b>";}
+                    return GradeName;
                     } },
                 {
                     "data": "CreateTime", "render": function (data) {

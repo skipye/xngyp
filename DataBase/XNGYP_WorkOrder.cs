@@ -14,6 +14,12 @@ namespace DataBase
     
     public partial class XNGYP_WorkOrder
     {
+        public XNGYP_WorkOrder()
+        {
+            this.XNGYP_WorkFrom = new HashSet<XNGYP_WorkFrom>();
+            this.XNGYP_WorkEven = new HashSet<XNGYP_WorkEven>();
+        }
+    
         public int Id { get; set; }
         public string WorkOrder { get; set; }
         public Nullable<int> Contract_Detail_Id { get; set; }
@@ -29,9 +35,13 @@ namespace DataBase
         public Nullable<int> Status { get; set; }
         public Nullable<bool> ClosedFlag { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
+        public Nullable<int> WoodId { get; set; }
+        public string WoodName { get; set; }
     
         public virtual Contract_Detail Contract_Detail { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
         public virtual XNGYP_WIP_PreCast XNGYP_WIP_PreCast { get; set; }
+        public virtual ICollection<XNGYP_WorkFrom> XNGYP_WorkFrom { get; set; }
+        public virtual ICollection<XNGYP_WorkEven> XNGYP_WorkEven { get; set; }
     }
 }

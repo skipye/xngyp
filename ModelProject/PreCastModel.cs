@@ -29,6 +29,8 @@ namespace ModelProject
         public string Remark { get; set; }
         public DateTime? CreateTime { get; set; }
         public int? FatherId { get; set; }
+        public int? Grade { get; set; }
+        public string WoodNameXL { get; set; }
     }
     public class SPreCastModel
     {

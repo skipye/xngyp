@@ -33,6 +33,30 @@ namespace XNGYP.Controllers
             }
             else { return Content("0"); }
         }
-    
+        public ActionResult AddFrom(string ListId)
+        {
+            WorkFromModel models = new WorkFromModel();
+            models.ListId = ListId;
+            return View(models);
+        }
+        [HttpPost]
+        public ActionResult AddFromPost(WorkFromModel Models,string ListId)
+        {
+            if (WSer.AddWorlFrom(Models,ListId) == true)
+            {
+                return Content("1");
+            }
+            else { return Content("0"); }
+        }
+        public ActionResult UserDroListByJob(string Job)
+        {
+            var List = WSer.GetUserDrolistByJob(Job);
+            return Content(List.ToString());
+        }
+        public ActionResult Show(int Id)
+        {
+            var Models = WSer.GetWorkOrderEvenList(Id);
+            return View(Models);
+        }
     }
 }

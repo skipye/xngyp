@@ -41,6 +41,7 @@ namespace DataBase
         public string Picture { get; set; }
         public string ProductSN { get; set; }
         public Nullable<int> FatherId { get; set; }
+        public Nullable<int> WorkOrderId { get; set; }
     
         public virtual INV_Name INV_Name { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }

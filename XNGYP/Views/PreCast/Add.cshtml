@@ -2,9 +2,14 @@
 @{Layout = null;
     List<SelectListItem> ArrPro = new List<SelectListItem>();
     ArrPro.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
-   List<SelectListItem> ArrSecPro = new List<SelectListItem>();
+    List<SelectListItem> ArrSecPro = new List<SelectListItem>();
     ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
-    }
+    List<SelectListItem> ArrGrade = new List<SelectListItem>();
+    ArrGrade.Add(new SelectListItem { Text = "请选择产品等级", Value = "" });
+    ArrGrade.Add(new SelectListItem { Text = "低级", Value = "1" });
+    ArrGrade.Add(new SelectListItem { Text = "中级", Value = "5" });
+    ArrGrade.Add(new SelectListItem { Text = "高级", Value = "9" });
+}
 
 @Html.Action("_Meta", "Home")
 
@@ -33,12 +38,14 @@
             </div>
         </div>*@
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属材质：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质+级别：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
+                    @Html.DropDownListFor(k => k.Grade, ArrGrade, new { @class = "select" })
                 </span>
                 @Html.HiddenFor(m => m.WoodName)
+                @Html.HiddenFor(m => m.WoodNameXL)
             </div>
         </div>
         <div class="row cl">
@@ -176,7 +183,8 @@
         });
         $("#WoodId").change(function () {
             var Vtext = $("#WoodId").find("option:selected").text();
-            $("#WoodName").val(Vtext);
+            $("#WoodName").val(Vtext.split('_')[0]);
+            $("#WoodNameXL").val(Vtext.split('_')[1]);
         });
     });
 </script>

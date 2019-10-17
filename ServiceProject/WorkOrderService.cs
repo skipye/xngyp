@@ -27,5 +27,29 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool AddWorlFrom(WorkFromModel Models, string ListId)
+        {
+            try { WODal.AddWorlFrom(Models,ListId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string GetUserDrolistByJob(string Job)
+        {
+            try { return WODal.GetUserDrolistByJob(Job); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public List<WorkOrderEven> GetWorkOrderEvenList(int Id)
+        {
+            try { return WODal.GetWorkOrderEvenList(Id); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

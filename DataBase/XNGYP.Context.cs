@@ -41,5 +41,8 @@ namespace DataBase
         public DbSet<XNGYP_INV_Semi> XNGYP_INV_Semi { get; set; }
         public DbSet<XNGYP_WIP_PreCast> XNGYP_WIP_PreCast { get; set; }
         public DbSet<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
+        public DbSet<XNGYP_WorkFrom> XNGYP_WorkFrom { get; set; }
+        public DbSet<XNGYP_WorkEven> XNGYP_WorkEven { get; set; }
+        public DbSet<XNGYP_Products_Price> XNGYP_Products_Price { get; set; }
     }
 }

@@ -38,5 +38,8 @@ namespace DataBase
         public Nullable<int> WPCastId { get; set; }
         public Nullable<int> Flag { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
+        public Nullable<int> WorkOrderId { get; set; }
+        public Nullable<int> FatherId { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

@@ -46,6 +46,8 @@ namespace DalProject
                                 Staute = p.Staute,
                                 CreateTime=p.CreateTime,
                                 Qty=p.Qty,
+                                WoodNameXL=p.WoodNameXL,
+                                Grade=p.Grade,
                             }).ToList();
                 return List;
             }
@@ -68,6 +70,8 @@ namespace DalProject
                     table.ColorId = Models.ColorId;
                     table.ColorName = Models.Color;
                     table.Qty = Models.Qty;
+                    table.WoodNameXL = Models.WoodNameXL;
+                    table.Grade = Models.Grade;
                 }
                 else
                 {
@@ -84,6 +88,8 @@ namespace DalProject
                     table.ColorName = Models.Color;
                     table.Staute = 1;
                     table.Qty = Models.Qty;
+                    table.WoodNameXL = Models.WoodNameXL;
+                    table.Grade = Models.Grade;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
                     db.XNGYP_WIP_PreCast.Add(table);
@@ -111,6 +117,8 @@ namespace DalProject
                                   Staute = p.Staute,
                                   CreateTime = p.CreateTime,
                                   Qty=p.Qty,
+                                  WoodNameXL = p.WoodNameXL,
+                                  Grade = p.Grade,
                               }).SingleOrDefault();
                 return tables;
             }

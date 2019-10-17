@@ -34,6 +34,8 @@ namespace DataBase
         public Nullable<int> Staute { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
+        public Nullable<int> Grade { get; set; }
+        public string WoodNameXL { get; set; }
     
         public virtual XNGYP_Products XNGYP_Products { get; set; }
         public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }

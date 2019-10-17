@@ -40,6 +40,13 @@
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_WIP_PreCas_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkOrder_XNGYP_WIP_PreCast" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_WorkFrom" Width="1.5" PointX="17.25" PointY="1.875" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkFrom_XNGYP_WorkOrder" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_WorkEven" Width="1.5" PointX="17.25" PointY="8.5" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkEven_XNGYP_WorkOrder" />
+        <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_Price" Width="1.5" PointX="2.875" PointY="13.125" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_Price_XNGYP_Products" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkFrom_XNGYP_Products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

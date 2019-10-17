@@ -2,7 +2,7 @@
 @{
     Layout = null;
     List<SelectListItem> LItem = new List<SelectListItem>();
-    LItem.Add(new SelectListItem { Value = "", Text = "全部任务单" });
+    LItem.Add(new SelectListItem { Value = "", Text = "全部生产状态" });
     LItem.Add(new SelectListItem { Value = "0", Text = "已开任务单" });
     LItem.Add(new SelectListItem { Value = "1", Text = "图纸料单就绪" });
     LItem.Add(new SelectListItem { Value = "2", Text = "开料完成" });
@@ -25,7 +25,9 @@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="addwindow('选中生产', '/PreCast/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中生产</a>
+        <span class="f-l">
+            <a href="javascript:void(0);" onclick="workordermorep(this, '/WorkOrder/AddFrom', '/0/', '700', '500')" class="btn btn-primary radius" title="选中生产"><i class="Hui-iconfont">&#xe600;</i>选中生产</a>
+        </span>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -67,7 +69,7 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-             "aaSorting": [[6, "desc"]],//默认第几个排序
+            "aaSorting": [[6, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/PreCast/WorkPage", param, function (result) {
@@ -87,7 +89,8 @@
                 }, {
                     targets:7,
                     render: function (data, type, row) {
-                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe637;</i></a>';
+                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'查看记录\',\'/WorkOrder/Show\', \'' + row.Id + '\', \'800\', \'500\')" title="查看记录"><i class="Hui-iconfont f-14">&#xe687;</i></a>' +
+                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="workordermorep(this,\'/WorkOrder/AddFrom\', \'' + row.Id + '\', \'700\', \'500\')" title="安排生产"><i class="Hui-iconfont">&#xe63c;</i></a>';
                     }
                 }
             ],
@@ -98,7 +101,7 @@
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "Qty", "defaultContent": "" },
                 { "data": "Status",  "render": function (data) {
-                    return data;
+                    return "<b class='c-red'>"+Arritem[data]+"<b>";
                     } },
                 {
                     "data": "CreateTime", "render": function (data) {

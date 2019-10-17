@@ -17,9 +17,9 @@ function AddWorkLogs(MSG, MSGSTatus)
     var PostUrl = '/Users/AddWorkLogs';
     $.post(PostUrl, { MSG: MSG, MSGSTatus: MSGSTatus }, function (d) { });
 }
-function workorderp(Id) {
+function workorderp(Id, url) {
     var ListId = Id + "w$";
-    var PostUrl = "/WorkOrder/Add/";
+    var PostUrl = url;
     var MSG = "安排生产操作，操作ID：" + ListId + "，网址：" + PostUrl;
     AddWorkLogs(MSG,8);
     $.post(PostUrl, { ListId: ListId }, function (d) {
@@ -29,6 +29,22 @@ function workorderp(Id) {
             ResetWindow();
         }
         else { layer.msg('服务器错误!', { icon: 2, time: 1000 }); }});
+}
+function workordermorep(obj, url,id, w, h) {
+    var ListId = "";
+    var title = $(obj).attr("title");
+    if (id > 0) { ListId = id + "$"; }
+    else {
+        var NewObj = $(obj).parent().parent().siblings("div.checkmodel").find("table.table");
+        NewObj.find("input[type='checkbox']:checked").each(function () {
+            ListId += $(this).val() + "$";
+        });
+    }
+    if (ListId == "" || ListId == undefined) {
+        layer.alert("请先去选中！");
+        return false;
+    }
+    layer_show(title, url + "?ListId=" + ListId, w, h);
 }
 //删除
 function del(obj,id) {
@@ -65,7 +81,6 @@ function checked(obj, id) {
     if (id > 0) {
         ListId = id + "$";
     } else {
-        
         var NewObj = $(obj).parent().parent().siblings("div.checkmodel").find("table.table");
         NewObj.find("input[type='checkbox']:checked").each(function () {
             ListId += $(this).val() + "$";
@@ -108,7 +123,7 @@ function checked(obj, id) {
 	    });
 	});
 }
-function belong(title, url, id, w, h) {
+function belong(title, url, id) {
     var MSG = title + "，客户所属操作，操作ID：" + id + "，编辑网址：" + url;
     AddWorkLogs(MSG, 7);
     var index = layer.open({
@@ -123,7 +138,7 @@ function belongwindow(title, url, id, w, h) {
     AddWorkLogs(MSG, 7);
     layer_show(title, url + "?Id=" + id, w, h);
 }
-function edit(title, url, id, w, h) {
+function edit(title, url, id) {
     var MSG = title + "编辑操作，编辑ID：" + id + "，编辑网址：" + url;
     AddWorkLogs(MSG, 4);
     var index = layer.open({
@@ -133,7 +148,7 @@ function edit(title, url, id, w, h) {
     });
     layer.full(index);
 }
-function add(title, url, w, h) {
+function add(title, url) {
     var MSG = title + "增加操作，增加网址：" + url;
     AddWorkLogs(MSG, 2);
     var index = layer.open({

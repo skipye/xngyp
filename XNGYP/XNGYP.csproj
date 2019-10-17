@@ -117,6 +117,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\FileManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CostController.cs" />
     <Compile Include="Controllers\SaleStartController.cs" />
     <Compile Include="Controllers\PreCastController.cs" />
     <Compile Include="Controllers\LabelsController.cs" />
@@ -652,6 +653,10 @@
     <Content Include="Views\SaleStart\Work.cshtml" />
     <Content Include="Views\PreCast\Work.cshtml" />
     <Content Include="Views\Labels\MoveINV.cshtml" />
+    <Content Include="Views\WorkOrder\AddFrom.cshtml" />
+    <Content Include="Views\Cost\Add.cshtml" />
+    <Content Include="Views\Cost\Index.cshtml" />
+    <Content Include="Views\WorkOrder\Show.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
