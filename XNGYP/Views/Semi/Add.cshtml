@@ -1,0 +1,206 @@
+﻿@model ModelProject.SemiModel
+@{Layout = null;
+    List<SelectListItem> ArrPro = new List<SelectListItem>();
+    ArrPro.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
+	List<SelectListItem> ArrSecPro = new List<SelectListItem>();
+    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+    List<SelectListItem> ArrGrade = new List<SelectListItem>();
+    ArrGrade.Add(new SelectListItem { Text = "请选择产品等级", Value = "" });
+    ArrGrade.Add(new SelectListItem { Text = "低级", Value = "1" });
+    ArrGrade.Add(new SelectListItem { Text = "中级", Value = "5" });
+    ArrGrade.Add(new SelectListItem { Text = "高级", Value = "9" });
+    }
+
+@Html.Action("_Meta", "Home")
+
+<script type="text/javascript" src="~/js/jquery.min.js"></script>
+<article class="page-container">
+	<form class="form form-horizontal" id="formadd">
+		@Html.HiddenFor(k => k.Id)
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属类别：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box inline">
+                    @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "150px;" })
+                    @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "150px;" })
+                    @Html.DropDownListFor(k => k.ProductId, ArrPro, new { @class = "select", @style = "150px;" })
+                    @Html.HiddenFor(k => k.ProductXL)
+                    @Html.HiddenFor(k => k.ProductSN)
+                    @Html.HiddenFor(k => k.ProductName)
+                </span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属仓库：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box" style="width:150px;">
+					@Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属材质：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box" style="width:150px;">
+					@Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
+				</span>
+				@Html.HiddenFor(m => m.WoodName)
+				@Html.HiddenFor(m => m.WoodNameXL)
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>色号：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width:150px;">
+				<span class="select-box" style="width:150px;">
+					@Html.DropDownListFor(k => k.ColorId, Model.SHDroList, new { @class = "select" })
+				</span>
+				@Html.HiddenFor(m => m.Color)
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品等级：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width:150px;">
+				<span class="select-box" style="width:150px;">
+					@Html.DropDownListFor(k => k.Grade, ArrGrade, new { @class = "select" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>入库数量：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.qty, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>长（MM）：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.Length, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>宽（MM）：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.Width, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>高（MM）：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.Height, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.Picture, new { @class = "input-text", @onclick = "fileUpload('图片上传', '/FileManage/Index', '500', '360')" })
+				<img src="@Model.Picture" class="ConvertImg picreload" />
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				<button onClick="removeIframe();" class="btn btn-default radius ml-20" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=1"></script>
+<script type="text/javascript" src="~/js/layer/layer.js"></script>
+<script type="text/javascript" src="~/js/jquery.validation/jquery.validate.js"></script>
+<script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        //表单验证
+        $("#formadd").validate({
+            rules: {
+                ProductId: { required: true, },
+                INVId: { required: true, },
+                WoodId: { required: true, },
+                Grade: { required: true, },
+
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                //构造上传数据
+                var param = {};
+                var paramArray = $(form).serializeArray();
+                for (var i = 0; i < paramArray.length; ++i) {
+                    var o = paramArray[i];
+                    param[o["name"]] = o["value"];
+                };
+                ajaxRequest("post", "/Semi/PostAdd", param, function (d) {
+                    if (d == "1") {
+                        if (editModel(window.location.href)) {
+                            layer.msg("编辑成功！", { icon: 1, time: 1000 });
+                        } else {
+                            layer.msg("添加成功！", { icon: 1, time: 1000 });
+                        }
+                    } else {
+                        layer.msg("服务器错误！", { icon: 2, time: 1000 });
+                    }
+                    setTimeout(function () {
+                        parent.window.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }, 1000);
+                });
+            }
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#FatherId").change(function () {
+            var ProductSNId = $("#FatherId").val();
+            var Vtext = $("#FatherId").find("option:selected").text();
+			$("#ProductSN").val(Vtext.split('_')[1]);
+            var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
+            $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
+                //alert(data);
+                $('#ProductId').empty();
+                $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+                $('#ProductId').append(data);
+            });
+        });
+		$("#ProductSNId").change(function () {
+            var FatherId = $("#ProductSNId").val();
+			var Vtext = $("#ProductSNId").find("option:selected").text();
+			$("#ProductXL").val(Vtext.split('_')[1]);
+			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+            $.post(ProUrl, { FatherId: FatherId }, function (data) {
+                //alert(data);
+                $('#FatherId').empty();
+                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
+                $('#FatherId').append(data);
+            });
+        });
+        $("#ProductId").change(function () {
+            var Vtext = $("#ProductId").find("option:selected").text();
+            var Item = Vtext.split('_');
+            var Vlength = Item[1];
+            var Vwidth = Item[2];
+            var Vheight = Item[3];
+            if ($("#Length").val() == "") { $("#Length").val(Vlength); }
+            if ($("#Width").val() == "") { $("#Width").val(Vwidth);}
+            if ($("#Height").val() == "") { $("#Height").val(Vheight);}
+        });
+        $("#ColorId").change(function () {
+            var Vtext = $("#ColorId").find("option:selected").text();
+            $("#Color").val(Vtext);
+        });
+        $("#WoodId").change(function () {
+			var Vtext = $("#WoodId").find("option:selected").text();
+			$("#WoodName").val(Vtext.split('_')[0]);
+			$("#WoodNameXL").val(Vtext.split('_')[1]);
+        });
+    });
+</script>
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

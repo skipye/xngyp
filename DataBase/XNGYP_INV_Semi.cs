@@ -41,5 +41,8 @@ namespace DataBase
         public Nullable<int> WorkOrderId { get; set; }
         public Nullable<int> FatherId { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> Grade { get; set; }
+    
+        public virtual INV_Name INV_Name { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace XNGYP.Controllers
     public class WorkOrderController : Controller
     {
         private static readonly WorkOrderService WSer = new WorkOrderService();
+        private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         public ActionResult Index()
         {
             return View();
@@ -57,6 +58,80 @@ namespace XNGYP.Controllers
         {
             var Models = WSer.GetWorkOrderEvenList(Id);
             return View(Models);
+        }
+        public ActionResult KLWork()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 1;
+            return View(Models);
+        }
+        public ActionResult MGQD()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 2;
+            return View(Models);
+        }
+        public ActionResult DHWork()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 3;
+            return View(Models);
+        }
+        public ActionResult MGHD()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 4;
+            return View(Models);
+        }
+        public ActionResult GMWork()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 5;
+            return View(Models);
+        }
+        public ActionResult YQWork()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 6;
+            return View(Models);
+        }
+        public ActionResult PJAZ()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 7;
+            return View(Models);
+        }
+        public ActionResult GetFlowList(SWorkFromModel SModel)
+        {
+            var PageList = WSer.GetFlowList(SModel);
+            return new ContentResult
+            {
+                Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
+                ContentType = "application/json"
+            };
+        }
+        public ActionResult Checked(string ListId, int status)
+        {
+            if (!string.IsNullOrEmpty(ListId) == true && WSer.Checked(ListId,status) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+            
         }
     }
 }

@@ -2,13 +2,13 @@
 @{Layout = null;
     List<SelectListItem> ArrGX=new List<SelectListItem>();
     ArrGX.Add(new SelectListItem { Text = "请选择工序", Value = "" });
-    ArrGX.Add(new SelectListItem { Text = "开料", Value = "开料" });
-    ArrGX.Add(new SelectListItem { Text = "木工前段", Value = "木工" });
-    ArrGX.Add(new SelectListItem { Text = "雕花", Value = "雕花" });
-    ArrGX.Add(new SelectListItem { Text = "木工后段", Value = "木工" });
-    ArrGX.Add(new SelectListItem { Text = "刮磨", Value = "刮磨" });
-    ArrGX.Add(new SelectListItem { Text = "油漆", Value = "油漆" });
-    ArrGX.Add(new SelectListItem { Text = "配件安装", Value = "配件安装" });
+    ArrGX.Add(new SelectListItem { Text = "开料", Value = "1" });
+    ArrGX.Add(new SelectListItem { Text = "木工前段", Value = "2" });
+    ArrGX.Add(new SelectListItem { Text = "雕花", Value = "3" });
+    ArrGX.Add(new SelectListItem { Text = "木工后段", Value = "4" });
+    ArrGX.Add(new SelectListItem { Text = "刮磨", Value = "5" });
+    ArrGX.Add(new SelectListItem { Text = "油漆", Value = "6" });
+    ArrGX.Add(new SelectListItem { Text = "配件安装", Value = "7" });
     
     List<SelectListItem> ArrUser = new List<SelectListItem>();
     ArrUser.Add(new SelectListItem { Text = "请选择接单人", Value = "" });
@@ -25,7 +25,7 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择工序：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:200px;">
-                    @Html.DropDownListFor(k => k.GongXu, ArrGX, new { @class = "select" })
+                    @Html.DropDownListFor(k => k.GXId, ArrGX, new { @class = "select" })
                     @Html.HiddenFor(k => k.Job)
                 </span>
             </div>
@@ -47,8 +47,8 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>工作时间：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="inline">
-                    @Html.TextBoxFor(k => k.exp_begin_date, new { @class = "input-text Wdate", @onfocus="WdatePicker({ maxDate:'#F{$dp.$D('logmax')||'%y-%M-%d'}' })", @style = "width:150px;", @id = "logmin" })
-                   - @Html.TextBoxFor(k => k.exp_end_date, new { @class = "input-text Wdate", @onfocus="WdatePicker({ minDate:'#F{$dp.$D('logmin')}',maxDate:'%y-%M-%d' })", @style = "width:150px;", @id = "logmax" })
+                    @Html.TextBoxFor(k => k.exp_begin_date, new { @class = "input-text Wdate", @onfocus="WdatePicker()", @style = "width:150px;", @id = "logmin" })
+                   - @Html.TextBoxFor(k => k.exp_end_date, new { @class = "input-text Wdate", @onfocus="WdatePicker()", @style = "width:150px;", @id = "logmax" })
                 </span>
             </div>
         </div>
@@ -120,12 +120,13 @@
 </script>
 <script type="text/javascript">
     $(function () {
-        $("#GongXu").change(function () {
+        $("#GXId").change(function () {
             var PId = $(this).val();
-            var JobName = $("#GongXu").find("option:selected").text();
+            var JobName = $("#GXId").find("option:selected").text();
+            if (PId == 2 || PId == 4) { JobName = "木工"; }
             $("#Job").val(JobName);
             var ProUrl = "@Url.Action("UserDroListByJob","WorkOrder")";
-            $.post(ProUrl, { Job: PId }, function (data) {
+            $.post(ProUrl, { Job: JobName }, function (data) {
                 //alert(data);
                 $('#ArrUser').empty();
                 $('#ArrUser').append($('<option></option>').val("").text("请选择接单人").attr("selected", true));

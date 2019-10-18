@@ -95,33 +95,111 @@ function checked(obj, id) {
         shade: false,
         closeBtn: 0
     },
-	function () {
-	    $.post(PostUrl, { ListId: ListId, CheckedId: 1 }, function (d) {
-	        if (d == "True")
-	        {
-	            var MSG = "审核操作，审核ID：" + ListId + "，审核网址：" + PostUrl;
-	            AddWorkLogs(MSG, 5);
-	            layer.msg('已审核', { icon: 6, time: 1000 });
-	            if (id > 0) {
-	                $(obj).parents("tr").find(".checkedstatus").html('<span class="label label-success radius">通过</span>');
-	                $(obj).remove();
-	            } else { ResetWindow();}
-	        }
-	    });
-	},
-	function () {
-	    $.post(PostUrl, { ListId: ListId, CheckedId: 2 }, function (d) {
-	        if (d == "True") {
-	            var MSG = "驳回操作，驳回ID：" + ListId + "，驳回网址：" + PostUrl;
-	            AddWorkLogs(MSG, 6);
-	            layer.msg('未通过', { icon: 5, time: 1000 });
-	            if (id > 0) {
-	                $(obj).parents("tr").find(".checkedstatus").html('<span class="label label-danger radius">被驳回</span>');
-	                $(obj).remove();
-	            } else { ResetWindow(); }
-	        }
-	    });
-	});
+        function () {
+            $.post(PostUrl, { ListId: ListId, CheckedId: 1 }, function (d) {
+                if (d == "True") {
+                    var MSG = "审核操作，审核ID：" + ListId + "，审核网址：" + PostUrl;
+                    AddWorkLogs(MSG, 5);
+                    layer.msg('已审核', { icon: 6, time: 1000 });
+                    if (id > 0) {
+                        $(obj).parents("tr").find(".checkedstatus").html('<span class="label label-success radius">通过</span>');
+                        $(obj).remove();
+                    } else { ResetWindow(); }
+                }
+            });
+        },
+        function () {
+            $.post(PostUrl, { ListId: ListId, CheckedId: 2 }, function (d) {
+                if (d == "True") {
+                    var MSG = "驳回操作，驳回ID：" + ListId + "，驳回网址：" + PostUrl;
+                    AddWorkLogs(MSG, 6);
+                    layer.msg('未通过', { icon: 5, time: 1000 });
+                    if (id > 0) {
+                        $(obj).parents("tr").find(".checkedstatus").html('<span class="label label-danger radius">被驳回</span>');
+                        $(obj).remove();
+                    } else { ResetWindow(); }
+                }
+            });
+        });
+}
+
+/*提交任务*/
+function submitWork(obj, id) {
+    var PostUrl = $(obj).attr("data-url");
+    var ListId = "";
+    if (id > 0) {
+        ListId = id + "$";
+    } else {
+        var NewObj = $(obj).parent().parent().siblings("div.checkmodel").find("table.table");
+        NewObj.find("input[type='checkbox']:checked").each(function () {
+            var StrStatus = $(this).attr("ref");//判断是否已经提交
+            if (StrStatus == 0 || StrStatus == 3) { ListId += $(this).val() + "$"; }
+        });
+    }
+    if (ListId == "" || ListId == undefined) {
+        layer.alert("请先去选中！或者当前任务已经操作过！");
+        return false;
+    }
+    layer.confirm('您正在进行提交任务操作，请认真核对信息！', {
+        btn: ['确认', '取消'],
+        shade: false,
+        closeBtn: 0
+    },
+    function () {
+        $.post(PostUrl, { ListId: ListId, status: 1 }, function (d) {
+            if (d == "1") {
+                var MSG = "提交任务操作，操作ID：" + ListId + "，操作网址：" + PostUrl;
+                AddWorkLogs(MSG, 5);
+                layer.msg('已提交', { icon: 6, time: 1000 });
+                ResetWindow();
+            }
+        });
+    });
+}
+
+/*审核任务*/
+function checkedWork(obj, id) {
+    var PostUrl = $(obj).attr("data-url");
+    var ListId = "";
+    
+    if (id > 0) {
+        ListId = id + "$";
+    } else {
+        var NewObj = $(obj).parent().parent().siblings("div.checkmodel").find("table.table");
+        NewObj.find("input[type='checkbox']:checked").each(function () {
+            var StrStatus = $(this).attr("ref");//判断是否已经提交
+            if (StrStatus == 1 ) { ListId += $(this).val() + "$"; }
+        });
+    }
+    if (ListId == "" || ListId == undefined) {
+        layer.alert("请先去选中！或者当前任务已经操作过！");
+        return false;
+    }
+    layer.confirm('您正在进行审核操作，请认真核对信息！', {
+        btn: ['通过', '不通过', '取消'],
+        shade: false,
+        closeBtn: 0
+    },
+        function () {
+            $.post(PostUrl, { ListId: ListId, status: 2 }, function (d) {
+                if (d == "1") {
+                    var MSG = "审核操作，审核ID：" + ListId + "，审核网址：" + PostUrl;
+                    AddWorkLogs(MSG, 5);
+                    layer.msg('已审核', { icon: 6, time: 1000 });
+                    ResetWindow();
+                }
+            });
+        },
+        function () {
+            $.post(PostUrl, { ListId: ListId, status: 3 }, function (d) {
+                if (d == "1") {
+                    var MSG = "驳回操作，驳回ID：" + ListId + "，驳回网址：" + PostUrl;
+                    AddWorkLogs(MSG, 6);
+                    layer.msg('未通过', { icon: 5, time: 1000 });
+                    ResetWindow();
+                }
+            });
+        });
 }
 function belong(title, url, id) {
     var MSG = title + "，客户所属操作，操作ID：" + id + "，编辑网址：" + url;

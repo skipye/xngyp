@@ -47,6 +47,7 @@
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_Price" Width="1.5" PointX="2.875" PointY="13.125" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Products_Price_XNGYP_Products" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_WorkFrom_XNGYP_Products" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_INV_Semi_INV_Name" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

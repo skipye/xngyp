@@ -186,6 +186,7 @@
           <Property Name="WorkOrderId" Type="int" />
           <Property Name="FatherId" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Grade" Type="int" />
         </EntityType>
         <EntityType Name="XNGYP_Menu">
           <Key>
@@ -478,6 +479,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_XNGYP_INV_Semi_INV_Name">
+          <End Role="INV_Name" Type="Self.INV_Name" Multiplicity="0..1" />
+          <End Role="XNGYP_INV_Semi" Type="Self.XNGYP_INV_Semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Semi">
+              <PropertyRef Name="INVId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_XNGYP_Menu_XNGYP_Menu">
           <End Role="XNGYP_Menu" Type="Self.XNGYP_Menu" Multiplicity="0..1" />
           <End Role="XNGYP_Menu1" Type="Self.XNGYP_Menu" Multiplicity="*" />
@@ -702,6 +715,10 @@
             <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
           </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Semi_INV_Name" Association="Self.FK_XNGYP_INV_Semi_INV_Name">
+            <End Role="INV_Name" EntitySet="INV_Name" />
+            <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
+          </AssociationSet>
           <AssociationSet Name="FK_XNGYP_Menu_XNGYP_Menu" Association="Self.FK_XNGYP_Menu_XNGYP_Menu">
             <End Role="XNGYP_Menu" EntitySet="XNGYP_Menu" />
             <End Role="XNGYP_Menu1" EntitySet="XNGYP_Menu" />
@@ -874,6 +891,10 @@
           <AssociationSet Name="FK_XNGYP_WorkFrom_XNGYP_Products" Association="XNGYPModel.FK_XNGYP_WorkFrom_XNGYP_Products">
             <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
             <End Role="XNGYP_WorkFrom" EntitySet="XNGYP_WorkFrom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Semi_INV_Name" Association="XNGYPModel.FK_XNGYP_INV_Semi_INV_Name">
+            <End Role="INV_Name" EntitySet="INV_Name" />
+            <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
@@ -1161,6 +1182,7 @@
           <Property Name="DeleteFlag" Type="Boolean" />
           <NavigationProperty Name="INV_Name_Type" Relationship="XNGYPModel.FK_INV_Name_INV_Name_Type" FromRole="INV_Name" ToRole="INV_Name_Type" />
           <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_INV_Name" FromRole="INV_Name" ToRole="XNGYP_INV_Labels" />
+          <NavigationProperty Name="XNGYP_INV_Semi" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_INV_Name" FromRole="INV_Name" ToRole="XNGYP_INV_Semi" />
         </EntityType>
         <EntityType Name="INV_Name_Type">
           <Key>
@@ -1303,6 +1325,8 @@
           <Property Name="WorkOrderId" Type="Int32" />
           <Property Name="FatherId" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="INV_Name" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_INV_Name" FromRole="XNGYP_INV_Semi" ToRole="INV_Name" />
+          <Property Name="Grade" Type="Int32" />
         </EntityType>
         <Association Name="FK_Contract_Detail_XNGYP_Products">
           <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="0..1" />
@@ -1563,6 +1587,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_XNGYP_INV_Semi_INV_Name">
+          <End Type="XNGYPModel.INV_Name" Role="INV_Name" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_INV_Semi" Role="XNGYP_INV_Semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_Name">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Semi">
+              <PropertyRef Name="INVId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1814,6 +1850,7 @@
           <EntitySetMapping Name="XNGYP_INV_Semi">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_INV_Semi">
               <MappingFragment StoreEntitySet="XNGYP_INV_Semi">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="FatherId" ColumnName="FatherId" />
                 <ScalarProperty Name="WorkOrderId" ColumnName="WorkOrderId" />

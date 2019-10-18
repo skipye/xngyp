@@ -50,6 +50,7 @@
     <Compile Include="ContractHeaderService.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="CostService.cs" />
+    <Compile Include="SemiService.cs" />
     <Compile Include="ToExcel.cs" />
     <Compile Include="WorkOrderService.cs" />
     <Compile Include="SaleStartService.cs" />

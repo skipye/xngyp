@@ -1,4 +1,4 @@
-﻿@model ModelProject.SPreCastModel
+﻿@model ModelProject.SWorkFromModel
 @{
     Layout = null;
     List<SelectListItem> ArrSecPro = new List<SelectListItem>();
@@ -6,7 +6,7 @@
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>预投管理
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>开料管理
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -22,7 +22,10 @@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="addwindow('添加预投', '/PreCast/Add', '700', '500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加预投</a>
+        <span class="f-l">
+            <a href="javascript:void(0);" onclick="submitWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中提交任务</a>
+            <a href="javascript:void(0);" onclick="checkedWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中审核</a>
+        </span>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -31,14 +34,14 @@
                 <tr class="text-l">
                     <th width="25"><input type="checkbox" name="" value=""></th>
                     <th>产品名称</th>
-                    <th>材质</th>
-                    <th>色号</th>
-                    <th>长（mm）</th>
-                    <th>宽（mm）</th>
-                    <th>高（mm）</th>
-                    <th>数量（件）</th>
-                    <th>状态</th>
-                    <th>添加时间</th>
+                    <th>任务单号</th>
+                    <th>生产价格</th>
+                    <th>生产状态</th>
+                    <th>开始时间</th>
+                    <th>完成时间</th>
+                    <th>接单人</th>
+                    <th>审核人</th>
+                    <th>来源</th>
                     <th width="120">操作</th>
                 </tr>
             </thead>
@@ -54,15 +57,15 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { search(param); });
+    $(function () {param["GXId"] = "@Model.GXId"; search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
         var ProductSNId = $("#ProductSNId").val().trim();
-        var ProductName = $("#ProductName").val().trim();
+        var FatherId = $("#FatherId").val().trim();
         var WoodId = $("#WoodId").val().trim();
         //搜索
         param["ProductSNId"] = ProductSNId;
-        param["ProductName"] = ProductName;
+        param["FatherId"] = FatherId;
         param["WoodId"] = WoodId;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
@@ -71,10 +74,10 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[8, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
+            "aaSorting": [[5, "desc"]],//默认第几个排序
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
-                ajaxRequest("post", "/PreCast/PageList", param, function (result) {
+                ajaxRequest("post", "/WorkOrder/GetFlowList", param, function (result) {
                     //封装返回数据
                     var returnData = {};
                     returnData.data = result;
@@ -86,13 +89,15 @@
                     targets: 0,
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<input type="checkbox" value="' + row.Id + '" >';
+                        return '<input type="checkbox" value="' + row.Id + '" ref="' + row.Status + '" >';
                     }
                 }, {
                     targets: 10,
                     render: function (data, type, row) {
                         var strArr = "";
-                        if (row.Staute <= 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="workorderp(' + row.Id + ',\'/WorkOrder/Add\')" title="开工"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
+                        if (row.Status == 0) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="submitWork(this, \'' + row.Id + '\')" title="提交任务" data-url=\'/WorkOrder/Checked\'><i class="Hui-iconfont">&#xe603;</i></a>'; }
+                        if (row.Status == 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="checkedWork(this, \'' + row.Id + '\')" title="审核" data-url=\'/WorkOrder/Checked\' val=\'2\'><i class="Hui-iconfont">&#xe614;</i></a>'; }
+                        
                         return strArr;
                     }
                 }
@@ -100,27 +105,40 @@
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
                 { "data": "ProductName", "defaultContent": "" },
-                { "data": "WoodName", "defaultContent": "" },
-                { "data": "Color", "defaultContent": "" },
-                { "data": "Length", "defaultContent": "" },
-                { "data": "Width", "defaultContent": "" },
-                { "data": "Height", "defaultContent": "" },
-                { "data": "Qty", "defaultContent": "" },
-                { "data": "Staute",  "render": function (data) {
-                        var GradeName = "未确认";
-                    if (data == 1) { GradeName = "<b class='c-red'>已确认</b>"; }
-                    if (data == 2) { GradeName = "<b class='c-success'>已生产</b>"; }
-                    if (data == 3) { GradeName = "<b class='c-success'>已入半成品库</b>"; }
-                    if (data == 4) { GradeName = "<b class='c-success'>已入成品库</b>";}
+                { "data": "workorder", "defaultContent": "" },
+                { "data": "cost", "defaultContent": "" },
+                { "data": "Status",  "render": function (data) {
+                        var GradeName = "";
+                    if (data == 1) { GradeName = "<b class='c-red'>生产完成，待审核</b>"; }
+                    else if (data == 2) { GradeName = "<b class='c-success'>审核通过</b>"; }
+                    else if (data == 3) { GradeName = "<b class='c-red'>被驳回</b>"; }
+                    else { GradeName = "<b class='c-red'>生产中</b>";}
                     return GradeName;
-                    } },
+                }
+                },
                 {
-                    "data": "CreateTime", "render": function (data) {
+                    "data": "act_begin_date", "render": function (data) {
                         var NewTime = parseInt(data.replace(/\D/igm, ""));
-                        return formatDateTime(NewTime);
+                        return formatDate(NewTime);
+                    }
+                },
+                {
+                    "data": "act_end_date", "render": function (data) {
+                        var NewTime = "";
+                        if (data != null) { var NewTime = parseInt(data.replace(/\D/igm, ""));
+                            return formatDate(NewTime);
+                        }
+                        return NewTime;
                     }
                  },
-
+                { "data": "UserName", "defaultContent": "" },
+                { "data": "CheckedUser", "defaultContent": "" },
+                { "data": "Flag", "render": function (data) {
+                       var GradeName = "<b class='c-red'>预投产品</b>";
+                    if (data == 1) { GradeName = "<b class='c-red'>销售产品</b>"; }
+                    return GradeName;
+                    } },
+                
             ]
         });
     };

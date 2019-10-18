@@ -155,39 +155,45 @@ namespace DalProject
                     if (!string.IsNullOrEmpty(item))
                     {
                         int Id = Convert.ToInt32(item);
-                        var WTable = db.XNGYP_WorkOrder.Where(k => k.Id == Id).FirstOrDefault();
-                        int? ProId = WTable.ProductId;
-                        int? WoodId = WTable.WoodId;
-                        int? Flag = WTable.Flag;
-                        int WorkOrderId = WTable.Id;
-                        XNGYP_WorkFrom table = new XNGYP_WorkFrom();
-                        table.WorkOrderId = WorkOrderId;
-                        table.GXId = Models.GXId;
-                        table.Name = Models.Job;
-                        table.exp_begin_date = Models.exp_begin_date;
-                        table.exp_end_date = Models.exp_end_date;
-                        table.act_begin_date = Models.exp_begin_date;
-                        table.cost = Models.cost;
-                        table.UserId = Models.UserId;
-                        table.UserName = Models.UserName;
-                        table.DepartmentId = Models.DepartmentId;
-                        table.Department = Models.Department;
-                        table.Status = 0;
-                        table.CreateTime = DateTime.Now;
-                        table.DeleteFlag = false;
-                        table.ProductId = ProId;
-                        table.WoodId = WoodId;
-                        table.Flag = Flag;
-                        db.XNGYP_WorkFrom.Add(table);
+                        var FromtableCount = db.XNGYP_WorkFrom.Where(k => k.WorkOrderId == Id && k.Status<=1 && k.DeleteFlag==false).Count();//判断当前是否还有任务在生产
+                        if (FromtableCount <= 0)
+                        { 
+                            var WTable = db.XNGYP_WorkOrder.Where(k => k.Id == Id).FirstOrDefault();
+                            int? ProId = WTable.ProductId;
+                            int? WoodId = WTable.WoodId;
+                            int? Flag = WTable.Flag;
+                            int WorkOrderId = WTable.Id;
+                            if (Models.GXId == 2) { Models.Job = "木工前段"; }
+                            if (Models.GXId == 4) { Models.Job = "木工后段"; }
+                            XNGYP_WorkFrom table = new XNGYP_WorkFrom();
+                            table.WorkOrderId = WorkOrderId;
+                            table.GXId = Models.GXId;
+                            table.Name = Models.Job;
+                            table.exp_begin_date = Models.exp_begin_date;
+                            table.exp_end_date = Models.exp_end_date;
+                            table.act_begin_date = Models.exp_begin_date;
+                            table.cost = Models.cost;
+                            table.UserId = Models.UserId;
+                            table.UserName = Models.UserName;
+                            table.DepartmentId = Models.DepartmentId;
+                            table.Department = Models.Department;
+                            table.Status = 0;
+                            table.CreateTime = DateTime.Now;
+                            table.DeleteFlag = false;
+                            table.ProductId = ProId;
+                            table.WoodId = WoodId;
+                            table.Flag = Flag;
+                            db.XNGYP_WorkFrom.Add(table);
 
-                        XNGYP_WorkEven Emodels = new XNGYP_WorkEven();
-                        Emodels.Name = Models.Job;
-                        Emodels.UserId = new UserDal().GetCurrentUserName().UserId;
-                        Emodels.UserName = new UserDal().GetCurrentUserName().UserName;
-                        Emodels.WorkOrderId = WorkOrderId;
-                        Emodels.Eventlog = Emodels.UserName + ",安排" + Models.UserName + "," + Models.Job + "任务";
-                        Emodels.Remark = Models.Remark;
-                        AddWorkOrderEven(Emodels, db);
+                            XNGYP_WorkEven Emodels = new XNGYP_WorkEven();
+                            Emodels.Name = Models.Job;
+                            Emodels.UserId = new UserDal().GetCurrentUserName().UserId;
+                            Emodels.UserName = new UserDal().GetCurrentUserName().UserName;
+                            Emodels.WorkOrderId = WorkOrderId;
+                            Emodels.Eventlog = Emodels.UserName + ",安排" + Models.UserName + "," + Models.Job + "任务";
+                            Emodels.Remark = Models.Remark;
+                            AddWorkOrderEven(Emodels, db);
+                        }
                     }
                 }
                 db.SaveChanges();
@@ -260,7 +266,6 @@ namespace DalProject
                         int Id = Convert.ToInt32(item);
                         var tables = db.XNGYP_WorkFrom.Where(k => k.Id == Id).FirstOrDefault();
                         tables.Status = status;
-                        string WoodName = "";
                         if (status == 1)//提交任务，更改实际完成时间
                         {
                             tables.act_end_date = DateTime.Now;
@@ -282,7 +287,6 @@ namespace DalProject
                             int? ColorId = 0;
                             string Color = "";
                             string WoodNameXL = "";
-                            int? Grade = 1;
                             if (CRM_Id > 0)
                             {
                                 Length = Convert.ToInt32(WTable.Contract_Detail.length);
@@ -290,7 +294,6 @@ namespace DalProject
                                 Height = Convert.ToInt32(WTable.Contract_Detail.height);
                                 ColorId = WTable.Contract_Detail.ColorId;
                                 Color = WTable.Contract_Detail.Color;
-                                Grade = WTable.Contract_Detail.Grade;
                                 WoodNameXL= WTable.Contract_Detail.WoodNameXL;
                             }
                             else
@@ -300,15 +303,14 @@ namespace DalProject
                                 Height = Convert.ToInt32(WTable.XNGYP_WIP_PreCast.Height);
                                 ColorId = WTable.XNGYP_WIP_PreCast.ColorId;
                                 Color = WTable.XNGYP_WIP_PreCast.ColorName;
-                                Grade = WTable.XNGYP_WIP_PreCast.Grade;
                                 WoodNameXL = WTable.XNGYP_WIP_PreCast.WoodNameXL;
                                 flag = 2;
                             }
-                            if (tables.Name.Contains("开料"))
+                            if (tables.GXId==2)
                             { WTable.Status = 3; }
-                            if (tables.Name.Contains("雕花"))
+                            if (tables.GXId == 3)
                             { WTable.Status = 4; }
-                            if (tables.Name.Contains("木工后段"))//半成品入库
+                            if (tables.GXId==4)//半成品入库
                             {
                                 WTable.Status = 5;
                                 int? SW_id = db.XNGYP_INV_Semi.Where(k => k.WorkOrderId == WTable.Id).Count();//判断是否已经入库，防止多次入库
@@ -319,7 +321,6 @@ namespace DalProject
                                     INTable.ProductName = tables.XNGYP_Products.name;
                                     INTable.ProductSNId = tables.XNGYP_Products.ProductsSNId;
                                     INTable.FatherId = tables.XNGYP_Products.FatherId;
-                                    INTable.ProductSN = tables.XNGYP_Products.XNGYP_Products_SN.name;
                                     INTable.WoodId = tables.WoodId;
                                     INTable.WoodName = WTable.WoodName;
                                     INTable.ColorId = ColorId;
@@ -337,11 +338,11 @@ namespace DalProject
                                     db.XNGYP_INV_Semi.Add(INTable);
                                 }
                             }
-                            if (tables.Name.Contains("刮磨"))
+                            if (tables.GXId == 5)
                             { WTable.Status = 6; }
-                            if (tables.Name.Contains("油漆"))
+                            if (tables.GXId == 6)
                             { WTable.Status = 7; }
-                            if (tables.Name.Contains("配件安装"))//到这里，成品入库
+                            if (tables.GXId == 7)//到这里，成品入库
                             {
                                 WTable.Status = 8;
                                 int? LabCount = db.XNGYP_INV_Labels.Where(k => k.WorkOrderId == WTable.Id).Count();//判断是否已经入库，防止多次入库
@@ -349,7 +350,7 @@ namespace DalProject
                                 {
 
                                     XNGYP_INV_Labels table = new XNGYP_INV_Labels();
-                                    table.SN = "XN" + new LabelsDal().GenerateTimeStamp() + "_" + Grade;
+                                    //table.SN = "XN" + new LabelsDal().GenerateTimeStamp() + "_" + Grade;
                                     table.ProductsId = tables.ProductId??1;
                                     table.ProductsSNId = tables.XNGYP_Products.ProductsSNId;
                                     table.Length = Length;
@@ -368,16 +369,54 @@ namespace DalProject
                                     table.Flag = flag;
                                     table.ContractDetailId = CRM_Id;
                                     table.WIPContractIid = WIP_Id;
-                                    table.Grade = Grade;
+                                    //table.Grade = Grade;
                                     table.FatherId = tables.XNGYP_Products.FatherId;
-                                    table.ProductSN = tables.XNGYP_Products.XNGYP_Products_SN1.SN + tables.XNGYP_Products.XNGYP_Products_SN1.XNGYP_Products_SN2.SN + WoodNameXL + Grade;
+                                    //table.ProductSN = tables.XNGYP_Products.XNGYP_Products_SN1.SN + tables.XNGYP_Products.XNGYP_Products_SN1.XNGYP_Products_SN2.SN + WoodNameXL + Grade;
                                     db.XNGYP_INV_Labels.Add(table);
                                 }      
                             }
                         }
+
+                        if (status == 3)
+                        {
+                            tables.Status = 3;
+                        }
                     }
                 }
                 db.SaveChanges();
+            }
+        }
+        //生产进度情况查询
+        public List<WorkFromModel> GetFlowList(SWorkFromModel SModel)
+        {
+            int GXId = 1;
+            if (SModel.GXId != null && SModel.GXId > 0)
+            { GXId = SModel.GXId.Value; }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_WorkFrom.Where(k => k.DeleteFlag == false && k.XNGYP_WorkOrder.DeleteFlag == false && k.XNGYP_WorkOrder.ClosedFlag==false && k.GXId== GXId)
+                            where SModel.ProductSNId != null && SModel.ProductSNId>0 ? p.XNGYP_Products.ProductsSNId == SModel.ProductSNId : true
+                            where SModel.FatherId != null && SModel.FatherId > 0 ? p.XNGYP_Products.FatherId == SModel.FatherId : true
+                            where SModel.WoodId != null && SModel.WoodId > 0 ? p.WoodId == SModel.WoodId : true
+                            orderby p.CreateTime descending
+                            select new WorkFromModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                workorder = p.XNGYP_WorkOrder.WorkOrder,
+                                ProductName = p.XNGYP_Products.name,
+                                Customer = p.XNGYP_WorkOrder.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                UserName = p.UserName,
+                                exp_begin_date = p.exp_begin_date,
+                                exp_end_date = p.exp_end_date,
+                                act_begin_date = p.act_begin_date,
+                                act_end_date = p.act_end_date,
+                                Status = p.Status,
+                                CheckedUser = p.CheckedUser,
+                                cost = p.cost,
+                                Flag = p.Flag,
+                            }).ToList();
+                return List;
             }
         }
     }

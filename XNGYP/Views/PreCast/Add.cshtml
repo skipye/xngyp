@@ -38,11 +38,11 @@
             </div>
         </div>*@
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质+级别：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <span class="select-box" style="width:150px;">
-                    @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
-                    @Html.DropDownListFor(k => k.Grade, ArrGrade, new { @class = "select" })
+                <span class="select-box inline">
+                    @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select", @style = "width:150px", })
+                    
                 </span>
                 @Html.HiddenFor(m => m.WoodName)
                 @Html.HiddenFor(m => m.WoodNameXL)
@@ -50,36 +50,38 @@
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">色号：</label>
-            <div class="formControls col-xs-8 col-sm-9" style="width:150px;">
-                <span class="select-box" style="width:150px;">
-                    @Html.DropDownListFor(k => k.ColorId, Model.SHDroList, new { @class = "select" })
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box inline">
+                    @Html.DropDownListFor(k => k.ColorId, Model.SHDroList, new { @class = "select" ,@style="width:150px;"})<span class="c-red">（如没可不填！）</span>
                 </span>
                 @Html.HiddenFor(m => m.Color)
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预投数量：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.Qty, new { @class = "input-text" })
+            <div class="formControls col-xs-8 col-sm-9">
+                @Html.TextBoxFor(k => k.Qty, new { @class = "input-text",@style="width:150px;" }) 件
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">长（MM）：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.Length, new { @class = "input-text" })
+            <label class="form-label col-xs-4 col-sm-2">长：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                @Html.TextBoxFor(k => k.Length, new { @class = "input-text",@style="width:150px;" }) <span class="c-red">MM（如没可不填！）</span>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">宽（MM）：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.Width, new { @class = "input-text" })
+            <label class="form-label col-xs-4 col-sm-2">宽：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                @Html.TextBoxFor(k => k.Width, new { @class = "input-text", @style = "width:150px;" }) <span class="c-red">MM（如没可不填！）</span>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">高（MM）：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @Html.TextBoxFor(k => k.Height, new { @class = "input-text" })
-            </div>
+            <label class="form-label col-xs-4 col-sm-2">高：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="inline">
+                    @Html.TextBoxFor(k => k.Height, new { @class = "input-text", @style = "width:150px;" }) <span class="c-red">MM（如没可不填！）</span>
+                </span>
+           </div>
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2 mt-20">

@@ -51,5 +51,21 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<WorkFromModel> GetFlowList(SWorkFromModel SModel)
+        {
+            try { return WODal.GetFlowList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool Checked(string ListId, int status)
+        {
+            try { WODal.Checked(ListId, status); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="ContractModel.cs" />
     <Compile Include="CustomerModel.cs" />
     <Compile Include="CostModel.cs" />
+    <Compile Include="SemiModel.cs" />
     <Compile Include="PreCastModel.cs" />
     <Compile Include="LabelsModel.cs" />
     <Compile Include="ProductsModel.cs" />

@@ -19,7 +19,7 @@ namespace ModelProject
         public string workorder { get; set; }
         public int? GXId { get; set; }
         public int? Status { get; set; }
-        public decimal cost { get; set; }
+        public decimal? cost { get; set; }
         public string ArrUser { get; set; }
         public int? UserId { get; set; }
         public string UserName { get; set; }
@@ -38,6 +38,16 @@ namespace ModelProject
         public string SaleName { get; set; }
         public string ListId { get; set; }
         public string WoodName { get; set; }
+        public int? Flag { get; set; }
+    }
+    public class SWorkFromModel
+    {
+        public int? GXId { get; set; }
+        public int? ProductSNId { get; set; }
+        public int? FatherId { get; set; }
+        public int? WoodId { get; set; }
+        public List<SelectListItem> XLDroList { get; set; }
+        public List<SelectListItem> MCDroList { get; set; }
     }
     public class WorkOrderEven
     {

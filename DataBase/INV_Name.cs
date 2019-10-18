@@ -17,6 +17,7 @@ namespace DataBase
         public INV_Name()
         {
             this.XNGYP_INV_Labels = new HashSet<XNGYP_INV_Labels>();
+            this.XNGYP_INV_Semi = new HashSet<XNGYP_INV_Semi>();
         }
     
         public int Id { get; set; }
@@ -29,5 +30,6 @@ namespace DataBase
     
         public virtual INV_Name_Type INV_Name_Type { get; set; }
         public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels { get; set; }
+        public virtual ICollection<XNGYP_INV_Semi> XNGYP_INV_Semi { get; set; }
     }
 }
