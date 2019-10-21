@@ -5,6 +5,8 @@
     ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
 }
 @Html.Action("_Meta", "Home")
+
+
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>仓库管理<span class="c-gray en">&gt;</span>成品库管理
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
@@ -19,17 +21,18 @@
         <span class="select-box inline">
             @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
         </span>
-        日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="入库开始时间">
         -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="入库结束时间">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
             <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Semi")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
             <a href="javascript:void(0);" onclick="add('盘点入库', '/Semi/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>盘点入库</a>
-            <a href="javascript:void(0);" onclick="opneview(this,'0')" class="btn btn-success radius" data-url="@Url.Action("MoveINV","Semi")"><i class="Hui-iconfont">&#xe615;</i>选中移库</a>
+            <a href="javascript:void(0);" onclick="MoveINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("MoveINV","Semi")" title="选中移库"><i class="Hui-iconfont">&#xe615;</i>选中移库</a>
+            <a href="javascript:void(0);" onclick="opneview(this,'0')" class="btn btn-warning radius" data-url="@Url.Action("Check","Semi")" title="选中入库"><i class="Hui-iconfont">&#xe615;</i>选中入库</a>
+            <a href="javascript:void(0);" onclick="INVWork(this,'0')" class="btn btn-warning radius" data-url="@Url.Action("Work","Semi")" title="选中生产"><i class="Hui-iconfont">&#xe615;</i>选中生产</a>
             <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
     </div>
@@ -46,7 +49,6 @@
                     <th>长（mm）</th>
                     <th>宽（mm）</th>
                     <th>高（mm）</th>
-                    <th>产品级别</th>
                     <th>所入仓库</th>
                     <th>进库日期</th>
                     <th>状态</th>
@@ -64,6 +66,7 @@
 <script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
+<script type="text/javascript" src="~/js/INVScript.js"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -90,7 +93,7 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[11, "desc"]],//默认第几个排序
+            "aaSorting": [[10, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Semi/PageList", param, function (result) {
@@ -105,13 +108,15 @@
                     targets: 0,
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<input type="checkbox" value="' + row.Id + '" >';
+                        return '<input type="checkbox" value="' + row.Id + '" ref="'+row.Status+'" >';
                     }
                 }, {
-                    targets: 13,
+                    targets: 12,
                     render: function (data, type, row) {
-                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/Semi/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
-                               '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Semi/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
+                        var str = "";
+                        if (row.Status == 0) { str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="opneview(this,\'' + row.Id + '\')" data-url=\'/Semi/Check\' title="入库"><i class="Hui-iconfont f-14">&#xe645;</i></a>'; }
+                        if (row.Status == 1) { str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="INVWork(this,\'' + row.Id + '\')" data-url=\'/Semi/Work\' title="生产"><i class="Hui-iconfont f-14">&#xe645;</i></a>';}
+                        return str;
                     }
                 }
             ],
@@ -124,13 +129,6 @@
                 { "data": "Length", "defaultContent": "" },
                 { "data": "Width", "defaultContent": "" },
                 { "data": "Height", "defaultContent": "" },
-                {
-                    "data": "Grade", "render": function (data) {
-                        var GradeName = "<span class=\"label c-yellow radius\">低级</span>";
-                        if (data >= 5 && data < 9) { GradeName = "<span class=\"label c-blue radius\">中级</span>"; }
-                        if (data >= 9) { GradeName = "<span class=\"label c-red radius\">高级</span>";}
-                    return GradeName;
-                    }},
                 { "data": "INVName", "defaultContent": "" },
                 {
                     "data": "InputDateTime", "render": function (data) {

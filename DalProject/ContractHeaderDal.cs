@@ -250,6 +250,16 @@ namespace DalProject
             }
             return items;
         }
+        //根据材质ID获取材质标签
+        public string GetWoodSN(int Id)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var model = db.INV_wood_type.Where(b => b.delete_flag == false && b.id == Id).Select(k => k.SN).FirstOrDefault();
+                return model;
+            }
+            
+        }
         public List<SelectListItem> GetColorDrolist(int? pId)
         {
             List<SelectListItem> items = new List<SelectListItem>();

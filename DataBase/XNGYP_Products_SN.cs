@@ -21,6 +21,8 @@ namespace DataBase
             this.XNGYP_Products_SN1 = new HashSet<XNGYP_Products_SN>();
             this.XNGYP_INV_Labels1 = new HashSet<XNGYP_INV_Labels>();
             this.XNGYP_Products1 = new HashSet<XNGYP_Products>();
+            this.XNGYP_INV_Semi = new HashSet<XNGYP_INV_Semi>();
+            this.XNGYP_INV_Semi1 = new HashSet<XNGYP_INV_Semi>();
         }
     
         public int Id { get; set; }
@@ -37,5 +39,7 @@ namespace DataBase
         public virtual XNGYP_Products_SN XNGYP_Products_SN2 { get; set; }
         public virtual ICollection<XNGYP_INV_Labels> XNGYP_INV_Labels1 { get; set; }
         public virtual ICollection<XNGYP_Products> XNGYP_Products1 { get; set; }
+        public virtual ICollection<XNGYP_INV_Semi> XNGYP_INV_Semi { get; set; }
+        public virtual ICollection<XNGYP_INV_Semi> XNGYP_INV_Semi1 { get; set; }
     }
 }

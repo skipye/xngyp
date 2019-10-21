@@ -19,10 +19,9 @@
         <span class="select-box inline">
             @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
         </span>
-        日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="入库开始时间">
         -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="入库结束时间">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -73,13 +72,11 @@
         //搜索条件
         var ProductSNId = $("#ProductSNId").val().trim();
         var FatherId = $("#FatherId").val().trim();
-        var ProductName = $("#ProductName").val().trim();
         var INVId = $("#INVId").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
         //搜索
         param["ProductSNId"] = ProductSNId;
-        param["ProductName"] = ProductName;
         param["INVId"] = INVId;
         param["FatherId"] = FatherId;
         param["StartTime"] = StartTime;

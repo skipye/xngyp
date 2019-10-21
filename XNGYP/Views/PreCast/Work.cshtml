@@ -4,13 +4,13 @@
     List<SelectListItem> LItem = new List<SelectListItem>();
     LItem.Add(new SelectListItem { Value = "", Text = "全部生产状态" });
     LItem.Add(new SelectListItem { Value = "0", Text = "已开任务单" });
-    LItem.Add(new SelectListItem { Value = "1", Text = "图纸料单就绪" });
-    LItem.Add(new SelectListItem { Value = "2", Text = "开料完成" });
-    LItem.Add(new SelectListItem { Value = "3", Text = "雕花完成" });
-    LItem.Add(new SelectListItem { Value = "4", Text = "木工完成" });
-    LItem.Add(new SelectListItem { Value = "5", Text = "刮磨完成" });
-    LItem.Add(new SelectListItem { Value = "6", Text = "油漆完成" });
-    LItem.Add(new SelectListItem { Value = "7", Text = "配件安装完成" });
+    LItem.Add(new SelectListItem { Value = "2", Text = "图纸料单就绪" });
+    LItem.Add(new SelectListItem { Value = "3", Text = "开料完成" });
+    LItem.Add(new SelectListItem { Value = "4", Text = "雕花完成" });
+    LItem.Add(new SelectListItem { Value = "5", Text = "木工完成" });
+    LItem.Add(new SelectListItem { Value = "6", Text = "刮磨完成" });
+    LItem.Add(new SelectListItem { Value = "7", Text = "油漆完成" });
+    LItem.Add(new SelectListItem { Value = "8", Text = "配件安装完成" });
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
@@ -101,7 +101,7 @@
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "Qty", "defaultContent": "" },
                 { "data": "Status",  "render": function (data) {
-                    return "<b class='c-red'>"+Arritem[data]+"<b>";
+                    return "<b class='c-red'>"+Arritem[data]+"</b>";
                     } },
                 {
                     "data": "CreateTime", "render": function (data) {

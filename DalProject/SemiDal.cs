@@ -29,7 +29,7 @@ namespace DalProject
             }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false)
+                var List = (from p in db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false && k.Status<=1)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductSNId : true
                             where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
                             where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
@@ -80,7 +80,7 @@ namespace DalProject
                     table.CreateTime = DateTime.Now;
                     table.Grade = Models.Grade;
                     table.FatherId = Models.FatherId;
-                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade;
+                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL;
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace DalProject
                         table.Flag = 3;
                         table.Grade = Models.Grade;
                         table.FatherId = Models.FatherId;
-                        table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade;
+                        table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL;
                         db.XNGYP_INV_Semi.Add(table);
                     }
                 }
@@ -253,7 +253,7 @@ namespace DalProject
             return Exceltable;
         }
         //半成品审核
-        public void CheckMore(string ListId, int InvId,int Grade)
+        public void CheckMore(string ListId, int InvId)
         {
             using (var db = new XNGYPEntities())
             {
@@ -269,8 +269,60 @@ namespace DalProject
                         tables.InputUserId = new UserDal().GetCurrentUserName().UserId;
                         tables.InputUserName= new UserDal().GetCurrentUserName().UserName;
                         tables.InputDate = DateTime.Now;
-                        
+                        tables.ProductSN = tables.XNGYP_Products_SN.SN + tables.XNGYP_Products_SN1.SN + new ContractHeaderDal().GetWoodSN(tables.WoodId.Value);
 
+                        int CRMId = tables.CDetailId??0;
+                        int WIPId = tables.WPCastId??0;
+                        //判断是否是销售产品、预投产品，然后设置状态
+                        if (CRMId > 0)
+                        {
+                            var CRMTable = db.Contract_Detail.Where(k => k.Id == CRMId).FirstOrDefault();
+                            if (CRMTable != null)
+                            {
+                                CRMTable.Status = 3;
+                            }
+                        }
+                        if (WIPId > 0)
+                        { var WIPTable= db.XNGYP_WIP_PreCast.Where(k => k.Id == WIPId).FirstOrDefault();
+                            if (WIPTable != null)
+                            {
+                                WIPTable.Staute = 3;
+                            }
+                        }
+                        int WorkOrderId = tables.WorkOrderId??0;
+                        var Worktable = db.XNGYP_WorkOrder.Where(k => k.Id == WorkOrderId).FirstOrDefault();
+                        if (Worktable != null)
+                        {
+                            Worktable.ClosedFlag = true;//关闭工单
+                        }
+
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
+        //安排生产
+        public void AddWork(string ListId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                string[] ArrId = ListId.Split('$');
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var STables = db.XNGYP_INV_Semi.Where(k => k.Id == Id).SingleOrDefault();
+                        STables.OutDate = DateTime.Now;
+                        STables.OutUserId = new UserDal().GetCurrentUserName().UserId;
+                        STables.OutUserName = new UserDal().GetCurrentUserName().UserName;
+                        STables.Status = 2;
+                        int WorkOrderId = STables.WorkOrderId??0;
+                        var Worktable = db.XNGYP_WorkOrder.Where(k => k.Id == WorkOrderId).FirstOrDefault();
+                        if (Worktable != null)
+                        {
+                            Worktable.ClosedFlag = false;//开启工单
+                        }
                     }
                 }
                 db.SaveChanges();

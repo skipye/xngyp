@@ -479,15 +479,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_XNGYP_INV_Semi_INV_Name">
-          <End Role="INV_Name" Type="Self.INV_Name" Multiplicity="0..1" />
+        <Association Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN">
+          <End Role="XNGYP_Products_SN" Type="Self.XNGYP_Products_SN" Multiplicity="0..1" />
           <End Role="XNGYP_INV_Semi" Type="Self.XNGYP_INV_Semi" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="INV_Name">
+            <Principal Role="XNGYP_Products_SN">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="XNGYP_INV_Semi">
-              <PropertyRef Name="INVId" />
+              <PropertyRef Name="ProductSNId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN1">
+          <End Role="XNGYP_Products_SN" Type="Self.XNGYP_Products_SN" Multiplicity="0..1" />
+          <End Role="XNGYP_INV_Semi" Type="Self.XNGYP_INV_Semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Semi">
+              <PropertyRef Name="FatherId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -715,8 +727,12 @@
             <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
           </AssociationSet>
-          <AssociationSet Name="FK_XNGYP_INV_Semi_INV_Name" Association="Self.FK_XNGYP_INV_Semi_INV_Name">
-            <End Role="INV_Name" EntitySet="INV_Name" />
+          <AssociationSet Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN" Association="Self.FK_XNGYP_INV_Semi_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN1" Association="Self.FK_XNGYP_INV_Semi_XNGYP_Products_SN1">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
           </AssociationSet>
           <AssociationSet Name="FK_XNGYP_Menu_XNGYP_Menu" Association="Self.FK_XNGYP_Menu_XNGYP_Menu">
@@ -894,6 +910,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_XNGYP_INV_Semi_INV_Name" Association="XNGYPModel.FK_XNGYP_INV_Semi_INV_Name">
             <End Role="INV_Name" EntitySet="INV_Name" />
+            <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN" Association="XNGYPModel.FK_XNGYP_INV_Semi_XNGYP_Products_SN">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
+            <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN1" Association="XNGYPModel.FK_XNGYP_INV_Semi_XNGYP_Products_SN1">
+            <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
           </AssociationSet>
         </EntityContainer>
@@ -1107,6 +1131,8 @@
           <NavigationProperty Name="XNGYP_Products_SN2" Relationship="XNGYPModel.FK_XNGYP_Products_SN_XNGYP_Products_SN" FromRole="XNGYP_Products_SN1" ToRole="XNGYP_Products_SN" />
           <NavigationProperty Name="XNGYP_INV_Labels1" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN1" FromRole="XNGYP_Products_SN" ToRole="XNGYP_INV_Labels" />
           <NavigationProperty Name="XNGYP_Products1" Relationship="XNGYPModel.FK_XNGYP_Products_XNGYP_Products_SN1" FromRole="XNGYP_Products_SN" ToRole="XNGYP_Products" />
+          <NavigationProperty Name="XNGYP_INV_Semi" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_XNGYP_Products_SN" FromRole="XNGYP_Products_SN" ToRole="XNGYP_INV_Semi" />
+          <NavigationProperty Name="XNGYP_INV_Semi1" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_XNGYP_Products_SN1" FromRole="XNGYP_Products_SN" ToRole="XNGYP_INV_Semi" />
         </EntityType>
         <EntityType Name="XNGYP_Products_WorkFrom">
           <Key>
@@ -1327,6 +1353,8 @@
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INV_Name" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_INV_Name" FromRole="XNGYP_INV_Semi" ToRole="INV_Name" />
           <Property Name="Grade" Type="Int32" />
+          <NavigationProperty Name="XNGYP_Products_SN" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_XNGYP_Products_SN" FromRole="XNGYP_INV_Semi" ToRole="XNGYP_Products_SN" />
+          <NavigationProperty Name="XNGYP_Products_SN1" Relationship="XNGYPModel.FK_XNGYP_INV_Semi_XNGYP_Products_SN1" FromRole="XNGYP_INV_Semi" ToRole="XNGYP_Products_SN" />
         </EntityType>
         <Association Name="FK_Contract_Detail_XNGYP_Products">
           <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="0..1" />
@@ -1596,6 +1624,30 @@
             </Principal>
             <Dependent Role="XNGYP_INV_Semi">
               <PropertyRef Name="INVId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN">
+          <End Type="XNGYPModel.XNGYP_Products_SN" Role="XNGYP_Products_SN" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_INV_Semi" Role="XNGYP_INV_Semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Semi">
+              <PropertyRef Name="ProductSNId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_INV_Semi_XNGYP_Products_SN1">
+          <End Type="XNGYPModel.XNGYP_Products_SN" Role="XNGYP_Products_SN" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_INV_Semi" Role="XNGYP_INV_Semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Products_SN">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_INV_Semi">
+              <PropertyRef Name="FatherId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

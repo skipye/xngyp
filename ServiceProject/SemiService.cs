@@ -64,5 +64,22 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool CheckMore(string ListId, int InvId)
+        {
+            try { CDal.CheckMore(ListId, InvId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        //安排生产
+        public bool AddWork(string ListId)
+        {
+            try { CDal.AddWork(ListId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

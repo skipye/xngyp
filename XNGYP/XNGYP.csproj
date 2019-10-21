@@ -180,6 +180,7 @@
     <Content Include="images\loading.gif" />
     <Content Include="images\loading\loading-b.gif" />
     <Content Include="images\loading\loading-s.gif" />
+    <Content Include="js\INVScript.js" />
     <Content Include="js\ajaxScript.js" />
     <Content Include="js\DatePicker\4.8\calendar.js" />
     <Content Include="js\DatePicker\4.8\lang\en.js" />
@@ -668,6 +669,7 @@
     <Content Include="Views\Semi\Add.cshtml" />
     <Content Include="Views\Semi\Index.cshtml" />
     <Content Include="Views\Semi\MoveINV.cshtml" />
+    <Content Include="Views\Semi\Check.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -271,7 +271,7 @@ function opneview(obj, id)
     if (ListId != "" && ListId != undefined) {
         var MSG = title+"审核操作，审核ID：" + ListId + "，审核网址：" + PostUrl;
         AddWorkLogs(MSG, 5);
-        layer_show(title, PostUrl + "?ListId=" + ListId, 600, 300);
+        layer_show(title, PostUrl + "?ListId=" + ListId, 500, 300);
     }
     else { layer.alert("请先去选中！"); }
     
@@ -458,4 +458,4 @@ $(".number").keyup(function () {  //keyup事件处理
     $(this).val($(this).val().replace(/\D|^0/g, ''));
 }).css("number", "disabled");  //CSS设置输入法不可用
 
-var Arritem = new Array("已开工单", "图纸料单就绪", "开料完成", "雕花完成", "木工完成", "刮磨完成", "油漆完成", "配件安装完成");
+var Arritem = new Array("已开工单","_", "图纸料单就绪", "开料完成", "雕花完成", "木工完成", "刮磨完成", "油漆完成", "配件安装完成");

@@ -82,10 +82,33 @@ namespace XNGYP.Controllers
             }
             else return Content("0");
         }
+        public ActionResult Check(string ListId)
+        {
+            SemiModel Models = new SemiModel();
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.ListId = ListId;
+            return View(Models);
+        }
+        public ActionResult PostCheck(string ListId, int INVId)
+        {
+            if (LSer.CheckMore(ListId, INVId) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
+        public ActionResult Work(string ListId)
+        {
+            if (LSer.AddWork(ListId) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
         public void ToExcelOut(SSemiModel SModels)
         {
             var models = LSer.ToExcelOut(SModels);
-            ESer.CreateExcel(models, "成品库库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+            ESer.CreateExcel(models, "半成品库库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }
 }
