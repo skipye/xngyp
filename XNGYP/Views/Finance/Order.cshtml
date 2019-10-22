@@ -1,0 +1,180 @@
+﻿@model ModelProject.SContractHeaderModel
+@{
+    Layout = null;
+}
+@Html.Action("_Meta", "Home")
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>财务管理<span class="c-gray en">&gt;</span>订单列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <div class="text-c">
+        @*<span class="select-box inline">
+            @Html.DropDownListFor(k => k.DepartmentId, Model.DepartmentDroList, new { @class = "select" })
+        </span>*@
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="开始时间">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="结束时间">
+        @Html.TextBoxFor(k => k.UserName, new { @placeholder = "客户名称", @style = "width:150px", @class = "input-text" })
+        <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜素</button>
+    </div>
+    @*<div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="f-l">
+            <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Order")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+            <a href="javascript:void(0);" onclick="checked(this,'0')" class="btn btn-primary radius" data-url="@Url.Action("Checked","Order")"><i class="Hui-iconfont">&#xe615;</i>批量审核</a>
+        </span>
+        <span class="f-r pr-10 c-green" style="line-height:40px;">合同总金额：<b id="HTTotail"></b>元</span>
+    </div>*@
+    <div class="mt-20 checkmodel">
+        @*@Html.Action("PageList","Article")*@
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+                <tr class="text-l">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th>客户名称</th>
+                    <th>合同编号</th>
+                    <th width="100">合同时间</th>
+                    <th>发货方式</th>
+                    <th>合同总金额</th>
+                    <th>预付款</th>
+                    <th>付款状态</th>
+                    <th>是否审核</th>
+                    <th>销售人员</th>
+                    <th>财务是否审核</th>
+                    <th width="100">操作时间</th>
+                    <th width="120">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Action("_Footer", "Home")
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=4"></script>
+<script type="text/javascript">
+
+    var param = {};
+    $(function () { search(param); });
+    $("#btnSearch").click(function () {
+        //搜索条件
+        var UserName = $("#UserName").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        //搜索
+        param["UserName"] = UserName;
+        param["StartTime"] = StartTime;
+		param["EndTime"] = EndTime;
+		param["UserId"] = 3285;
+        //初始化，然后绑定
+        $('.table-sort').DataTable().destroy();
+        search(param);
+    });
+
+    function search(param) {
+        $('.table-sort').dataTable({
+            "aaSorting": [[2, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "ajax": function (data, callback, settings) {
+                ajaxRequest("post", "/Finance/PageList", param, function (result) {
+                    //封装返回数据
+                    var returnData = {};
+                    returnData.data = result.data;
+                    var HTTotail = result.HTTotail;
+                    $("#HTTotail").html(HTTotail);
+                    callback(returnData);
+                });
+            },
+            "columnDefs": [//对table格式的定义（表格的列从0开始）
+                {
+                    targets: 0,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var StrArr = "";
+                        if (row.CWCheckStatus == 0) {
+                            StrArr= '<input type="checkbox" value="' + row.Id + '" >';
+                        }
+                        return StrArr;
+                    }
+                }, {
+                    targets: 12,//把第九列的样式改为超链接
+                    render: function (data, type, row) {
+                        var StrCheck = "";
+                        if (row.CWCheckStatus == 0 && param["UserId"]==3285)
+                        {
+                            StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="checked(this, \'' + row.Id + '\')" data-url=\'/Order/CWChecked\' title="审核"><i class="Hui-iconfont f-14">&#xe615;</i></a>';
+                        }
+						StrCheck += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="FR(\'收款\',\'/Finance/FR\', \'' + row.Id + '\', \'600\', \'300\')" data-url=\'/Finance/FR\' title="收款"><i class="Hui-iconfont f-14">&#xe637;</i></a>' +
+							        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="show(\'付款记录\',\'/Finance/Show\', \'' + row.Id + '\', \'700\', \'400\')" title="付款记录"><i class="Hui-iconfont f-14">&#xe687;</i></a>';
+                        return StrCheck;
+                               
+                    }
+                }
+            ],
+            "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
+                        { "data": "Id" },
+                        { "data": "Customer", "className": "textoverflow" },
+                        {
+                            "data": "SN", "defaultContent": "", "render": function (data, type, row) {
+                                return "<u style=\"cursor:pointer\" class=\"text-primary\" onclick=\"show('" + data + "','/Order/Show','" + row.Id + "','800','600')\">" + data + "</u>";
+                        } },
+                        {
+                            "data": "OrderTime", "render": function (data) {
+                                var NewTime = parseInt(data.replace(/\D/igm, ""));
+                                return formatDate(NewTime);
+                            }
+                        },
+                        {
+                            "data": "SHFlag", "render": function (data) {
+                                var StrStatus = "<b class='c-warning'>送货</b>";
+                                if (data == 1)
+                                { StrStatus = "<b class='c-green'>自提</b>"; }
+                                if (data == 2)
+                                { StrStatus = "<b class='c-green'>邮寄</b>"; }
+                                return StrStatus;
+                            }
+                        },
+                        { "data": "Amount", "defaultContent": "", "className": "textoverflow" },
+                        { "data": "Prepay", "defaultContent": "", "className": "textoverflow" },
+                        {
+                            "data": "FRFlag", "render": function (data, type, row) {
+                                var StatusName = "<span class=\"label label-warning radius\">未付款</span>";
+                                if (data == 1)
+                                { StatusName = "<span class=\"label label-success radius\">已付预付款</span>"; }
+                                if (data == 2) { StatusName = "<span class=\"label label-danger radius\">已付全款</span>"; }
+                                return StatusName;
+                            }, "className": "checkedstatus",
+                        },
+                        {
+                            "data": "Status", "render": function (data) {
+                                var StrStatus = "<b class='c-warning'>否</b>";
+                                if (data == true)
+                                { StrStatus = "<b class='c-green'>是</b>"; }
+                                return StrStatus;
+                            }
+                        },
+                        { "data": "SaleUserName", "defaultContent": "" },
+                        {
+                            "data": "CWCheckStatus", "render": function (data) {
+                                var StrStatus = "<b class='c-warning'>否</b>";
+                                if (data == true)
+                                { StrStatus = "<b class='c-green'>是</b>"; }
+                                return StrStatus;
+                            }
+                        },
+                        {
+                            "data": "CreateTime", "render": function (data) {
+                                var NewTime = parseInt(data.replace(/\D/igm, ""));
+                                return formatDateTime(NewTime);
+                            }
+                        },
+
+            ]
+        });
+    };
+
+
+</script> 

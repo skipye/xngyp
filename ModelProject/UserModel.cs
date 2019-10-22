@@ -27,6 +27,8 @@ namespace ModelProject
         public DateTime? jobtime { get; set; }//手机号码
         public string departmentname { get; set; }
         public DateTime? officialtime { get; set; }
+        public int departmentId { get; set; }
+        public int Flag { get; set; }
 
     }
     public class SUsersModel

@@ -118,6 +118,7 @@
     <Compile Include="Controllers\FileManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CostController.cs" />
+    <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\SemiController.cs" />
     <Compile Include="Controllers\SaleStartController.cs" />
     <Compile Include="Controllers\PreCastController.cs" />
@@ -670,6 +671,14 @@
     <Content Include="Views\Semi\Index.cshtml" />
     <Content Include="Views\Semi\MoveINV.cshtml" />
     <Content Include="Views\Semi\Check.cshtml" />
+    <Content Include="Views\Finance\Add.cshtml" />
+    <Content Include="Views\Finance\AddProducts.cshtml" />
+    <Content Include="Views\Finance\DepartmentIndex.cshtml" />
+    <Content Include="Views\Finance\Order.cshtml" />
+    <Content Include="Views\Finance\ProductListByOrder.cshtml" />
+    <Content Include="Views\Finance\Show.cshtml" />
+    <Content Include="Views\Finance\UserIndex.cshtml" />
+    <Content Include="Views\Finance\FR.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

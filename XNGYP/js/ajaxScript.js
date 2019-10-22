@@ -287,7 +287,12 @@ function ajaxRequest(requestType, url, params, backFuc) {
         }
     });
 }
-
+//f付款
+function FR(title, url, id, w, h) {
+	var MSG = title + "操作，付款ID：" + id + "，付款网址：" + url;
+	AddWorkLogs(MSG, 8);
+	layer_show(title, url + "?Id=" + id, w, h);
+}
 //时间方法,时间对象转换成"2010-09-12 22:12:23"格式
 function formatDateTime(inputTime) {
     var date = new Date(inputTime);

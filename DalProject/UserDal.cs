@@ -65,34 +65,52 @@ namespace DalProject
         //用户登录
         public LoginModel IsLogin(LoginModel models)
         {
+            LoginModel ReturnModel = new LoginModel();
             using (var db = new XNHREntities())
             {
-                var Tables = (from p in db.ehr_employee.Where(k => k.password == models.PassWord && k.status == 1)
+                ReturnModel = (from p in db.ehr_employee.Where(k => k.password == models.PassWord && k.status == 1)
                               where !string.IsNullOrEmpty(models.UserName) ? p.name == models.UserName : true
                               where !string.IsNullOrEmpty(models.Telephone) ? p.tel == models.Telephone : true
-                              select p
+                              select new LoginModel {
+                                  UserName=p.name,
+                                  UserId=p.id,
+                                  departmentId=p.department,
+                                  department=p.departmentname,
+                                  IsLogin = true,
+                              }
                              ).FirstOrDefault();
-                LoginModel ReturnModel = new LoginModel();
-                if (Tables != null)
-                {
-                    ReturnModel.UserName = Tables.name;
-                    ReturnModel.IsLogin = true;
-                    ReturnModel.UserId = Tables.id;
-                    ReturnModel.departmentId = Tables.department;
-                    ReturnModel.department = Tables.departmentname;
-                    db.SaveChanges();
-
-                    WorkLogsModel WModels = new WorkLogsModel();
-                    WModels.UserId = Tables.id;
-                    WModels.UserName= Tables.name;
-                    WModels.MSG = "用户登录";
-                    WModels.MSGStatus = 1;
-                    AddWorkLogs(WModels);
-                }
-                else { ReturnModel.IsLogin = false; }
-               
-                return ReturnModel;
             }
+            if (ReturnModel == null)
+            {
+                using (var db = new SaleHREntities())
+                {
+                    ReturnModel = (from p in db.ehr_employee.Where(k => k.password == models.PassWord && k.status == 1)
+                                   where !string.IsNullOrEmpty(models.UserName) ? p.name == models.UserName : true
+                                   where !string.IsNullOrEmpty(models.Telephone) ? p.tel == models.Telephone : true
+                                   select new LoginModel
+                                   {
+                                       UserName = p.name,
+                                       UserId = p.id,
+                                       departmentId = p.department,
+                                       department = p.departmentname,
+                                       IsLogin=true,
+                                   }
+                                 ).FirstOrDefault();
+                }
+            }
+            if (ReturnModel != null)
+            {
+
+                WorkLogsModel WModels = new WorkLogsModel();
+                WModels.UserId = ReturnModel.UserId;
+                WModels.UserName = ReturnModel.UserName;
+                WModels.MSG = "用户登录";
+                WModels.MSGStatus = 1;
+                AddWorkLogs(WModels);
+            }
+            else { ReturnModel.IsLogin = false; }
+
+            return ReturnModel;
         }
 
         public UserCurrentModel GetCurrentUserName()
@@ -158,13 +176,40 @@ namespace DalProject
         {
             List<SelectListItem> items = new List<SelectListItem>();
             items.Add(new SelectListItem() { Text = "请选择用户", Value = "" });
+            List<UsersModel> UserModel = new List<UsersModel>();
+            List<UsersModel> Result = new List<UsersModel>();
             using (var db = new XNHREntities())
             {
-                List<ehr_employee> model = db.ehr_employee.Where(b => b.status == 1).OrderBy(k => k.department).ToList();
-                foreach (var item in model)
-                {
-                    items.Add(new SelectListItem() { Text = "╋" + item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
-                }
+                UserModel = (from p in db.ehr_employee.Where(b => b.status == 1)
+                             orderby p.department
+                             select new UsersModel
+                             {
+                                Id=p.id,
+                                Name=p.name,
+                                departmentname=p.departmentname,
+                                departmentId=p.department,
+                                Telphone =p.tel,
+                                Flag=1,
+                             }).ToList();
+            }
+            using (var db = new SaleHREntities())
+            {
+                var NewUserModel = (from p in db.ehr_employee.Where(b => b.status == 1)
+                             orderby p.department
+                             select new UsersModel
+                             {
+                                 Id = p.id,
+                                 Name = p.name,
+                                 departmentname = p.departmentname,
+                                 departmentId = p.department,
+                                 Telphone = p.tel,
+                                 Flag = 2,
+                             }).ToList();
+                 Result = UserModel.Union(NewUserModel).ToList<UsersModel>();
+            }
+            foreach (var item in Result)
+            {
+                items.Add(new SelectListItem() { Text = item.Name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
             }
             return items;
         }

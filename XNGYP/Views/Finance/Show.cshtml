@@ -1,0 +1,56 @@
+﻿
+@model List<ModelProject.FinanceModel>
+@{
+	Layout = null;
+	int i = 1;
+}
+@Html.Action("_Meta", "Home")
+@if (Model != null && Model.Any())
+{
+	<table class="table table-border table-bordered table-bg table-hover table-sort">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>订单编号</th>
+				<th>客户名称</th>
+				<th>付款方式</th>
+				<th>收款金额</th>
+				<th>操作人</th>
+				<th>操作时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr style="height:35px;">
+					<td>@(i)</td>
+					<td>@item.HTSN </td>
+					<td>@item.Customer </td>
+					<td>@item.PayModel</td>
+					<td>@item.Amount </td>
+					<td>@item.operator_name </td>
+					<td>@Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd HH:mm") </td>
+					
+				</tr>
+				i++;
+			}
+		</tbody>
+	</table>
+
+}
+else
+{<p>暂无产品！</p>}
+<script type="text/javascript" src="~/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".delone").click(function () {
+        var _This = $(this);
+        var Id = _This.attr("ref");
+        var Url = _This.attr("url");
+        $.post(Url, { Id: Id }, function (d) {
+            if (d == "1")
+            {
+                _This.parent().parent().remove();
+            }
+        })
+    })
+</script>

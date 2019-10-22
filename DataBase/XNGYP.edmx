@@ -122,6 +122,36 @@
           <Property Name="DeleteFlag" Type="bit" />
           <Property Name="Remarks" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="XNGYP_FR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HTId" Type="int" />
+          <Property Name="HTSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Prepay" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="operator_id" Type="int" />
+          <Property Name="operator_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="XNGYP_FR_Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HTId" Type="int" />
+          <Property Name="HTSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="PayModel" Type="nvarchar" MaxLength="50" />
+          <Property Name="operator_id" Type="int" />
+          <Property Name="operator_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Remaks" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="XNGYP_INV_Labels">
           <Key>
             <PropertyRef Name="Id" />
@@ -284,6 +314,20 @@
           <Property Name="MenuList" Type="nvarchar" MaxLength="500" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="XNGYP_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="userName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="Telphone" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="XNGYP_WIP_PreCast">
           <Key>
@@ -678,6 +722,8 @@
           <EntitySet Name="INV_Name_Type" EntityType="Self.INV_Name_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkLogs" EntityType="Self.WorkLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Customers" EntityType="Self.XNGYP_Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_FR" EntityType="Self.XNGYP_FR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_FR_Logs" EntityType="Self.XNGYP_FR_Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_INV_Labels" EntityType="Self.XNGYP_INV_Labels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_INV_Semi" EntityType="Self.XNGYP_INV_Semi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Menu" EntityType="Self.XNGYP_Menu" Schema="dbo" store:Type="Tables" />
@@ -687,6 +733,7 @@
           <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="Self.XNGYP_Products_WorkFrom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Products_WorkFrom_Price" EntityType="Self.XNGYP_Products_WorkFrom_Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Role" EntityType="Self.XNGYP_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Users" EntityType="Self.XNGYP_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_WIP_PreCast" EntityType="Self.XNGYP_WIP_PreCast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_WorkEven" EntityType="Self.XNGYP_WorkEven" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_WorkFrom" EntityType="Self.XNGYP_WorkFrom" Schema="dbo" store:Type="Tables" />
@@ -920,6 +967,9 @@
             <End Role="XNGYP_Products_SN" EntitySet="XNGYP_Products_SN" />
             <End Role="XNGYP_INV_Semi" EntitySet="XNGYP_INV_Semi" />
           </AssociationSet>
+          <EntitySet Name="XNGYP_FR_Logs" EntityType="XNGYPModel.XNGYP_FR_Logs" />
+          <EntitySet Name="XNGYP_FR" EntityType="XNGYPModel.XNGYP_FR" />
+          <EntitySet Name="XNGYP_Users" EntityType="XNGYPModel.XNGYP_Users" />
         </EntityContainer>
         <EntityType Name="WorkLogs">
           <Key>
@@ -1651,6 +1701,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="XNGYP_FR_Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HTId" Type="Int32" />
+          <Property Name="HTSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PayModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="operator_id" Type="Int32" />
+          <Property Name="operator_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Remaks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="XNGYP_FR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HTId" Type="Int32" />
+          <Property Name="HTSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Prepay" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="operator_id" Type="Int32" />
+          <Property Name="operator_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="XNGYP_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <Property Name="Telphone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2038,6 +2132,53 @@
                 <ScalarProperty Name="WoodName" ColumnName="WoodName" />
                 <ScalarProperty Name="WoodId" ColumnName="WoodId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_FR_Logs">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_FR_Logs">
+              <MappingFragment StoreEntitySet="XNGYP_FR_Logs">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Remaks" ColumnName="Remaks" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="operator_name" ColumnName="operator_name" />
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="PayModel" ColumnName="PayModel" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="HTSN" ColumnName="HTSN" />
+                <ScalarProperty Name="HTId" ColumnName="HTId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_FR">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_FR">
+              <MappingFragment StoreEntitySet="XNGYP_FR">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="operator_name" ColumnName="operator_name" />
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Prepay" ColumnName="Prepay" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="HTSN" ColumnName="HTSN" />
+                <ScalarProperty Name="HTId" ColumnName="HTId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Users">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Users">
+              <MappingFragment StoreEntitySet="XNGYP_Users">
+                <ScalarProperty Name="Telphone" ColumnName="Telphone" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

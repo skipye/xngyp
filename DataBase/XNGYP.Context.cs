@@ -44,5 +44,8 @@ namespace DataBase
         public DbSet<XNGYP_WorkFrom> XNGYP_WorkFrom { get; set; }
         public DbSet<XNGYP_WorkEven> XNGYP_WorkEven { get; set; }
         public DbSet<XNGYP_Products_Price> XNGYP_Products_Price { get; set; }
+        public DbSet<XNGYP_FR_Logs> XNGYP_FR_Logs { get; set; }
+        public DbSet<XNGYP_FR> XNGYP_FR { get; set; }
+        public DbSet<XNGYP_Users> XNGYP_Users { get; set; }
     }
 }

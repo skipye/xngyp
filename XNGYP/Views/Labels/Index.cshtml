@@ -165,11 +165,10 @@
     function toExcelout() {
         var ProductSNId = $("#ProductSNId").val().trim();
         var FatherId = $("#FatherId").val().trim();
-        var ProductName = $("#ProductName").val().trim();
         var INVId = $("#INVId").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        window.location.href = "/Labels/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&ProductName=' + ProductName + '&INVId=' + INVId + '&StartTime=' + StartTime + '&EndTime=' + EndTime;
+        window.location.href = "/Labels/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&StartTime=' + StartTime + '&EndTime=' + EndTime;
         //$.post(ExcelUrl, {}, function (d) { });
     };
 </script> 

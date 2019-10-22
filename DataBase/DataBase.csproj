@@ -56,7 +56,7 @@
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ehr_employee.cs">
-      <DependentUpon>XNHRModel.tt</DependentUpon>
+      <DependentUpon>SaleHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="INV_Name.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
@@ -68,6 +68,21 @@
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaleHRModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SaleHRModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaleHRModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SaleHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaleHRModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SaleHRModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="SYS_colors.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
@@ -107,6 +122,12 @@
     <Compile Include="XNGYP_Customers.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
+    <Compile Include="XNGYP_FR.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_FR_Logs.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
     <Compile Include="XNGYP_INV_Labels.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
@@ -132,6 +153,9 @@
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_Role.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNGYP_Users.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
     <Compile Include="XNGYP_WIP_PreCast.cs">
@@ -179,6 +203,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>XNERPModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="SaleHRModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SaleHRModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SaleHRModel.edmx.diagram">
+      <DependentUpon>SaleHRModel.edmx</DependentUpon>
+    </None>
     <None Include="XNERPModel.edmx.diagram">
       <DependentUpon>XNERPModel.edmx</DependentUpon>
     </None>
@@ -190,6 +221,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SaleHRModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SaleHRModel.edmx</DependentUpon>
+      <LastGenOutput>SaleHRModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SaleHRModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SaleHRModel.edmx</DependentUpon>
+      <LastGenOutput>SaleHRModel.cs</LastGenOutput>
+    </Content>
     <Content Include="XNERPModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>XNERPModel.edmx</DependentUpon>
