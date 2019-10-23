@@ -1,45 +1,49 @@
-﻿@model ModelProject.SPreCastModel
+﻿@model ModelProject.SLabelsModel
 @{
     Layout = null;
     List<SelectListItem> ArrSecPro = new List<SelectListItem>();
     ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
 }
 @Html.Action("_Meta", "Home")
-<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>预投管理
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>成品库管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
 <div class="page-container">
     <div class="text-c">
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px", })
-            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select",@style = "width:150px", })
+            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
+            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
         </span>
         @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
+            @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
         </span>
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="开始时间">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="结束时间">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="addwindow('添加预投', '/PreCast/Add', '700', '500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加预投</a>
-    </div>
+    
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
                 <tr class="text-l">
                     <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th>标签编码</th>
+                    <th>产品编码</th>
                     <th>产品名称</th>
                     <th>材质</th>
                     <th>色号</th>
                     <th>长（mm）</th>
                     <th>宽（mm）</th>
                     <th>高（mm）</th>
-                    <th>数量（件）</th>
+                    <th>产品级别</th>
+                    <th>所入仓库</th>
+                    <th>进库日期</th>
                     <th>状态</th>
-                    <th>添加时间</th>
-                    <th width="120">操作</th>
+                    <th>所属方式</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -49,8 +53,9 @@
 
 @Html.Action("_Footer", "Home")
 <!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=7"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -58,12 +63,16 @@
     $("#btnSearch").click(function () {
         //搜索条件
         var ProductSNId = $("#ProductSNId").val().trim();
-        var ProductName = $("#ProductName").val().trim();
-        var WoodId = $("#WoodId").val().trim();
+        var FatherId = $("#FatherId").val().trim();
+        var INVId = $("#INVId").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
         //搜索
         param["ProductSNId"] = ProductSNId;
-        param["ProductName"] = ProductName;
-        param["WoodId"] = WoodId;
+        param["INVId"] = INVId;
+        param["FatherId"] = FatherId;
+        param["StartTime"] = StartTime;
+        param["EndTime"] = EndTime;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -71,10 +80,10 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[8, "desc"]],//默认第几个排序
+            "aaSorting": [[11, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
-                ajaxRequest("post", "/PreCast/PageList", param, function (result) {
+                ajaxRequest("post", "/Labels/PageList", param, function (result) {
                     //封装返回数据
                     var returnData = {};
                     returnData.data = result;
@@ -86,48 +95,51 @@
                     targets: 0,
                     orderable: false,
                     render: function (data, type, row) {
-                        var strArr = "";
-                        if (row.Staute <= 1) { strArr = '<input type="checkbox" value="' + row.Id + '" >';};
-                        return strArr;
-                    }
-                }, {
-                    targets: 10,
-                    render: function (data, type, row) {
-                        var strArr = "";
-                        if (row.Staute <= 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="workorderp(' + row.Id + ',\'/WorkOrder/Add\')" title="开工"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
-                        return strArr;
+                        return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }
             ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
+				{ "data": "SN", "className": "text-overflow" },
+				{ "data": "ProductSN", "className": "text-overflow" },
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "Color", "defaultContent": "" },
                 { "data": "Length", "defaultContent": "" },
                 { "data": "Width", "defaultContent": "" },
                 { "data": "Height", "defaultContent": "" },
-                { "data": "Qty", "defaultContent": "" },
-                { "data": "Staute",  "render": function (data) {
-                        var GradeName = "未确认";
-                    if (data == 1) { GradeName = "<b class='c-red'>已确认</b>"; }
-                    if (data == 2) { GradeName = "<b class='c-success'>已生产</b>"; }
-                    if (data == 3) { GradeName = "<b class='c-success'>已入半成品库</b>"; }
-                    if (data == 4) { GradeName = "<b class='c-success'>已入成品库</b>";}
-                    return GradeName;
-                    } },
                 {
-                    "data": "CreateTime", "render": function (data) {
+                    "data": "Grade", "render": function (data) {
+                        var GradeName = "低级";
+                        if (data >= 5 && data < 9) { GradeName = "中级"; }
+                        if (data >= 9) { GradeName = "高级";}
+                    return GradeName;
+                    }},
+                { "data": "INVName", "defaultContent": "" },
+                {
+                    "data": "InputDateTime", "render": function (data) {
                         var NewTime = parseInt(data.replace(/\D/igm, ""));
                         return formatDateTime(NewTime);
                     }
                  },
+                { "data": "Status",  "render": function (data) {
+                        var GradeName = "<span class=\"label label-warning radius\">未确认</span>";
+                        if (data >= 1) { GradeName = "<span class=\"label label-success radius\">已确认</span>";}
+                    return GradeName;
+                    } },
+                { "data": "flag",  "render": function (data) {
+                        var GradeName = "盘点产品";
+                        if (data ==2) { GradeName = "销售产品"; }
+                        if (data == 3) { GradeName = "预投产品";}
+                    return GradeName;
+                    } },
 
             ]
         });
     };
-    $("#ProductSNId").change(function () {
-            var FatherId = $("#ProductSNId").val();
+    $("#ProductsSNId").change(function () {
+            var FatherId = $("#ProductsSNId").val();
 			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
             $.post(ProUrl, { FatherId: FatherId }, function (data) {
                 //alert(data);
@@ -136,5 +148,4 @@
                 $('#FatherId').append(data);
             });
     });
-
 </script> 

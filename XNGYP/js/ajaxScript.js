@@ -101,10 +101,7 @@ function checked(obj, id) {
                     var MSG = "审核操作，审核ID：" + ListId + "，审核网址：" + PostUrl;
                     AddWorkLogs(MSG, 5);
                     layer.msg('已审核', { icon: 6, time: 1000 });
-                    if (id > 0) {
-                        $(obj).parents("tr").find(".checkedstatus").html('<span class="label label-success radius">通过</span>');
-                        $(obj).remove();
-                    } else { ResetWindow(); }
+                    ResetWindow();
                 }
             });
         },
@@ -114,10 +111,7 @@ function checked(obj, id) {
                     var MSG = "驳回操作，驳回ID：" + ListId + "，驳回网址：" + PostUrl;
                     AddWorkLogs(MSG, 6);
                     layer.msg('未通过', { icon: 5, time: 1000 });
-                    if (id > 0) {
-                        $(obj).parents("tr").find(".checkedstatus").html('<span class="label label-danger radius">被驳回</span>');
-                        $(obj).remove();
-                    } else { ResetWindow(); }
+                    ResetWindow();
                 }
             });
         });

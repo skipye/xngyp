@@ -29,6 +29,15 @@ namespace XNGYP.Controllers
                 ContentType = "application/json"
             };
         }
+        public ActionResult UserIndex()
+        {
+            SSemiModel Models = new SSemiModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
+            return View(Models);
+        }
         public ActionResult Add(int? Id)
         {
             SemiModel Models = new SemiModel();

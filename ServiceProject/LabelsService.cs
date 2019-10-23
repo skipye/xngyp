@@ -64,5 +64,28 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<LabelsModel> GetWorkLabelsList(SLabelsModel SModel)
+        {
+            try
+            {
+                return CDal.GetWorkLabelsList(SModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        //绑定合同操作
+        public bool CheckLabels(string ListId, int CRM_Id)
+        {
+            try
+            {
+                CDal.CheckLabels(ListId, CRM_Id); return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

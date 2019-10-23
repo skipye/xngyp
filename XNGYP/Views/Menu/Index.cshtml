@@ -67,7 +67,7 @@
             "destroy": true,
             "searching": true,
             "autoWidth": true,
-            "ordering": false, //设置所有不排序
+            "ordering": true, //设置所有不排序
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Menu/PageList", param, function (result) {
                     //封装返回数据

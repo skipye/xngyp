@@ -37,17 +37,19 @@ namespace DalProject
                                 SN = p.Contract_Header.SN,
                                 Customer = p.Contract_Header.XNGYP_Customers.Name,
                                 ProductSN = p.ProductSN,
+                                ProductId=p.ProductId,
                                 ProductName = p.ProductName,
                                 delivery_date = p.Contract_Header.DeliveryDate,
                                 length = p.length,
                                 width = p.width,
                                 height = p.height,
                                 WoodName = p.WoodName,
+                                WoodId=p.WoodId,
                                 Color = p.Color,
                                 Status = p.Status,
                                 Qty = p.Qty,
-                                LabelsCount = db.XNGYP_INV_Labels.Where(k => k.ProductsId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag<=2 && k.DeleteFlag == false).Count(),
-                                SemiCount = db.XNGYP_INV_Semi.Where(k => k.ProductId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag <= 2 && k.DeleteFlag == false).Count(),
+                                LabelsCount = db.XNGYP_INV_Labels.Where(k => k.ProductsId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag!=2 && k.DeleteFlag == false).Count(),
+                                SemiCount = db.XNGYP_INV_Semi.Where(k => k.ProductId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag != 1 && k.DeleteFlag == false).Count(),
                                 
                             }).ToList();
                 return List;

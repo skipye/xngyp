@@ -266,5 +266,68 @@ namespace DalProject
             }
             return Exceltable;
         }
+        public List<LabelsModel> GetWorkLabelsList(SLabelsModel SModel)
+        {
+
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Flag != 2 && k.Status==1)
+                            where SModel.WoodId != null && SModel.WoodId > 0 ? SModel.WoodId == p.WoodId : true
+                            where SModel.ProductId != null && SModel.ProductId > 0 ? p.ProductsId == SModel.ProductId : true
+                            orderby p.InputDateTime descending
+                            select new LabelsModel
+                            {
+                                Id = p.Id,
+                                ProductId = p.ProductsId,
+                                ProductName = p.XNGYP_Products.name,
+                                ProductSN = p.ProductSN,
+                                Color = p.Color,
+                                WoodName = p.WoodName,
+                                INVId = p.INVId,
+                                INVName = p.INV_Name.Name,
+                                InputDateTime = p.InputDateTime,
+                                SN = p.SN,
+                                Length = p.Length,
+                                Width = p.Width,
+                                Height = p.Height,
+                                WoodId = p.WoodId,
+                                ColorId = p.ColorId,
+                                Status = p.Status,
+                                flag = p.Flag,
+                                Grade = p.Grade,
+                            }).ToList();
+                return List;
+            }
+        }
+        //绑定合同操作
+        public void CheckLabels(string ListId, int CRM_Id)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                string[] ArrId = ListId.Split('$');
+                int UpdateCount = ArrId.Count() - 1;
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
+                        tables.ContractDetailId = CRM_Id;
+                        tables.Flag = 2;
+                        tables.WIPContractIid = null;
+                    }
+                }
+                int LabelsCount = UpdateCount;
+                int qty = 1;
+                var CRMTables = db.Contract_Detail.Where(k => k.Id == CRM_Id).SingleOrDefault();
+                CRMTables.LabelseCount = UpdateCount;
+                qty = CRMTables.Qty??0;
+                if ((qty - LabelsCount) <= 0)//判断是否已经没了
+                {
+                    CRMTables.Status = 4;
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }

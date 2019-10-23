@@ -17,7 +17,9 @@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="add('选中开工', '/PreCast/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中开工</a>
+        <span class="f-l">
+            <a href="javascript:void(0);" onclick="SaleWork('0')" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe615;</i>选中开工</a>
+        </span>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -30,10 +32,6 @@
                     <th>产品系列</th>
                     <th>产品名称</th>
                     <th>材质</th>
-                    <th>色号</th>
-                    <th>长（mm）</th>
-                    <th>宽（mm）</th>
-                    <th>高（mm）</th>
                     <th>数量（件）</th>
                     <th>状态</th>
                     <th>半成品库存</th>
@@ -50,6 +48,7 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
+<script type="text/javascript" src="~/js/WorkScript.js?v=3"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -70,11 +69,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "scrollX": true,
-            "searching": true,
+            "aaSorting": [[2, "desc"]],//默认第几个排序
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/SaleStart/PageList", param, function (result) {
                     //封装返回数据
@@ -88,12 +84,16 @@
                     targets: 0,
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<input type="checkbox" value="' + row.Id + '" >';
+                        var strArr = "";
+                        if (row.Status <= 1) { strArr = '<input type="checkbox" value="' + row.Id + '" >';};
+                        return strArr;
                     }
                 }, {
-                    targets: 14,
+                    targets: 10,
                     render: function (data, type, row) {
-                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/PreCast/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe637;</i></a>';
+                        var strArr = "";
+                        if (row.Status <=1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="SaleWork(' + row.Id + ')" title="开工"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
+                        return strArr;
                     }
                 }
             ],
@@ -104,19 +104,23 @@
                 { "data": "ProductSN", "defaultContent": "" },
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "WoodName", "defaultContent": "" },
-                { "data": "Color", "defaultContent": "" },
-                { "data": "length", "defaultContent": "" },
-                { "data": "width", "defaultContent": "" },
-                { "data": "height", "defaultContent": "" },
                 { "data": "Qty", "defaultContent": "" },
-                { "data": "Staute",  "render": function (data) {
+                { "data": "Status",  "render": function (data) {
                         var GradeName = "<span class=\"label label-warning radius\">未开工</span>";
-                    if (data == 1) { GradeName = "<span class=\"label label-success radius\">已开工</span>"; }
-                    if (data == 2) { GradeName = "<span class=\"label label-danger radius\">已完成</span>";}
+                    if (data == 1) { GradeName = "<b class='c-red'>已确认</b>"; }
+                    if (data == 2) { GradeName = "<b class='c-success'>已生产</b>"; }
+                    if (data == 3) { GradeName = "<b class='c-success'>已入半成品库</b>"; }
+                    if (data == 4) { GradeName = "<b class='c-success'>已入成品库</b>";}
                     return GradeName;
                     } },
                 { "data": "SemiCount", "defaultContent": "" },
-                { "data": "LabelsCount", "defaultContent": "" },
+                {
+                    "data": "LabelsCount",  "defaultContent": "", "render": function (data, type, row) {
+                        var ReStr = data;
+                        if (data > 0) { ReStr ="<u style=\"cursor:pointer\" class=\"c-red\" onclick=\"BindSaleOrder('" + row.WoodId + "','" + row.ProductId + "','" + row.Id + "','" + row.Qty + "')\">" + data + "</u>"; }
+                        return ReStr;
+                    }
+                },
 
             ]
         });

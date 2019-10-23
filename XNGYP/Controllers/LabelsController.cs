@@ -20,6 +20,15 @@ namespace XNGYP.Controllers
             Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
+        public ActionResult UserIndex()
+        {
+            SLabelsModel Models = new SLabelsModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
+            return View(Models);
+        }
         public ActionResult PageList(SLabelsModel SModels)
         {
             var PageList = LSer.GetLabelsList(SModels);
@@ -86,6 +95,21 @@ namespace XNGYP.Controllers
         {
             var models = LSer.ToExcelOut(SModels);
             ESer.CreateExcel(models, "成品库库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+        }
+        public ActionResult WorkLabels(SLabelsModel SModel,int CRMId,int Qty)
+        {
+            var Models = LSer.GetWorkLabelsList(SModel);
+            ViewBag.CRMId = CRMId;
+            ViewBag.Qty = Qty;
+            return View(Models); 
+        }
+        public ActionResult CheckLabels(string ListId, int CRM_Id)
+        {
+            if (LSer.CheckLabels(ListId, CRM_Id) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
         }
     }
 }
