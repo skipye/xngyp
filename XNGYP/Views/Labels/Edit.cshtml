@@ -1,9 +1,5 @@
 ﻿@model ModelProject.LabelsModel
 @{Layout = null;
-    List<SelectListItem> ArrPro = new List<SelectListItem>();
-    ArrPro.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
-	List<SelectListItem> ArrSecPro = new List<SelectListItem>();
-    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
     List<SelectListItem> ArrGrade = new List<SelectListItem>();
     ArrGrade.Add(new SelectListItem { Text = "请选择产品等级", Value = "" });
     ArrGrade.Add(new SelectListItem { Text = "低级", Value = "1" });
@@ -17,33 +13,7 @@
 <article class="page-container">
 	<form class="form form-horizontal" id="formadd">
 		@Html.HiddenFor(k => k.Id)
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属类别：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<span class="select-box inline">
-					@Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select" })
-					@Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select" })
-					@Html.HiddenFor(k => k.ProductXL)
-					@Html.HiddenFor(k => k.ProductSN)
-				</span>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<span class="select-box" style="width:150px;">
-					@Html.DropDownListFor(k => k.ProductId, ArrPro, new { @class = "select" })
-				</span>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属仓库：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<span class="select-box" style="width:150px;">
-					@Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
-				</span>
-			</div>
-		</div>
+		
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属材质：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -69,12 +39,6 @@
 				<span class="select-box" style="width:150px;">
 					@Html.DropDownListFor(k => k.Grade, ArrGrade, new { @class = "select" })
 				</span>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>入库数量：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				@Html.TextBoxFor(k => k.qty, new { @class = "input-text" })
 			</div>
 		</div>
 		<div class="row cl">
@@ -120,12 +84,8 @@
         //表单验证
         $("#formadd").validate({
             rules: {
-                ProductId: { required: true, },
-                INVId: { required: true, },
                 WoodId: { required: true, },
-                ColorId: { required: true, },
                 Grade: { required: true, },
-
             },
             onkeyup: false,
             focusCleanup: true,
@@ -138,13 +98,9 @@
                     var o = paramArray[i];
                     param[o["name"]] = o["value"];
                 };
-                ajaxRequest("post", "/Labels/PostAdd", param, function (d) {
+                ajaxRequest("post", "/Labels/PostEdit", param, function (d) {
                     if (d == "1") {
-                        if (editModel(window.location.href)) {
-                            layer.msg("编辑成功！", { icon: 1, time: 1000 });
-                        } else {
-                            layer.msg("添加成功！", { icon: 1, time: 1000 });
-                        }
+                        layer.msg("编辑成功！", { icon: 1, time: 1000 });
                     } else {
                         layer.msg("服务器错误！", { icon: 2, time: 1000 });
                     }

@@ -52,6 +52,29 @@ namespace XNGYP.Controllers
             Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
+        public ActionResult Edit(int Id)
+        {
+            LabelsModel Models = new LabelsModel();
+            Models.qty = 1;
+            if (Id > 0)
+            {
+                Models = LSer.GetDetailById(Id);
+            }
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
+            return View(Models);
+        }
+        [ValidateInput(false)]
+        public ActionResult PostEdit(LabelsModel Models)
+        {
+            if (LSer.Edit(Models) == true)
+            {
+                return Content("1");
+            }
+            else { return View(Models); }
+        }
         [ValidateInput(false)]
         public ActionResult PostAdd(LabelsModel Models)
         {
@@ -103,9 +126,34 @@ namespace XNGYP.Controllers
             ViewBag.Qty = Qty;
             return View(Models); 
         }
+        //绑定库存产品
         public ActionResult CheckLabels(string ListId, int CRM_Id)
         {
-            if (LSer.CheckLabels(ListId, CRM_Id) == true)
+            if (LSer.BindLabels(ListId, CRM_Id) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
+        //产品确认
+        public ActionResult Check(string ListId)
+        {
+            SemiModel Models = new SemiModel();
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.ListId = ListId;
+            return View(Models);
+        }
+        public ActionResult PostCheck(string ListId, int INVId,int Grade)
+        {
+            if (LSer.CheckMore(ListId, INVId, Grade) == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
+        public ActionResult Delivery(string ListId)
+        {
+            if (LSer.DeliveryMore(ListId) == true)
             {
                 return Content("1");
             }

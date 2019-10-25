@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class XNGYP_INV_Labels
     {
+        public XNGYP_INV_Labels()
+        {
+            this.XNGYP_Delivery = new HashSet<XNGYP_Delivery>();
+        }
+    
         public int Id { get; set; }
         public int ProductsId { get; set; }
         public Nullable<int> ProductsSNId { get; set; }
@@ -42,10 +47,14 @@ namespace DataBase
         public string ProductSN { get; set; }
         public Nullable<int> FatherId { get; set; }
         public Nullable<int> WorkOrderId { get; set; }
+        public Nullable<System.DateTime> OutDate { get; set; }
+        public Nullable<int> OutUserId { get; set; }
+        public string OutUserName { get; set; }
     
         public virtual INV_Name INV_Name { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
         public virtual XNGYP_Products_SN XNGYP_Products_SN { get; set; }
         public virtual XNGYP_Products_SN XNGYP_Products_SN1 { get; set; }
+        public virtual ICollection<XNGYP_Delivery> XNGYP_Delivery { get; set; }
     }
 }

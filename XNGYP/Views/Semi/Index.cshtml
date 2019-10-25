@@ -115,7 +115,7 @@
                     render: function (data, type, row) {
                         var str = "";
                         if (row.Status == 0) { str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="opneview(this,\'' + row.Id + '\')" data-url=\'/Semi/Check\' title="入库"><i class="Hui-iconfont f-14">&#xe645;</i></a>'; }
-                        if (row.Status == 1) { str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="INVWork(this,\'' + row.Id + '\')" data-url=\'/Semi/Work\' title="生产"><i class="Hui-iconfont f-14">&#xe645;</i></a>';}
+                        if (row.Status == 1) { str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="INVWork(this,\'' + row.Id + '\')" data-url=\'/Semi/Work\' title="生产"><i class="Hui-iconfont f-14">&#xe63c;</i></a>';}
                         return str;
                     }
                 }

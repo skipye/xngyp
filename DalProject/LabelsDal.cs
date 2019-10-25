@@ -33,6 +33,7 @@ namespace DalProject
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductsSNId : true
                             where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
                             where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
+                            where SModel.Status !=null && SModel.Status >0? SModel.Status == p.Status : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.XNGYP_Products.name.Contains(SModel.ProductName) : true
                             where p.CreateTime > StartTime
                             where p.CreateTime < EndTime
@@ -59,6 +60,7 @@ namespace DalProject
                                 Grade = p.Grade,
                                 ProductSN=p.ProductSN,
                                 FatherId=p.FatherId,
+                                CreateTime=p.CreateTime,
                             }).ToList();
                 return List;
             }
@@ -108,7 +110,7 @@ namespace DalProject
                         table.CreateTime = DateTime.Now;
                         table.InputDateTime = DateTime.Now;
                         table.DeleteFlag = false;
-                        table.Flag = 1;
+                        table.Flag = 3;
                         table.ContractDetailId = 0;
                         table.WIPContractIid = 0;
                         table.Grade = Models.Grade;
@@ -116,6 +118,26 @@ namespace DalProject
                         table.ProductSN = Models.ProductXL+Models.ProductSN+Models.WoodNameXL+Models.Grade;
                         db.XNGYP_INV_Labels.Add(table);
                     }
+                }
+                db.SaveChanges();
+            }
+        }
+        public void Edit(LabelsModel Models)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                if (Models.Id > 0)
+                {
+                    var table = db.XNGYP_INV_Labels.Where(k => k.Id == Models.Id).SingleOrDefault();
+                    table.Length = Models.Length;
+                    table.Width = Models.Width;
+                    table.Height = Models.Height;
+                    table.WoodId = Models.WoodId;
+                    table.WoodName = Models.WoodName;
+                    table.ColorId = Models.ColorId;
+                    table.Color = Models.Color;
+                    table.Grade = Models.Grade;
+                    table.ProductSN = table.XNGYP_Products_SN.SN + table.XNGYP_Products_SN1.SN + new ContractHeaderDal().GetWoodSN(Models.WoodId.Value) + Models.Grade;
                 }
                 db.SaveChanges();
             }
@@ -258,7 +280,7 @@ namespace DalProject
                         row["所入仓库"] = item.INVName;
                         row["进库日期"] = Convert.ToDateTime(item.InputDateTime).ToString("yyyy-MM-dd"); ;
                         row["状态"] = item.Status != null && item.Status == 2 ? "已出库" : item.Status == 1 ? "已入库" : "未确认";
-                        row["所属方式"] = item.flag != null && item.flag == 2 ? "销售产品" : item.flag != null && item.flag == 3 ? "预投产品" : "盘点产品";
+                        row["所属方式"] = item.flag != null && item.flag == 1 ? "销售产品" : item.flag != null && item.flag == 2 ? "预投产品" : "盘点产品";
 
                         Exceltable.Rows.Add(row);
                     }
@@ -300,7 +322,7 @@ namespace DalProject
             }
         }
         //绑定合同操作
-        public void CheckLabels(string ListId, int CRM_Id)
+        public void BindLabels(string ListId, int CRM_Id)
         {
             using (var db = new XNGYPEntities())
             {
@@ -313,7 +335,7 @@ namespace DalProject
                         int Id = Convert.ToInt32(item);
                         var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
                         tables.ContractDetailId = CRM_Id;
-                        tables.Flag = 2;
+                        tables.Flag = 1;
                         tables.WIPContractIid = null;
                     }
                 }
@@ -325,6 +347,94 @@ namespace DalProject
                 if ((qty - LabelsCount) <= 0)//判断是否已经没了
                 {
                     CRMTables.Status = 4;
+                }
+                db.SaveChanges();
+            }
+        }
+        //半成品审核
+        public void CheckMore(string ListId, int InvId,int Grade)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                int i = 1;
+                string[] ArrId = ListId.Split('$');
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
+                        tables.INVId = InvId;
+                        tables.Status = 1;
+                        tables.InputDateTime = DateTime.Now;
+                        tables.CheckDate = DateTime.Now;
+                        tables.ProductSN = tables.XNGYP_Products_SN.SN + tables.XNGYP_Products_SN1.SN + new ContractHeaderDal().GetWoodSN(tables.WoodId.Value) + Grade;
+                        tables.SN = "XN" + new LabelsDal().GenerateTimeStamp() + i+ "_" + Grade;
+                        tables.Grade = Grade;
+                        int CRMId = tables.ContractDetailId ?? 0;
+                        int WIPId = tables.WIPContractIid ?? 0;
+                        //判断是否是销售产品、预投产品，然后设置状态
+                        if (CRMId > 0)
+                        {
+                            var CRMTable = db.Contract_Detail.Where(k => k.Id == CRMId).FirstOrDefault();
+                            if (CRMTable != null)
+                            {
+                                CRMTable.Status = 4;
+                            }
+                        }
+                        if (WIPId > 0)
+                        {
+                            var WIPTable = db.XNGYP_WIP_PreCast.Where(k => k.Id == WIPId).FirstOrDefault();
+                            if (WIPTable != null)
+                            {
+                                WIPTable.Staute = 4;
+                            }
+                        }
+                        int WorkOrderId = tables.WorkOrderId ?? 0;
+                        var Worktable = db.XNGYP_WorkOrder.Where(k => k.Id == WorkOrderId).FirstOrDefault();
+                        if (Worktable != null)
+                        {
+                            Worktable.ClosedFlag = true;//关闭工单
+                        }
+                        i++;
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
+        //送货维修操作
+        public void DeliveryMore(string ListId)
+        {
+            Random r = new Random();
+            using (var db = new XNGYPEntities())
+            {
+                string[] ArrId = ListId.Split('$');
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int CRMId = 0;
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
+                        CRMId = tables.ContractDetailId ?? 0;
+                        if (CRMId > 0)
+                        {
+                            XNGYP_Delivery HTables = new XNGYP_Delivery();
+                            HTables.CDeatailId = tables.ContractDetailId;
+                            HTables.OperatorId = new UserDal().GetCurrentUserName().UserId;
+                            HTables.Operator= new UserDal().GetCurrentUserName().UserName;
+                            HTables.LabelsId = Id;
+                            HTables.CreateTime = DateTime.Now;
+                            HTables.DeleteFlag = false;
+                            HTables.Status = 0;
+                            db.XNGYP_Delivery.Add(HTables);
+
+                            tables.OutDate = DateTime.Now;
+                            tables.OutUserId= HTables.OperatorId;
+                            tables.OutUserName = HTables.Operator;
+                            tables.Status = 9;
+                        }
+                    }
                 }
                 db.SaveChanges();
             }

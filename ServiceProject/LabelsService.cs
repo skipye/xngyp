@@ -28,6 +28,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool Edit(LabelsModel Models)
+        {
+            try { CDal.Edit(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool AddOrUpdate(LabelsModel Models)
         {
             try { CDal.AddOrUpdate(Models); return true; }
@@ -76,12 +84,29 @@ namespace ServiceProject
             }
         }
         //绑定合同操作
-        public bool CheckLabels(string ListId, int CRM_Id)
+        public bool BindLabels(string ListId, int CRM_Id)
         {
             try
             {
-                CDal.CheckLabels(ListId, CRM_Id); return true;
+                CDal.BindLabels(ListId, CRM_Id); return true;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool CheckMore(string ListId, int InvId, int Grade)
+        {
+            try { CDal.CheckMore(ListId, InvId, Grade); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        //送货维修操作
+        public bool DeliveryMore(string ListId)
+        {
+            try { CDal.DeliveryMore(ListId); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

@@ -47,5 +47,6 @@ namespace DataBase
         public DbSet<XNGYP_FR_Logs> XNGYP_FR_Logs { get; set; }
         public DbSet<XNGYP_FR> XNGYP_FR { get; set; }
         public DbSet<XNGYP_Users> XNGYP_Users { get; set; }
+        public DbSet<XNGYP_Delivery> XNGYP_Delivery { get; set; }
     }
 }

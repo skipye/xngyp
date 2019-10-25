@@ -59,7 +59,7 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { search(param); });
+    $(function () { param["Status"] = 1;search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
         var ProductSNId = $("#ProductSNId").val().trim();
@@ -73,6 +73,7 @@
         param["FatherId"] = FatherId;
         param["StartTime"] = StartTime;
         param["EndTime"] = EndTime;
+        param["Status"] = 1;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -81,7 +82,7 @@
     function search(param) {
         $('.table-sort').dataTable({
             "aaSorting": [[11, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Labels/PageList", param, function (result) {
                     //封装返回数据
@@ -112,13 +113,13 @@
                 {
                     "data": "Grade", "render": function (data) {
                         var GradeName = "低级";
-                        if (data >= 5 && data < 9) { GradeName = "中级"; }
+                        if (data >= 6 && data < 9) { GradeName = "中级"; }
                         if (data >= 9) { GradeName = "高级";}
                     return GradeName;
                     }},
                 { "data": "INVName", "defaultContent": "" },
                 {
-                    "data": "InputDateTime", "render": function (data) {
+                    "data": "CreateTime", "render": function (data) {
                         var NewTime = parseInt(data.replace(/\D/igm, ""));
                         return formatDateTime(NewTime);
                     }

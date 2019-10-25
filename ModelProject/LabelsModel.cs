@@ -44,6 +44,7 @@ namespace ModelProject
         public string Picture { get; set; }
         public int? FatherId { get; set; }
         public string ProductSN { get; set; }//产品标签
+        public DateTime? CreateTime { get; set; }
     }
     public class SLabelsModel
     {
@@ -61,6 +62,7 @@ namespace ModelProject
         public List<SelectListItem> MCDroList { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public int? Status { get; set; }
     }
     
 }

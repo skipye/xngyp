@@ -122,6 +122,22 @@
           <Property Name="DeleteFlag" Type="bit" />
           <Property Name="Remarks" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="XNGYP_Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CDeatailId" Type="int" />
+          <Property Name="CHeadId" Type="int" />
+          <Property Name="OperatorId" Type="int" />
+          <Property Name="Operator" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeliverTime" Type="datetime" />
+          <Property Name="OrderNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="LabelsId" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
         <EntityType Name="XNGYP_FR">
           <Key>
             <PropertyRef Name="Id" />
@@ -184,6 +200,9 @@
           <Property Name="ProductSN" Type="nvarchar" MaxLength="50" />
           <Property Name="FatherId" Type="int" />
           <Property Name="WorkOrderId" Type="int" />
+          <Property Name="OutDate" Type="datetime" />
+          <Property Name="OutUserId" Type="int" />
+          <Property Name="OutUserName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="XNGYP_INV_Semi">
           <Key>
@@ -475,6 +494,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_XNGYP_Delivery_XNGYP_INV_Labels">
+          <End Role="XNGYP_INV_Labels" Type="Self.XNGYP_INV_Labels" Multiplicity="0..1" />
+          <End Role="XNGYP_Delivery" Type="Self.XNGYP_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_INV_Labels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Delivery">
+              <PropertyRef Name="LabelsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_XNGYP_INV_Labels_INV_Name">
           <End Role="INV_Name" Type="Self.INV_Name" Multiplicity="0..1" />
           <End Role="XNGYP_INV_Labels" Type="Self.XNGYP_INV_Labels" Multiplicity="*" />
@@ -722,6 +753,7 @@
           <EntitySet Name="INV_Name_Type" EntityType="Self.INV_Name_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkLogs" EntityType="Self.WorkLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_Customers" EntityType="Self.XNGYP_Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XNGYP_Delivery" EntityType="Self.XNGYP_Delivery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_FR" EntityType="Self.XNGYP_FR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_FR_Logs" EntityType="Self.XNGYP_FR_Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XNGYP_INV_Labels" EntityType="Self.XNGYP_INV_Labels" Schema="dbo" store:Type="Tables" />
@@ -757,6 +789,10 @@
           <AssociationSet Name="FK_INV_Name_Type_INV_Name_Type" Association="Self.FK_INV_Name_Type_INV_Name_Type">
             <End Role="INV_Name_Type" EntitySet="INV_Name_Type" />
             <End Role="INV_Name_Type1" EntitySet="INV_Name_Type" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Delivery_XNGYP_INV_Labels" Association="Self.FK_XNGYP_Delivery_XNGYP_INV_Labels">
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+            <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
           </AssociationSet>
           <AssociationSet Name="FK_XNGYP_INV_Labels_INV_Name" Association="Self.FK_XNGYP_INV_Labels_INV_Name">
             <End Role="INV_Name" EntitySet="INV_Name" />
@@ -970,6 +1006,11 @@
           <EntitySet Name="XNGYP_FR_Logs" EntityType="XNGYPModel.XNGYP_FR_Logs" />
           <EntitySet Name="XNGYP_FR" EntityType="XNGYPModel.XNGYP_FR" />
           <EntitySet Name="XNGYP_Users" EntityType="XNGYPModel.XNGYP_Users" />
+          <EntitySet Name="XNGYP_Delivery" EntityType="XNGYPModel.XNGYP_Delivery" />
+          <AssociationSet Name="FK_XNGYP_Delivery_XNGYP_INV_Labels" Association="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels">
+            <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
+            <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
           <Key>
@@ -1333,6 +1374,10 @@
           <Property Name="FatherId" Type="Int32" />
           <NavigationProperty Name="XNGYP_Products_SN1" Relationship="XNGYPModel.FK_XNGYP_INV_Labels_XNGYP_Products_SN1" FromRole="XNGYP_INV_Labels" ToRole="XNGYP_Products_SN" />
           <Property Name="WorkOrderId" Type="Int32" />
+          <NavigationProperty Name="XNGYP_Delivery" Relationship="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels" FromRole="XNGYP_INV_Labels" ToRole="XNGYP_Delivery" />
+          <Property Name="OutDate" Type="DateTime" Precision="3" />
+          <Property Name="OutUserId" Type="Int32" />
+          <Property Name="OutUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_XNGYP_INV_Labels_INV_Name">
           <End Type="XNGYPModel.INV_Name" Role="INV_Name" Multiplicity="0..1" />
@@ -1745,6 +1790,35 @@
           <Property Name="DeleteFlag" Type="Boolean" />
           <Property Name="Telphone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="XNGYP_Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CDeatailId" Type="Int32" />
+          <Property Name="CHeadId" Type="Int32" />
+          <Property Name="OperatorId" Type="Int32" />
+          <Property Name="Operator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliverTime" Type="DateTime" Precision="3" />
+          <Property Name="OrderNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LabelsId" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels" FromRole="XNGYP_Delivery" ToRole="XNGYP_INV_Labels" />
+        </EntityType>
+        <Association Name="FK_XNGYP_Delivery_XNGYP_INV_Labels">
+          <End Type="XNGYPModel.XNGYP_INV_Labels" Role="XNGYP_INV_Labels" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_Delivery" Role="XNGYP_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_INV_Labels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Delivery">
+              <PropertyRef Name="LabelsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1962,6 +2036,9 @@
           <EntitySetMapping Name="XNGYP_INV_Labels">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_INV_Labels">
               <MappingFragment StoreEntitySet="XNGYP_INV_Labels">
+                <ScalarProperty Name="OutUserName" ColumnName="OutUserName" />
+                <ScalarProperty Name="OutUserId" ColumnName="OutUserId" />
+                <ScalarProperty Name="OutDate" ColumnName="OutDate" />
                 <ScalarProperty Name="WorkOrderId" ColumnName="WorkOrderId" />
                 <ScalarProperty Name="FatherId" ColumnName="FatherId" />
                 <ScalarProperty Name="ProductSN" ColumnName="ProductSN" />
@@ -2179,6 +2256,23 @@
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="userName" ColumnName="userName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XNGYP_Delivery">
+            <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Delivery">
+              <MappingFragment StoreEntitySet="XNGYP_Delivery">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LabelsId" ColumnName="LabelsId" />
+                <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+                <ScalarProperty Name="DeliverTime" ColumnName="DeliverTime" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="CHeadId" ColumnName="CHeadId" />
+                <ScalarProperty Name="CDeatailId" ColumnName="CDeatailId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

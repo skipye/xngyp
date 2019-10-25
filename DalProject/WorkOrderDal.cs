@@ -371,6 +371,7 @@ namespace DalProject
                                     table.WIPContractIid = WIP_Id;
                                     //table.Grade = Grade;
                                     table.FatherId = tables.XNGYP_Products.FatherId;
+                                    table.WorkOrderId = tables.WorkOrderId;
                                     //table.ProductSN = tables.XNGYP_Products.XNGYP_Products_SN1.SN + tables.XNGYP_Products.XNGYP_Products_SN1.XNGYP_Products_SN2.SN + WoodNameXL + Grade;
                                     db.XNGYP_INV_Labels.Add(table);
                                 }      

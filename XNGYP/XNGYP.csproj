@@ -684,6 +684,8 @@
     <Content Include="Views\Labels\UserIndex.cshtml" />
     <Content Include="Views\Semi\UserIndex.cshtml" />
     <Content Include="Views\Finance\Money.cshtml" />
+    <Content Include="Views\Labels\Check.cshtml" />
+    <Content Include="Views\Labels\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
