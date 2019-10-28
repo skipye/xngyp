@@ -17,6 +17,7 @@ namespace DataBase
         public Contract_Detail()
         {
             this.XNGYP_WorkOrder = new HashSet<XNGYP_WorkOrder>();
+            this.XNGYP_Delivery = new HashSet<XNGYP_Delivery>();
         }
     
         public int Id { get; set; }
@@ -48,5 +49,6 @@ namespace DataBase
         public virtual Contract_Header Contract_Header { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
         public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
+        public virtual ICollection<XNGYP_Delivery> XNGYP_Delivery { get; set; }
     }
 }

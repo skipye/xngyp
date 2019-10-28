@@ -37,14 +37,16 @@ namespace ModelProject
         public string ListId { get; set; }
         public DateTime? CheckDate { get; set; }
         public string CRM_SN { get; set; }
-        public int? PageIndex { get; set; }
-        public int? PageSize { get; set; }
+        public int? CRM_HTId { get; set; }
         public int qty { get; set; }
         public int? Grade { get; set; }
         public string Picture { get; set; }
         public int? FatherId { get; set; }
         public string ProductSN { get; set; }//产品标签
         public DateTime? CreateTime { get; set; }
+        public string CustomerName { get; set; }
+        public DateTime? DeliverTime { get; set; }
+        public string OrderNum { get; set; }
     }
     public class SLabelsModel
     {
@@ -63,6 +65,8 @@ namespace ModelProject
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public int? Status { get; set; }
+        public string CustomerName { get; set; }
+        public string HTSN { get; set; }
     }
     
 }

@@ -29,7 +29,7 @@ namespace DalProject
             }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false)
+                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Status!=9)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductsSNId : true
                             where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
                             where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
@@ -425,6 +425,7 @@ namespace DalProject
                             HTables.Operator= new UserDal().GetCurrentUserName().UserName;
                             HTables.LabelsId = Id;
                             HTables.CreateTime = DateTime.Now;
+                            HTables.DeliverTime = DateTime.Now;
                             HTables.DeleteFlag = false;
                             HTables.Status = 0;
                             db.XNGYP_Delivery.Add(HTables);
@@ -437,6 +438,48 @@ namespace DalProject
                     }
                 }
                 db.SaveChanges();
+            }
+        }
+        //送货列表
+        public List<LabelsModel> GetDeliveryList(SLabelsModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_Delivery.Where(k => k.DeleteFlag==false)
+                            where !string.IsNullOrEmpty(SModel.CustomerName) ? p.Contract_Detail.Contract_Header.XNGYP_Customers.Name.Contains(SModel.CustomerName) : true
+                            where !string.IsNullOrEmpty(SModel.HTSN) ? p.Contract_Detail.Contract_Header.SN.Contains(SModel.HTSN) : true
+                            where SModel.INVId != null && SModel.INVId > 0 ? SModel.INVId == p.XNGYP_INV_Labels.INVId : true
+                            where p.DeliverTime > StartTime
+                            where p.DeliverTime < EndTime
+                            orderby p.CreateTime descending
+                            select new LabelsModel
+                            {
+                                Id = p.Id,
+                                CRM_SN = p.Contract_Detail.Contract_Header.SN,
+                                CRM_HTId = p.Contract_Detail.Contract_Header.Id,
+                                ProductName = p.XNGYP_INV_Labels.XNGYP_Products.name,
+                                ProductXL = p.XNGYP_INV_Labels.XNGYP_Products.XNGYP_Products_SN.name,
+                                WoodName = p.XNGYP_INV_Labels.WoodName,
+                                INVId = p.XNGYP_INV_Labels.INVId,
+                                INVName = p.XNGYP_INV_Labels.INV_Name.Name,
+                                CreateTime = p.CreateTime,
+                                Color = p.XNGYP_INV_Labels.Color,
+                                CustomerName = p.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                OrderNum = p.OrderNum,
+                                DeliverTime = p.DeliverTime,
+                                Status=p.Status,
+                            }).ToList();
+                return List;
             }
         }
     }

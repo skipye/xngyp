@@ -494,6 +494,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_XNGYP_Delivery_Contract_Detail">
+          <End Role="Contract_Detail" Type="Self.Contract_Detail" Multiplicity="0..1" />
+          <End Role="XNGYP_Delivery" Type="Self.XNGYP_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Detail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Delivery">
+              <PropertyRef Name="CDeatailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_XNGYP_Delivery_XNGYP_INV_Labels">
           <End Role="XNGYP_INV_Labels" Type="Self.XNGYP_INV_Labels" Multiplicity="0..1" />
           <End Role="XNGYP_Delivery" Type="Self.XNGYP_Delivery" Multiplicity="*" />
@@ -790,6 +802,10 @@
             <End Role="INV_Name_Type" EntitySet="INV_Name_Type" />
             <End Role="INV_Name_Type1" EntitySet="INV_Name_Type" />
           </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Delivery_Contract_Detail" Association="Self.FK_XNGYP_Delivery_Contract_Detail">
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+            <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
+          </AssociationSet>
           <AssociationSet Name="FK_XNGYP_Delivery_XNGYP_INV_Labels" Association="Self.FK_XNGYP_Delivery_XNGYP_INV_Labels">
             <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
             <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
@@ -1011,6 +1027,10 @@
             <End Role="XNGYP_INV_Labels" EntitySet="XNGYP_INV_Labels" />
             <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
           </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_Delivery_Contract_Detail" Association="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail">
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+            <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
           <Key>
@@ -1116,6 +1136,7 @@
           <NavigationProperty Name="XNGYP_WorkOrder" Relationship="XNGYPModel.FK_XNGYP_WorkOrder_Contract_Detail" FromRole="Contract_Detail" ToRole="XNGYP_WorkOrder" />
           <Property Name="Grade" Type="Int32" />
           <Property Name="WoodNameXL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="XNGYP_Delivery" Relationship="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" FromRole="Contract_Detail" ToRole="XNGYP_Delivery" />
         </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
@@ -1806,6 +1827,7 @@
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="DeleteFlag" Type="Boolean" />
           <NavigationProperty Name="XNGYP_INV_Labels" Relationship="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels" FromRole="XNGYP_Delivery" ToRole="XNGYP_INV_Labels" />
+          <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" FromRole="XNGYP_Delivery" ToRole="Contract_Detail" />
         </EntityType>
         <Association Name="FK_XNGYP_Delivery_XNGYP_INV_Labels">
           <End Type="XNGYPModel.XNGYP_INV_Labels" Role="XNGYP_INV_Labels" Multiplicity="0..1" />
@@ -1816,6 +1838,18 @@
             </Principal>
             <Dependent Role="XNGYP_Delivery">
               <PropertyRef Name="LabelsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_XNGYP_Delivery_Contract_Detail">
+          <End Type="XNGYPModel.Contract_Detail" Role="Contract_Detail" Multiplicity="0..1" />
+          <End Type="XNGYPModel.XNGYP_Delivery" Role="XNGYP_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Detail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_Delivery">
+              <PropertyRef Name="CDeatailId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

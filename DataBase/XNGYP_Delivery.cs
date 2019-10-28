@@ -27,5 +27,6 @@ namespace DataBase
         public Nullable<bool> DeleteFlag { get; set; }
     
         public virtual XNGYP_INV_Labels XNGYP_INV_Labels { get; set; }
+        public virtual Contract_Detail Contract_Detail { get; set; }
     }
 }

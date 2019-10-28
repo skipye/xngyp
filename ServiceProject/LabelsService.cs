@@ -112,5 +112,16 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<LabelsModel> GetDeliveryList(SLabelsModel SModel)
+        {
+            try
+            {
+                return CDal.GetDeliveryList(SModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

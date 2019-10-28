@@ -87,7 +87,7 @@ function DeliveryINV(obj, id) {
         });
     }
     if (ListId != "" && ListId != undefined) {
-        layer.confirm('您确定要重新生产吗？', function (index) {
+        layer.confirm('您确定要送货维修吗？', function (index) {
             $.post(PostUrl, { ListId: ListId }, function (d) {
                 if (d == "1") {
                     var MSG = Title + "操作，操作ID：" + ListId + "，操作网址：" + PostUrl;

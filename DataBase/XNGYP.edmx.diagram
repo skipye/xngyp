@@ -55,6 +55,7 @@
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Users" Width="1.5" PointX="7.375" PointY="14.75" />
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Delivery" Width="1.5" PointX="11.125" PointY="19.875" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels" />
+        <AssociationConnector Association="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
