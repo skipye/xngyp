@@ -35,6 +35,35 @@
           <Property Name="Grade" Type="int" />
           <Property Name="WoodNameXL" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Contract_FDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContractHeadId" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductArea" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="WoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="WoodId" Type="int" />
+          <Property Name="CustomFlag" Type="bit" />
+          <Property Name="length" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="width" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="height" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="price_recommend" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="30" />
+          <Property Name="hardware_part" Type="nvarchar" MaxLength="50" />
+          <Property Name="decoration_part" Type="nvarchar" MaxLength="100" />
+          <Property Name="req_others" Type="nvarchar" MaxLength="500" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
             <PropertyRef Name="Id" />
@@ -68,6 +97,8 @@
           <Property Name="SHFlag" Type="int" />
           <Property Name="DeliverChannel" Type="nvarchar" MaxLength="50" />
           <Property Name="ZTDFlag" Type="nvarchar" MaxLength="50" />
+          <Property Name="FRStatus" Type="int" />
+          <Property Name="RealPrice" Type="decimal" Precision="16" Scale="2" />
         </EntityType>
         <EntityType Name="INV_Name">
           <Key>
@@ -458,6 +489,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Contract_FDetail_Contract_Header">
+          <End Role="Contract_Header" Type="Self.Contract_Header" Multiplicity="0..1" />
+          <End Role="Contract_FDetail" Type="Self.Contract_FDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Header">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_FDetail">
+              <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Contract_Header_XNGYP_Customers">
           <End Role="XNGYP_Customers" Type="Self.XNGYP_Customers" Multiplicity="0..1" />
           <End Role="Contract_Header" Type="Self.Contract_Header" Multiplicity="*" />
@@ -760,6 +803,7 @@
         </Association>
         <EntityContainer Name="XNGYPModelStoreContainer">
           <EntitySet Name="Contract_Detail" EntityType="Self.Contract_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract_FDetail" EntityType="Self.Contract_FDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contract_Header" EntityType="Self.Contract_Header" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INV_Name" EntityType="Self.INV_Name" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INV_Name_Type" EntityType="Self.INV_Name_Type" Schema="dbo" store:Type="Tables" />
@@ -789,6 +833,10 @@
           <AssociationSet Name="FK_Contract_Detail_XNGYP_Products" Association="Self.FK_Contract_Detail_XNGYP_Products">
             <End Role="XNGYP_Products" EntitySet="XNGYP_Products" />
             <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_FDetail_Contract_Header" Association="Self.FK_Contract_FDetail_Contract_Header">
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_FDetail" EntitySet="Contract_FDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="Self.FK_Contract_Header_XNGYP_Customers">
             <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
@@ -1031,6 +1079,11 @@
             <End Role="Contract_Detail" EntitySet="Contract_Detail" />
             <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
           </AssociationSet>
+          <EntitySet Name="Contract_FDetail" EntityType="XNGYPModel.Contract_FDetail" />
+          <AssociationSet Name="FK_Contract_FDetail_Contract_Header" Association="XNGYPModel.FK_Contract_FDetail_Contract_Header">
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_FDetail" EntitySet="Contract_FDetail" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
           <Key>
@@ -1173,6 +1226,9 @@
           <Property Name="SHFlag" Type="Int32" />
           <Property Name="DeliverChannel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ZTDFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract_FDetail" Relationship="XNGYPModel.FK_Contract_FDetail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_FDetail" />
+          <Property Name="FRStatus" Type="Int32" />
+          <Property Name="RealPrice" Type="Decimal" Precision="16" Scale="2" />
         </EntityType>
         <Association Name="FK_Contract_Detail_Contract_Header">
           <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
@@ -1853,6 +1909,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Contract_FDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContractHeadId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColorId" Type="Int32" />
+          <Property Name="WoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WoodId" Type="Int32" />
+          <Property Name="CustomFlag" Type="Boolean" />
+          <Property Name="length" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="width" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="height" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="price_recommend" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="hardware_part" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="decoration_part" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="req_others" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <NavigationProperty Name="Contract_Header" Relationship="XNGYPModel.FK_Contract_FDetail_Contract_Header" FromRole="Contract_FDetail" ToRole="Contract_Header" />
+        </EntityType>
+        <Association Name="FK_Contract_FDetail_Contract_Header">
+          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
+          <End Type="XNGYPModel.Contract_FDetail" Role="Contract_FDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Header">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_FDetail">
+              <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1954,6 +2052,8 @@
           <EntitySetMapping Name="Contract_Header">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
               <MappingFragment StoreEntitySet="Contract_Header">
+                <ScalarProperty Name="RealPrice" ColumnName="RealPrice" />
+                <ScalarProperty Name="FRStatus" ColumnName="FRStatus" />
                 <ScalarProperty Name="ZTDFlag" ColumnName="ZTDFlag" />
                 <ScalarProperty Name="DeliverChannel" ColumnName="DeliverChannel" />
                 <ScalarProperty Name="SHFlag" ColumnName="SHFlag" />
@@ -2307,6 +2407,36 @@
                 <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
                 <ScalarProperty Name="CHeadId" ColumnName="CHeadId" />
                 <ScalarProperty Name="CDeatailId" ColumnName="CDeatailId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract_FDetail">
+            <EntityTypeMapping TypeName="XNGYPModel.Contract_FDetail">
+              <MappingFragment StoreEntitySet="Contract_FDetail">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="req_others" ColumnName="req_others" />
+                <ScalarProperty Name="decoration_part" ColumnName="decoration_part" />
+                <ScalarProperty Name="hardware_part" ColumnName="hardware_part" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="price_recommend" ColumnName="price_recommend" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="CustomFlag" ColumnName="CustomFlag" />
+                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
+                <ScalarProperty Name="WoodName" ColumnName="WoodName" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="ProductSN" ColumnName="ProductSN" />
+                <ScalarProperty Name="ProductArea" ColumnName="ProductArea" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ContractHeadId" ColumnName="ContractHeadId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

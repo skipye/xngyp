@@ -65,7 +65,7 @@ function ConfirmINV(obj, id) {
         });
     }
     if (ListId != "" && ListId != undefined) {
-        layer.confirm('您确定要入库吗？', function (index) {
+        layer.confirm('您确定要这样操作吗？', function (index) {
             layer_show(title, PostUrl + "?ListId=" + ListId, 600, 300);
         });
     }

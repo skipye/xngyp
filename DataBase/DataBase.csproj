@@ -49,6 +49,9 @@
     <Compile Include="Contract_Detail.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Contract_FDetail.cs">
+      <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Contract_Header.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
@@ -84,6 +87,15 @@
       <DependentUpon>SaleHRModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SYS_colors.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SYS_product.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SYS_product_area.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SYS_product_SN.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WorkLogs.cs">

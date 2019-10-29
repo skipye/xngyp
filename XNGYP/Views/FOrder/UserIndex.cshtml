@@ -18,7 +18,7 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
-            <a href="javascript:void(0);" onclick="addwindow('添加订单', '/Order/Add', '800', '620')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加订单</a>
+            <a href="javascript:void(0);" onclick="addwindow('添加订单', '/Order/Add', '800', '600')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加订单</a>
         </span>
         <span class="f-r pr-10 c-green" style="line-height:40px;">合同总金额：<b id="HTTotail"></b>元</span>
     </div>
@@ -32,7 +32,7 @@
                     <th width="100">合同时间</th>
                     <th>发货方式</th>
                     <th>合同总金额</th>
-					<th>应收金额</th>
+                    <th>预付款</th>
                     <th>付款状态</th>
                     <th>是否审核</th>
                     <th>销售人员</th>
@@ -50,7 +50,7 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=4"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=3"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -103,10 +103,10 @@
                         var StrCheck = "";
                         if (row.Status == 0) {
                             StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'查看产品\',\'/Order/ProductListByOrder\', \'' + row.Id + '\', \'800\', \'500\')" title="查看产品"><i class="Hui-iconfont f-14">&#xe687;</i></a>' +
-                                       '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'添加产品\',\'/Order/AddProducts\', \'' + row.Id + '\', \'800\', \'620\')" title="添加产品"><i class="Hui-iconfont f-14">&#xe670;</i></a>' +
+                                       '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'添加产品\',\'/Order/AddProducts\', \'' + row.Id + '\', \'800\', \'600\')" title="添加产品"><i class="Hui-iconfont f-14">&#xe670;</i></a>' +
                                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="订单编辑"><i class="Hui-iconfont f-14">&#xe6df;</i></a>' +
                                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Order/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
-                        } else { StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="printpage(\'打印订单\',\'/Order/Print\', \'' + row.Id + '\', \'900\', \'620\')" title="打印订单"><i class="Hui-iconfont f-14">&#xe632;</i></a>'; }
+                        } else { StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="printpage(\'打印订单\',\'/Order/Print\', \'' + row.Id + '\', \'800\', \'500\')" title="打印订单"><i class="Hui-iconfont f-14">&#xe632;</i></a>'; }
                         return StrCheck ;
                     }
                 }

@@ -91,9 +91,33 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<SelectListItem> GetProFSNDrolist(int? pId)
+        {
+            try { return CHDal.GetProFSNDrolist(pId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public List<SelectListItem> GetProAreaDrolist(int? pId)
+        {
+            try { return CHDal.GetProAreaDrolist(pId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public List<SelectListItem> GetCKDrolist(int? pId, int? CKType)
         {
             try { return CHDal.GetCKDrolist(pId, CKType); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string GetFProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
+        {
+            try { return CHDal.GetFProNameDrolistBySNAndArea(ProSN, ProProArea); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -115,9 +139,25 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool AddFProducts(FContractProductsModel Models)
+        {
+            try { CHDal.AddFProducts(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool DeleteOne(int Id)
         {
             try { CHDal.DeleteOne(Id); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool DeleteFProduct(int Id)
+        {
+            try { CHDal.DeleteFProduct(Id); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

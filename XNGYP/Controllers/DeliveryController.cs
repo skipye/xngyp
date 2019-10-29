@@ -9,7 +9,7 @@ namespace XNGYP.Controllers
     public class DeliveryController : Controller
     {
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
-        private static readonly LabelsService LSer = new LabelsService();
+        private static readonly DeliveryService LSer = new DeliveryService();
         private static readonly ToExcel ESer = new ToExcel();
         public ActionResult Index()
         {
@@ -38,74 +38,29 @@ namespace XNGYP.Controllers
         
         public ActionResult Delete(string ListId)
         {
-            if (string.IsNullOrEmpty(ListId) == true)
+            if (LSer.DeleteMore(ListId) == true)
             {
-                return Content("False");
+                return Content("True");
             }
-            else
-            {
-                if (LSer.DeleteMore(ListId) == true)
-                {
-                    return Content("True");
-                }
-                else return Content("False");
-            }
-        }
-        public ActionResult MoveINV(string ListId)
-        {
-            LabelsModel Models = new LabelsModel();
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
-            Models.ListId = ListId;
-            return View(Models);
-        }
-        public ActionResult PostMoveINV(string ListId,int INVId)
-        {
-            if (LSer.MoveINV(ListId, INVId) == true)
-            {
-                return Content("1");
-            }
-            else return Content("0");
+            else return Content("False");
+            
         }
         public void ToExcelOut(SLabelsModel SModels)
         {
             var models = LSer.ToExcelOut(SModels);
             ESer.CreateExcel(models, "成品库库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
-        public ActionResult WorkLabels(SLabelsModel SModel,int CRMId,int Qty)
-        {
-            var Models = LSer.GetWorkLabelsList(SModel);
-            ViewBag.CRMId = CRMId;
-            ViewBag.Qty = Qty;
-            return View(Models); 
-        }
-        //绑定库存产品
-        public ActionResult CheckLabels(string ListId, int CRM_Id)
-        {
-            if (LSer.BindLabels(ListId, CRM_Id) == true)
-            {
-                return Content("1");
-            }
-            else return Content("0");
-        }
+        
         //产品确认
         public ActionResult Check(string ListId)
         {
-            SemiModel Models = new SemiModel();
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            LabelsModel Models = new LabelsModel();
             Models.ListId = ListId;
             return View(Models);
         }
-        public ActionResult PostCheck(string ListId, int INVId,int Grade)
+        public ActionResult PostCheck(string ListId, string OrderNum, DateTime DeliveryTime)
         {
-            if (LSer.CheckMore(ListId, INVId, Grade) == true)
-            {
-                return Content("1");
-            }
-            else return Content("0");
-        }
-        public ActionResult Delivery(string ListId)
-        {
-            if (LSer.DeliveryMore(ListId) == true)
+            if (LSer.CheckMore(ListId, OrderNum, DeliveryTime) == true)
             {
                 return Content("1");
             }

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DalProject
 {
-    public class LabelsDal
+    public class DeliveryDal
     {
         public string GenerateTimeStamp()
         {
@@ -181,8 +181,15 @@ namespace DalProject
                     if (!string.IsNullOrEmpty(item))
                     {
                         int Id = Convert.ToInt32(item);
-                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
+                        var tables = db.XNGYP_Delivery.Where(k => k.Id == Id).SingleOrDefault();
                         tables.DeleteFlag = true;
+                        int LablesId = tables.LabelsId??0;
+                        if (LablesId > 0)
+                        {
+                            var LaTable = db.XNGYP_INV_Labels.Where(k => k.Id == LablesId).FirstOrDefault();
+                            LaTable.Status = 1;
+                            LaTable.OutDate = DateTime.Now;
+                        }
                     }
                 }
                 db.SaveChanges();
@@ -351,8 +358,7 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        //半成品审核
-        public void CheckMore(string ListId, int InvId,int Grade)
+        public void CheckMore(string ListId, string OrderNum,DateTime DeliveryTime)
         {
             using (var db = new XNGYPEntities())
             {
@@ -363,40 +369,10 @@ namespace DalProject
                     if (!string.IsNullOrEmpty(item))
                     {
                         int Id = Convert.ToInt32(item);
-                        var tables = db.XNGYP_INV_Labels.Where(k => k.Id == Id).SingleOrDefault();
-                        tables.INVId = InvId;
+                        var tables = db.XNGYP_Delivery.Where(k => k.Id == Id).SingleOrDefault();
+                        tables.OrderNum = OrderNum;
                         tables.Status = 1;
-                        tables.InputDateTime = DateTime.Now;
-                        tables.CheckDate = DateTime.Now;
-                        tables.ProductSN = tables.XNGYP_Products_SN.SN + tables.XNGYP_Products_SN1.SN + new ContractHeaderDal().GetWoodSN(tables.WoodId.Value) + Grade;
-                        tables.SN = "XN" + new LabelsDal().GenerateTimeStamp() + i+ "_" + Grade;
-                        tables.Grade = Grade;
-                        int CRMId = tables.ContractDetailId ?? 0;
-                        int WIPId = tables.WIPContractIid ?? 0;
-                        //判断是否是销售产品、预投产品，然后设置状态
-                        if (CRMId > 0)
-                        {
-                            var CRMTable = db.Contract_Detail.Where(k => k.Id == CRMId).FirstOrDefault();
-                            if (CRMTable != null)
-                            {
-                                CRMTable.Status = 4;
-                            }
-                        }
-                        if (WIPId > 0)
-                        {
-                            var WIPTable = db.XNGYP_WIP_PreCast.Where(k => k.Id == WIPId).FirstOrDefault();
-                            if (WIPTable != null)
-                            {
-                                WIPTable.Staute = 4;
-                            }
-                        }
-                        int WorkOrderId = tables.WorkOrderId ?? 0;
-                        var Worktable = db.XNGYP_WorkOrder.Where(k => k.Id == WorkOrderId).FirstOrDefault();
-                        if (Worktable != null)
-                        {
-                            Worktable.ClosedFlag = true;//关闭工单
-                        }
-                        i++;
+                        tables.DeliverTime = DeliveryTime;
                     }
                 }
                 db.SaveChanges();
@@ -440,6 +416,47 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        
+        //送货列表
+        public List<LabelsModel> GetDeliveryList(SLabelsModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_Delivery.Where(k => k.DeleteFlag==false)
+                            where !string.IsNullOrEmpty(SModel.CustomerName) ? p.Contract_Detail.Contract_Header.XNGYP_Customers.Name.Contains(SModel.CustomerName) : true
+                            where !string.IsNullOrEmpty(SModel.HTSN) ? p.Contract_Detail.Contract_Header.SN.Contains(SModel.HTSN) : true
+                            where SModel.INVId != null && SModel.INVId > 0 ? SModel.INVId == p.XNGYP_INV_Labels.INVId : true
+                            where p.DeliverTime > StartTime
+                            where p.DeliverTime < EndTime
+                            orderby p.CreateTime descending
+                            select new LabelsModel
+                            {
+                                Id = p.Id,
+                                CRM_SN = p.Contract_Detail.Contract_Header.SN,
+                                CRM_HTId = p.Contract_Detail.Contract_Header.Id,
+                                ProductName = p.XNGYP_INV_Labels.XNGYP_Products.name,
+                                ProductXL = p.XNGYP_INV_Labels.XNGYP_Products.XNGYP_Products_SN.name,
+                                WoodName = p.XNGYP_INV_Labels.WoodName,
+                                INVId = p.XNGYP_INV_Labels.INVId,
+                                INVName = p.XNGYP_INV_Labels.INV_Name.Name,
+                                CreateTime = p.CreateTime,
+                                Color = p.XNGYP_INV_Labels.Color,
+                                CustomerName = p.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                OrderNum = p.OrderNum,
+                                DeliveryTime = p.DeliverTime,
+                                Status=p.Status,
+                            }).ToList();
+                return List;
+            }
+        }
     }
 }

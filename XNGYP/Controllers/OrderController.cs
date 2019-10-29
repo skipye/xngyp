@@ -150,6 +150,12 @@ namespace XNGYP.Controllers
         //添加产品
         public ActionResult AddProducts(int Id)
         {
+            ViewBag.CHeadId = Id;
+            return View();
+        }
+        //添加工艺品产品
+        public ActionResult AddGYPProducts(int Id)
+        {
             ContractProductsModel Models = new ContractProductsModel();
             Models.ContractHeadId = Id;
             Models.ProXLDroList = NSer.GetProSNDrolist(Models.ProductSNId);
@@ -184,6 +190,12 @@ namespace XNGYP.Controllers
             var Models = NSer.GetDetailById(Id);
             return View(Models);
         }
-
+        public ActionResult Print(int Id)
+        {
+            ContractHeaderModel Models = new ContractHeaderModel();
+            Models= NSer.GetDetailById(Id);
+            Models.HTProList = NSer.GetProductListByOrder(Id);
+            return View(Models);
+        }
     }
 }

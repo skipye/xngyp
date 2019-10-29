@@ -93,6 +93,9 @@ namespace ModelProject
         public bool? CWCheckStatus { get; set; }
         public int? SHFlag { get; set; }
         public string ZTDFlag { get; set; }
+        public decimal? RealPrice { get; set; }//实收款金额
+        public int? FRStatus { get; set; }
+        public List<ContractProductsModel> HTProList { get; set; }
     }
     public class SContractHeaderModel
     {
@@ -118,6 +121,7 @@ namespace ModelProject
         public string ProductSN { get; set; }
         public string ProductXL { get; set; }
         public string ProductName { get; set; }
+        public string ProductArea { get; set; }
         public int ColorId { get; set; }
         public string Color { get; set; }
         public int? WoodId { get; set; }
@@ -152,6 +156,51 @@ namespace ModelProject
         public int? Status { get; set; }
         public string OrderNum { get; set; }
         public int? FatherId { get; set; }
+        public int IsJJ { get; set; }
+    }
+    public class FContractProductsModel
+    {
+        public int Id { get; set; }
+        public int? FContractHeadId { get; set; }
+        public string HeaderName { get; set; }
+        public int? FProductId { get; set; }
+        public int? ProductAreaId { get; set; }
+        public int ProductXLId { get; set; }
+        public string FProductXL { get; set; }
+        public string FProductName { get; set; }
+        public string ProductArea { get; set; }
+        public int FColorId { get; set; }
+        public string FColor { get; set; }
+        public int? FWoodId { get; set; }
+        public string FWoodName { get; set; }
+        public bool? CustomFlag { get; set; }//是否定制
+        public decimal? Length { get; set; }//送货通道：楼梯/电梯
+        public decimal? Width { get; set; }//预付款比例
+        public decimal? Height { get; set; }//预付款金额
+        public decimal? Price { get; set; }//预付款金额
+        public int? FQty { get; set; }
+        public string hardware_part { get; set; }
+        public string decoration_part { get; set; }
+        public string req_carve { get; set; }
+        public string Others { get; set; }//其它要求
+        public DateTime? CreateTime { get; set; }
+        public string SN { get; set; }
+        public string Customer { get; set; }
+        public DateTime? delivery_date { get; set; }
+        public DateTime? checked_date { get; set; }
+        public string Remark { get; set; }
+        public int? SemiCount { get; set; }
+        public int? LabelsCount { get; set; }
+        public decimal amount { get; set; }//合同总金额
+        public decimal? prepay { get; set; }//预付款金额
+        public decimal FR_contract { get; set; }
+        public List<SelectListItem> ProXLDroList { get; set; }
+        public List<SelectListItem> AreaDroList { get; set; }
+        public List<SelectListItem> ProNameDroList { get; set; }
+        public List<SelectListItem> WoodDroList { get; set; }
+        public List<SelectListItem> ColorDroList { get; set; }
+        public int? WorkCount { get; set; }
+        public int? Status { get; set; }
     }
     public class SContractProductsModel
     {

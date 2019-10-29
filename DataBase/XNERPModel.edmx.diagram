@@ -7,6 +7,12 @@
       <Diagram DiagramId="688392607f714608bf6377e29855da17" Name="关系图1">
         <EntityTypeShape EntityType="XNERPModel.INV_wood_type" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="XNERPModel.SYS_colors" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="XNERPModel.SYS_product_area" Width="1.5" PointX="4.875" PointY="0.75" />
+        <EntityTypeShape EntityType="XNERPModel.SYS_product" Width="1.5" PointX="8.375" PointY="1" />
+        <AssociationConnector Association="XNERPModel.FK_SYS_product_SYS_product_area" />
+        <EntityTypeShape EntityType="XNERPModel.SYS_product_SN" Width="1.5" PointX="5" PointY="3.625" />
+        <AssociationConnector Association="XNERPModel.FK_SYS_product_SYS_product_SN" />
+        <AssociationConnector Association="XNERPModel.FK_SYS_product_SN_SYS_product_SN" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -84,6 +84,8 @@ namespace DalProject
                     table.DeliverChannel = Models.DeliverChannel;
                     table.SHFlag = Models.SHFlag;
                     table.ZTDFlag = Models.ZTDFlag;
+                    table.RealPrice = Models.RealPrice;
+                    table.FRStatus = Models.FRStatus;
                 }
                 else
                 {
@@ -109,6 +111,8 @@ namespace DalProject
                     table.DeliverChannel = Models.DeliverChannel;
                     table.SHFlag = Models.SHFlag;
                     table.ZTDFlag = Models.ZTDFlag;
+                    table.RealPrice = Models.RealPrice;
+                    table.FRStatus = Models.FRStatus;
                     db.Contract_Header.Add(table);
                 }
                 db.SaveChanges();
@@ -235,7 +239,35 @@ namespace DalProject
             }
             return items;
         }
-       
+        public List<SelectListItem> GetProFSNDrolist(int? pId)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "请选择产品系列", Value = "" });
+            using (var db = new XNERPEntities())
+            {
+                List<SYS_product_SN> model = db.SYS_product_SN.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
+                foreach (var item in model)
+                {
+                    items.Add(new SelectListItem() { Text = item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
+                }
+            }
+            return items;
+        }
+        //产品区域
+        public List<SelectListItem> GetProAreaDrolist(int? pId)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "请选择产品区域", Value = "" });
+            using (var db = new XNERPEntities())
+            {
+                List<SYS_product_area> model = db.SYS_product_area.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
+                foreach (var item in model)
+                {
+                    items.Add(new SelectListItem() { Text = item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
+                }
+            }
+            return items;
+        }
         public List<SelectListItem> GetWoodDrolist(int? pId)
         {
             List<SelectListItem> items = new List<SelectListItem>();
@@ -292,6 +324,32 @@ namespace DalProject
                 }
             }
             return items;
+        }
+        public string GetFProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var list = (from p in db.SYS_product.Where(k => k.delete_flag == false)
+                            where ProSN > 0 ? p.product_SN_id == ProSN : true
+                            where ProProArea > 0 ? p.product_area_id == ProProArea : true
+                            orderby p.created_time descending
+                            select new CRMItem
+                            {
+                                Id = p.id,
+                                Name = p.name,
+                                length = p.length,
+                                width = p.width,
+                                height = p.height
+                            }).ToList();
+                string NewItme = "";
+                foreach (var item in list)
+                {
+                    var strText = item.Name + "_" + item.length + "_" + item.width + "_" + item.height;
+                    var IstrValue = item.Id;
+                    NewItme += "<option value=" + IstrValue + ">" + strText + "</option>";
+                }
+                return NewItme;
+            }
         }
         public string GetProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
         {
@@ -356,6 +414,46 @@ namespace DalProject
 
             }
         }
+        public void AddFProducts(FContractProductsModel Models)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                decimal price = 0;
+                if (Models.Price > 0)
+                { price = Models.Price.Value; }
+
+                Contract_FDetail table = new Contract_FDetail();
+                table.ContractHeadId = Models.FContractHeadId;
+                table.ProductId = Models.FProductId;
+                table.ProductArea = Models.ProductArea;
+                table.ProductSN = Models.FProductXL;
+                table.ProductName = Models.FProductName;
+                table.ColorId = Models.FColorId;
+                table.Color = Models.FColor;
+                table.WoodId = Models.FWoodId;
+                table.WoodName = Models.FWoodName;
+                table.CustomFlag = Models.CustomFlag;
+                table.length = Models.Length;
+                table.width = Models.Width;
+                table.height = Models.Height;
+                table.Price = price;
+                table.price_recommend = 0;
+                table.Qty = Models.FQty;
+                table.Unit = "件";
+                table.hardware_part = Models.hardware_part;
+                table.decoration_part = Models.decoration_part;
+                table.req_others = Models.Others;
+                table.CreateTime = DateTime.Now;
+                table.DeleteFlag = false;
+                table.Status = 0;
+                db.Contract_FDetail.Add(table);
+
+                var HeadTable = db.Contract_Header.Where(k => k.Id == Models.FContractHeadId).FirstOrDefault();
+                HeadTable.Amount = HeadTable.Amount + price * Models.FQty;
+                db.SaveChanges();
+
+            }
+        }
         public void DeleteOne(int Id)
         {
             using (var db = new XNGYPEntities())
@@ -371,8 +469,26 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
+        //删除家具产品
+        public void DeleteFProduct(int Id)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var tables = db.Contract_FDetail.Where(k => k.Id == Id).SingleOrDefault();
+                tables.DeleteFlag = true;
+
+                var HeadId = tables.ContractHeadId;
+                var HeadTable = db.Contract_Header.Where(k => k.Id == HeadId).FirstOrDefault();
+                if (HeadTable.Amount >= tables.Price.Value * tables.Qty)
+                {
+                    HeadTable.Amount = HeadTable.Amount - tables.Price.Value * tables.Qty;
+                }
+                db.SaveChanges();
+            }
+        }
         public List<ContractProductsModel> GetProductListByOrder(int HTId)
         {
+            List<ContractProductsModel> Models = new List<ContractProductsModel>();
             using (var db = new XNGYPEntities())
             {
                 var List = (from p in db.Contract_Detail.Where(k => k.DeleteFlag == false && k.ContractHeadId == HTId)
@@ -395,8 +511,32 @@ namespace DalProject
                                 req_others = p.req_others,
                                 Status = p.Contract_Header.Status,
                                 Qty=p.Qty,
+                                IsJJ=1,
                             }).ToList();
-                return List;
+                var FList= (from p in db.Contract_FDetail.Where(k => k.DeleteFlag == false && k.ContractHeadId == HTId)
+                            orderby p.CreateTime descending
+                            select new ContractProductsModel
+                            {
+                                Id = p.Id,
+                                ContractHeadId = p.ContractHeadId,
+                                ProductName = p.ProductName,
+                                ProductSN = p.ProductSN,
+                                Color = p.Color,
+                                WoodName = p.WoodName,
+                                CustomFlag = p.CustomFlag,
+                                length = p.length,
+                                width = p.width,
+                                height = p.height,
+                                price = p.Price,
+                                hardware_part = p.hardware_part,
+                                decoration_part = p.decoration_part,
+                                req_others = p.req_others,
+                                Status = p.Contract_Header.Status,
+                                Qty = p.Qty,
+                                IsJJ=2,
+                            }).ToList();
+                Models = List.Union(FList).ToList<ContractProductsModel>();
+                return Models;
             }
         }
     }

@@ -9,9 +9,9 @@ using System.Web.Mvc;
 
 namespace ServiceProject
 {
-    public class LabelsService
+    public class DeliveryService
     {
-        private static readonly LabelsDal CDal = new LabelsDal();
+        private static readonly DeliveryDal CDal = new DeliveryDal();
         public List<LabelsModel> GetLabelsList(SLabelsModel SModel)
         {
             try { return CDal.GetLabelsList(SModel); }
@@ -95,9 +95,9 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public bool CheckMore(string ListId, int InvId, int Grade)
+        public bool CheckMore(string ListId, string OrderNum, DateTime DeliveryTime)
         {
-            try { CDal.CheckMore(ListId, InvId, Grade); return true; }
+            try { CDal.CheckMore(ListId, OrderNum, DeliveryTime); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -112,6 +112,16 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        
+        public List<LabelsModel> GetDeliveryList(SLabelsModel SModel)
+        {
+            try
+            {
+                return CDal.GetDeliveryList(SModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

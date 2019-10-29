@@ -45,7 +45,7 @@ namespace ModelProject
         public string ProductSN { get; set; }//产品标签
         public DateTime? CreateTime { get; set; }
         public string CustomerName { get; set; }
-        public DateTime? DeliverTime { get; set; }
+        public DateTime? DeliveryTime { get; set; }
         public string OrderNum { get; set; }
     }
     public class SLabelsModel

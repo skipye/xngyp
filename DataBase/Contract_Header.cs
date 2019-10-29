@@ -17,6 +17,7 @@ namespace DataBase
         public Contract_Header()
         {
             this.Contract_Detail = new HashSet<Contract_Detail>();
+            this.Contract_FDetail = new HashSet<Contract_FDetail>();
         }
     
         public int Id { get; set; }
@@ -48,8 +49,11 @@ namespace DataBase
         public Nullable<int> SHFlag { get; set; }
         public string DeliverChannel { get; set; }
         public string ZTDFlag { get; set; }
+        public Nullable<int> FRStatus { get; set; }
+        public Nullable<decimal> RealPrice { get; set; }
     
         public virtual ICollection<Contract_Detail> Contract_Detail { get; set; }
         public virtual XNGYP_Customers XNGYP_Customers { get; set; }
+        public virtual ICollection<Contract_FDetail> Contract_FDetail { get; set; }
     }
 }

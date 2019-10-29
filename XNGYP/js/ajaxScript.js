@@ -240,6 +240,9 @@ function addwindow(title, url, w, h) {
     AddWorkLogs(MSG, 2);
     layer_show(title, url, w, h);
 }
+function printpage(title, url, id, w, h) {
+	layer_show(title, url + "?Id=" + id, w, h);
+}
 function fileUpload(title, url, w, h) {
     layer_show(title, url, w, h);
 }

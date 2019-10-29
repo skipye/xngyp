@@ -1,102 +1,25 @@
 ﻿@model ModelProject.ContractProductsModel
 @{
-    Layout = null;
-    List<SelectListItem> ArrWJ = new List<SelectListItem>();
-    ArrWJ.Add(new SelectListItem { Text = "常规", Value = "常规" });
-    ArrWJ.Add(new SelectListItem { Text = "定制", Value = "定制" });
-    ArrWJ.Add(new SelectListItem { Text = "木拉手", Value = "木拉手" });
-    ArrWJ.Add(new SelectListItem { Text = "挖拉手", Value = "挖拉手" });
-    ArrWJ.Add(new SelectListItem { Text = "其他", Value = "其他" });
-    List<SelectListItem> ArrProName = new List<SelectListItem>();
-    ArrProName.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
-    List<SelectListItem> ArrCL = new List<SelectListItem>();
-    ArrCL.Add(new SelectListItem { Text = "是否定制", Value = "" });
-    ArrCL.Add(new SelectListItem { Text = "是", Value = "true" });
-    ArrCL.Add(new SelectListItem { Text = "否", Value = "false",Selected=true });
-    List<SelectListItem> ArrSecPro = new List<SelectListItem>();
-    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+	Layout = null;
+	int Id = ViewBag.CHeadId;
 }
 
 @Html.Action("_Meta", "Home")
 
 
 <article class="page-container">
-    <form class="form form-horizontal" id="formadd">
-        <div id="tab-system" class="HuiTab">
-            <div class="tabBar cl">
-                <span>家具</span>
-                <span>工艺品</span>
-            </div>
-            <div class="tabCon">
-            </div>
-            <div class="tabCon">
-                @Html.HiddenFor(k => k.ContractHeadId)
-
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">产品编号：</label>
-                    <div class="formControls col-xs-8 col-sm-4">
-                            @Html.TextBoxFor(k => k.OrderNum, new { @class = "input-text", @style = "width:250px;" })
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        <span class="select-box inline">
-                            @Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
-                            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px;" })
-                            @Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:150px;" })
-                            @Html.HiddenFor(k => k.ProductXL)
-                            @Html.HiddenFor(k => k.ProductName)
-                            @Html.HiddenFor(k => k.ProductSN)
-                        </span>
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质+色号：</label>
-                    <div class="formControls col-xs-8 col-sm-8">
-                        <span class="select-box inline">
-                            @Html.DropDownListFor(k => k.WoodId, Model.WoodDroList, new { @class = "select", @style = "width:150px;" })
-
-                            @Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:130px;" })
-                            @Html.TextBoxFor(k => k.Color, new { @class = "input-text", @style = "width:150px;" })
-                            @Html.HiddenFor(k => k.WoodName)
-                        </span>
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">长+宽+高：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        @Html.TextBoxFor(k => k.length, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-                        @Html.TextBoxFor(k => k.width, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-                        @Html.TextBoxFor(k => k.height, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单价+数量：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        <span class="inline">
-                            @Html.TextBoxFor(k => k.price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
-                            -  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">其他要求：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        @Html.TextAreaFor(k => k.req_others, new { @class = "textarea" })
-                    </div>
-                </div>
-
-                <div class="row cl">
-                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                        <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-                        <button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-</form>
+	<div id="tab-system" class="HuiTab">
+		<div class="tabBar cl">
+			<span>家具</span>
+			<span>工艺品</span>
+		</div>
+		<div class="tabCon">
+			@Html.Action("AddF", "FOrder", new { Id = Id })
+		</div>
+		<div class="tabCon">
+			@Html.Action("AddGYPProducts", "Order", new { Id = Id })
+		</div>
+	</div>
 </article>
 
 @Html.Action("_Footer", "Home")
@@ -107,18 +30,18 @@
 <script type="text/javascript" src="~/js/jquery.validation/validate-methods.js"></script>
 <script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
 <script type="text/javascript">
-
-$(function(){
-    $("#tab-system").Huitab({
-		index:1
+	$("#tab-system").Huitab({
+		index: 1
 	});
+	$(function(){
 	//表单验证
 	$("#formadd").validate({
 		rules:{
 		    ProductSNId: {required:true,},
 		    ProductName: { required: true },
 		    WoodId: { required: true },
-		    price: { required: true },
+			price: { required: true },
+			ProductId: { required: true },
 		    Qty: { required: true, isIntGteZero: true },
 		},
 		onkeyup: false,
@@ -133,13 +56,49 @@ $(function(){
 		        param[o["name"]] = o["value"];
 		    };
 		    ajaxRequest("post", "/Order/PostAddProducts", param, function (d) {
+		        if (d == "1") {
+		            layer.msg("添加成功！", { icon: 1, time: 1000 });
+		        } else {
+		            layer.msg("服务器错误！", { icon: 2, time: 1000 });
+		        }
+		        setTimeout(function () {
+		            parent.window.location.reload();
+		            var index = parent.layer.getFrameIndex(window.name);
+		            parent.layer.close(index);
+		        }, 1000);
+		    });
+		}
+	});
+});
+
+$(function(){
+
+	//表单验证
+	$("#Fformadd").validate({
+		rules:{
+		    FProductId: {required:true,},
+		    ProductAreaId: {required:true,},
+		    FProductName: { required: true },
+		    FWoodId: { required: true },
+		    FColorId: { required: true },
+		    Price: { required: true },
+		    FQty: { required: true, isIntGteZero: true },
+		},
+		onkeyup: false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler: function (form) {
+		    //构造上传数据
+		    var param = {};
+		    var paramArray = $(form).serializeArray();
+		    for (var i = 0; i < paramArray.length; ++i) {
+		        var o = paramArray[i];
+		        param[o["name"]] = o["value"];
+		    };
+		    ajaxRequest("post", "/FOrder/PostAddProducts", param, function (d) {
 
 		        if (d == "1") {
-		            if (editModel(window.location.href)) {
-		                layer.msg("编辑成功！", { icon: 1, time: 1000 });
-		            } else {
-		                layer.msg("添加成功！", { icon: 1, time: 1000 });
-		            }
+		           layer.msg("添加成功！", { icon: 1, time: 1000 });
 		        } else {
 		            layer.msg("服务器错误！", { icon: 2, time: 1000 });
 		        }
@@ -156,7 +115,19 @@ $(function(){
 
 });
 
-    $("#ColorId").change(function () {
+    $("#FColorId").change(function () {
+        var StrVal = $(this).find("option:selected").text();
+        if (StrVal == "请选择色号")
+        { StrVal = "";}
+        $("#FColor").val(StrVal);
+    });
+    $("#FWoodId").change(function () {
+        var StrVal = $(this).find("option:selected").text();
+        if (StrVal == "请选择材质")
+        { StrVal = ""; }
+        $("#FWoodName").val(StrVal.split('_')[0]);
+	});
+	$("#ColorId").change(function () {
         var StrVal = $(this).find("option:selected").text();
         if (StrVal == "请选择色号")
         { StrVal = "";}
@@ -167,33 +138,70 @@ $(function(){
         if (StrVal == "请选择材质")
         { StrVal = ""; }
         $("#WoodName").val(StrVal.split('_')[0]);
+	});
+	$("#ProductSNId").change(function () {
+        var FatherId = $("#ProductSNId").val();
+		var Vtext = $("#ProductSNId").find("option:selected").text();
+		$("#ProductXL").val(Vtext.split('_')[0]);
+		var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+        $.post(ProUrl, { FatherId: FatherId }, function (data) {
+            //alert(data);
+            $('#FatherId').empty();
+            $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
+            $('#FatherId').append(data);
+        });
     });
-   $("#FatherId").change(function () {
-            var ProductSNId = $("#FatherId").val();
-            var Vtext = $("#FatherId").find("option:selected").text();
-			$("#ProductSN").val(Vtext.split('_')[0]);
-            var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
-            $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
-                //alert(data);
-                $('#ProductId').empty();
-                $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
-                $('#ProductId').append(data);
-            });
+    $("#ProductXLId").change(function () {
+        var ProductSNId = $("#ProductXLId").val();
+        var Strtext = $("#ProductXLId").find("option:selected").text();
+        $("#FProductXL").val(Strtext);
+        var productAreaId = $("#productAreaId").val();
+        var ProUrl = "@Url.Action("GetFProNameDrolistBySNAndArea","FOrder")";
+        $.post(ProUrl, { ProSN: ProductSNId, ProProArea: productAreaId }, function (data) {
+            $('#FProductId').empty();
+            $('#FProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+            $('#FProductId').append(data);
         });
-		$("#ProductSNId").change(function () {
-            var FatherId = $("#ProductSNId").val();
-			var Vtext = $("#ProductSNId").find("option:selected").text();
-			$("#ProductXL").val(Vtext.split('_')[0]);
-			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
-            $.post(ProUrl, { FatherId: FatherId }, function (data) {
-                //alert(data);
-                $('#FatherId').empty();
-                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
-                $('#FatherId').append(data);
-            });
+    });
+    $("#productAreaId").change(function () {
+        var Strtext = $("#productAreaId").find("option:selected").text();
+        $("#ProductArea").val(Strtext);
+        var ProductSNId = $("#ProductSNId").val();
+        var productAreaId = $("#productAreaId").val();
+        var ProUrl = "@Url.Action("GetFProNameDrolistBySNAndArea", "FOrder")";
+            $.post(ProUrl, { ProSN: ProductSNId, ProProArea: productAreaId }, function (data) {
+                $('#FProductId').empty();
+                $('#FProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+                $('#FProductId').append(data);
         });
-      
-    $("#ProductId").change(function () {
+    });
+	$("#FatherId").change(function () {
+        var ProductSNId = $("#FatherId").val();
+        var Vtext = $("#FatherId").find("option:selected").text();
+		$("#ProductSN").val(Vtext.split('_')[0]);
+        var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
+        $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
+            //alert(data);
+            $('#ProductId').empty();
+            $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+            $('#ProductId').append(data);
+        });
+    });
+
+    $("#FProductId").change(function () {
+		var _this = $(this);
+		var Id = _this.val();
+		var StrText = $(this).find("option:selected").text();
+		var name = StrText.split('_')[0];
+		var length = StrText.split('_')[1];
+		var width = StrText.split('_')[2];
+		var height = StrText.split('_')[3];
+		$("#FProductName").val(name);
+		$("#Length").val(length);
+		$("#Width").val(width);
+		$("#Height").val(height);
+	});
+	$("#ProductId").change(function () {
         var _this = $(this);
         var StrText = $(this).find("option:selected").text();
         var ProductName = StrText.split('_')[0];
@@ -205,13 +213,12 @@ $(function(){
         $("#width").val(width);
         $("#height").val(height);
     });
-
-    //$("#CustomFlag").click(function () {
-    //    var StrVal = $(this).val();
-    //    if (StrVal == "true")
-    //    { $("#length").removeAttr("readonly"); $("#width").removeAttr("readonly"); $("#height").removeAttr("readonly"); }
-    //    else { $("#length").attr("readonly", "readonly"); $("#width").attr("readonly", "readonly"); $("#height").attr("readonly", "readonly"); }
-    //});
+    $("#CustomFlag").click(function () {
+        var StrVal = $(this).val();
+        if (StrVal == "true")
+        { $("#length").removeAttr("readonly"); $("#width").removeAttr("readonly"); $("#height").removeAttr("readonly"); }
+        else { $("#length").attr("readonly", "readonly"); $("#width").attr("readonly", "readonly"); $("#height").attr("readonly", "readonly"); }
+    });
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

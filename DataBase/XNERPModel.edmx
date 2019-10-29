@@ -41,9 +41,107 @@
           <Property Name="created_time" Type="datetime" Nullable="false" />
           <Property Name="delete_flag" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="SYS_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_SN_id" Type="int" Nullable="false" />
+          <Property Name="product_area_id" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="length" Type="int" />
+          <Property Name="width" Type="int" />
+          <Property Name="height" Type="int" />
+          <Property Name="picture" Type="varchar" MaxLength="50" />
+          <Property Name="paper_path" Type="varchar" MaxLength="50" />
+          <Property Name="BOM_path" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="volume" Type="decimal" Precision="16" Scale="4" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+          <Property Name="reserved1" Type="int" />
+          <Property Name="reserved2" Type="int" />
+          <Property Name="reserved3" Type="int" />
+          <Property Name="reserved4" Type="varchar" MaxLength="50" />
+          <Property Name="reserved5" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_product_area">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SN" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_product_SN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SN" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SYS_product_SN_SYS_product_SN">
+          <End Role="SYS_product_SN" Type="Self.SYS_product_SN" Multiplicity="1" />
+          <End Role="SYS_product_SN1" Type="Self.SYS_product_SN" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product_SN">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_product_SN1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_product_SYS_product_area">
+          <End Role="SYS_product_area" Type="Self.SYS_product_area" Multiplicity="0..1" />
+          <End Role="SYS_product" Type="Self.SYS_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product_area">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_product">
+              <PropertyRef Name="product_area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_product_SYS_product_SN">
+          <End Role="SYS_product_SN" Type="Self.SYS_product_SN" Multiplicity="1" />
+          <End Role="SYS_product" Type="Self.SYS_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product_SN">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_product">
+              <PropertyRef Name="product_SN_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="XNERPModelStoreContainer">
           <EntitySet Name="INV_wood_type" EntityType="Self.INV_wood_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_colors" EntityType="Self.SYS_colors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_product" EntityType="Self.SYS_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_product_area" EntityType="Self.SYS_product_area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_product_SN" EntityType="Self.SYS_product_SN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SYS_product_SN_SYS_product_SN" Association="Self.FK_SYS_product_SN_SYS_product_SN">
+            <End Role="SYS_product_SN" EntitySet="SYS_product_SN" />
+            <End Role="SYS_product_SN1" EntitySet="SYS_product_SN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_product_SYS_product_area" Association="Self.FK_SYS_product_SYS_product_area">
+            <End Role="SYS_product_area" EntitySet="SYS_product_area" />
+            <End Role="SYS_product" EntitySet="SYS_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_product_SYS_product_SN" Association="Self.FK_SYS_product_SYS_product_SN">
+            <End Role="SYS_product_SN" EntitySet="SYS_product_SN" />
+            <End Role="SYS_product" EntitySet="SYS_product" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -52,6 +150,21 @@
         <EntityContainer Name="XNERPEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="INV_wood_type" EntityType="XNERPModel.INV_wood_type" />
           <EntitySet Name="SYS_colors" EntityType="XNERPModel.SYS_colors" />
+          <EntitySet Name="SYS_product_area" EntityType="XNERPModel.SYS_product_area" />
+          <EntitySet Name="SYS_product" EntityType="XNERPModel.SYS_product" />
+          <AssociationSet Name="FK_SYS_product_SYS_product_area" Association="XNERPModel.FK_SYS_product_SYS_product_area">
+            <End Role="SYS_product_area" EntitySet="SYS_product_area" />
+            <End Role="SYS_product" EntitySet="SYS_product" />
+          </AssociationSet>
+          <EntitySet Name="SYS_product_SN" EntityType="XNERPModel.SYS_product_SN" />
+          <AssociationSet Name="FK_SYS_product_SYS_product_SN" Association="XNERPModel.FK_SYS_product_SYS_product_SN">
+            <End Role="SYS_product_SN" EntitySet="SYS_product_SN" />
+            <End Role="SYS_product" EntitySet="SYS_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_product_SN_SYS_product_SN" Association="XNERPModel.FK_SYS_product_SN_SYS_product_SN">
+            <End Role="SYS_product_SN" EntitySet="SYS_product_SN" />
+            <End Role="SYS_product_SN1" EntitySet="SYS_product_SN" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -89,6 +202,95 @@
           <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="delete_flag" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="SYS_product_area">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_SYS_product_SYS_product_area" FromRole="SYS_product_area" ToRole="SYS_product" />
+        </EntityType>
+        <EntityType Name="SYS_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_SN_id" Type="Int32" Nullable="false" />
+          <Property Name="product_area_id" Type="Int32" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="length" Type="Int32" />
+          <Property Name="width" Type="Int32" />
+          <Property Name="height" Type="Int32" />
+          <Property Name="picture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="paper_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BOM_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="volume" Type="Decimal" Precision="16" Scale="4" />
+          <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <Property Name="reserved1" Type="Int32" />
+          <Property Name="reserved2" Type="Int32" />
+          <Property Name="reserved3" Type="Int32" />
+          <Property Name="reserved4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reserved5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SYS_product_area" Relationship="XNERPModel.FK_SYS_product_SYS_product_area" FromRole="SYS_product" ToRole="SYS_product_area" />
+          <NavigationProperty Name="SYS_product_SN" Relationship="XNERPModel.FK_SYS_product_SYS_product_SN" FromRole="SYS_product" ToRole="SYS_product_SN" />
+        </EntityType>
+        <Association Name="FK_SYS_product_SYS_product_area">
+          <End Type="XNERPModel.SYS_product_area" Role="SYS_product_area" Multiplicity="0..1" />
+          <End Type="XNERPModel.SYS_product" Role="SYS_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product_area">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_product">
+              <PropertyRef Name="product_area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SYS_product_SN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_SYS_product_SYS_product_SN" FromRole="SYS_product_SN" ToRole="SYS_product" />
+          <NavigationProperty Name="SYS_product_SN1" Relationship="XNERPModel.FK_SYS_product_SN_SYS_product_SN" FromRole="SYS_product_SN" ToRole="SYS_product_SN1" />
+          <NavigationProperty Name="SYS_product_SN2" Relationship="XNERPModel.FK_SYS_product_SN_SYS_product_SN" FromRole="SYS_product_SN1" ToRole="SYS_product_SN" />
+        </EntityType>
+        <Association Name="FK_SYS_product_SYS_product_SN">
+          <End Type="XNERPModel.SYS_product_SN" Role="SYS_product_SN" Multiplicity="1" />
+          <End Type="XNERPModel.SYS_product" Role="SYS_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product_SN">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_product">
+              <PropertyRef Name="product_SN_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_product_SN_SYS_product_SN">
+          <End Type="XNERPModel.SYS_product_SN" Role="SYS_product_SN" Multiplicity="1" />
+          <End Type="XNERPModel.SYS_product_SN" Role="SYS_product_SN1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product_SN">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_product_SN1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -130,6 +332,56 @@
                 <ScalarProperty Name="remark" ColumnName="remark" />
                 <ScalarProperty Name="created_time" ColumnName="created_time" />
                 <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_product_area">
+            <EntityTypeMapping TypeName="XNERPModel.SYS_product_area">
+              <MappingFragment StoreEntitySet="SYS_product_area">
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_product">
+            <EntityTypeMapping TypeName="XNERPModel.SYS_product">
+              <MappingFragment StoreEntitySet="SYS_product">
+                <ScalarProperty Name="reserved5" ColumnName="reserved5" />
+                <ScalarProperty Name="reserved4" ColumnName="reserved4" />
+                <ScalarProperty Name="reserved3" ColumnName="reserved3" />
+                <ScalarProperty Name="reserved2" ColumnName="reserved2" />
+                <ScalarProperty Name="reserved1" ColumnName="reserved1" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="BOM_path" ColumnName="BOM_path" />
+                <ScalarProperty Name="paper_path" ColumnName="paper_path" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="product_area_id" ColumnName="product_area_id" />
+                <ScalarProperty Name="product_SN_id" ColumnName="product_SN_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_product_SN">
+            <EntityTypeMapping TypeName="XNERPModel.SYS_product_SN">
+              <MappingFragment StoreEntitySet="SYS_product_SN">
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

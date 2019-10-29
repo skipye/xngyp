@@ -23,9 +23,9 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
-            <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Labels")"><i class="Hui-iconfont">&#xe6e2;</i>选中取消送货</a>
-            <a href="javascript:void(0);" onclick="ConfirmINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("MoveINV","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中送货</a>
-            <a href="javascript:void(0);" onclick="DeliveryINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Delivery","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中打印</a>
+            <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Delivery")"><i class="Hui-iconfont">&#xe6e2;</i>选中取消送货</a>
+            <a href="javascript:void(0);" onclick="ConfirmINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Check","Delivery")"><i class="Hui-iconfont">&#xe615;</i>选中送货</a>
+            <a href="javascript:void(0);" onclick="DeliveryINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Print","Delivery")"><i class="Hui-iconfont">&#xe615;</i>选中打印</a>
             <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
     </div>
@@ -101,10 +101,13 @@
                 }, {
                     targets: 11,
                     render: function (data, type, row) {
-                        var str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'编辑\',\'/Labels/Edit\', \'' + row.Id + '\', \'800\', \'600\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
-                               '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Labels/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
-                        if (row.Status == 0) { str += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="ConfirmINV(this,\'' + row.Id + '\')" data-url=\'/Labels/Check\' title="入库"><i class="Hui-iconfont f-14">&#xe645;</i></a>'; }
-                        if (row.Status == 1) { str += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="DeliveryINV(this,\'' + row.Id + '\')" data-url=\'/Labels/Delivery\' title="送货维修"><i class="Hui-iconfont f-14">&#xe63c;</i></a>';}
+						var str = "";
+                               ;
+						if (row.Status == 0) {
+							str += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="ConfirmINV(this,\'' + row.Id + '\')" data-url=\'/Delivery/Check\' title="送货"><i class="Hui-iconfont f-14">&#xe645;</i></a>' +
+								'<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Delivery/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
+						}
+                        if (row.Status == 1) { str += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="DeliveryINV(this,\'' + row.Id + '\')" data-url=\'/Delivery/Delivery\' title="打印送货单"><i class="Hui-iconfont f-14">&#xe63c;</i></a>';}
                         return str;
                     }
                 }
@@ -124,7 +127,7 @@
                 { "data": "Color", "defaultContent": "" },
                 { "data": "INVName", "defaultContent": "" },
                 {
-                    "data": "DeliverTime", "defaultContent": "","render": function (data) {
+                    "data": "DeliveryTime", "defaultContent": "","render": function (data) {
                         if (data != null) {
                         var NewTime = parseInt(data.replace(/\D/igm, ""));
                             return formatDate(NewTime);
@@ -164,7 +167,7 @@
         var INVId = $("#INVId").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        window.location.href = "/Labels/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&StartTime=' + StartTime + '&EndTime=' + EndTime;
+        window.location.href = "/Delivery/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&StartTime=' + StartTime + '&EndTime=' + EndTime;
         //$.post(ExcelUrl, {}, function (d) { });
     };
 </script> 

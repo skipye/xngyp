@@ -27,5 +27,8 @@ namespace DataBase
     
         public DbSet<INV_wood_type> INV_wood_type { get; set; }
         public DbSet<SYS_colors> SYS_colors { get; set; }
+        public DbSet<SYS_product_area> SYS_product_area { get; set; }
+        public DbSet<SYS_product> SYS_product { get; set; }
+        public DbSet<SYS_product_SN> SYS_product_SN { get; set; }
     }
 }

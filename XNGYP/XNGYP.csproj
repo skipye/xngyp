@@ -120,6 +120,7 @@
     <Compile Include="Controllers\CostController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\FOrderController.cs" />
     <Compile Include="Controllers\SemiController.cs" />
     <Compile Include="Controllers\SaleStartController.cs" />
     <Compile Include="Controllers\PreCastController.cs" />
@@ -146,7 +147,9 @@
     <Content Include="css\iconfont\iconfont.css" />
     <Content Include="css\iconfont\iconfont.min.css" />
     <Content Include="css\iconfont\iconfont.svg" />
+    <Content Include="js\jQuery.print.js" />
     <Content Include="css\login.css" />
+    <Content Include="css\print.css" />
     <Content Include="Global.asax" />
     <Content Include="images\acrossTab-2.png" />
     <Content Include="images\acrossTab-close.png" />
@@ -694,6 +697,15 @@
     <Content Include="Views\Delivery\MoveINV.cshtml" />
     <Content Include="Views\Delivery\UserIndex.cshtml" />
     <Content Include="Views\Delivery\WorkLabels.cshtml" />
+    <Content Include="Views\FOrder\AddF.cshtml" />
+    <Content Include="Views\FOrder\AddProducts.cshtml" />
+    <Content Include="Views\FOrder\DepartmentIndex.cshtml" />
+    <Content Include="Views\FOrder\Index.cshtml" />
+    <Content Include="Views\FOrder\ProductListByOrder.cshtml" />
+    <Content Include="Views\FOrder\Show.cshtml" />
+    <Content Include="Views\FOrder\UserIndex.cshtml" />
+    <Content Include="Views\Order\AddGYPProducts.cshtml" />
+    <Content Include="Views\Order\Print.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

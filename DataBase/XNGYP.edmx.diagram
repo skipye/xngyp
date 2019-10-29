@@ -56,6 +56,8 @@
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Delivery" Width="1.5" PointX="11.125" PointY="19.875" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" />
+        <EntityTypeShape EntityType="XNGYPModel.Contract_FDetail" Width="1.5" PointX="14.25" PointY="20.125" />
+        <AssociationConnector Association="XNGYPModel.FK_Contract_FDetail_Contract_Header" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

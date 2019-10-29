@@ -51,6 +51,7 @@
     <Compile Include="CustomerService.cs" />
     <Compile Include="CostService.cs" />
     <Compile Include="FinanceService.cs" />
+    <Compile Include="DeliveryService.cs" />
     <Compile Include="SemiService.cs" />
     <Compile Include="ToExcel.cs" />
     <Compile Include="WorkOrderService.cs" />
