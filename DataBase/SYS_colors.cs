@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class SYS_colors
     {
+        public SYS_colors()
+        {
+            this.CRM_contract_detail = new HashSet<CRM_contract_detail>();
+        }
+    
         public int id { get; set; }
         public string SN { get; set; }
         public string name { get; set; }
@@ -22,5 +27,7 @@ namespace DataBase
         public string remark { get; set; }
         public System.DateTime created_time { get; set; }
         public bool delete_flag { get; set; }
+    
+        public virtual ICollection<CRM_contract_detail> CRM_contract_detail { get; set; }
     }
 }

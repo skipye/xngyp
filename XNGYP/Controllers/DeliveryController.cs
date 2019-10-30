@@ -11,6 +11,7 @@ namespace XNGYP.Controllers
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         private static readonly DeliveryService LSer = new DeliveryService();
         private static readonly ToExcel ESer = new ToExcel();
+        [Authorize]
         public ActionResult Index()
         {
             SLabelsModel SModel = new SLabelsModel();

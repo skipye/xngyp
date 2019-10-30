@@ -13,6 +13,7 @@ namespace XNGYP.Controllers
     {
         private static readonly CostService CSer = new CostService();
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
+        [Authorize]
         public ActionResult Index()
         {
             SCostModel SModels = new SCostModel();

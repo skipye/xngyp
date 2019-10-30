@@ -30,5 +30,7 @@ namespace DataBase
         public DbSet<SYS_product_area> SYS_product_area { get; set; }
         public DbSet<SYS_product> SYS_product { get; set; }
         public DbSet<SYS_product_SN> SYS_product_SN { get; set; }
+        public DbSet<CRM_contract_detail> CRM_contract_detail { get; set; }
+        public DbSet<CRM_contract_header> CRM_contract_header { get; set; }
     }
 }

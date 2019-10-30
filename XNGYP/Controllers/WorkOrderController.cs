@@ -13,6 +13,7 @@ namespace XNGYP.Controllers
     {
         private static readonly WorkOrderService WSer = new WorkOrderService();
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
+        [Authorize]
         public ActionResult Index()
         {
             return View();

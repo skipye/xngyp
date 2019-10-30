@@ -114,6 +114,11 @@ namespace DalProject
                     table.RealPrice = Models.RealPrice;
                     table.FRStatus = Models.FRStatus;
                     db.Contract_Header.Add(table);
+
+                    FinanceModel FModels = new FinanceModel();
+                    FModels.Id = Models.Id;
+                    FModels.PayStatus = Models.FRStatus;
+                    FModels.Amount = Models.RealPrice;
                 }
                 db.SaveChanges();
 
@@ -209,6 +214,8 @@ namespace DalProject
                         tables.CWCheckId = new UserDal().GetCurrentUserName().UserId;
                         tables.CWCheckName = new UserDal().GetCurrentUserName().UserName;
                         tables.CWCheckTime = DateTime.Now;
+
+                        AddFOrder(Id);//添加家具订单
                     }
                 }
 
@@ -235,6 +242,20 @@ namespace DalProject
                 foreach (var item in model)
                 {
                     items.Add(new SelectListItem() { Text = item.name+"_"+item.SN, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
+                }
+            }
+            return items;
+        }
+        public List<SelectListItem> GetFatherProSNDrolist(int? pId)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "请选择系列二级", Value = "" });
+            using (var db = new XNGYPEntities())
+            {
+                List<XNGYP_Products_SN> model = db.XNGYP_Products_SN.Where(b => b.delete_flag == false && b.FatherId >0).OrderBy(k => k.created_time).ToList();
+                foreach (var item in model)
+                {
+                    items.Add(new SelectListItem() { Text = item.name + "_" + item.SN, Value = item.Id.ToString() });
                 }
             }
             return items;
@@ -539,5 +560,107 @@ namespace DalProject
                 return Models;
             }
         }
+        //添加家具订单
+        public void AddFOrder(int Id)
+        {
+            ContractHeaderModel CHModels = new ContractHeaderModel();
+            List<ContractProductsModel> CHDetailModels = new List<ContractProductsModel>();
+            bool IsF = false;
+            using (var db = new XNGYPEntities())
+            {
+                var CHDetail = (from p in db.Contract_FDetail.Where(k => k.ContractHeadId == Id && k.DeleteFlag == false)
+                                orderby p.CreateTime descending
+                                select new ContractProductsModel
+                                {
+                                    ColorId = p.ColorId,
+                                    Color = p.Color,
+                                    ProductId = p.ProductId,
+                                    WoodId = p.WoodId,
+                                    CustomFlag = p.CustomFlag,
+                                    length = p.length,
+                                    width = p.width,
+                                    height = p.height,
+                                    price = p.Price,
+                                    Qty = p.Qty,
+                                    hardware_part = p.hardware_part,
+                                    decoration_part = p.decoration_part,
+                                    req_others = p.req_others,
+                                }).ToList();
+                if (CHDetail != null && CHDetail.Any())
+                {
+                    CHDetailModels = CHDetail;
+                    var CHTabl = (from p in db.Contract_Header.Where(k => k.Id == Id)
+                                  select new ContractHeaderModel
+                                  {
+                                      SN = p.SN,
+                                      OrderTime = p.HTDate,
+                                      DeliveryDate = p.DeliveryDate,
+                                      DeliverChannel = p.DeliverChannel,
+                                      DeliveryAddress = p.DeliveryAddress,
+                                      Customer = p.DeliveryLinkMan,
+                                      TelPhone = p.DeliveryLinkTel,
+                                  }).SingleOrDefault();
+                    CHModels = CHTabl;
+                    IsF = true;
+                }
+            }
+            if (IsF == true) { 
+                using (var db = new XNERPEntities())
+                {
+                    CRM_contract_header table = new CRM_contract_header();
+                    table.SN = CHModels.SN;
+                    table.HTDate = Convert.ToDateTime(CHModels.OrderTime);
+                    table.customer_id = 213;
+                    table.delivery_date = CHModels.DeliveryDate;
+                    table.amount = 0;
+                    table.delivery_channel = CHModels.DeliverChannel;
+                    table.freight_carrier = CHModels.FreightCarrier;
+                    table.prepay = 0;
+                    table.measure_flag = CHModels.MeasureFlag;
+                    table.delivery_address = CHModels.DeliveryAddress;
+                    table.Linkman = CHModels.Customer;
+                    table.Linktel = CHModels.TelPhone;
+                    table.signed_user_id = 0;
+                    table.signed_department_id = 0;
+                    table.department = "唐锐";
+                    table.SaleName = "唐锐";
+                    table.status = 0;
+                    table.created_time = DateTime.Now;
+                    table.delete_flag = false;
+                    db.CRM_contract_header.Add(table);
+                    db.SaveChanges();
+                    var HeaderId = table.id;
+                    if (CHDetailModels != null && CHDetailModels.Any())
+                    {
+                        foreach (var item in CHDetailModels)
+                        {
+                            CRM_contract_detail Detailtable = new CRM_contract_detail();
+                            Detailtable.header_id = HeaderId;
+                            Detailtable.color_id = item.ColorId ?? 0;
+                            Detailtable.color = item.Color;
+                            Detailtable.product_id = item.ProductId??0;
+                            Detailtable.wood_type_id = item.WoodId ?? 0;
+                            Detailtable.custom_flag = item.CustomFlag;
+                            Detailtable.length = item.length;
+                            Detailtable.width = item.width;
+                            Detailtable.height = item.height;
+                            Detailtable.price = 0;
+                            Detailtable.qty = item.Qty ?? 0;
+                            Detailtable.hardware_part = item.hardware_part;
+                            Detailtable.decoration_part = item.decoration_part;
+                            Detailtable.req_others = item.req_others;
+                            Detailtable.created_time = DateTime.Now;
+                            Detailtable.delete_flag = false;
+                            Detailtable.status = 0;
+                            db.CRM_contract_detail.Add(Detailtable);
+                        }
+
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
+
+
     }
 }

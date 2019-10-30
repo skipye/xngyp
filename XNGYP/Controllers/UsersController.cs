@@ -12,6 +12,7 @@ namespace XNGYP.Controllers
     public class UsersController : Controller
     {
         private static readonly UserService USer = new UserService();
+        [Authorize]
         public void AddWorkLogs(WorkLogsModel tables)
         {
             tables.UserId = USer.GetCurrentUserName().UserId;

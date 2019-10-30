@@ -227,7 +227,7 @@ namespace DalProject
                 return NewItme;
             }
         }
-        public string GetSecSNDrolistByFatherId(int? FatherId)
+        public string GetSecSNDrolistByFatherId(int? FatherId,string SelectedId)
         {
             using (var db = new XNGYPEntities())
             {
@@ -245,7 +245,10 @@ namespace DalProject
                 {
                     var strText = item.Name + "_" + item.label;
                     var IstrValue = item.Id;
-                    NewItme += "<option value=" + IstrValue + ">" + strText + "</option>";
+                    if (item.label == SelectedId)
+                    { NewItme += "<option value=" + IstrValue + " selected='selected'>" + strText + "</option>"; }
+                    else { NewItme += "<option value=" + IstrValue + ">" + strText + "</option>"; }
+                    
                 }
                 return NewItme;
             }

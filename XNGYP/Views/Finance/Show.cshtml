@@ -26,7 +26,7 @@
 					<td>@(i)</td>
 					<td>@item.HTSN </td>
 					<td>@item.Customer </td>
-					<td>@item.PayModel</td>
+					<td>@(item.PayStatus==1?"微信/支付宝":item.PayStatus==2?"现金":"刷卡")</td>
 					<td>@item.Amount </td>
 					<td>@item.operator_name </td>
 					<td>@Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd HH:mm") </td>
@@ -36,10 +36,7 @@
 			}
 		</tbody>
 	</table>
-
 }
-else
-{<p>暂无记录！</p>}
 <script type="text/javascript" src="~/js/jquery.min.js"></script>
 <script type="text/javascript">
     $(".delone").click(function () {

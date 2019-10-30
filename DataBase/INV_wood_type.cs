@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class INV_wood_type
     {
+        public INV_wood_type()
+        {
+            this.CRM_contract_detail = new HashSet<CRM_contract_detail>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string nickname { get; set; }
@@ -32,5 +37,7 @@ namespace DataBase
         public Nullable<int> Sort { get; set; }
         public Nullable<decimal> PersonPrice { get; set; }
         public string SN { get; set; }
+    
+        public virtual ICollection<CRM_contract_detail> CRM_contract_detail { get; set; }
     }
 }

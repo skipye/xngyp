@@ -13,6 +13,12 @@
         <EntityTypeShape EntityType="XNERPModel.SYS_product_SN" Width="1.5" PointX="5" PointY="3.625" />
         <AssociationConnector Association="XNERPModel.FK_SYS_product_SYS_product_SN" />
         <AssociationConnector Association="XNERPModel.FK_SYS_product_SN_SYS_product_SN" />
+        <EntityTypeShape EntityType="XNERPModel.CRM_contract_detail" Width="1.5" PointX="10.625" PointY="0.75" />
+        <EntityTypeShape EntityType="XNERPModel.CRM_contract_header" Width="1.5" PointX="8.375" PointY="8" />
+        <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_CRM_contract_header" />
+        <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_INV_wood_type" />
+        <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_SYS_colors" />
+        <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_SYS_product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -13,7 +13,7 @@ namespace XNGYP.Controllers
     {
         private static readonly UserService USer = new UserService();
         private static readonly CustomerService NSer = new CustomerService();
-
+        [Authorize]
         public ActionResult Index()
         {
             SCustomerModel SModels = new SCustomerModel();

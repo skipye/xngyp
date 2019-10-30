@@ -12,6 +12,7 @@ namespace XNGYP.Controllers
     public class MenuController : Controller
     {
         private static readonly MenuService CSer = new MenuService();
+        [Authorize]
         public ActionResult Index()
         {
             SMenuModel SModels = new SMenuModel();

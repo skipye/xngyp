@@ -13,6 +13,7 @@ namespace XNGYP.Controllers
     {
         private static readonly ProductsService CSer = new ProductsService();
         private static readonly ContractHeaderService NSer = new ContractHeaderService();
+        [Authorize]
         public ActionResult Name()
         {
             return View();
@@ -112,9 +113,9 @@ namespace XNGYP.Controllers
             var List = CSer.GetProNameDrolistBySN(ProSN);
             return Content(List.ToString());
         }
-        public ActionResult GetSecSNDrolistByFatherId(int? FatherId)
+        public ActionResult GetSecSNDrolistByFatherId(int? FatherId, string SelectedId)
         {
-            var List = CSer.GetSecSNDrolistByFatherId(FatherId);
+            var List = CSer.GetSecSNDrolistByFatherId(FatherId, SelectedId);
             return Content(List.ToString());
         }
     }

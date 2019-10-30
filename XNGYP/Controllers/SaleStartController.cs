@@ -10,6 +10,7 @@ namespace XNGYP.Controllers
     {
         private static readonly SaleStartService SSSer = new SaleStartService();
         private static readonly WorkOrderService WOSer = new WorkOrderService();
+        [Authorize]
         public ActionResult Index()
         {
             SContractProductsModel Models = new SContractProductsModel();

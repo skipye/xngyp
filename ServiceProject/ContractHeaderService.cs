@@ -91,6 +91,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<SelectListItem> GetFatherProSNDrolist(int? pId)
+        {
+            try { return CHDal.GetFatherProSNDrolist(pId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public List<SelectListItem> GetProFSNDrolist(int? pId)
         {
             try { return CHDal.GetProFSNDrolist(pId); }

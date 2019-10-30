@@ -14,7 +14,7 @@ namespace XNGYP.Controllers
         private static readonly UserService USer = new UserService();
         private static readonly CustomerService CSer = new CustomerService();
         private static readonly ContractHeaderService NSer = new ContractHeaderService();
-
+        [Authorize]
         public ActionResult Index()
         {
             SContractHeaderModel SModels = new SContractHeaderModel();
@@ -104,18 +104,12 @@ namespace XNGYP.Controllers
         }
         public ActionResult Delete(string ListId)
         {
-            if (string.IsNullOrEmpty(ListId) == true)
+            if (NSer.Delete(ListId) == true)
             {
-                return Content("False");
+                return Content("True");
             }
-            else
-            {
-                if (NSer.Delete(ListId) == true)
-                {
-                    return Content("True");
-                }
-                else return Content("False");
-            }
+            else return Content("False");
+            
         }
         public ActionResult Checked(string ListId)
         {
@@ -159,6 +153,7 @@ namespace XNGYP.Controllers
             ContractProductsModel Models = new ContractProductsModel();
             Models.ContractHeadId = Id;
             Models.ProXLDroList = NSer.GetProSNDrolist(Models.ProductSNId);
+            Models.FatherDroList = NSer.GetFatherProSNDrolist(Models.FatherId);
             Models.WoodDroList = NSer.GetWoodDrolist(Models.WoodId);
             Models.colorDroList = NSer.GetColorDrolist(Models.ColorId);
             return View(Models);

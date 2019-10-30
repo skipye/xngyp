@@ -55,6 +55,12 @@
     <Compile Include="Contract_Header.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>
+    <Compile Include="CRM_contract_detail.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRM_contract_header.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ehr_department.cs">
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>

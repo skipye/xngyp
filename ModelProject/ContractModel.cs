@@ -122,7 +122,7 @@ namespace ModelProject
         public string ProductXL { get; set; }
         public string ProductName { get; set; }
         public string ProductArea { get; set; }
-        public int ColorId { get; set; }
+        public int? ColorId { get; set; }
         public string Color { get; set; }
         public int? WoodId { get; set; }
         public string WoodName { get; set; }
@@ -152,6 +152,7 @@ namespace ModelProject
         public List<SelectListItem> ProNameDroList { get; set; }
         public List<SelectListItem> WoodDroList { get; set; }
         public List<SelectListItem> colorDroList { get; set; }
+        public List<SelectListItem> FatherDroList { get; set; }
         public int? WorkCount { get; set; }
         public int? Status { get; set; }
         public string OrderNum { get; set; }

@@ -17,5 +17,6 @@ namespace ModelProject
         public decimal? Amount { get; set; }
         public string Remaks { get; set; }
         public DateTime? CreateTime { get; set; }
+        public int? PayStatus { get; set; }
     }
 }

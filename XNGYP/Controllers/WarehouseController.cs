@@ -12,6 +12,7 @@ namespace XNGYP.Controllers
     public class WarehouseController : Controller
     {
         private static readonly INVService CSer = new INVService();
+        [Authorize]
         public ActionResult Index()
         {
             return View();

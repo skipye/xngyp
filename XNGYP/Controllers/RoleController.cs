@@ -14,6 +14,7 @@ namespace XNGYP.Controllers
         private static readonly RoleService CSer = new RoleService();
         private static readonly MenuService MSer = new MenuService();
         private static readonly UserService User = new UserService();
+        [Authorize]
         public ActionResult Index()
         {
             SRoleModel SModels = new SRoleModel();

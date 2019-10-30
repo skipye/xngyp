@@ -202,7 +202,6 @@ $(function(){
 		$("#Height").val(height);
 	});
 	$("#ProductId").change(function () {
-        var _this = $(this);
         var StrText = $(this).find("option:selected").text();
         var ProductName = StrText.split('_')[0];
         var length = StrText.split('_')[1];
@@ -216,10 +215,60 @@ $(function(){
     $("#CustomFlag").click(function () {
         var StrVal = $(this).val();
         if (StrVal == "true")
-        { $("#length").removeAttr("readonly"); $("#width").removeAttr("readonly"); $("#height").removeAttr("readonly"); }
-        else { $("#length").attr("readonly", "readonly"); $("#width").attr("readonly", "readonly"); $("#height").attr("readonly", "readonly"); }
+        { $("#Length").removeAttr("readonly"); $("#Width").removeAttr("readonly"); $("#Height").removeAttr("readonly"); }
+        else { $("#Length").attr("readonly", "readonly"); $("#Width").attr("readonly", "readonly"); $("#Height").attr("readonly", "readonly"); }
     });
+    $("#OrderNum").blur(function () {
+        var ordernum = $(this).val();
+        var XL = ordernum.substring(0, 2).toUpperCase();
+        var FatherSN = ordernum.substring(2, 4);
+        var MCSN = ordernum.substring(4, 7);
+        $("select#ProductSNId option").each(function (index, domEle) {
+            var StrItem = $(this).text();
+            var XLId = $(this).val();
+            if (StrItem.indexOf(XL) >= 0) {
+                $(this).attr("selected", true);
+                $("#ProductXL").val(StrItem.split('_')[0]);
+                var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+                $.post(ProUrl, { FatherId: XLId,SelectedId:FatherSN }, function (data) {
+                    $('#FatherId').empty();
+                    $('#FatherId').append(data);
+                });
+            }
+        });
+        $("select#FatherId option").each(function (index, domEle) {
+            var FItem = $(this).text();
+            var FatherId = $(this).val();
+            if (FItem.indexOf("_"+FatherSN) >= 0) {
+                $(this).attr("selected", true);
+                $("#ProductSN").val(FItem.split('_')[0]);
+                var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
+                $.post(ProUrl, { ProSN: FatherId }, function (data) {
+                    $('#ProductId').empty();
+                    $('#ProductId').append(data);
 
+                    $("select#ProductId option").each(function (index, domEle) {
+                        var StrText = $(this).text();
+                        var ProductName = StrText.split('_')[0];
+                        var length = StrText.split('_')[1];
+                        var width = StrText.split('_')[2];
+                        var height = StrText.split('_')[3];
+                        $("#ProductName").val(ProductName);
+                        $("#length").val(length);
+                        $("#width").val(width);
+                        $("#height").val(height);
+                    });
+                });
+            }
+        });
+        $("select#WoodId option").each(function (index, domEle) {
+            var FItem = $(this).text();
+            if (FItem.indexOf("_"+MCSN) >= 0) {
+                $(this).attr("selected", true);
+                $("#WoodName").val(FItem.split('_')[0]);
+            }
+        });
+    });
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

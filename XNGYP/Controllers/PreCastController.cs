@@ -11,6 +11,7 @@ namespace XNGYP.Controllers
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         private static readonly WorkOrderService WOSer = new WorkOrderService();
         private static readonly PreCastService LSer = new PreCastService();
+        [Authorize]
         public ActionResult Index()
         {
             SPreCastModel Models = new SPreCastModel();

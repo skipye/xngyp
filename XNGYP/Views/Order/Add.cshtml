@@ -38,7 +38,7 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>合同日期：</label>
 			<div class="formControls col-xs-8 col-sm-4">
 				@*<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">*@
-				@Html.TextBoxFor(k => k.HTDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;", @id = "logmin" })
+				@Html.TextBoxFor(k => k.HTDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;",@readonly="@readonly" })
 			</div>
 		</div>
 		<div class="row cl">
@@ -199,7 +199,8 @@
 	//表单验证
 	$("#formadd").validate({
 		rules:{
-		    Customer: {required:true,},
+            Customer: { required: true, },
+            HTDate: {required:true,},
 		},
 		onkeyup: false,
 		focusCleanup:true,

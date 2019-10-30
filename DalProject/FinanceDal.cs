@@ -24,10 +24,11 @@ namespace DalProject
                 SFLtable.Customer = OrderTable.XNGYP_Customers.Name;
                 SFLtable.PayModel = Models.PayModel;
                 SFLtable.Amount = Models.Amount;
-                SFLtable.operator_id = Models.operator_id;
-                SFLtable.operator_name = Models.operator_name;
+                SFLtable.operator_id = new UserDal().GetCurrentUserName().UserId;
+                SFLtable.operator_name = new UserDal().GetCurrentUserName().UserName;
                 SFLtable.CreateTime = DateTime.Now;
                 SFLtable.Remaks = Models.Remaks;
+                SFLtable.PayStatus = Models.PayStatus;
                 db.XNGYP_FR_Logs.Add(SFLtable);
 
                 var table = db.XNGYP_FR.Where(k => k.HTId == Models.Id).SingleOrDefault();//判断是否存在
@@ -48,8 +49,8 @@ namespace DalProject
                     Stable.Total = Total;
                     Stable.Prepay = Prepay;
                     Stable.Amount = Models.Amount;
-                    Stable.operator_id = Models.operator_id;
-                    Stable.operator_name = Models.operator_name;
+                    Stable.operator_id = SFLtable.operator_id;
+                    Stable.operator_name = SFLtable.operator_name;
                     Stable.CreateTime = DateTime.Now;
                     db.XNGYP_FR.Add(Stable);
                 }

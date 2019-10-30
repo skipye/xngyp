@@ -1,9 +1,9 @@
 ﻿@model ModelProject.FinanceModel
 @{Layout = null;
     List<SelectListItem> TypeDroList = new List<SelectListItem>();
-    TypeDroList.Add(new SelectListItem { Text = "现金", Value = "现金" });
-    TypeDroList.Add(new SelectListItem { Text = "银行", Value = "银行" });
-    TypeDroList.Add(new SelectListItem { Text = "pos机", Value = "pos机" });
+    TypeDroList.Add(new SelectListItem { Text = "微信/支付宝", Value = "1" });
+    TypeDroList.Add(new SelectListItem { Text = "现金", Value = "2" });
+    TypeDroList.Add(new SelectListItem { Text = "刷卡", Value = "3" });
     }
 
 @Html.Action("_Meta", "Home")

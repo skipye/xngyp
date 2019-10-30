@@ -198,6 +198,7 @@
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Remaks" Type="nvarchar" MaxLength="500" />
           <Property Name="CreateTime" Type="datetime" />
+          <Property Name="PayStatus" Type="int" />
         </EntityType>
         <EntityType Name="XNGYP_INV_Labels">
           <Key>
@@ -1837,6 +1838,7 @@
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Remaks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="PayStatus" Type="Int32" />
         </EntityType>
         <EntityType Name="XNGYP_FR">
           <Key>
@@ -2350,6 +2352,7 @@
           <EntitySetMapping Name="XNGYP_FR_Logs">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_FR_Logs">
               <MappingFragment StoreEntitySet="XNGYP_FR_Logs">
+                <ScalarProperty Name="PayStatus" ColumnName="PayStatus" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="Remaks" ColumnName="Remaks" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />

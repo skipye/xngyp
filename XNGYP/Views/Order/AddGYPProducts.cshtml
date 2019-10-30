@@ -30,7 +30,7 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box inline">
 					@Html.DropDownListFor(k => k.ProductSNId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
-					@Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px;" })
+					@Html.DropDownListFor(k => k.FatherId, Model.FatherDroList, new { @class = "select", @style = "width:150px;" })
 					@Html.DropDownListFor(k => k.ProductId, ArrProName, new { @class = "select", @style = "width:150px;" })
 					@Html.HiddenFor(k => k.ProductXL)
 					@Html.HiddenFor(k => k.ProductName)
@@ -44,7 +44,7 @@
 				<span class="select-box inline">
 					@Html.DropDownListFor(k => k.WoodId, Model.WoodDroList, new { @class = "select", @style = "width:150px;" })
 
-					@Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:130px;" })
+					@Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:150px;" })
 					@Html.TextBoxFor(k => k.Color, new { @class = "input-text", @style = "width:150px;" })
 					@Html.HiddenFor(k => k.WoodName)
 				</span>

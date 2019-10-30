@@ -11,6 +11,7 @@ namespace XNGYP.Controllers
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         private static readonly SemiService LSer = new SemiService();
         private static readonly ToExcel ESer = new ToExcel();
+        [Authorize]
         public ActionResult Index()
         {
             SSemiModel Models = new SSemiModel();

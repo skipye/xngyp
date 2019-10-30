@@ -24,5 +24,6 @@ namespace DataBase
         public Nullable<decimal> Amount { get; set; }
         public string Remaks { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> PayStatus { get; set; }
     }
 }

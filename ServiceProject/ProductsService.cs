@@ -88,11 +88,11 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public string GetSecSNDrolistByFatherId(int? FatherId)
+        public string GetSecSNDrolistByFatherId(int? FatherId, string SelectedId)
         {
             try
             {
-                return CDal.GetSecSNDrolistByFatherId(FatherId);
+                return CDal.GetSecSNDrolistByFatherId(FatherId, SelectedId);
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ namespace XNGYP.Controllers
         private static readonly UserService USer = new UserService();
         private static readonly FinanceService FSer = new FinanceService();
         private static readonly ContractHeaderService NSer = new ContractHeaderService();
-
+        [Authorize]
         public ActionResult Order()
         {
             SContractHeaderModel SModels = new SContractHeaderModel();
