@@ -156,6 +156,8 @@ namespace DalProject
                                   SHFlag = p.SHFlag,
                                   DeliverChannel=p.DeliverChannel,
                                   ZTDFlag = p.ZTDFlag,
+                                  RealPrice = p.RealPrice,
+                                  FRStatus = p.FRStatus,
                               }).SingleOrDefault();
                 return tables;
             }
