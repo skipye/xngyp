@@ -227,7 +227,30 @@ namespace DalProject
                 return NewItme;
             }
         }
-        public string GetSecSNDrolistByFatherId(int? FatherId,string SelectedId)
+        public string GetSecSNDrolistByFatherId(int? FatherId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var list = (from p in db.XNGYP_Products_SN.Where(k => k.delete_flag == false)
+                            where FatherId > 0 ? p.FatherId == FatherId : true
+                            orderby p.created_time descending
+                            select new CRMItem
+                            {
+                                Id = p.Id,
+                                Name = p.name,
+                                label = p.SN,
+                            }).ToList();
+                string NewItme = "";
+                foreach (var item in list)
+                {
+                    var strText = item.Name + "_" + item.label;
+                    var IstrValue = item.Id;
+                    NewItme += "<option value=" + IstrValue + ">" + strText + "</option>";
+                }
+                return NewItme;
+            }
+        }
+        public string GetDrolistByFatherId(int? FatherId, string SelectedId)
         {
             using (var db = new XNGYPEntities())
             {
@@ -248,7 +271,7 @@ namespace DalProject
                     if (item.label == SelectedId)
                     { NewItme += "<option value=" + IstrValue + " selected='selected'>" + strText + "</option>"; }
                     else { NewItme += "<option value=" + IstrValue + ">" + strText + "</option>"; }
-                    
+
                 }
                 return NewItme;
             }

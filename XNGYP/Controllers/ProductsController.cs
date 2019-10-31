@@ -113,9 +113,14 @@ namespace XNGYP.Controllers
             var List = CSer.GetProNameDrolistBySN(ProSN);
             return Content(List.ToString());
         }
-        public ActionResult GetSecSNDrolistByFatherId(int? FatherId, string SelectedId)
+        public ActionResult GetSecSNDrolistByFatherId(int? FatherId)
         {
-            var List = CSer.GetSecSNDrolistByFatherId(FatherId, SelectedId);
+            var List = CSer.GetSecSNDrolistByFatherId(FatherId);
+            return Content(List.ToString());
+        }
+        public ActionResult GetDrolistByFatherId(int? FatherId, string SelectedId)
+        {
+            var List = CSer.GetDrolistByFatherId(FatherId, SelectedId);
             return Content(List.ToString());
         }
     }

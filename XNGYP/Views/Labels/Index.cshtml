@@ -160,11 +160,10 @@
             ]
         });
     };
-    $("#ProductsSNId").change(function () {
-            var FatherId = $("#ProductsSNId").val();
+    $("#ProductSNId").change(function () {
+            var FatherId = $("#ProductSNId").val();
 			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
             $.post(ProUrl, { FatherId: FatherId }, function (data) {
-                //alert(data);
                 $('#FatherId').empty();
                 $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
                 $('#FatherId').append(data);

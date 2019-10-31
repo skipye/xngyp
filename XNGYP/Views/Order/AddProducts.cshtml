@@ -229,7 +229,7 @@ $(function(){
             if (StrItem.indexOf(XL) >= 0) {
                 $(this).attr("selected", true);
                 $("#ProductXL").val(StrItem.split('_')[0]);
-                var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
+                var ProUrl = "@Url.Action("GetDrolistByFatherId","Products")";
                 $.post(ProUrl, { FatherId: XLId,SelectedId:FatherSN }, function (data) {
                     $('#FatherId').empty();
                     $('#FatherId').append(data);
