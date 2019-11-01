@@ -6,7 +6,7 @@ using System.Web.Script.Serialization;
 
 namespace XNGYP.Controllers
 {
-    public class LabelsController : Controller
+    public class FLabelsController : Controller
     {
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         private static readonly LabelsService LSer = new LabelsService();
@@ -24,15 +24,14 @@ namespace XNGYP.Controllers
         public ActionResult UserIndex()
         {
             SLabelsModel Models = new SLabelsModel();
-            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
-            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
+            Models.CKDroList = CHSer.GetFCKDrolist(Models.INVId,4);
             return View(Models);
         }
         public ActionResult PageList(SLabelsModel SModels)
         {
-            var PageList = LSer.GetLabelsList(SModels);
+            var PageList = LSer.GetFLabelsList(SModels);
             return new ContentResult
             {
                 Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
@@ -47,10 +46,8 @@ namespace XNGYP.Controllers
             {
                 Models = LSer.GetDetailById(Id.Value);
             }
-            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
-            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
         public ActionResult Edit(int Id)
@@ -128,7 +125,7 @@ namespace XNGYP.Controllers
             return View(Models); 
         }
         //绑定库存产品
-        public ActionResult BindLabels(string ListId, int CRM_Id)
+        public ActionResult CheckLabels(string ListId, int CRM_Id)
         {
             if (LSer.BindLabels(ListId, CRM_Id) == true)
             {

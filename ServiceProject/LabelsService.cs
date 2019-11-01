@@ -20,6 +20,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<LabelsModel> GetFLabelsList(SLabelsModel SModel)
+        {
+            try { return CDal.GetFLabelsList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public LabelsModel GetDetailById(int Id)
         {
             try { return CDal.GetDetailById(Id); }

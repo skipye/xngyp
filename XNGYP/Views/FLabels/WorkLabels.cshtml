@@ -28,7 +28,7 @@
                     <td>@item.ProductSN </td>
                     <td>@item.ProductName </td>
                     <td>@item.WoodName</td>
-                    <td>@(item.Grade>6?"高级":item.Grade<=6 && item.Grade>1?"中级":"低级") </td>
+                    <td>@item.Grade </td>
                     <td>@item.INVName </td>
                     <td>@Convert.ToDateTime(item.InputDateTime).ToString("yyyy-MM-dd") </td>
 
@@ -38,8 +38,10 @@
     </table>
 
 }
+else
+{<p>暂无记录！</p>}
 <script type="text/javascript" src="~/js/jquery.min.js"></script>
-<p class="fl c-red">当前合同数量是：@Qty 件</p>
+<p class="fl red">当前合同数量是：@Qty 件</p>
 <div style="text-align:center;">
     <a href="javascript:void(0);" id="checkpro" class="btn btn-danger radius" style="width:120px;"><i class="Hui-iconfont">&#xe615;</i>提交</a>
 </div>
@@ -50,13 +52,15 @@
             var CRMId = '@CRMId';
             var Qty = parseInt("@Qty");
             var i = 0;
-            var PostUrl = "@Url.Action("BindLabels","Labels")";
-            $.each($('input:checkbox:checked'),function(){
-                strId += $(this).val() + "$";
+            var PostUrl = "@Url.Action("CheckLabels","Labels")";
+            $("input[name='listcheck']:checkbox").each(function () {
+                if ($(this).attr("checked")) {
+                    strId += $(this).val() + "$";
                     i++;
-            });
+                }
+            })
             if (strId != "" && strId != undefined && i<=Qty) {
-                $.post(PostUrl, { ListId: strId, CRM_Id: CRMId }, function (d) {
+                $.post(PostUrl, { ListId: strId, CRMId: CRMId }, function (d) {
                     if (d == "1") {
                         alert("操作成功！");
                         window.location.reload();
@@ -65,12 +69,6 @@
                 });
             }
             else { alert("请先去选中！或者选中数量大于合同数量！"); }
-
-            setTimeout(function () {
-		            parent.window.location.reload();
-		            var index = parent.layer.getFrameIndex(window.name);
-		            parent.layer.close(index);
-		        }, 1000);
         });
 
 

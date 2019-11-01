@@ -67,6 +67,12 @@
     <Compile Include="ehr_employee.cs">
       <DependentUpon>SaleHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="INV_inventories.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INV_labels.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="INV_Name.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
     </Compile>

@@ -123,6 +123,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<SelectListItem> GetFCKDrolist(int? pId, int? CKType)
+        {
+            try { return CHDal.GetFCKDrolist(pId, CKType); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public string GetFProNameDrolistBySNAndArea(int? ProSN, int? ProProArea)
         {
             try { return CHDal.GetFProNameDrolistBySNAndArea(ProSN, ProProArea); }

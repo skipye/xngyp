@@ -19,6 +19,11 @@
         <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_INV_wood_type" />
         <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_SYS_colors" />
         <AssociationConnector Association="XNERPModel.FK_CRM_contract_detail_SYS_product" />
+        <EntityTypeShape EntityType="XNERPModel.INV_labels" Width="1.5" PointX="5.5" PointY="8.25" />
+        <AssociationConnector Association="XNERPModel.SYS_productINV_labels" />
+        <EntityTypeShape EntityType="XNERPModel.INV_inventories" Width="1.5" PointX="1.875" PointY="8" />
+        <AssociationConnector Association="XNERPModel.INV_inventoriesINV_labels" />
+        <AssociationConnector Association="XNERPModel.INV_wood_typeINV_labels" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

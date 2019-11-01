@@ -96,6 +96,7 @@ namespace ModelProject
         public decimal? RealPrice { get; set; }//实收款金额
         public int? FRStatus { get; set; }
         public List<ContractProductsModel> HTProList { get; set; }
+        public int? SaleFlag { get; set; }
     }
     public class SContractHeaderModel
     {
@@ -210,6 +211,7 @@ namespace ModelProject
         public string ProductName { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public int? SaleFlag { get; set; }
     }
     public class FR_contract
     {

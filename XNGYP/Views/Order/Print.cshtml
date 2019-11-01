@@ -2,7 +2,8 @@
 @{
     Layout = null;
     int i = 1;
- }
+}
+@Html.Action("_Meta", "Home")
 <link href="~/css/print.css?v=2" rel="stylesheet" />
 <script src="~/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="~/js/jQuery.print.js"></script>
@@ -24,8 +25,9 @@
             deferred: $.Deferred(),//回调函数
         });
     };
-    
-	</script>
+
+
+/**/</script>
 <div id="printtext" class="htprint clearfix">
     <h2>家具销售合同</h2>
     <div class="topht clearfix mt20">
@@ -34,51 +36,51 @@
     </div>
     <p class="mt10 pspace">依照《中华人民共和国合同法》及其他有关法律、法规，就相关事宜，公平和诚实信用的原则，经双方友好协商，达成如下约定：</p>
     <p class="mt10 f14">一、产品名称、规格、数量、金额：</p>
-@if (Model.HTProList != null && Model.HTProList.Any())
-{
-    <table class="ptable">
-        <col width="50px" />
-        <col width="160px" />
-        <col width="100px" />
-        <col width="100px" />
-        <col width="100px" />
-        <col width="100px" />
-        <col width="100px" />
-        <col width="100px" />
-        <col width="100px" />
-        <col width="80px" />
-        <tr class="fb">
-            <th>序号</th>
-            <th>产品名称</th>
-            <th>材质</th>
-            <th>色号</th>
-            <th>类型</th>
-            <th>数量</th>
-            <th>单位</th>
-            <th>单价</th>
-            <th>金额</th>
-            <th>备注</th>
-        </tr>
-    @foreach (var item in Model.HTProList)
+    @if (Model.HTProList != null && Model.HTProList.Any())
     {
-       
-        <tr style="height:35px;font-size:12px;">
-            <td>@(i)</td>
-            <td>@item.ProductSN _ @item.ProductName </td>
-            <td>@item.WoodName </td>
-            <td>@item.Color </td>
-			<td>@(item.IsJJ == 1 ? "工艺礼品" : "红木家具")</td>
-            <td>@item.Qty</td>
-            <td>件</td>
-            <td>@item.price</td>
-            <td>@(item.price*item.Qty)</td>
-            <td><div class="tw" title="@item.req_others">@item.req_others</div></td>
-        </tr>
-        i++;
-    } 
-    </table>
-   <p class="mt10 pspace">备注：其他未尽事项必须经双方用书面形式签字后才有效，否则，原经济合同仍然有效。</p>
-}
+        <table class="ptable">
+            <col width="50px" />
+            <col width="160px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="80px" />
+            <tr class="fb">
+                <th>序号</th>
+                <th>产品名称</th>
+                <th>材质</th>
+                <th>色号</th>
+                <th>类型</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>单价</th>
+                <th>金额</th>
+                <th>备注</th>
+            </tr>
+            @foreach (var item in Model.HTProList)
+            {
+
+                <tr style="height:35px;font-size:12px;">
+                    <td>@(i)</td>
+                    <td>@item.ProductSN _ @item.ProductName </td>
+                    <td>@item.WoodName </td>
+                    <td>@item.Color </td>
+                    <td>@(item.IsJJ == 1 ? "工艺礼品" : "红木家具")</td>
+                    <td>@item.Qty</td>
+                    <td>件</td>
+                    <td>@item.price</td>
+                    <td>@(item.price * item.Qty)</td>
+                    <td><div class="tw" title="@item.req_others">@item.req_others</div></td>
+                </tr>
+                i++;
+            }
+        </table>
+        <p class="mt10 pspace">备注：其他未尽事项必须经双方用书面形式签字后才有效，否则，原经济合同仍然有效。</p>
+    }
     <p class="mt10 f14">二、验收期限和方法：</p>
     <p class="mt10 pspace">1.方法：按双方议定的款式和现有的货物实样为准。</p>
     <p class="pspace">2.甲方签收人除法人或指定的代理人签收外，其他人员签收无效。</p>
@@ -90,8 +92,8 @@
     <p class="pspace">2.验收地点及交货地址：<u>@Model.DeliveryAddress</u>。</p>
 
     <p class="mt10 f14">四、付款方法：</p>
-    <p class="mt10 pspace">1.本合同经双方签字（盖章）后即预付<u> @(Model.Prepay !=0? Math.Round(Convert.ToDecimal(Model.Prepay * 100 / Model.Amount),2,MidpointRounding.AwayFromZero):0)</u>%的定金（<u>@Model.Prepay</u>）元。</p>
-    <p class="pspace">2.乙方生产完成后经甲方验收合格，支付剩余<u>@(Model.Prepay != 0 ? Math.Round(Convert.ToDecimal((Model.Amount - Model.Prepay) * 100 / Model.Amount),2,MidpointRounding.AwayFromZero):0)</u>%（<u>@(Model.Amount-Model.Prepay)</u>元）后三日内安排发货。</p>
+    <p class="mt10 pspace">1.本合同经双方签字（盖章）后即预付<u> @(Model.Prepay != 0 ? Math.Round(Convert.ToDecimal(Model.Prepay * 100 / Model.Amount), 2, MidpointRounding.AwayFromZero) : 0)</u>%的定金（<u>@Model.Prepay</u>）元。</p>
+    <p class="pspace">2.乙方生产完成后经甲方验收合格，支付剩余<u>@(Model.Prepay != 0 ? Math.Round(Convert.ToDecimal((Model.Amount - Model.Prepay) * 100 / Model.Amount), 2, MidpointRounding.AwayFromZero) : 0)</u>%（<u>@(Model.Amount - Model.Prepay)</u>元）后三日内安排发货。</p>
 
     <p class="mt10 f14">五、违约责任：</p>
     <p class="mt10 pspace">甲乙双方任何一方违约，应承担违约责任。乙方不能交货的，或甲方中途退货，向对方赔偿不能交货或中途退货部分货款总值的50%。如违约金不足以抵补损失时，还应支付赔偿金以补偿其差额部分。</p>
@@ -123,9 +125,11 @@
     <p class="rtit">①销售存档︵白︶②客户存档︵红︶③财务存联︵蓝︶④生产联︵黄︶</p>
 </div>
 
-
-
-<div class="no-print">
-	@*<button onclick="print()" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;预览并打印&nbsp;&nbsp;</button>*@
-	<input type="button" value="预览并打印" class="inputsubbtn mt10 mb20" style="width:120px;margin:20px;"  onclick="print()" />
+<div style="text-align:center;" class="no-print">
+    <a href="javascript:void(0);" id="checkpro" class="btn btn-danger radius" style="width:120px;" onclick="print()"><i class="Hui-iconfont"></i>预览并打印</a>
 </div>
+
+@*<div>
+        @*<button onclick="print()" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;预览并打印&nbsp;&nbsp;</button>
+        <input type="button" value="预览并打印" class="inputsubbtn mt10 mb20" style="width:120px;margin:20px;"  onclick="print()" />
+    </div>*@

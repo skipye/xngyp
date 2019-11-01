@@ -4,7 +4,7 @@
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>销售开工
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>绑定线上产品
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -16,27 +16,19 @@
 
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <span class="f-l">
-            <a href="javascript:void(0);" onclick="SaleWork('0')" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe615;</i>选中开工</a>
-        </span>
-    </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
                 <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th width="25">序号</th>
                     <th>客户</th>
                     <th>合同编号</th>
                     <th>产品系列</th>
                     <th>产品名称</th>
                     <th>材质</th>
                     <th>数量（件）</th>
-                    <th>状态</th>
-                    <th>半成品库存</th>
                     <th>成品库存</th>
-                    <th width="120">操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -52,8 +44,9 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { search(param); });
+    $(function () { param["SaleFlag"] = 1; search(param); });
     $("#btnSearch").click(function () {
+        //搜索条件
         var Customer = $("#Customer").val().trim();
         var ProductName = $("#ProductName").val().trim();
         var SN = $("#SN").val().trim();
@@ -61,6 +54,7 @@
         param["Customer"] = Customer;
         param["ProductName"] = ProductName;
         param["SN"] = SN;
+        param["SaleFlag"] = 1;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -71,31 +65,13 @@
             "aaSorting": [[2, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
-                ajaxRequest("post", "/SaleStart/PageList", param, function (result) {
+                ajaxRequest("post", "/SaleStart/BindOrderPageList", param, function (result) {
                     //封装返回数据
                     var returnData = {};
                     returnData.data = result;
                     callback(returnData);
                 });
             },
-            "columnDefs": [//对table格式的定义（表格的列从0开始）
-                {
-                    targets: 0,
-                    orderable: false,
-                    render: function (data, type, row) {
-                        var strArr = "";
-                        if (row.Status <= 1) { strArr = '<input type="checkbox" value="' + row.Id + '" >';};
-                        return strArr;
-                    }
-                }, {
-                    targets: 10,
-                    render: function (data, type, row) {
-                        var strArr = "";
-                        if (row.Status <=1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="SaleWork(' + row.Id + ')" title="开工"><i class="Hui-iconfont">&#xe61d;</i></a>'; }
-                        return strArr;
-                    }
-                }
-            ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
                 { "data": "Customer", "defaultContent": "" },
@@ -104,19 +80,10 @@
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "Qty", "defaultContent": "" },
-                { "data": "Status",  "render": function (data) {
-                        var GradeName = "<span class=\"label label-warning radius\">未开工</span>";
-                    if (data == 1) { GradeName = "<b class='c-red'>已确认</b>"; }
-                    if (data == 2) { GradeName = "<b class='c-success'>已生产</b>"; }
-                    if (data == 3) { GradeName = "<b class='c-success'>已入半成品库</b>"; }
-                    if (data == 4) { GradeName = "<b class='c-success'>已入成品库</b>";}
-                    return GradeName;
-                    } },
-                { "data": "SemiCount", "defaultContent": "" },
                 {
-                    "data": "LabelsCount",  "defaultContent": "", "render": function (data, type, row) {
+                    "data": "LabelsCount", "defaultContent": "", "render": function (data, type, row) {
                         var ReStr = data;
-                        if (data > 0) { ReStr ="<u style=\"cursor:pointer\" class=\"c-red\" onclick=\"BindSaleOrder('" + row.WoodId + "','" + row.ProductId + "','" + row.Id + "','" + row.Qty + "')\">" + data + "</u>"; }
+                        if (data > 0) { ReStr = "<u style=\"cursor:pointer\" class=\"c-red\" onclick=\"BindSaleOrder('" + row.WoodId + "','" + row.ProductId + "','" + row.Id + "','" + row.Qty + "')\">" + data + "</u>"; }
                         return ReStr;
                     }
                 },

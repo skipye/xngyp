@@ -192,5 +192,10 @@ namespace XNGYP.Controllers
             Models.HTProList = NSer.GetProductListByOrder(Id);
             return View(Models);
         }
+        //绑定订单
+        public ActionResult BindOrder()
+        {
+            return View();
+        }
     }
 }

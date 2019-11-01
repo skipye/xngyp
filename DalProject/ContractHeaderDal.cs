@@ -59,6 +59,7 @@ namespace DalProject
                                 SHFlag=p.SHFlag,
                                 DeliverChannel=p.DeliverChannel,
                                 ZTDFlag=p.ZTDFlag,
+                                SaleFlag=p.SaleFlag,
                             }).ToList();
                 ContractModel Models = new ContractModel();
                 Models.data = List;
@@ -86,6 +87,7 @@ namespace DalProject
                     table.ZTDFlag = Models.ZTDFlag;
                     table.RealPrice = Models.RealPrice;
                     table.FRStatus = Models.FRStatus;
+                    table.SaleFlag = Models.SaleFlag;
                 }
                 else
                 {
@@ -113,6 +115,7 @@ namespace DalProject
                     table.ZTDFlag = Models.ZTDFlag;
                     table.RealPrice = Models.RealPrice;
                     table.FRStatus = Models.FRStatus;
+                    table.SaleFlag = Models.SaleFlag;
                     db.Contract_Header.Add(table);
 
                     FinanceModel FModels = new FinanceModel();
@@ -121,10 +124,8 @@ namespace DalProject
                     FModels.Amount = Models.RealPrice;
                 }
                 db.SaveChanges();
-
             }
         }
-
         public ContractHeaderModel GetDetailById(int Id)
         {
             using (var db = new XNGYPEntities())
@@ -158,6 +159,7 @@ namespace DalProject
                                   ZTDFlag = p.ZTDFlag,
                                   RealPrice = p.RealPrice,
                                   FRStatus = p.FRStatus,
+                                  SaleFlag = p.SaleFlag,
                               }).SingleOrDefault();
                 return tables;
             }
@@ -197,7 +199,6 @@ namespace DalProject
                         tables.CheckedTime = DateTime.Now;
                     }
                 }
-
                 db.SaveChanges();
             }
         }
@@ -344,6 +345,25 @@ namespace DalProject
                 foreach (var item in model)
                 {
                     items.Add(new SelectListItem() { Text =item.Name, Value = item.Id.ToString(), Selected = pId.HasValue && item.Id.Equals(pId) });
+                }
+            }
+            return items;
+        }
+        public List<SelectListItem> GetFCKDrolist(int? pId, int? CKType)
+        {
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "请选择仓库", Value = "" });
+            using (var db = new XNERPEntities())
+            {
+                List<INV_inventories> model = db.INV_inventories.Where(b => b.delete_flag == false).OrderBy(k => k.created_time).ToList();
+                if (CKType != null && CKType > 0)
+                {
+                    model = db.INV_inventories.Where(b => b.delete_flag == false && b.type == CKType).OrderBy(k => k.created_time).ToList();
+                }
+                foreach (var item in model)
+                {
+                    items.Add(new SelectListItem() { Text = item.name, Value = item.id.ToString(), Selected = pId.HasValue && item.id.Equals(pId) });
                 }
             }
             return items;

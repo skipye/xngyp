@@ -1,0 +1,111 @@
+﻿@model ModelProject.LabelsModel
+@{Layout = null;
+    
+    }
+
+@Html.Action("_Meta", "Home")
+
+<script type="text/javascript" src="~/js/jquery.min.js"></script>
+<article class="page-container">
+    <form class="form form-horizontal" id="formadd">
+        @Html.HiddenFor(k => k.ListId)
+        <div style="height:50px;"></div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属仓库：</label>
+            <div class="formControls col-xs-8 col-sm-5">
+                <span class="select-box" style="width:150px;">
+                    @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
+                </span>
+            </div>
+        </div>
+        <div style="height:30px;"></div>
+        <div class="row cl mt-30">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+                <button onClick="removeIframe();" class="btn btn-default radius ml-20" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</article>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=1"></script>
+<script type="text/javascript" src="~/js/layer/layer.js"></script>
+<script type="text/javascript" src="~/js/jquery.validation/jquery.validate.js"></script>
+<script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        //表单验证
+        $("#formadd").validate({
+            rules: {
+                INVId: { required: true, },
+
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                //构造上传数据
+                var param = {};
+                var paramArray = $(form).serializeArray();
+                for (var i = 0; i < paramArray.length; ++i) {
+                    var o = paramArray[i];
+                    param[o["name"]] = o["value"];
+                };
+                ajaxRequest("post", "/Labels/PostMoveINV", param, function (d) {
+                    if (d == "1") {
+                        layer.msg("移库成功！", { icon: 1, time: 1000 });
+                    } else {
+                        layer.msg("服务器错误！", { icon: 2, time: 1000 });
+                    }
+                    setTimeout(function () {
+                        parent.window.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }, 1000);
+                });
+            }
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#ProductSNId").change(function () {
+            //var CVal = $(this).val();
+            //$("#product_SN").val(CVal);
+            var ProductSNId = $("#ProductSNId").val();
+            //alert(product_SN_id + ";;;" + product_area_id);
+            var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
+            $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
+                //alert(data);
+                $('#ProductId').empty();
+                $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
+                $('#ProductId').append(data);
+            });
+        });
+
+        $("#ProductId").change(function () {
+            var Vtext = $("#ProductId").find("option:selected").text();
+            var Item = Vtext.split('_');
+            var Vlength = Item[1];
+            var Vwidth = Item[2];
+            var Vheight = Item[3];
+            $("#Length").val(Vlength);
+            $("#Width").val(Vwidth);
+            $("#Height").val(Vheight);
+        });
+        $("#ColorId").change(function () {
+            var Vtext = $("#ColorId").find("option:selected").text().replace('╋', "");
+            $("#Color").val(Vtext);
+        });
+        $("#WoodId").change(function () {
+            var Vtext = $("#WoodId").find("option:selected").text().replace('╋', "");
+            $("#WoodName").val(Vtext);
+        });
+    });
+</script>
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

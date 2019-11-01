@@ -19,6 +19,13 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        
+        public List<ContractProductsModel> GetBindOrderPageList(SContractProductsModel SModel)
+        {
+            try { return SSDal.GetBindOrderPageList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

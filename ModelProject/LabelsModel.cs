@@ -47,6 +47,7 @@ namespace ModelProject
         public string CustomerName { get; set; }
         public DateTime? DeliveryTime { get; set; }
         public string OrderNum { get; set; }
+        public string Style { get; set; }
     }
     public class SLabelsModel
     {

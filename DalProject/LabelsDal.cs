@@ -65,6 +65,46 @@ namespace DalProject
                 return List;
             }
         }
+        public List<LabelsModel> GetFLabelsList(SLabelsModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.flag==2 && k.status==1)
+                            where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.SYS_product.product_SN_id : true
+                            where SModel.INVId > 0 ? SModel.INVId == p.inv_id : true
+                            where !string.IsNullOrEmpty(SModel.ProductName) ? p.SYS_product.name.Contains(SModel.ProductName) : true
+                            where p.created_time > StartTime
+                            where p.created_time < EndTime
+                            orderby p.created_time descending
+                            select new LabelsModel
+                            {
+                                Id = p.id,
+                                ProductId = p.product_id,
+                                ProductName = p.SYS_product.name,
+                                ProductXL = p.SYS_product.SYS_product_SN.name,
+                                Color = p.color,
+                                WoodName = p.INV_wood_type.name,
+                                INVId = p.inv_id,
+                                INVName = p.INV_inventories.name,
+                                InputDateTime = p.InputDateTime,
+                                SN = p.SN,
+                                Style = p.style,
+                                ProductSN = p.product_SN,
+                                CreateTime = p.created_time,
+                            }).ToList();
+                return List;
+            }
+        }
         public void AddOrUpdate(LabelsModel Models)
         {
             using (var db = new XNGYPEntities())

@@ -51,6 +51,7 @@ namespace DataBase
         public string ZTDFlag { get; set; }
         public Nullable<int> FRStatus { get; set; }
         public Nullable<decimal> RealPrice { get; set; }
+        public Nullable<int> SaleFlag { get; set; }
     
         public virtual ICollection<Contract_Detail> Contract_Detail { get; set; }
         public virtual XNGYP_Customers XNGYP_Customers { get; set; }

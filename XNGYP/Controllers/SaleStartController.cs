@@ -25,6 +25,15 @@ namespace XNGYP.Controllers
                 ContentType = "application/json"
             };
         }
+        public ActionResult BindOrderPageList(SContractProductsModel SModels)
+        {
+            var PageList = SSSer.GetBindOrderPageList(SModels);
+            return new ContentResult
+            {
+                Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
+                ContentType = "application/json"
+            };
+        }
         public ActionResult Work()
         {
             SWorkOrderModel Models = new SWorkOrderModel();

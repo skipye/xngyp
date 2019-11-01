@@ -12,34 +12,21 @@ namespace DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class INV_wood_type
+    public partial class INV_inventories
     {
-        public INV_wood_type()
+        public INV_inventories()
         {
-            this.CRM_contract_detail = new HashSet<CRM_contract_detail>();
             this.INV_labels = new HashSet<INV_labels>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
-        public string nickname { get; set; }
-        public string place { get; set; }
-        public int safe_stock_max { get; set; }
-        public int safe_stock_min { get; set; }
+        public byte type { get; set; }
+        public string address { get; set; }
         public string remark { get; set; }
         public System.DateTime created_time { get; set; }
         public bool delete_flag { get; set; }
-        public Nullable<decimal> g_ccl { get; set; }
-        public Nullable<decimal> g_bz { get; set; }
-        public Nullable<decimal> q_ccl { get; set; }
-        public Nullable<decimal> q_bz { get; set; }
-        public Nullable<decimal> prcie { get; set; }
-        public Nullable<decimal> cc_prcie { get; set; }
-        public Nullable<int> Sort { get; set; }
-        public Nullable<decimal> PersonPrice { get; set; }
-        public string SN { get; set; }
     
-        public virtual ICollection<CRM_contract_detail> CRM_contract_detail { get; set; }
         public virtual ICollection<INV_labels> INV_labels { get; set; }
     }
 }
