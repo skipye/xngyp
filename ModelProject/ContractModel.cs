@@ -97,6 +97,8 @@ namespace ModelProject
         public int? FRStatus { get; set; }
         public List<ContractProductsModel> HTProList { get; set; }
         public int? SaleFlag { get; set; }
+        public string DDOrder { get; set; }
+        public string YDOrder { get; set; }
     }
     public class SContractHeaderModel
     {
@@ -159,6 +161,8 @@ namespace ModelProject
         public string OrderNum { get; set; }
         public int? FatherId { get; set; }
         public int IsJJ { get; set; }
+        public string DDOrder { get; set; }
+        public string YDOrder { get; set; }
     }
     public class FContractProductsModel
     {

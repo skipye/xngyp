@@ -88,6 +88,8 @@ namespace DalProject
                     table.RealPrice = Models.RealPrice;
                     table.FRStatus = Models.FRStatus;
                     table.SaleFlag = Models.SaleFlag;
+                    table.DDOrder = Models.DDOrder;
+                    table.YDOrder = Models.YDOrder;
                 }
                 else
                 {
@@ -116,6 +118,8 @@ namespace DalProject
                     table.RealPrice = Models.RealPrice;
                     table.FRStatus = Models.FRStatus;
                     table.SaleFlag = Models.SaleFlag;
+                    table.DDOrder = Models.DDOrder;
+                    table.YDOrder = Models.YDOrder;
                     db.Contract_Header.Add(table);
 
                     FinanceModel FModels = new FinanceModel();
@@ -152,14 +156,16 @@ namespace DalProject
                                   FRFlag = p.FRFlag,
                                   OrderTime = p.HTDate,
                                   CheckedTime = p.CheckedTime,
-                                  DeliveryLinkMan=p.DeliveryLinkMan,
-                                  DeliveryLinkTel=p.DeliveryLinkTel,
+                                  DeliveryLinkMan = p.DeliveryLinkMan,
+                                  DeliveryLinkTel = p.DeliveryLinkTel,
                                   SHFlag = p.SHFlag,
-                                  DeliverChannel=p.DeliverChannel,
+                                  DeliverChannel = p.DeliverChannel,
                                   ZTDFlag = p.ZTDFlag,
                                   RealPrice = p.RealPrice,
                                   FRStatus = p.FRStatus,
                                   SaleFlag = p.SaleFlag,
+                                  YDOrder = p.YDOrder,
+                                  DDOrder=p.DDOrder,
                               }).SingleOrDefault();
                 return tables;
             }

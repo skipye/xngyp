@@ -97,6 +97,7 @@ namespace DalProject
                                 Qty = p.Qty,
                                 LabelsCount = db.XNGYP_INV_Labels.Where(k => k.ProductsId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag != 2 && k.DeleteFlag == false).Count(),
                                 SemiCount = db.XNGYP_INV_Semi.Where(k => k.ProductId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag != 1 && k.DeleteFlag == false).Count(),
+                                DDOrder=p.Contract_Header.DDOrder,
 
                             }).ToList();
                 return List;

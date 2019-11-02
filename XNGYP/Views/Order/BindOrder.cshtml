@@ -20,16 +20,17 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25">序号</th>
-                    <th>客户</th>
-                    <th>合同编号</th>
-                    <th>产品系列</th>
-                    <th>产品名称</th>
-                    <th>材质</th>
-                    <th>数量（件）</th>
-                    <th>成品库存</th>
-                </tr>
+				<tr class="text-l">
+					<th width="25">序号</th>
+					<th>客户</th>
+					<th>合同编号</th>
+					<th>订单号</th>
+					<th>产品系列</th>
+					<th>产品名称</th>
+					<th>材质</th>
+					<th>数量（件）</th>
+					<th>成品库存</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -75,7 +76,8 @@
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
                 { "data": "Customer", "defaultContent": "" },
-                { "data": "SN", "defaultContent": "" },
+				{ "data": "SN", "defaultContent": "" },
+				{ "data": "DDOrder", "defaultContent": "" },
                 { "data": "ProductSN", "defaultContent": "" },
                 { "data": "ProductName", "defaultContent": "" },
                 { "data": "WoodName", "defaultContent": "" },

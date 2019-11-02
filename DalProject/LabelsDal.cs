@@ -33,6 +33,7 @@ namespace DalProject
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductsSNId : true
                             where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
                             where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
+                            where SModel.WoodId > 0 ? SModel.WoodId == p.WoodId : true
                             where SModel.Status !=null && SModel.Status >0? SModel.Status == p.Status : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.XNGYP_Products.name.Contains(SModel.ProductName) : true
                             where p.CreateTime > StartTime

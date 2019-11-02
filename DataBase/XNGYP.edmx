@@ -100,6 +100,8 @@
           <Property Name="FRStatus" Type="int" />
           <Property Name="RealPrice" Type="decimal" Precision="16" Scale="2" />
           <Property Name="SaleFlag" Type="int" />
+          <Property Name="DDOrder" Type="nvarchar" MaxLength="50" />
+          <Property Name="YDOrder" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="INV_Name">
           <Key>
@@ -1232,6 +1234,8 @@
           <Property Name="FRStatus" Type="Int32" />
           <Property Name="RealPrice" Type="Decimal" Precision="16" Scale="2" />
           <Property Name="SaleFlag" Type="Int32" />
+          <Property Name="DDOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YDOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Contract_Detail_Contract_Header">
           <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
@@ -2056,6 +2060,8 @@
           <EntitySetMapping Name="Contract_Header">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
               <MappingFragment StoreEntitySet="Contract_Header">
+                <ScalarProperty Name="YDOrder" ColumnName="YDOrder" />
+                <ScalarProperty Name="DDOrder" ColumnName="DDOrder" />
                 <ScalarProperty Name="SaleFlag" ColumnName="SaleFlag" />
                 <ScalarProperty Name="RealPrice" ColumnName="RealPrice" />
                 <ScalarProperty Name="FRStatus" ColumnName="FRStatus" />

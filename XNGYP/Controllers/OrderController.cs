@@ -195,7 +195,8 @@ namespace XNGYP.Controllers
         //绑定订单
         public ActionResult BindOrder()
         {
-            return View();
+            SContractProductsModel model = new SContractProductsModel();
+            return View(model);
         }
     }
 }

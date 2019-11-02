@@ -54,7 +54,10 @@
 		    for (var i = 0; i < paramArray.length; ++i) {
 		        var o = paramArray[i];
 		        param[o["name"]] = o["value"];
-		    };
+			};
+
+			param["ProductId"] = $("#ProductId").find("option:selected").val();
+			param["ProductName"] = $("#ProductId").find("option:selected").text().split('_')[0];
 		    ajaxRequest("post", "/Order/PostAddProducts", param, function (d) {
 		        if (d == "1") {
 		            layer.msg("添加成功！", { icon: 1, time: 1000 });
@@ -183,7 +186,6 @@ $(function(){
         $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
             //alert(data);
             $('#ProductId').empty();
-            $('#ProductId').append($('<option></option>').val("").text("请选择产品名称").attr("selected", true));
             $('#ProductId').append(data);
         });
     });

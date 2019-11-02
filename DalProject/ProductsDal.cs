@@ -218,11 +218,18 @@ namespace DalProject
                                 height = p.height
                             }).ToList();
                 string NewItme = "";
+                int i = 1;
                 foreach (var item in list)
                 {
                     var strText = item.Name + "_" + item.length + "_" + item.width + "_" + item.height;
                     var IstrValue = item.Id;
-                    NewItme += "<option value=" + IstrValue + ">" + strText + "</option>";
+                    if (i == 1)
+                    {
+                        NewItme += "<option value=" + IstrValue + " selected='selected'>" + strText + "</option>";
+                    }
+                    else { NewItme += "<option value=" + IstrValue + ">" + strText + "</option>"; }
+                    
+                    i++;
                 }
                 return NewItme;
             }
