@@ -66,12 +66,14 @@
         //搜索条件
         var ProductSNId = $("#ProductSNId").val().trim();
         var FatherId = $("#FatherId").val().trim();
-        var INVId = $("#INVId").val().trim();
+		var INVId = $("#INVId").val().trim();
+		var WoodId = $("#WoodId").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
         //搜索
         param["ProductSNId"] = ProductSNId;
-        param["INVId"] = INVId;
+		param["INVId"] = INVId;
+		param["WoodId"] = WoodId;
         param["FatherId"] = FatherId;
         param["StartTime"] = StartTime;
         param["EndTime"] = EndTime;

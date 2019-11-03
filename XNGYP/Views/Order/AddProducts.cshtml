@@ -140,12 +140,16 @@ $(function(){
         var StrVal = $(this).find("option:selected").text();
         if (StrVal == "请选择材质")
         { StrVal = ""; }
-        $("#WoodName").val(StrVal.split('_')[0]);
+		$("#WoodName").val(StrVal.split('_')[0]);
+		$("#WoodSN").val(StrVal.split('_')[1]);
+		var SN = $("#ProductXLSN").val() + $("#FatherSN").val() + $("#WoodSN").val();
+		$("#SN").val(SN);
 	});
 	$("#ProductSNId").change(function () {
         var FatherId = $("#ProductSNId").val();
 		var Vtext = $("#ProductSNId").find("option:selected").text();
 		$("#ProductXL").val(Vtext.split('_')[0]);
+		$("#ProductXLSN").val(Vtext.split('_')[1]);
 		var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
         $.post(ProUrl, { FatherId: FatherId }, function (data) {
             //alert(data);
@@ -182,6 +186,9 @@ $(function(){
         var ProductSNId = $("#FatherId").val();
         var Vtext = $("#FatherId").find("option:selected").text();
 		$("#ProductSN").val(Vtext.split('_')[0]);
+		$("#FatherSN").val(Vtext.split('_')[1]);
+		var SN = $("#ProductXLSN").val() + $("#FatherSN").val() + $("#WoodSN").val();
+		$("#SN").val(SN);
         var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
         $.post(ProUrl, { ProSN: ProductSNId }, function (data) {
             //alert(data);

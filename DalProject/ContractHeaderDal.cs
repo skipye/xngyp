@@ -166,6 +166,7 @@ namespace DalProject
                                   SaleFlag = p.SaleFlag,
                                   YDOrder = p.YDOrder,
                                   DDOrder=p.DDOrder,
+                                  CreateTime=p.CreateTime,
                               }).SingleOrDefault();
                 return tables;
             }
@@ -427,6 +428,11 @@ namespace DalProject
         }
         public void AddProducts(ContractProductsModel Models)
         {
+            string SN = Models.SN;
+            if (!string.IsNullOrEmpty(Models.OrderNum))
+            {
+                SN = Models.OrderNum.ToUpper();
+            }
             using (var db = new XNGYPEntities())
             {
                 decimal price = 0;
@@ -455,6 +461,7 @@ namespace DalProject
                 table.Status = 0;
                 table.Qty = Models.Qty;
                 table.LabelseCount = 0;
+                table.SN = SN;
                 db.Contract_Detail.Add(table);
 
                 var HeadTable = db.Contract_Header.Where(k => k.Id == Models.ContractHeadId).SingleOrDefault();
@@ -561,6 +568,7 @@ namespace DalProject
                                 Status = p.Contract_Header.Status,
                                 Qty=p.Qty,
                                 IsJJ=1,
+                                SN=p.SN,
                             }).ToList();
                 var FList= (from p in db.Contract_FDetail.Where(k => k.DeleteFlag == false && k.ContractHeadId == HTId)
                             orderby p.CreateTime descending

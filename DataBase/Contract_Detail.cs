@@ -45,6 +45,7 @@ namespace DataBase
         public Nullable<int> LabelseCount { get; set; }
         public Nullable<int> Grade { get; set; }
         public string WoodNameXL { get; set; }
+        public string SN { get; set; }
     
         public virtual Contract_Header Contract_Header { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }

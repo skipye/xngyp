@@ -35,6 +35,9 @@
 					@Html.HiddenFor(k => k.ProductXL)
 					@Html.HiddenFor(k => k.ProductName)
 					@Html.HiddenFor(k => k.ProductSN)
+					@Html.HiddenFor(k => k.SN)
+					@Html.HiddenFor(k => k.FatherSN)
+					@Html.HiddenFor(k => k.ProductXLSN)
 				</span>
 			</div>
 		</div>
@@ -43,10 +46,10 @@
 			<div class="formControls col-xs-8 col-sm-8">
 				<span class="select-box inline">
 					@Html.DropDownListFor(k => k.WoodId, Model.WoodDroList, new { @class = "select", @style = "width:150px;" })
-
 					@Html.DropDownListFor(k => k.ColorId, Model.colorDroList, new { @class = "select", @style = "width:150px;" })
 					@Html.TextBoxFor(k => k.Color, new { @class = "input-text", @style = "width:150px;" })
 					@Html.HiddenFor(k => k.WoodName)
+					@Html.HiddenFor(k => k.WoodSN)
 				</span>
 			</div>
 		</div>

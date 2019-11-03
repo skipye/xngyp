@@ -34,6 +34,7 @@
           <Property Name="LabelseCount" Type="int" />
           <Property Name="Grade" Type="int" />
           <Property Name="WoodNameXL" Type="nvarchar" MaxLength="50" />
+          <Property Name="SN" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Contract_FDetail">
           <Key>
@@ -1194,6 +1195,7 @@
           <Property Name="Grade" Type="Int32" />
           <Property Name="WoodNameXL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="XNGYP_Delivery" Relationship="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" FromRole="Contract_Detail" ToRole="XNGYP_Delivery" />
+          <Property Name="SN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Contract_Header">
           <Key>
@@ -2029,6 +2031,7 @@
           <EntitySetMapping Name="Contract_Detail">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Detail">
               <MappingFragment StoreEntitySet="Contract_Detail">
+                <ScalarProperty Name="SN" ColumnName="SN" />
                 <ScalarProperty Name="WoodNameXL" ColumnName="WoodNameXL" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="LabelseCount" ColumnName="LabelseCount" />

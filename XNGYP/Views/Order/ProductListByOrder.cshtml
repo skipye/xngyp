@@ -10,6 +10,7 @@
             <thead>
 				<tr>
 					<th>序号</th>
+					<th>产品编号</th>
 					<th>产品名称</th>
 					<th>材质</th>
 					<th>色号</th>
@@ -24,18 +25,20 @@
                 {
 				<tr style="height:35px;">
 					<td>@(i)</td>
+					<td>@item.SN</td>
 					<td>@item.ProductSN _ @item.ProductName </td>
 					<td>@item.WoodName </td>
 					<td>@item.Color</td>
 					<td>@item.price</td>
 					<td>@item.Qty</td>
-					<td>@(item.IsJJ==1?"工艺礼品":"红木家具" )</td>
+					<td>@(item.IsJJ == 1 ? "工艺礼品" : "红木家具")</td>
 					<td>
 						@if (item.Status == 0)
 						{
 							if (item.IsJJ == 1)
-							{ <a href="javascript:void(0)" class="delone" ref="@item.Id" url="@Url.Action("DeleteProduct", "Order")">删除</a>}
-							else { <a href="javascript:void(0)" class="delone" ref="@item.Id" url="@Url.Action("DeleteProduct", "FOrder")">删除</a>}
+							{<a href="javascript:void(0)" class="delone" ref="@item.Id" url="@Url.Action("DeleteProduct", "Order")">删除</a>}
+							else
+							{ <a href="javascript:void(0)" class="delone" ref="@item.Id" url="@Url.Action("DeleteProduct", "FOrder")">删除</a>}
 						}
 					</td>
 				</tr>

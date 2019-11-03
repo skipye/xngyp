@@ -1,7 +1,8 @@
 ﻿@model ModelProject.ContractHeaderModel
 @{
-    Layout = null;
-    int i = 1;
+	Layout = null;
+	int i = 1;
+	string[] Arritem = { "月星店","红星店","工厂店"};
 }
 @Html.Action("_Meta", "Home")
 <link href="~/css/print.css?v=2" rel="stylesheet" />
@@ -31,7 +32,7 @@
 <div id="printtext" class="htprint clearfix">
     <h2>家具销售合同</h2>
     <div class="topht clearfix mt20">
-        <span class="fl">订货日期<span>：@Convert.ToDateTime(Model.CreateTime).ToString("yyyy")</span> 年 <span>@Convert.ToDateTime(Model.CreateTime).ToString("MM")</span>月<span> @Convert.ToDateTime(Model.CreateTime).ToString("dd") </span>日</span>
+        <span class="fl">订货日期<span>：@Convert.ToDateTime(Model.OrderTime).ToString("yyyy")</span> 年 <span>@Convert.ToDateTime(Model.OrderTime).ToString("MM")</span>月<span> @Convert.ToDateTime(Model.OrderTime).ToString("dd") </span>日</span>
         <span class="fr">合同编号：No @Model.SN</span>
     </div>
     <p class="mt10 pspace">依照《中华人民共和国合同法》及其他有关法律、法规，就相关事宜，公平和诚实信用的原则，经双方友好协商，达成如下约定：</p>
@@ -88,8 +89,10 @@
     <p class="pspace">4.执行标准编号为Q31/0118000962C001-2018《红木艺术家具》。</p>
 
     <p class="mt10 f14">三、交货方法：</p>
-    <p class="mt10 pspace">1.方法：由 <u>@Model.SHFlag</u>方承担运费费用。</p>
-    <p class="pspace">2.验收地点及交货地址：<u>@Model.DeliveryAddress</u>。</p>
+    <p class="mt10 pspace">1.方法：<u>@(Model.SHFlag == 1 ? "自提" : Model.SHFlag == 2 ? "邮寄" : "送货")</u>。</p>
+    <p class="pspace">2.验收地点及交货地址：<u>
+	@(Model.SHFlag == 1?Arritem[Convert.ToInt32(Model.ZTDFlag) - 1]:Model.DeliveryAddress)
+    </u>。</p>
 
     <p class="mt10 f14">四、付款方法：</p>
     <p class="mt10 pspace">1.本合同经双方签字（盖章）后即预付<u> @(Model.Prepay != 0 ? Math.Round(Convert.ToDecimal(Model.Prepay * 100 / Model.Amount), 2, MidpointRounding.AwayFromZero) : 0)</u>%的定金（<u>@Model.Prepay</u>）元。</p>
