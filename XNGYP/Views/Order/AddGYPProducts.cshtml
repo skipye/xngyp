@@ -56,17 +56,17 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">长+宽+高：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				@Html.TextBoxFor(k => k.length, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-				@Html.TextBoxFor(k => k.width, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
-				@Html.TextBoxFor(k => k.height, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+				@Html.TextBoxFor(k => k.length, new { @class = "input-text", @style = "width:120px;" })<span>mm</span>
+				@Html.TextBoxFor(k => k.width, new { @class = "input-text", @style = "width:120px;" })<span>mm</span>
+				@Html.TextBoxFor(k => k.height, new { @class = "input-text", @style = "width:120px;" })<span>mm</span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单价+数量：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="inline">
-					@Html.TextBoxFor(k => k.price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
-					-  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
+					@Html.TextBoxFor(k => k.price, new { @class = "input-text", @style = "width:120px;" }) <span>元</span>
+					-  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text", @style = "width:100px;" }) <span>件</span>
 				</span>
 			</div>
 		</div>
