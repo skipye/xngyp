@@ -15,7 +15,7 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box inline">
 					@Html.DropDownListFor(k => k.ProductsSNId, Model.XLDroList, new { @class = "select" })
-					@Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:180px;" })
+					@Html.DropDownListFor(k => k.FatherId, Model.FatherDroList, new { @class = "select", @style = "width:180px;" })
 				</span>
 			</div>
         </div>

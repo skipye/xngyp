@@ -24,6 +24,7 @@ namespace ModelProject
         public decimal? volume { get; set; }
         public DateTime? created_time { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
+        public List<SelectListItem> FatherDroList { get; set; }
         public int? PersonPrice { get; set; }
         public int? FatherId { get; set; }
         public string XLSecName { get; set; }

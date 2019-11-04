@@ -35,6 +35,7 @@ namespace XNGYP.Controllers
                 Models = CSer.GetDetailById(Id.Value);
             }
             Models.XLDroList = NSer.GetProSNDrolist(Models.ProductsSNId);
+            Models.FatherDroList = NSer.GetFatherProSNDrolist(Models.FatherId);
             return View(Models);
         }
         [ValidateInput(false)]
