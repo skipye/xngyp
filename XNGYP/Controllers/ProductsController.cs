@@ -16,11 +16,13 @@ namespace XNGYP.Controllers
         [Authorize]
         public ActionResult Name()
         {
-            return View();
+            SProductsNameModel SModel = new SProductsNameModel();
+            SModel.XLDroList = NSer.GetProSNDrolist(SModel.ProductsSNId);
+            return View(SModel);
         }
-        public ActionResult NamePageList()
+        public ActionResult NamePageList(SProductsNameModel SModel)
         {
-            var PageList = CSer.GetPageList();
+            var PageList = CSer.GetPageList(SModel);
             return new ContentResult
             {
                 Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),

@@ -29,6 +29,13 @@ namespace ModelProject
         public int? FatherId { get; set; }
         public string XLSecName { get; set; }
     }
+    public class SProductsNameModel
+    {
+        public int ProductsSNId { get; set; }
+        public List<SelectListItem> XLDroList { get; set; }
+        public List<SelectListItem> FatherDroList { get; set; }
+        public int? FatherId { get; set; }
+    }
     public class ProductsSNModel
     {
         public int Id { get; set; }

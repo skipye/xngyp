@@ -9,11 +9,13 @@ namespace DalProject
 {
     public class ProductsDal
     {
-        public List<ProductsNameModel> GetPageList()
+        public List<ProductsNameModel> GetPageList(SProductsNameModel SModel)
         {
             using (var db = new XNGYPEntities())
             {
                 var List = (from p in db.XNGYP_Products.Where(k => k.delete_flag == false)
+                            where SModel.ProductsSNId != null && SModel.ProductsSNId > 0 ? SModel.ProductsSNId == p.ProductsSNId : true
+                            where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
                             orderby p.created_time
                             select new ProductsNameModel
                             {

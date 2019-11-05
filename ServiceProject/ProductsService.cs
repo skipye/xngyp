@@ -12,9 +12,9 @@ namespace ServiceProject
     {
         private static readonly ProductsDal CDal = new ProductsDal();
 
-        public List<ProductsNameModel> GetPageList()
+        public List<ProductsNameModel> GetPageList(SProductsNameModel SModel)
         {
-            try { return CDal.GetPageList(); }
+            try { return CDal.GetPageList(SModel); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
