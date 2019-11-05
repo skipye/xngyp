@@ -28,21 +28,22 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th>客户名称</th>
-                    <th>合同编号</th>
-                    <th>合同时间</th>
-                    <th>发货方式</th>
-                    <th>合同总金额</th>
-                    <th>预付款</th>
-                    <th>付款状态</th>
-                    <th>是否审核</th>
-                    <th>销售人员</th>
-                    <th>财务是否审核</th>
-                    <th width="100">操作时间</th>
-                    <th width="120">操作</th>
-                </tr>
+				<tr class="text-l">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th>客户名称</th>
+					<th>合同编号</th>
+					<th>合同时间</th>
+					<th>发货方式</th>
+					<th>合同总金额</th>
+					<th>预付款</th>
+					<th>付款状态</th>
+					<th>是否审核</th>
+					<th>销售人员</th>
+					<th>财务是否审核</th>
+					<th>操作时间</th>
+					<th>备注</th>
+					<th width="120">操作</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -99,7 +100,7 @@
                         return StrArr;
                     }
                 }, {
-                    targets: 12,//把第九列的样式改为超链接
+                    targets: 13,//把第九列的样式改为超链接
                     render: function (data, type, row) {
                         var StrCheck = "";
                         if (row.CWCheckStatus <= 0 || row.CWCheckStatus==2)
@@ -172,7 +173,8 @@
                                 var NewTime = parseInt(data.replace(/\D/igm, ""));
                                 return formatDateTime(NewTime);
                             }
-                        },
+				},
+						{ "data": "Remark", "defaultContent": "", "className": "textoverflow" },
 
             ]
         });

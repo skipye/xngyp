@@ -60,6 +60,7 @@ namespace DalProject
                                 DeliverChannel=p.DeliverChannel,
                                 ZTDFlag=p.ZTDFlag,
                                 SaleFlag=p.SaleFlag,
+                                Remark=p.Remark,
                             }).ToList();
                 ContractModel Models = new ContractModel();
                 Models.data = List;
@@ -90,6 +91,7 @@ namespace DalProject
                     table.SaleFlag = Models.SaleFlag;
                     table.DDOrder = Models.DDOrder;
                     table.YDOrder = Models.YDOrder;
+                    table.Remark = Models.Remark;
                 }
                 else
                 {
@@ -120,6 +122,7 @@ namespace DalProject
                     table.SaleFlag = Models.SaleFlag;
                     table.DDOrder = Models.DDOrder;
                     table.YDOrder = Models.YDOrder;
+                    table.Remark = Models.Remark;
                     db.Contract_Header.Add(table);
 
                     FinanceModel FModels = new FinanceModel();
@@ -167,7 +170,8 @@ namespace DalProject
                                   YDOrder = p.YDOrder,
                                   DDOrder=p.DDOrder,
                                   CreateTime=p.CreateTime,
-                              }).SingleOrDefault();
+                                  Remark = p.Remark,
+            }).SingleOrDefault();
                 return tables;
             }
         }
