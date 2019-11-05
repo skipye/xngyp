@@ -51,9 +51,9 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public bool CWChecked(string ListId)
+        public bool CWChecked(string ListId, int CheckedId)
         {
-            try { CHDal.CWChecked(ListId); return true; }
+            try { CHDal.CWChecked(ListId, CheckedId); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

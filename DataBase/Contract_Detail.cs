@@ -47,9 +47,9 @@ namespace DataBase
         public string WoodNameXL { get; set; }
         public string SN { get; set; }
     
-        public virtual Contract_Header Contract_Header { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }
         public virtual ICollection<XNGYP_WorkOrder> XNGYP_WorkOrder { get; set; }
         public virtual ICollection<XNGYP_Delivery> XNGYP_Delivery { get; set; }
+        public virtual Contract_Header Contract_Header { get; set; }
     }
 }

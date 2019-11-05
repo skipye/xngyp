@@ -90,7 +90,7 @@ namespace ModelProject
         public List<SelectListItem> CustomerDroList { get; set; }
         public string OrderMun { get; set; }
         public List<DeliveryModel> DePro { get; set; }//送货Model
-        public bool? CWCheckStatus { get; set; }
+        public int? CWCheckStatus { get; set; }
         public int? SHFlag { get; set; }
         public string ZTDFlag { get; set; }
         public decimal? RealPrice { get; set; }//实收款金额

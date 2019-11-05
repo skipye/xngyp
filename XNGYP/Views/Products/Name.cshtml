@@ -19,7 +19,8 @@
             <thead>
 				<tr class="text-l">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="140">名称</th>
+					<th>名称</th>
+					<th>图片</th>
 					<th>一级</th>
 					<th>二级</th>
 					<th>长（mm）</th>
@@ -45,11 +46,8 @@
     $(function () { search(param); });
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "searching": true,
-            "autoWidth": true,
+			"aaSorting": [[9, "desc"]],//默认第几个排序
+			"bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Products/NamePageList", param, function (result) {
                     //封装返回数据
@@ -61,11 +59,12 @@
             "columnDefs": [//对table格式的定义（表格的列从0开始）
                 {
                     targets: 0,
+                    orderable: false,
                     render: function (data, type, row) {
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 9,
+                    targets: 10,
                     render: function (data, type, row) {
                         return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/Products/NameAdd\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
                                '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Products/NameDelete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
@@ -74,7 +73,13 @@
             ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                         { "data": "Id" },
-                        { "data": "name", "className": "text-overflow" },
+				        { "data": "name", "className": "text-overflow" },
+				{
+					"data": "Picture", "className": "text-overflow", "render": function (data) {
+						var picpath = "<img src=\"/images/nopic.png\" class=\"ConvertImg picreload\" id=\"ConvertImg\" />";
+						if (data != null && data!="") { picpath = "<a href=" + data + " target=\"blank\"><img src=" + data + " class=\"ConvertImg picreload\" id=\"ConvertImg\" /></a>"; }
+                                return picpath;
+                            } },
 				        { "data": "ProductsSNName", "defaultContent": "" },
                         { "data": "XLSecName", "defaultContent": "" },
                         { "data": "length", "defaultContent": "" },

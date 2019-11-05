@@ -1,6 +1,7 @@
 ﻿@{Layout = null;
   string TabId = ViewBag.TabId;
   }
+	<script type="text/javascript" src="~/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="@Url.Content("~/js/jquery.form.js")"></script>
 
 <form id="fileForm" method="post" action="/FileManage/UploadImg" enctype="multipart/form-data">
@@ -30,17 +31,28 @@
         };
         $("#fileForm").ajaxSubmit({
             success: function (msg) {
-                var TabId = "@TabId";
+                //var TabId = "@TabId";
                 if (msg != "0") {
                     alert("上传成功！"); //$("#dialog_img").dialog("close"); $("#" + TabId).val(msg);
 
-                    $("." + TabId).attr("src", msg);
+					var index = parent.parent.layer.getFrameIndex(window.name);
+					var body = parent.parent.layer.getChildFrame('body', index);
+					//var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+					console.log(body.html()) //得到iframe页的body内容
+					body.find('#Picture').val(msg);
+					body.find('#ConvertImg').attr("src",msg);
+					
                 }
                 else {
                     alert("上传失败！");
-                }
-                ResetWindow();
-            }
+				}
+				
+			removeIframe();
+			}
         });
-    });
+	});
+	function removeIframe() {
+    var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
+}
 </script>

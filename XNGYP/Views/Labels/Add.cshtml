@@ -1,15 +1,15 @@
 ﻿@model ModelProject.LabelsModel
 @{Layout = null;
-    List<SelectListItem> ArrPro = new List<SelectListItem>();
-    ArrPro.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
+	List<SelectListItem> ArrPro = new List<SelectListItem>();
+	ArrPro.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
 	List<SelectListItem> ArrSecPro = new List<SelectListItem>();
-    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
-    List<SelectListItem> ArrGrade = new List<SelectListItem>();
-    ArrGrade.Add(new SelectListItem { Text = "请选择产品等级", Value = "" });
-    ArrGrade.Add(new SelectListItem { Text = "低级", Value = "1" });
-    ArrGrade.Add(new SelectListItem { Text = "中级", Value = "6" });
-    ArrGrade.Add(new SelectListItem { Text = "高级", Value = "9" });
-    }
+	ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+	List<SelectListItem> ArrGrade = new List<SelectListItem>();
+	ArrGrade.Add(new SelectListItem { Text = "请选择产品等级", Value = "" });
+	ArrGrade.Add(new SelectListItem { Text = "低级", Value = "1" });
+	ArrGrade.Add(new SelectListItem { Text = "中级", Value = "6" });
+	ArrGrade.Add(new SelectListItem { Text = "高级", Value = "9" });
+}
 
 @Html.Action("_Meta", "Home")
 
@@ -98,8 +98,8 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">图片：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				@Html.TextBoxFor(k => k.Picture, new { @class = "input-text", @onclick = "fileUpload('图片上传', '/FileManage/Index', '500', '360')" })
-				<img src="@Model.Picture" class="ConvertImg picreload" />
+				<input type="text" name="Picture" id="Picture" class="input-text" onclick="fileUpload('图片上传', '/FileManage/Index', '500', '360')" value="@Model.Picture" />
+				<img src="@Model.Picture" class="ConvertImg picreload" id="ConvertImg" />
 			</div>
 		</div>
 		<div class="row cl">
@@ -110,53 +110,55 @@
 		</div>
 	</form>
 </article>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=1"></script>
-<script type="text/javascript" src="~/js/layer/layer.js"></script>
+@Html.Action("_Footer", "Home")
+<script type="text/javascript" src="~/js/ajaxScript.js"></script>
+
 <script type="text/javascript" src="~/js/jquery.validation/jquery.validate.js"></script>
+<script type="text/javascript" src="~/js/jquery.validation/validate-methods.js"></script>
 <script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
 <script type="text/javascript">
 
-    $(function () {
-        //表单验证
-        $("#formadd").validate({
-            rules: {
-                ProductId: { required: true, },
-                INVId: { required: true, },
-                WoodId: { required: true, },
-                ColorId: { required: true, },
-                Grade: { required: true, },
+	$(function () {
+		//表单验证
+		$("#formadd").validate({
+			rules: {
+				ProductId: { required: true, },
+				INVId: { required: true, },
+				WoodId: { required: true, },
+				ColorId: { required: true, },
+				Grade: { required: true, },
 
-            },
-            onkeyup: false,
-            focusCleanup: true,
-            success: "valid",
-            submitHandler: function (form) {
-                //构造上传数据
-                var param = {};
-                var paramArray = $(form).serializeArray();
-                for (var i = 0; i < paramArray.length; ++i) {
-                    var o = paramArray[i];
-                    param[o["name"]] = o["value"];
-                };
-                ajaxRequest("post", "/Labels/PostAdd", param, function (d) {
-                    if (d == "1") {
-                        if (editModel(window.location.href)) {
-                            layer.msg("编辑成功！", { icon: 1, time: 1000 });
-                        } else {
-                            layer.msg("添加成功！", { icon: 1, time: 1000 });
-                        }
-                    } else {
-                        layer.msg("服务器错误！", { icon: 2, time: 1000 });
-                    }
-                    setTimeout(function () {
-                        parent.window.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    }, 1000);
-                });
-            }
-        });
-    });
+			},
+			onkeyup: false,
+			focusCleanup: true,
+			success: "valid",
+			submitHandler: function (form) {
+				//构造上传数据
+				var param = {};
+				var paramArray = $(form).serializeArray();
+				for (var i = 0; i < paramArray.length; ++i) {
+					var o = paramArray[i];
+					param[o["name"]] = o["value"];
+				};
+				ajaxRequest("post", "/Labels/PostAdd", param, function (d) {
+					if (d == "1") {
+						if (editModel(window.location.href)) {
+							layer.msg("编辑成功！", { icon: 1, time: 1000 });
+						} else {
+							layer.msg("添加成功！", { icon: 1, time: 1000 });
+						}
+					} else {
+						layer.msg("服务器错误！", { icon: 2, time: 1000 });
+					}
+					setTimeout(function () {
+						parent.window.location.reload();
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					}, 1000);
+				});
+			}
+		});
+	});
 
 </script>
 <script type="text/javascript">

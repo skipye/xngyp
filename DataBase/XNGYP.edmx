@@ -91,7 +91,7 @@
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="DeleteFlag" Type="bit" />
           <Property Name="Remark" Type="nvarchar" MaxLength="500" />
-          <Property Name="CWCheckStatus" Type="bit" />
+          <Property Name="CWCheckStatus" Type="int" />
           <Property Name="CWCheckName" Type="nvarchar" MaxLength="50" />
           <Property Name="CWCheckId" Type="int" />
           <Property Name="CWCheckTime" Type="datetime" />
@@ -958,15 +958,6 @@
           </AssociationSet>
           <EntitySet Name="XNGYP_Customers" EntityType="XNGYPModel.XNGYP_Customers" />
           <EntitySet Name="Contract_Detail" EntityType="XNGYPModel.Contract_Detail" />
-          <EntitySet Name="Contract_Header" EntityType="XNGYPModel.Contract_Header" />
-          <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="XNGYPModel.FK_Contract_Detail_Contract_Header">
-            <End Role="Contract_Header" EntitySet="Contract_Header" />
-            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="XNGYPModel.FK_Contract_Header_XNGYP_Customers">
-            <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
-            <End Role="Contract_Header" EntitySet="Contract_Header" />
-          </AssociationSet>
           <EntitySet Name="XNGYP_Products" EntityType="XNGYPModel.XNGYP_Products" />
           <EntitySet Name="XNGYP_Products_SN" EntityType="XNGYPModel.XNGYP_Products_SN" />
           <EntitySet Name="XNGYP_Products_WorkFrom" EntityType="XNGYPModel.XNGYP_Products_WorkFrom" />
@@ -1085,9 +1076,18 @@
             <End Role="XNGYP_Delivery" EntitySet="XNGYP_Delivery" />
           </AssociationSet>
           <EntitySet Name="Contract_FDetail" EntityType="XNGYPModel.Contract_FDetail" />
+          <EntitySet Name="Contract_Header" EntityType="XNGYPModel.Contract_Header" />
+          <AssociationSet Name="FK_Contract_Detail_Contract_Header" Association="XNGYPModel.FK_Contract_Detail_Contract_Header">
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+          </AssociationSet>
           <AssociationSet Name="FK_Contract_FDetail_Contract_Header" Association="XNGYPModel.FK_Contract_FDetail_Contract_Header">
             <End Role="Contract_Header" EntitySet="Contract_Header" />
             <End Role="Contract_FDetail" EntitySet="Contract_FDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Header_XNGYP_Customers" Association="XNGYPModel.FK_Contract_Header_XNGYP_Customers">
+            <End Role="XNGYP_Customers" EntitySet="XNGYP_Customers" />
+            <End Role="Contract_Header" EntitySet="Contract_Header" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="WorkLogs">
@@ -1184,7 +1184,6 @@
           <Property Type="Int32" Name="Status" />
           <Property Type="DateTime" Name="CreateTime" Precision="3" />
           <Property Type="Boolean" Name="DeleteFlag" />
-          <NavigationProperty Name="Contract_Header" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Detail" ToRole="Contract_Header" />
           <Property Type="String" Name="hardware_part" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="decoration_part" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="req_others" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -1196,73 +1195,8 @@
           <Property Name="WoodNameXL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="XNGYP_Delivery" Relationship="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" FromRole="Contract_Detail" ToRole="XNGYP_Delivery" />
           <Property Name="SN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract_Header" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Detail" ToRole="Contract_Header" />
         </EntityType>
-        <EntityType Name="Contract_Header">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="SN" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="CustomerId" />
-          <Property Type="DateTime" Name="DeliveryDate" Precision="3" />
-          <Property Type="String" Name="DeliveryAddress" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DeliveryLinkTel" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DeliveryLinkMan" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="Amount" Precision="16" Scale="2" />
-          <Property Type="Decimal" Name="Prepay" Precision="16" Scale="2" />
-          <Property Type="Int32" Name="SaleUserId" />
-          <Property Type="String" Name="SaleUserName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="SaleDepartmentId" />
-          <Property Type="String" Name="SaleDepartment" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="Status" />
-          <Property Type="Int32" Name="CheckedUserId" />
-          <Property Type="String" Name="CheckedUserName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CheckedTime" Precision="3" />
-          <Property Type="DateTime" Name="HTDate" Precision="3" />
-          <Property Type="Int32" Name="FRFlag" />
-          <Property Type="DateTime" Name="CreateTime" Precision="3" />
-          <Property Type="Boolean" Name="DeleteFlag" />
-          <Property Type="String" Name="Remark" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_Detail" />
-          <NavigationProperty Name="XNGYP_Customers" Relationship="XNGYPModel.FK_Contract_Header_XNGYP_Customers" FromRole="Contract_Header" ToRole="XNGYP_Customers" />
-          <Property Type="Boolean" Name="CWCheckStatus" />
-          <Property Type="String" Name="CWCheckName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="CWCheckId" />
-          <Property Type="DateTime" Name="CWCheckTime" Precision="3" />
-          <Property Name="SHFlag" Type="Int32" />
-          <Property Name="DeliverChannel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ZTDFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Contract_FDetail" Relationship="XNGYPModel.FK_Contract_FDetail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_FDetail" />
-          <Property Name="FRStatus" Type="Int32" />
-          <Property Name="RealPrice" Type="Decimal" Precision="16" Scale="2" />
-          <Property Name="SaleFlag" Type="Int32" />
-          <Property Name="DDOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="YDOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="FK_Contract_Detail_Contract_Header">
-          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
-          <End Type="XNGYPModel.Contract_Detail" Role="Contract_Detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contract_Header">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Contract_Detail">
-              <PropertyRef Name="ContractHeadId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Contract_Header_XNGYP_Customers">
-          <End Type="XNGYPModel.XNGYP_Customers" Role="XNGYP_Customers" Multiplicity="0..1" />
-          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="XNGYP_Customers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Contract_Header">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="XNGYP_Products">
           <Key>
             <PropertyRef Name="Id" />
@@ -1949,6 +1883,60 @@
           <Property Name="DeleteFlag" Type="Boolean" />
           <NavigationProperty Name="Contract_Header" Relationship="XNGYPModel.FK_Contract_FDetail_Contract_Header" FromRole="Contract_FDetail" ToRole="Contract_Header" />
         </EntityType>
+        <EntityType Name="Contract_Header">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryLinkTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryLinkMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="Prepay" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="SaleUserId" Type="Int32" />
+          <Property Name="SaleUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SaleDepartmentId" Type="Int32" />
+          <Property Name="SaleDepartment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CheckedUserId" Type="Int32" />
+          <Property Name="CheckedUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckedTime" Type="DateTime" Precision="3" />
+          <Property Name="HTDate" Type="DateTime" Precision="3" />
+          <Property Name="FRFlag" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CWCheckStatus" Type="Int32" />
+          <Property Name="CWCheckName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CWCheckId" Type="Int32" />
+          <Property Name="CWCheckTime" Type="DateTime" Precision="3" />
+          <Property Name="SHFlag" Type="Int32" />
+          <Property Name="DeliverChannel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZTDFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FRStatus" Type="Int32" />
+          <Property Name="RealPrice" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="SaleFlag" Type="Int32" />
+          <Property Name="DDOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YDOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_Detail" />
+          <NavigationProperty Name="Contract_FDetail" Relationship="XNGYPModel.FK_Contract_FDetail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_FDetail" />
+          <NavigationProperty Name="XNGYP_Customers" Relationship="XNGYPModel.FK_Contract_Header_XNGYP_Customers" FromRole="Contract_Header" ToRole="XNGYP_Customers" />
+        </EntityType>
+        <Association Name="FK_Contract_Detail_Contract_Header">
+          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
+          <End Type="XNGYPModel.Contract_Detail" Role="Contract_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Header">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Detail">
+              <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Contract_FDetail_Contract_Header">
           <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
           <End Type="XNGYPModel.Contract_FDetail" Role="Contract_FDetail" Multiplicity="*" />
@@ -1958,6 +1946,18 @@
             </Principal>
             <Dependent Role="Contract_FDetail">
               <PropertyRef Name="ContractHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Header_XNGYP_Customers">
+          <End Type="XNGYPModel.XNGYP_Customers" Role="XNGYP_Customers" Multiplicity="0..1" />
+          <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XNGYP_Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contract_Header">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2056,46 +2056,6 @@
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Labels" ColumnName="Labels" />
                 <ScalarProperty Name="ContractHeadId" ColumnName="ContractHeadId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contract_Header">
-            <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
-              <MappingFragment StoreEntitySet="Contract_Header">
-                <ScalarProperty Name="YDOrder" ColumnName="YDOrder" />
-                <ScalarProperty Name="DDOrder" ColumnName="DDOrder" />
-                <ScalarProperty Name="SaleFlag" ColumnName="SaleFlag" />
-                <ScalarProperty Name="RealPrice" ColumnName="RealPrice" />
-                <ScalarProperty Name="FRStatus" ColumnName="FRStatus" />
-                <ScalarProperty Name="ZTDFlag" ColumnName="ZTDFlag" />
-                <ScalarProperty Name="DeliverChannel" ColumnName="DeliverChannel" />
-                <ScalarProperty Name="SHFlag" ColumnName="SHFlag" />
-                <ScalarProperty Name="CWCheckTime" ColumnName="CWCheckTime" />
-                <ScalarProperty Name="CWCheckId" ColumnName="CWCheckId" />
-                <ScalarProperty Name="CWCheckName" ColumnName="CWCheckName" />
-                <ScalarProperty Name="CWCheckStatus" ColumnName="CWCheckStatus" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="FRFlag" ColumnName="FRFlag" />
-                <ScalarProperty Name="HTDate" ColumnName="HTDate" />
-                <ScalarProperty Name="CheckedTime" ColumnName="CheckedTime" />
-                <ScalarProperty Name="CheckedUserName" ColumnName="CheckedUserName" />
-                <ScalarProperty Name="CheckedUserId" ColumnName="CheckedUserId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="SaleDepartment" ColumnName="SaleDepartment" />
-                <ScalarProperty Name="SaleDepartmentId" ColumnName="SaleDepartmentId" />
-                <ScalarProperty Name="SaleUserName" ColumnName="SaleUserName" />
-                <ScalarProperty Name="SaleUserId" ColumnName="SaleUserId" />
-                <ScalarProperty Name="Prepay" ColumnName="Prepay" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="DeliveryLinkMan" ColumnName="DeliveryLinkMan" />
-                <ScalarProperty Name="DeliveryLinkTel" ColumnName="DeliveryLinkTel" />
-                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
-                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="SN" ColumnName="SN" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2452,6 +2412,46 @@
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ContractHeadId" ColumnName="ContractHeadId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract_Header">
+            <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
+              <MappingFragment StoreEntitySet="Contract_Header">
+                <ScalarProperty Name="YDOrder" ColumnName="YDOrder" />
+                <ScalarProperty Name="DDOrder" ColumnName="DDOrder" />
+                <ScalarProperty Name="SaleFlag" ColumnName="SaleFlag" />
+                <ScalarProperty Name="RealPrice" ColumnName="RealPrice" />
+                <ScalarProperty Name="FRStatus" ColumnName="FRStatus" />
+                <ScalarProperty Name="ZTDFlag" ColumnName="ZTDFlag" />
+                <ScalarProperty Name="DeliverChannel" ColumnName="DeliverChannel" />
+                <ScalarProperty Name="SHFlag" ColumnName="SHFlag" />
+                <ScalarProperty Name="CWCheckTime" ColumnName="CWCheckTime" />
+                <ScalarProperty Name="CWCheckId" ColumnName="CWCheckId" />
+                <ScalarProperty Name="CWCheckName" ColumnName="CWCheckName" />
+                <ScalarProperty Name="CWCheckStatus" ColumnName="CWCheckStatus" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="FRFlag" ColumnName="FRFlag" />
+                <ScalarProperty Name="HTDate" ColumnName="HTDate" />
+                <ScalarProperty Name="CheckedTime" ColumnName="CheckedTime" />
+                <ScalarProperty Name="CheckedUserName" ColumnName="CheckedUserName" />
+                <ScalarProperty Name="CheckedUserId" ColumnName="CheckedUserId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SaleDepartment" ColumnName="SaleDepartment" />
+                <ScalarProperty Name="SaleDepartmentId" ColumnName="SaleDepartmentId" />
+                <ScalarProperty Name="SaleUserName" ColumnName="SaleUserName" />
+                <ScalarProperty Name="SaleUserId" ColumnName="SaleUserId" />
+                <ScalarProperty Name="Prepay" ColumnName="Prepay" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DeliveryLinkMan" ColumnName="DeliveryLinkMan" />
+                <ScalarProperty Name="DeliveryLinkTel" ColumnName="DeliveryLinkTel" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

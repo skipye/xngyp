@@ -155,12 +155,14 @@
                 },
                 { "data": "SaleUserName", "defaultContent": "" },
                 {
-                    "data": "CWCheckStatus", "render": function (data) {
-                        var StrStatus = "<b class='c-warning'>否</b>";
-                        if (data == true)
-                        { StrStatus = "<b class='c-green'>是</b>"; }
-                        return StrStatus;
-                    }
+                     "data": "CWCheckStatus", "render": function (data) {
+                                var StrStatus = "<b class='c-warning'>否</b>";
+                                if (data == 1)
+								{ StrStatus = "<b class='c-green'>是</b>"; }
+								if (data == 2)
+                                { StrStatus = "<b class='c-warning'>被驳回</b>"; }
+                                return StrStatus;
+                            }
                 },
                 {
                     "data": "CreateTime", "render": function (data) {

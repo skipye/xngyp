@@ -30,7 +30,6 @@ namespace DataBase
         public DbSet<XNGYP_Role> XNGYP_Role { get; set; }
         public DbSet<XNGYP_Customers> XNGYP_Customers { get; set; }
         public DbSet<Contract_Detail> Contract_Detail { get; set; }
-        public DbSet<Contract_Header> Contract_Header { get; set; }
         public DbSet<XNGYP_Products> XNGYP_Products { get; set; }
         public DbSet<XNGYP_Products_SN> XNGYP_Products_SN { get; set; }
         public DbSet<XNGYP_Products_WorkFrom> XNGYP_Products_WorkFrom { get; set; }
@@ -49,5 +48,6 @@ namespace DataBase
         public DbSet<XNGYP_Users> XNGYP_Users { get; set; }
         public DbSet<XNGYP_Delivery> XNGYP_Delivery { get; set; }
         public DbSet<Contract_FDetail> Contract_FDetail { get; set; }
+        public DbSet<Contract_Header> Contract_Header { get; set; }
     }
 }

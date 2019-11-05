@@ -42,7 +42,7 @@ namespace DataBase
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
         public string Remark { get; set; }
-        public Nullable<bool> CWCheckStatus { get; set; }
+        public Nullable<int> CWCheckStatus { get; set; }
         public string CWCheckName { get; set; }
         public Nullable<int> CWCheckId { get; set; }
         public Nullable<System.DateTime> CWCheckTime { get; set; }
@@ -56,7 +56,7 @@ namespace DataBase
         public string YDOrder { get; set; }
     
         public virtual ICollection<Contract_Detail> Contract_Detail { get; set; }
-        public virtual XNGYP_Customers XNGYP_Customers { get; set; }
         public virtual ICollection<Contract_FDetail> Contract_FDetail { get; set; }
+        public virtual XNGYP_Customers XNGYP_Customers { get; set; }
     }
 }

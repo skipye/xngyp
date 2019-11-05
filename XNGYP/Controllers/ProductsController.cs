@@ -30,6 +30,7 @@ namespace XNGYP.Controllers
         public ActionResult NameAdd(int? Id)
         {
             ProductsNameModel Models = new ProductsNameModel();
+           
             if (Id != null && Id > 0)
             {
                 Models = CSer.GetDetailById(Id.Value);

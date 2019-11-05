@@ -23,7 +23,7 @@ namespace DalProject
                                 length = p.length,
                                 width = p.width,
                                 height = p.height,
-                                picture=p.picture,
+                                Picture = p.picture,
                                 ProductsSNName = p.XNGYP_Products_SN.name,
                                 remark=p.remark,
                                 paper_path=p.paper_path,
@@ -49,7 +49,7 @@ namespace DalProject
                     table.length = Models.length;
                     table.width = Models.width;
                     table.height = Models.height;
-                    table.picture = Models.picture;
+                    table.picture = Models.Picture;
                     table.paper_path = Models.paper_path;
                     table.BOM_path = Models.BOM_path;
                     table.remark = Models.remark;
@@ -64,7 +64,7 @@ namespace DalProject
                     table.length = Models.length;
                     table.width = Models.width;
                     table.height = Models.height;
-                    table.picture = Models.picture;
+                    table.picture = Models.Picture;
                     table.paper_path = Models.paper_path;
                     table.BOM_path = Models.BOM_path;
                     table.volume = Models.volume;
@@ -90,7 +90,7 @@ namespace DalProject
                                   length = p.length,
                                   width = p.width,
                                   height = p.height,
-                                  picture = p.picture,
+                                  Picture = p.picture,
                                   remark = p.remark,
                                   paper_path = p.paper_path,
                                   BOM_path = p.BOM_path,

@@ -24,7 +24,7 @@ namespace DalProject
             }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.Contract_Detail.Where(k => k.DeleteFlag == false && k.Contract_Header.Status==1 && k.Contract_Header.CWCheckStatus==true)
+                var List = (from p in db.Contract_Detail.Where(k => k.DeleteFlag == false && k.Contract_Header.Status==1 && k.Contract_Header.CWCheckStatus==1)
                             where !string.IsNullOrEmpty(SModel.SN) ? p.Contract_Header.SN.Contains(SModel.SN) : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.ProductName.Contains(SModel.ProductName) : true
                             where !string.IsNullOrEmpty(SModel.Customer) ? p.Contract_Header.XNGYP_Customers.Name.Contains(SModel.Customer) : true

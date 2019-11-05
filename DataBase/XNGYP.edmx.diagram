@@ -11,9 +11,6 @@
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Menu_XNGYP_Menu" />
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Customers" Width="1.5" PointX="7.25" PointY="0.75" />
         <EntityTypeShape EntityType="XNGYPModel.Contract_Detail" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="XNGYPModel.Contract_Header" Width="1.5" PointX="12" PointY="0.5" />
-        <AssociationConnector Association="XNGYPModel.FK_Contract_Detail_Contract_Header" />
-        <AssociationConnector Association="XNGYPModel.FK_Contract_Header_XNGYP_Customers" />
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products" Width="1.5" PointX="0.625" PointY="3.375" />
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_SN" Width="1.5" PointX="3.625" PointY="4.875" />
         <EntityTypeShape EntityType="XNGYPModel.XNGYP_Products_WorkFrom" Width="1.5" PointX="6.25" PointY="5.125" />
@@ -57,7 +54,10 @@
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Delivery_XNGYP_INV_Labels" />
         <AssociationConnector Association="XNGYPModel.FK_XNGYP_Delivery_Contract_Detail" />
         <EntityTypeShape EntityType="XNGYPModel.Contract_FDetail" Width="1.5" PointX="14.25" PointY="20.125" />
+        <EntityTypeShape EntityType="XNGYPModel.Contract_Header" Width="1.5" PointX="9.5" PointY="24.25" />
+        <AssociationConnector Association="XNGYPModel.FK_Contract_Detail_Contract_Header" />
         <AssociationConnector Association="XNGYPModel.FK_Contract_FDetail_Contract_Header" />
+        <AssociationConnector Association="XNGYPModel.FK_Contract_Header_XNGYP_Customers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

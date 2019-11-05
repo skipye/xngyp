@@ -10,9 +10,8 @@ namespace XNGYP.Controllers
 {
     public class FileManageController : Controller
     {
-        public ActionResult Index(string TabId)
+        public ActionResult Index()
         {
-            ViewBag.TabId = TabId;
             return View();
         }
         [HttpPost]
@@ -46,6 +45,7 @@ namespace XNGYP.Controllers
 
             try
             {
+                Session["FileName"] = msg;
                 return Content(msg);
                 //msg = "1";
             }

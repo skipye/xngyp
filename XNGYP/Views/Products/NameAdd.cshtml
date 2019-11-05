@@ -1,85 +1,88 @@
 ﻿@model ModelProject.ProductsNameModel
 @{Layout = null;
 	List<SelectListItem> ArrSecPro = new List<SelectListItem>();
-    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
-	}
+	ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+}
 
 @Html.Action("_Meta", "Home")
 
 <script type="text/javascript" src="~/js/jquery.min.js"></script>
 <article class="page-container">
-    <form class="form form-horizontal" id="formadd">
-        @Html.HiddenFor(k => k.Id)
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列：</label>
+	<form class="form form-horizontal" id="formadd">
+		@Html.HiddenFor(k => k.Id)
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box inline">
 					@Html.DropDownListFor(k => k.ProductsSNId, Model.XLDroList, new { @class = "select" })
 					@Html.DropDownListFor(k => k.FatherId, Model.FatherDroList, new { @class = "select", @style = "width:180px;" })
 				</span>
 			</div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.name, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>长（mm）：</label>
-            <div class="formControls col-xs-8 col-sm-5">
-                @Html.TextBoxFor(k => k.length, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>宽（mm）：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.width, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>高（mm）：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.height, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">图片：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.picture, new { @class = "input-text" })
-                <img src="@Model.picture" class="ConvertImg picreload" />
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">图纸：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.paper_path, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">料单：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.BOM_path, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">备注说明：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextAreaFor(k => k.remark, new { @class = "textarea", @placeholder = "说点什么...！" })
-                <p class="textarea-numberbar"><em class="textarea-length">0</em>/400</p>
-            </div>
-        </div>
-        <div class="row cl">
-            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-                <button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-            </div>
-        </div>
-    </form>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.name, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>长（mm）：</label>
+			<div class="formControls col-xs-8 col-sm-5">
+				@Html.TextBoxFor(k => k.length, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>宽（mm）：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.width, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>高（mm）：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.height, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="Picture" id="Picture" class="input-text" onclick="fileUpload('图片上传', '/FileManage/Index', '500', '360')" value="@Model.Picture" />
+				@*@Html.TextBoxFor(k => k.picture, new { @class = "input-text", @onclick = "fileUpload('图片上传', '/FileManage/Index', '500', '360')"  })*@
+				<img src="@Model.Picture" class="ConvertImg picreload" id="ConvertImg" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图纸：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.paper_path, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">料单：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.BOM_path, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">备注说明：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextAreaFor(k => k.remark, new { @class = "textarea", @placeholder = "说点什么...！" })
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/400</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
 </article>
+@Html.Action("_Footer", "Home")
 <script type="text/javascript" src="~/js/ajaxScript.js"></script>
-<script type="text/javascript" src="~/js/layer/layer.js"></script>
+
 <script type="text/javascript" src="~/js/jquery.validation/jquery.validate.js"></script>
+<script type="text/javascript" src="~/js/jquery.validation/validate-methods.js"></script>
 <script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
 <script type="text/javascript">
 
@@ -100,7 +103,8 @@ $(function(){
 		    var paramArray = $(form).serializeArray();
 		    for (var i = 0; i < paramArray.length; ++i) {
 		        var o = paramArray[i];
-		        param[o["name"]] = o["value"];
+				param[o["name"]] = o["value"];
+				param["picture"] = $("#picture").val();
 		    };
 		    ajaxRequest("post", "/Products/PostNameAdd", param, function (d) {
 

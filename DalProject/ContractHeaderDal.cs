@@ -111,7 +111,7 @@ namespace DalProject
                     table.FRFlag = 0;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
-                    table.CWCheckStatus = false;
+                    table.CWCheckStatus = 0;
                     table.DeliverChannel = Models.DeliverChannel;
                     table.SHFlag = Models.SHFlag;
                     table.ZTDFlag = Models.ZTDFlag;
@@ -209,7 +209,7 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        public void CWChecked(string ListId)
+        public void CWChecked(string ListId,int CheckedId)
         {
             using (var db = new XNGYPEntities())
             {
@@ -220,12 +220,14 @@ namespace DalProject
                     {
                         int Id = Convert.ToInt32(item);
                         var tables = db.Contract_Header.Where(k => k.Id == Id).SingleOrDefault();
-                        tables.CWCheckStatus = true;
+                        tables.CWCheckStatus = CheckedId;
                         tables.CWCheckId = new UserDal().GetCurrentUserName().UserId;
                         tables.CWCheckName = new UserDal().GetCurrentUserName().UserName;
                         tables.CWCheckTime = DateTime.Now;
-
-                        AddFOrder(Id);//添加家具订单
+                        if (CheckedId == 1)
+                        {
+                            AddFOrder(Id);//添加家具订单
+                        }
                     }
                 }
 

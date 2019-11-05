@@ -18,7 +18,7 @@ namespace ModelProject
         public int? height { get; set; }
         public decimal? price { get; set; }
         public string remark { get; set; }
-        public string picture { get; set; }
+        public string Picture { get; set; }
         public string paper_path { get; set; }
         public string BOM_path { get; set; }
         public decimal? volume { get; set; }
