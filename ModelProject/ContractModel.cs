@@ -233,5 +233,7 @@ namespace ModelProject
         public decimal? width { get; set; }//预付款比例
         public decimal? height { get; set; }//预付款金额
         public int? qty { get; set; }
+        public int HTHeadId { get; set; }
+        public int HTDetailId { get; set; }
     }
 }

@@ -101,3 +101,25 @@ function DeliveryINV(obj, id) {
     }
     else { layer.alert("请先去选中！"); }
 }
+
+//打印送货单
+function PrintDelivery(obj, id) {
+    var PostUrl = $(obj).attr("data-url");
+    var Title = $(obj).attr("title");
+    var ListId = "";
+    if (id > 0) {
+        ListId = id + "$";
+    } else {
+        var NewObj = $(obj).parent().parent().siblings("div.checkmodel").find("table.table");
+        NewObj.find("input[type='checkbox']:checked").each(function () {
+            var StrStatus = $(this).attr("ref");//获取当前状态,0,是未确认，1是确认，
+            if (StrStatus == 1) { ListId += $(this).val() + "$"; }
+        });
+    }
+    if (ListId != "" && ListId != undefined) {
+        layer.confirm('您确定要打印吗？', function (index) {
+            layer_show(Title, PostUrl + "?ListId=" + ListId, 800, 600);
+        });
+    }
+    else { layer.alert("请先去选中！"); }
+}

@@ -123,5 +123,17 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        //打印送货单
+        public ContractHeaderModel PrintDelivery(string ListId)
+        {
+            try
+            {
+                return CDal.PrintDelivery(ListId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

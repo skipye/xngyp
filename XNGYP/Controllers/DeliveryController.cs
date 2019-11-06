@@ -67,5 +67,11 @@ namespace XNGYP.Controllers
             }
             else return Content("0");
         }
+        //打印送货单
+        public ActionResult Print(string ListId)
+        {
+            var models = LSer.PrintDelivery(ListId);
+            return View(models);
+        }
     }
 }

@@ -458,5 +458,61 @@ namespace DalProject
                 return List;
             }
         }
+        //打印送货单
+        public ContractHeaderModel PrintDelivery(string ListId)
+        {
+            ContractHeaderModel Models = new ContractHeaderModel();
+            using (var db = new XNGYPEntities())
+            {
+                List<DeliveryModel> ListD = new List<DeliveryModel>();
+                string[] ArrId = ListId.Split('$');
+                int j = 1;
+                List<string> list = new List<string>();
+                for (int i = 0; i < ArrId.Length; i++)//遍历数组成员
+                {
+                    if (list.IndexOf(ArrId[i].ToLower()) == -1)//对每个成员做一次新数组查询如果没有相等的则加到新数组
+                        list.Add(ArrId[i]);
+                }
+                foreach (var item in list)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.XNGYP_Delivery.Where(k => k.Id == Id).SingleOrDefault();
+
+                        int HeadId = tables.Contract_Detail.ContractHeadId??0;
+                        int DetailId = tables.CDeatailId??0;
+
+                        Models.Customer = tables.Contract_Detail.Contract_Header.DeliveryLinkMan;
+                        Models.DeliveryAddress = tables.Contract_Detail.Contract_Header.DeliveryAddress;
+                        Models.SN = tables.Contract_Detail.Contract_Header.SN;
+                        Models.TelPhone = tables.Contract_Detail.Contract_Header.DeliveryLinkTel;
+                        Models.OrderMun = tables.OrderNum;
+                        Models.DeliveryDate = tables.Contract_Detail.Contract_Header.DeliveryDate;
+
+                        var OldCount = ListD.Where(k => k.HTHeadId == HeadId && k.HTDetailId == DetailId).SingleOrDefault();//每次查询，重复的不要算进去
+
+                        if (OldCount == null)
+                        {
+                            DeliveryModel DeModel = new DeliveryModel();
+                            DeModel.productName = tables.XNGYP_INV_Labels.XNGYP_Products.name;
+                            DeModel.productXL = tables.XNGYP_INV_Labels.XNGYP_Products.XNGYP_Products_SN.name;
+                            DeModel.woodName = tables.XNGYP_INV_Labels.WoodName;
+                            DeModel.length = tables.XNGYP_INV_Labels.Length;
+                            DeModel.width = tables.XNGYP_INV_Labels.Width;
+                            DeModel.height = tables.XNGYP_INV_Labels.Height;
+                            DeModel.qty = j;
+                            DeModel.HTHeadId = HeadId;
+                            DeModel.HTDetailId = DetailId;
+                            ListD.Add(DeModel);
+                            
+                        }
+                        else { OldCount.qty = j + 1; }
+                    }
+                }
+                Models.DePro = ListD;
+            }
+            return Models;
+        }
     }
 }

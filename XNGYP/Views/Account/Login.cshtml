@@ -92,7 +92,7 @@
                     var MSG = ArrTerm[0];
                     var returnUrl = ArrTerm[1];
                     if (MSG == "登录成功！")
-                    { window.location.href = returnUrl; }
+                    { window.location.href = returnUrl; window.location.reload(); }
                     else { layer.msg(MSG, { icon: 2, time: 2000 }); }
                 }
                 else { layer.msg("登录错误！", { icon: 2, time: 2000 }); }
