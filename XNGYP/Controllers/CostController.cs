@@ -64,5 +64,58 @@ namespace XNGYP.Controllers
                 else return Content("False");
             }
         }
+        public ActionResult FIndex()
+        {
+            SCostModel SModels = new SCostModel();
+            SModels.XLDroList = CHSer.GetProSNDrolist(SModels.ProductSNId);
+            SModels.MCDroList = CHSer.GetWoodDrolist(SModels.WoodId);
+            return View(SModels);
+        }
+        public ActionResult FPageList(SCostModel SModels)
+        {
+            var PageList = CSer.GetFPageList(SModels);
+            return new ContentResult
+            {
+                Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
+                ContentType = "application/json"
+            };
+        }
+        public ActionResult AddF(int? Id)
+        {
+            CostModel Models = new CostModel();
+            if (Id != null && Id > 0)
+            {
+                Models = CSer.GetFDetailById(Id.Value);
+            }
+            Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            return View(Models);
+        }
+        [ValidateInput(false)]
+        public ActionResult PostAddF(CostModel Models)
+        {
+            if (CSer.AddOrUpdateF(Models) == true)
+            {
+                return Content("1");
+            }
+            else { return View(Models); }
+        }
+
+        //删除多个
+        public ActionResult DeleteF(string ListId)
+        {
+            if (string.IsNullOrEmpty(ListId) == true)
+            {
+                return Content("False");
+            }
+            else
+            {
+                if (CSer.DeleteFMore(ListId) == true)
+                {
+                    return Content("True");
+                }
+                else return Content("False");
+            }
+        }
     }
 }

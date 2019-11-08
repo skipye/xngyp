@@ -44,6 +44,38 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-       
+        public List<CostModel> GetFPageList(SCostModel SModel)
+        {
+            try { return CDal.GetFPageList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public bool AddOrUpdateF(CostModel Models)
+        {
+            try { CDal.AddOrUpdateF(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public CostModel GetFDetailById(int Id)
+        {
+            try { return CDal.GetFDetailById(Id); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool DeleteFMore(string ListId)
+        {
+            try { CDal.DeleteFMore(ListId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -34,5 +34,6 @@ namespace DataBase
         public DbSet<CRM_contract_header> CRM_contract_header { get; set; }
         public DbSet<INV_labels> INV_labels { get; set; }
         public DbSet<INV_inventories> INV_inventories { get; set; }
+        public DbSet<SYS_product_Cost> SYS_product_Cost { get; set; }
     }
 }

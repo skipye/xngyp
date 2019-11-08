@@ -24,6 +24,9 @@
         <EntityTypeShape EntityType="XNERPModel.INV_inventories" Width="1.5" PointX="1.875" PointY="8" />
         <AssociationConnector Association="XNERPModel.INV_inventoriesINV_labels" />
         <AssociationConnector Association="XNERPModel.INV_wood_typeINV_labels" />
+        <EntityTypeShape EntityType="XNERPModel.SYS_product_Cost" Width="1.5" PointX="13.625" PointY="1.75" />
+        <AssociationConnector Association="XNERPModel.FK_SYS_product_Cost_INV_wood_type" />
+        <AssociationConnector Association="XNERPModel.FK_SYS_product_Cost_SYS_product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

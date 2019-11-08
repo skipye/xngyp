@@ -18,6 +18,7 @@ namespace DataBase
         {
             this.CRM_contract_detail = new HashSet<CRM_contract_detail>();
             this.INV_labels = new HashSet<INV_labels>();
+            this.SYS_product_Cost = new HashSet<SYS_product_Cost>();
         }
     
         public int id { get; set; }
@@ -45,5 +46,6 @@ namespace DataBase
         public virtual SYS_product_SN SYS_product_SN { get; set; }
         public virtual ICollection<CRM_contract_detail> CRM_contract_detail { get; set; }
         public virtual ICollection<INV_labels> INV_labels { get; set; }
+        public virtual ICollection<SYS_product_Cost> SYS_product_Cost { get; set; }
     }
 }
