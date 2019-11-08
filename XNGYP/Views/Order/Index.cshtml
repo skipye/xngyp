@@ -9,9 +9,9 @@
 </nav>
 <div class="page-container">
     <div class="text-c">
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="开始时间">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
         -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="结束时间">
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
         @Html.TextBoxFor(k => k.UserName, new { @placeholder = "客户名称", @style = "width:150px", @class = "input-text" })
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜素</button>
     </div>
@@ -26,22 +26,23 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-				<tr class="text-l">
-					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th>客户名称</th>
-					<th>合同编号</th>
-					<th width="100">合同时间</th>
-					<th>发货方式</th>
-					<th>合同总金额</th>
-					<th>应收金额</th>
-					<th>付款状态</th>
-					<th>是否审核</th>
-					<th>销售人员</th>
-					<th>财务是否审核</th>
-					<th>操作时间</th>
-					<th>备注</th>
-					<th width="120">操作</th>
-				</tr>
+                <tr class="text-l">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th>客户名称</th>
+                    <th>合同编号</th>
+                    <th>合同时间</th>
+                    <th>发货方式</th>
+                    <th>合同总金额</th>
+                    <th>应收金额</th>
+                    <th>付款状态</th>
+                    <th>是否审核</th>
+                    <th>销售人员</th>
+                    <th>财务审核</th>
+                    <th>销售方式</th>
+                    <th>操作时间</th>
+                    <th>备注</th>
+                    <th width="120">操作</th>
+                </tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -97,7 +98,7 @@
                         return StrArr;
                     }
                 }, {
-                    targets: 13,//把第九列的样式改为超链接
+                    targets: 14,//把第九列的样式改为超链接
                     render: function (data, type, row) {
                         var StrCheck = "";
                         if (row.Status == 0)
@@ -166,7 +167,16 @@
                                 { StrStatus = "<b class='c-warning'>被驳回</b>"; }
                                 return StrStatus;
                             }
-                        },
+                },
+                {
+                    "data": "SaleFlag", "defaultContent": "", "className": "textoverflow","render": function (data, type, row) {
+                        var StrStatus = "<b class='c-warning'>来源线下</b>";
+                        var DDor = "";
+                        if (row.DDOrder != null && row.DDOrder != "") { DDor = "(" + row.DDOrder +")";}
+                        if (data == 1)
+                        { StrStatus = "<b class='c-green'>来源线上</b>" + DDor +""; }
+                                return StrStatus;
+                            }},
                         {
                             "data": "CreateTime", "render": function (data) {
                                 var NewTime = parseInt(data.replace(/\D/igm, ""));

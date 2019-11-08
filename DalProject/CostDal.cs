@@ -23,6 +23,7 @@ namespace DalProject
                                 Id = p.Id,
                                 ProductId = p.ProductId,
                                 ProductName=p.XNGYP_Products.name,
+                                ProductSN=p.XNGYP_Products.XNGYP_Products_SN1.name,
                                 WoodId = p.WoodId,
                                 WoodName = p.WoodName,
                                 MCPrice = p.MCPrice,

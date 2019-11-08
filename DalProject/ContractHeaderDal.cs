@@ -61,6 +61,7 @@ namespace DalProject
                                 ZTDFlag=p.ZTDFlag,
                                 SaleFlag=p.SaleFlag,
                                 Remark=p.Remark,
+                                DDOrder=p.DDOrder,
                             }).ToList();
                 ContractModel Models = new ContractModel();
                 Models.data = List;

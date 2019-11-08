@@ -67,7 +67,7 @@
 
                 <tr style="height:35px;font-size:12px;">
                     <td>@(i)</td>
-                    <td>@item.ProductSN _ @item.ProductName </td>
+                    <td>@item.ProductName </td>
                     <td>@item.WoodName </td>
                     <td>@item.Color </td>
                     <td>@(item.IsJJ == 1 ? "工艺礼品" : "红木家具")</td>
@@ -95,8 +95,8 @@
     </u>。</p>
 
     <p class="mt10 f14">四、付款方法：</p>
-    <p class="mt10 pspace">1.本合同经双方签字（盖章）后即预付<u> @(Model.Prepay != 0 ? Math.Round(Convert.ToDecimal(Model.Prepay * 100 / Model.Amount), 2, MidpointRounding.AwayFromZero) : 0)</u>%的定金（<u>@Model.Prepay</u>）元。</p>
-    <p class="pspace">2.乙方生产完成后经甲方验收合格，支付剩余<u>@(Model.Prepay != 0 ? Math.Round(Convert.ToDecimal((Model.Amount - Model.Prepay) * 100 / Model.Amount), 2, MidpointRounding.AwayFromZero) : 0)</u>%（<u>@(Model.Amount - Model.Prepay)</u>元）后三日内安排发货。</p>
+    <p class="mt10 pspace">1.本合同经双方签字（盖章）后即应收金额：<u> @(Model.Prepay)</u>元，实付金额：（<u>@Model.RealPrice</u>）元作为定金。</p>
+    <p class="pspace">2.乙方生产完成后经甲方验收合格，支付剩余<u>@(Model.Prepay - Model.RealPrice ) </u>元后三日内安排发货。</p>
 
     <p class="mt10 f14">五、违约责任：</p>
     <p class="mt10 pspace">甲乙双方任何一方违约，应承担违约责任。乙方不能交货的，或甲方中途退货，向对方赔偿不能交货或中途退货部分货款总值的50%。如违约金不足以抵补损失时，还应支付赔偿金以补偿其差额部分。</p>

@@ -45,6 +45,7 @@ namespace DalProject
                                 ProductId = p.ProductsId,
                                 ProductName = p.XNGYP_Products.name,
                                 ProductXL = p.XNGYP_Products_SN.name,
+                                Picture=p.XNGYP_Products.picture,
                                 Color = p.Color,
                                 WoodName = p.WoodName,
                                 INVId = p.INVId,
@@ -83,7 +84,7 @@ namespace DalProject
                 var List = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.flag==2 && k.status==1)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.SYS_product.product_SN_id : true
                             where SModel.INVId > 0 ? SModel.INVId == p.inv_id : true
-                            where !string.IsNullOrEmpty(SModel.ProductName) ? p.SYS_product.name.Contains(SModel.ProductName) : true
+                            where SModel.WoodId > 0 ? SModel.WoodId == p.wood_id : true
                             where p.created_time > StartTime
                             where p.created_time < EndTime
                             orderby p.created_time descending
@@ -92,6 +93,7 @@ namespace DalProject
                                 Id = p.id,
                                 ProductId = p.product_id,
                                 ProductName = p.SYS_product.name,
+                                Picture=p.SYS_product.picture,
                                 ProductXL = p.SYS_product.SYS_product_SN.name,
                                 Color = p.color,
                                 WoodName = p.INV_wood_type.name,

@@ -36,6 +36,7 @@
                     <th>标签编码</th>
                     <th>产品编码</th>
                     <th>产品名称</th>
+                    <th>产品图片</th>
                     <th>材质</th>
                     <th>色号</th>
                     <th>长（mm）</th>
@@ -109,6 +110,16 @@
 				{ "data": "SN", "className": "text-overflow" },
 				{ "data": "ProductSN", "className": "text-overflow" },
                 { "data": "ProductName", "defaultContent": "" },
+                {
+					"data": "Picture", "className": "text-overflow", "render": function (data) {
+						var picpath = "<img src=\"/images/nopic.png\" class=\"ConvertImg picreload\" id=\"ConvertImg\" />";
+                        if (data != null && data != "") {
+                            var UrlPath = "http://gyp.xiangninghm.com/" + data;
+                            picpath = "<a href=" + UrlPath + " target=\"blank\"><img src=" + UrlPath + " class=\"ConvertImg picreload\" id=\"ConvertImg\" /></a>";
+                        }
+						return picpath;
+					}
+				},
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "Color", "defaultContent": "" },
                 { "data": "Length", "defaultContent": "" },

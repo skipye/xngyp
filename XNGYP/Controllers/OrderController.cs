@@ -1,9 +1,6 @@
 ﻿using ModelProject;
 using ServiceProject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -54,6 +51,7 @@ namespace XNGYP.Controllers
 
                 Models.SN = "GY00" + DateTime.Now.ToString("yy") + Count.ToString("0000");
                 Models.HTDate = DateTime.Now.ToString("yyyy-MM-dd");
+                Models.DeliveryDate= DateTime.Now.AddDays(3);
             }
             int UserId = USer.GetCurrentUserName().UserId;
             Models.CustomerDroList = CSer.GetCustomerDrolist(Models.CustomerId, UserId, 0);

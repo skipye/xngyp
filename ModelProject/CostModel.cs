@@ -9,6 +9,7 @@ namespace ModelProject
         public int Id { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
+        public string ProductSN { get; set; }
         public int WoodId { get; set; }
         public string WoodName { get; set; }
         public decimal? MCPrice { get; set; }

@@ -13,11 +13,14 @@
     <div class="text-c">
         @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
+            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px" })
         </span>
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="开始时间">
-        -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="结束时间">
+        <span class="select-box inline">
+            @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select",@style = "width:150px" })
+        </span>
+        <span class="select-box inline">
+            @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select",@style = "width:150px" })
+        </span>
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     
@@ -29,7 +32,9 @@
                     <th width="25"><input type="checkbox" name="" value=""></th>
                     <th>标签编码</th>
                     <th>产品编码</th>
+                    <th>产品系列</th>
                     <th>产品名称</th>
+                    <th>产品图片</th>
                     <th>材质</th>
                     <th>色号</th>
                     <th>尺寸</th>
@@ -54,12 +59,12 @@
     $("#btnSearch").click(function () {
         //搜索条件
         var INVId = $("#INVId").val().trim();
-        var StartTime = $("#logmin").val().trim();
-        var EndTime = $("#logmax").val().trim();
+        var ProductSNId = $("#ProductSNId").val().trim();
+        var WoodId = $("#WoodId").val().trim();
         //搜索
         param["INVId"] = INVId;
-        param["StartTime"] = StartTime;
-        param["EndTime"] = EndTime;
+        param["ProductSNId"] = ProductSNId;
+        param["WoodId"] = WoodId;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -67,8 +72,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[8, "desc"]],//默认第几个排序
-            "bStateSave": false,//状态保存
+            "aaSorting": [[10, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/FLabels/PageList", param, function (result) {
                     //封装返回数据
@@ -89,8 +94,19 @@
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
 				{ "data": "SN", "className": "text-overflow" },
-				{ "data": "ProductSN", "className": "text-overflow" },
+                { "data": "ProductSN", "className": "text-overflow" },
+                { "data": "ProductXL", "defaultContent": "" },
                 { "data": "ProductName", "defaultContent": "" },
+                {
+					"data": "Picture", "className": "text-overflow", "render": function (data) {
+						var picpath = "<img src=\"/images/nopic.png\" class=\"ConvertImg picreload\" id=\"ConvertImg\" />";
+                        if (data != null && data != "") {
+                            var UrlPath = "http://erp.xiangninghm.com/" + data;
+                            picpath = "<a href=" + UrlPath + " target=\"blank\"><img src=" + UrlPath + " class=\"ConvertImg picreload\" id=\"ConvertImg\" /></a>";
+                        }
+						return picpath;
+					}
+				},
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "Color", "defaultContent": "" },
                 { "data": "Style", "defaultContent": "" },

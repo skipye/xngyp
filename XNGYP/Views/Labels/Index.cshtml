@@ -45,6 +45,7 @@
                     <th>标签编码</th>
                     <th>产品编码</th>
                     <th>产品名称</th>
+                    <th>产品图片</th>
                     <th>材质</th>
                     <th>色号</th>
                     <th>长（mm）</th>
@@ -113,7 +114,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" ref="'+row.flag+'" >';
                     }
                 }, {
-                    targets: 14,
+                    targets: 15,
                     render: function (data, type, row) {
                         var str = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'编辑\',\'/Labels/Edit\', \'' + row.Id + '\', \'800\', \'600\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
                         if (row.Status == 0) { str += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="ConfirmINV(this,\'' + row.Id + '\')" data-url=\'/Labels/Check\' title="入库"><i class="Hui-iconfont f-14">&#xe645;</i></a>'; }
@@ -128,6 +129,15 @@
 				{ "data": "SN", "className": "text-overflow" },
 				{ "data": "ProductSN", "className": "text-overflow" },
                 { "data": "ProductName", "defaultContent": "" },
+                {
+					"data": "Picture", "className": "text-overflow", "render": function (data) {
+						var picpath = "<img src=\"/images/nopic.png\" class=\"ConvertImg picreload\" id=\"ConvertImg\" />";
+                        if (data != null && data != "") {
+                            picpath = "<a href=" + data + " target=\"blank\"><img src=" + data + " class=\"ConvertImg picreload\" id=\"ConvertImg\" /></a>";
+                        }
+						return picpath;
+					}
+				},
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "Color", "defaultContent": "" },
                 { "data": "Length", "defaultContent": "" },

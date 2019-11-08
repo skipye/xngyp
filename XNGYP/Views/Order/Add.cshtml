@@ -43,11 +43,11 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>销售方式：</label>
             <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<div class="radio-box">
-					@Html.RadioButtonFor(k => k.SaleFlag, "1")
-					<label for="sex-1">来源线上</label>
-					@Html.TextBoxFor(k => k.DDOrder, new { @class = "input-text",@style="width:180px;",@placeholder="选择线上请输入订单号" })
-				</div>
+                <div class="radio-box">
+                    @Html.RadioButtonFor(k => k.SaleFlag, "1")
+                    <label for="sex-1">来源线上</label>
+                    @Html.TextBoxFor(k => k.DDOrder, new { @class = "input-text", @style = "width:180px;", @placeholder = "选择线上请输入订单号" })
+                </div>
                 <div class="radio-box">
                     @Html.RadioButtonFor(k => k.SaleFlag, "2")
                     <label for="sex-1">来源线下</label>
@@ -60,6 +60,13 @@
                 <span class="select-box inline">
                     @Html.DropDownListFor(k => k.SHFlag, ArrSH, new { @class = "select" })
                 </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>交货日期：</label>
+            <div class="formControls col-xs-8 col-sm-4">
+                @*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
+                @Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:200px;" })
             </div>
         </div>
         <div id="SH1" class="sh">
@@ -81,34 +88,28 @@
                 </div>
             </div>
         </div>
-		<div id="SH2" class="sh">
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货地址：</label>
-				<div class="formControls col-xs-8 col-sm-9">
-					@Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
-				</div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
-				<div class="formControls col-xs-8 col-sm-4">
-					@Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
-				</div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运单号：</label>
-				<div class="formControls col-xs-8 col-sm-4">
-					@Html.TextBoxFor(k => k.YDOrder, new { @class = "input-text" })
-				</div>
-			</div>
-		</div>
-        <div id="SH3" class="sh">
+        <div id="SH2" class="sh">
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货日期：</label>
-                <div class="formControls col-xs-8 col-sm-4">
-                    @*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
-                    @Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;" })
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货地址：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    @Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
                 </div>
             </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
+                <div class="formControls col-xs-8 col-sm-4">
+                    @Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运单号：</label>
+                <div class="formControls col-xs-8 col-sm-4">
+                    @Html.TextBoxFor(k => k.YDOrder, new { @class = "input-text" })
+                </div>
+            </div>
+        </div>
+        <div id="SH3" class="sh">
+
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货通道：</label>
                 <div class="formControls col-xs-8 col-sm-9">
