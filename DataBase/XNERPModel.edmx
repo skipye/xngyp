@@ -102,6 +102,8 @@
           <Property Name="WorkId" Type="int" />
           <Property Name="WIP_contract_id" Type="int" />
           <Property Name="InputDateTime" Type="datetime" />
+          <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BQPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -193,6 +195,8 @@
           <Property Name="FLPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CostCprice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SYS_product_SN">
           <Key>
@@ -202,6 +206,35 @@
           <Property Name="SN" Type="varchar" MaxLength="50" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="remark" Type="text" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WIP_workflow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wo_id" Type="int" Nullable="false" />
+          <Property Name="Wood_Id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="department_id" Type="int" />
+          <Property Name="department" Type="nvarchar" MaxLength="50" />
+          <Property Name="exp_begin_date" Type="datetime" />
+          <Property Name="exp_end_date" Type="datetime" />
+          <Property Name="act_begin_date" Type="datetime" />
+          <Property Name="act_end_date" Type="datetime" />
+          <Property Name="cost" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="check_level" Type="int" />
+          <Property Name="checked_user_id" Type="int" />
+          <Property Name="checked_user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="checked_date" Type="datetime" />
+          <Property Name="checked_reason" Type="text" />
+          <Property Name="Product_Id" Type="int" />
+          <Property Name="reserved2" Type="nvarchar" MaxLength="50" />
+          <Property Name="reserved3" Type="varchar" MaxLength="50" />
           <Property Name="created_time" Type="datetime" Nullable="false" />
           <Property Name="delete_flag" Type="bit" Nullable="false" />
         </EntityType>
@@ -313,6 +346,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WIP_workflow_INV_wood_type">
+          <End Role="INV_wood_type" Type="Self.INV_wood_type" Multiplicity="0..1" />
+          <End Role="WIP_workflow" Type="Self.WIP_workflow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_wood_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WIP_workflow">
+              <PropertyRef Name="Wood_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="XNERPModelStoreContainer">
           <EntitySet Name="CRM_contract_detail" EntityType="Self.CRM_contract_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_contract_header" EntityType="Self.CRM_contract_header" Schema="dbo" store:Type="Tables" />
@@ -324,6 +369,7 @@
           <EntitySet Name="SYS_product_area" EntityType="Self.SYS_product_area" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_product_Cost" EntityType="Self.SYS_product_Cost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_product_SN" EntityType="Self.SYS_product_SN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WIP_workflow" EntityType="Self.WIP_workflow" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CRM_contract_detail_CRM_contract_header" Association="Self.FK_CRM_contract_detail_CRM_contract_header">
             <End Role="CRM_contract_header" EntitySet="CRM_contract_header" />
             <End Role="CRM_contract_detail" EntitySet="CRM_contract_detail" />
@@ -359,6 +405,10 @@
           <AssociationSet Name="FK_SYS_product_SYS_product_SN" Association="Self.FK_SYS_product_SYS_product_SN">
             <End Role="SYS_product_SN" EntitySet="SYS_product_SN" />
             <End Role="SYS_product" EntitySet="SYS_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WIP_workflow_INV_wood_type" Association="Self.FK_WIP_workflow_INV_wood_type">
+            <End Role="INV_wood_type" EntitySet="INV_wood_type" />
+            <End Role="WIP_workflow" EntitySet="WIP_workflow" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -424,6 +474,11 @@
             <End Role="SYS_product" EntitySet="SYS_product" />
             <End Role="SYS_product_Cost" EntitySet="SYS_product_Cost" />
           </AssociationSet>
+          <EntitySet Name="WIP_workflow" EntityType="XNERPModel.WIP_workflow" />
+          <AssociationSet Name="FK_WIP_workflow_INV_wood_type" Association="XNERPModel.FK_WIP_workflow_INV_wood_type">
+            <End Role="INV_wood_type" EntitySet="INV_wood_type" />
+            <End Role="WIP_workflow" EntitySet="WIP_workflow" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -450,6 +505,7 @@
           <NavigationProperty Name="CRM_contract_detail" Relationship="XNERPModel.FK_CRM_contract_detail_INV_wood_type" FromRole="INV_wood_type" ToRole="CRM_contract_detail" />
           <NavigationProperty Name="INV_labels" Relationship="XNERPModel.INV_wood_typeINV_labels" FromRole="INV_wood_type" ToRole="INV_labels" />
           <NavigationProperty Name="SYS_product_Cost" Relationship="XNERPModel.FK_SYS_product_Cost_INV_wood_type" FromRole="INV_wood_type" ToRole="SYS_product_Cost" />
+          <NavigationProperty Name="WIP_workflow" Relationship="XNERPModel.FK_WIP_workflow_INV_wood_type" FromRole="INV_wood_type" ToRole="WIP_workflow" />
         </EntityType>
         <EntityType Name="SYS_colors">
           <Key>
@@ -698,6 +754,8 @@
           <NavigationProperty Name="SYS_product" Relationship="XNERPModel.SYS_productINV_labels" FromRole="INV_labels" ToRole="SYS_product" />
           <NavigationProperty Name="INV_inventories" Relationship="XNERPModel.INV_inventoriesINV_labels" FromRole="INV_labels" ToRole="INV_inventories" />
           <NavigationProperty Name="INV_wood_type" Relationship="XNERPModel.INV_wood_typeINV_labels" FromRole="INV_labels" ToRole="INV_wood_type" />
+          <Property Name="CCprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BQPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="SYS_productINV_labels">
           <End Type="XNERPModel.SYS_product" Role="SYS_product" Multiplicity="1" />
@@ -768,6 +826,8 @@
           <Property Name="DeleteFlag" Type="Boolean" />
           <NavigationProperty Name="INV_wood_type" Relationship="XNERPModel.FK_SYS_product_Cost_INV_wood_type" FromRole="SYS_product_Cost" ToRole="INV_wood_type" />
           <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_SYS_product_Cost_SYS_product" FromRole="SYS_product_Cost" ToRole="SYS_product" />
+          <Property Name="CCprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CostCprice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_SYS_product_Cost_INV_wood_type">
           <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="0..1" />
@@ -790,6 +850,48 @@
             </Principal>
             <Dependent Role="SYS_product_Cost">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WIP_workflow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wo_id" Type="Int32" Nullable="false" />
+          <Property Name="Wood_Id" Type="Int32" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="department_id" Type="Int32" />
+          <Property Name="department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="exp_begin_date" Type="DateTime" Precision="3" />
+          <Property Name="exp_end_date" Type="DateTime" Precision="3" />
+          <Property Name="act_begin_date" Type="DateTime" Precision="3" />
+          <Property Name="act_end_date" Type="DateTime" Precision="3" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="check_level" Type="Int32" />
+          <Property Name="checked_user_id" Type="Int32" />
+          <Property Name="checked_user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="checked_date" Type="DateTime" Precision="3" />
+          <Property Name="checked_reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Product_Id" Type="Int32" />
+          <Property Name="reserved2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="reserved3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="INV_wood_type" Relationship="XNERPModel.FK_WIP_workflow_INV_wood_type" FromRole="WIP_workflow" ToRole="INV_wood_type" />
+        </EntityType>
+        <Association Name="FK_WIP_workflow_INV_wood_type">
+          <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="0..1" />
+          <End Type="XNERPModel.WIP_workflow" Role="WIP_workflow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_wood_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WIP_workflow">
+              <PropertyRef Name="Wood_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -952,6 +1054,8 @@
           <EntitySetMapping Name="INV_labels">
             <EntityTypeMapping TypeName="XNERPModel.INV_labels">
               <MappingFragment StoreEntitySet="INV_labels">
+                <ScalarProperty Name="BQPrice" ColumnName="BQPrice" />
+                <ScalarProperty Name="CCprice" ColumnName="CCprice" />
                 <ScalarProperty Name="InputDateTime" ColumnName="InputDateTime" />
                 <ScalarProperty Name="WIP_contract_id" ColumnName="WIP_contract_id" />
                 <ScalarProperty Name="WorkId" ColumnName="WorkId" />
@@ -992,6 +1096,8 @@
           <EntitySetMapping Name="SYS_product_Cost">
             <EntityTypeMapping TypeName="XNERPModel.SYS_product_Cost">
               <MappingFragment StoreEntitySet="SYS_product_Cost">
+                <ScalarProperty Name="CostCprice" ColumnName="CostCprice" />
+                <ScalarProperty Name="CCprice" ColumnName="CCprice" />
                 <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="FLPrice" ColumnName="FLPrice" />
@@ -1006,6 +1112,36 @@
                 <ScalarProperty Name="WoodId" ColumnName="WoodId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WIP_workflow">
+            <EntityTypeMapping TypeName="XNERPModel.WIP_workflow">
+              <MappingFragment StoreEntitySet="WIP_workflow">
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="reserved3" ColumnName="reserved3" />
+                <ScalarProperty Name="reserved2" ColumnName="reserved2" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="checked_reason" ColumnName="checked_reason" />
+                <ScalarProperty Name="checked_date" ColumnName="checked_date" />
+                <ScalarProperty Name="checked_user_name" ColumnName="checked_user_name" />
+                <ScalarProperty Name="checked_user_id" ColumnName="checked_user_id" />
+                <ScalarProperty Name="check_level" ColumnName="check_level" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="act_end_date" ColumnName="act_end_date" />
+                <ScalarProperty Name="act_begin_date" ColumnName="act_begin_date" />
+                <ScalarProperty Name="exp_end_date" ColumnName="exp_end_date" />
+                <ScalarProperty Name="exp_begin_date" ColumnName="exp_begin_date" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Wood_Id" ColumnName="Wood_Id" />
+                <ScalarProperty Name="wo_id" ColumnName="wo_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

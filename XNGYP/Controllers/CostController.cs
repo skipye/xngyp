@@ -67,7 +67,7 @@ namespace XNGYP.Controllers
         public ActionResult FIndex()
         {
             SCostModel SModels = new SCostModel();
-            SModels.XLDroList = CHSer.GetProSNDrolist(SModels.ProductSNId);
+            SModels.XLDroList = CHSer.GetProFSNDrolist(SModels.ProductSNId);
             SModels.MCDroList = CHSer.GetWoodDrolist(SModels.WoodId);
             return View(SModels);
         }
@@ -117,5 +117,14 @@ namespace XNGYP.Controllers
                 else return Content("False");
             }
         }
+        public ActionResult AddFCost()
+        {
+            if (CSer.AddFCost() == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
+        
     }
 }

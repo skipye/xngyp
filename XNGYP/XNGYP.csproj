@@ -756,6 +756,8 @@
     <Content Include="Views\FLabels\MoveINV.cshtml" />
     <Content Include="Views\FLabels\UserIndex.cshtml" />
     <Content Include="Views\FLabels\WorkLabels.cshtml" />
+    <Content Include="Views\Cost\FIndex.cshtml" />
+    <Content Include="Views\Cost\AddF.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

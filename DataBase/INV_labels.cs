@@ -35,6 +35,8 @@ namespace DataBase
         public Nullable<int> WorkId { get; set; }
         public Nullable<int> WIP_contract_id { get; set; }
         public Nullable<System.DateTime> InputDateTime { get; set; }
+        public Nullable<decimal> CCprice { get; set; }
+        public Nullable<decimal> BQPrice { get; set; }
     
         public virtual SYS_product SYS_product { get; set; }
         public virtual INV_inventories INV_inventories { get; set; }

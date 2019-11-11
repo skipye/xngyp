@@ -25,6 +25,8 @@ namespace ModelProject
         public int? ProductSNId { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
         public List<SelectListItem> MCDroList { get; set; }
+        public decimal? CCprice { get; set; }
+        public decimal? CostCprice { get; set; }
     }
     public class SCostModel
     {

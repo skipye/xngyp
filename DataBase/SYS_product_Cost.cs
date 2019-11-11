@@ -28,6 +28,8 @@ namespace DataBase
         public Nullable<decimal> FLPrice { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
+        public Nullable<decimal> CCprice { get; set; }
+        public Nullable<decimal> CostCprice { get; set; }
     
         public virtual INV_wood_type INV_wood_type { get; set; }
         public virtual SYS_product SYS_product { get; set; }

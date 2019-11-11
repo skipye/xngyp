@@ -13,6 +13,7 @@ namespace ModelProject
         public string ProductName { get; set; }
         public string ProductXL { get; set; }
         public int ProductId { get; set; }
+        public int? ProductAreaId { get; set; }
         public int? WoodId { get; set; }
         public string WoodName { get; set; }
         public string WoodNameXL { get; set; }
@@ -48,6 +49,12 @@ namespace ModelProject
         public DateTime? DeliveryTime { get; set; }
         public string OrderNum { get; set; }
         public string Style { get; set; }
+        public decimal? Volume { get; set; }
+        public decimal? W_BZ { get; set; }
+        public decimal? W_price { get; set; }
+        public decimal? cc_prcie { get; set; }
+        public decimal? PersonPrice { get; set; }
+
     }
     public class SLabelsModel
     {

@@ -122,13 +122,14 @@ namespace DalProject
             {
                 var List = (from p in db.SYS_product_Cost.Where(k => k.DeleteFlag == false)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? p.SYS_product.product_SN_id == SModel.ProductSNId : true
-                            where SModel.WoodId != null && SModel.WoodId > 0 ? p.Id == SModel.WoodId : true
+                            where SModel.WoodId != null && SModel.WoodId > 0 ? p.WoodId == SModel.WoodId : true
                             orderby p.CreateTime
                             select new CostModel
                             {
                                 Id = p.Id,
                                 ProductId = p.ProductId,
                                 ProductName = p.SYS_product.name,
+                                ProductSN=p.SYS_product.SYS_product_SN.name,
                                 WoodId = p.WoodId,
                                 WoodName = p.INV_wood_type.name,
                                 MCPrice = p.MCPrice,
@@ -139,7 +140,9 @@ namespace DalProject
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
-                                CreateTime = p.CreateTime
+                                CreateTime = p.CreateTime,
+                                CCprice=p.CCprice,
+                                CostCprice=p.CostCprice,
                             }).ToList();
                 return List;
             }
@@ -177,6 +180,9 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.CCprice = Models.CCprice;
+                    table.CCprice = Models.CCprice;
+                    table.CostCprice = Models.CostCprice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
                     db.SYS_product_Cost.Add(table);
@@ -204,6 +210,8 @@ namespace DalProject
                                   GMPrice = p.GMPrice,
                                   YQPrice = p.YQPrice,
                                   FLPrice = p.FLPrice,
+                                  CCprice = p.CCprice,
+                                  CostCprice = p.CostCprice,
                               }).SingleOrDefault();
                 return tables;
             }
@@ -226,6 +234,88 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
+        //把库存家具的所有产品计算成本
+        public void AddFCost()
+        {
+            using (var db = new XNERPEntities())
+            {
+                var LablesTable = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.flag == 2 && k.status == 1)
+                                   orderby p.created_time descending
+                                   select new LabelsModel
+                                   {
+                                       Id=p.id,
+                                       ProductId = p.product_id,
+                                       WoodId = p.wood_id,
+                                       ProductAreaId = p.SYS_product.SYS_product_area.id,
+                                       Volume = p.SYS_product.volume ?? 0,
+                                       W_BZ = p.INV_wood_type.g_bz ?? 0,
+                                       W_price = p.INV_wood_type.prcie ?? 0,
+                                       cc_prcie = p.INV_wood_type.cc_prcie ?? 0,
+                                       PersonPrice = p.SYS_product.reserved1 ?? 0,
+                                   }).ToList();
+                double CCL = 0.42;
+                int OldProductId = 0;
+                int OldWoodId = 0;
+                foreach (var item in LablesTable)
+                {
+                    if (item.ProductId == OldProductId && item.WoodId == OldWoodId)
+                    {
+                        continue;
+                    }
+                    OldProductId = item.ProductId;
+                    OldWoodId = item.WoodId??0;
+                    if (item.ProductAreaId == 6)
+                    {
+                        CCL = 0.45;
+                    }
+                    double Woodunit = 0;//吨，材积/出材率*比重*数量
+                    double WoodCB = 0;//材料单价*吨数
+                    double FLCB = 0;//辅料成本，辅料成本=材料成本*0.15
+                    double CB = 0;//成本=材料成本+辅料成本+人工费
+                    
+                    Woodunit = Convert.ToDouble(item.Volume) / CCL * Convert.ToDouble(item.W_BZ);
+                    WoodCB = Woodunit * Convert.ToDouble(item.W_price);
+                    FLCB = WoodCB * 0.15;
+                    CB = WoodCB + FLCB + Convert.ToDouble(item.PersonPrice ?? 0);
+                    
 
+                    CostModel Costm = new CostModel();
+                    Costm.ProductId = item.ProductId;
+                    Costm.WoodId = item.WoodId;
+                    Costm.MCPrice = Convert.ToDecimal(WoodCB);
+                    Costm.KLPrice = GetCost(item.ProductId, item.WoodId ?? 0, "开料");
+                    Costm.FLPrice = Convert.ToDecimal(FLCB);
+                    Costm.MGQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工前段");
+                    Costm.MGHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工后段");
+                    Costm.DHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "雕花");
+                    Costm.GMPrice = GetCost(item.ProductId, item.WoodId ?? 0, "刮磨");
+                    Costm.YQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "油漆");
+                    
+                    if (Costm.KLPrice > 0 && Costm.MGQPrice > 0 && Costm.MGHPrice > 0 && Costm.DHPrice > 0 && Costm.GMPrice > 0 && Costm.YQPrice>0)
+                    {
+                        CB = WoodCB + FLCB + Convert.ToDouble(Costm.KLPrice) + Convert.ToDouble(Costm.MGQPrice) + Convert.ToDouble(Costm.MGHPrice) + Convert.ToDouble(Costm.DHPrice) + Convert.ToDouble(Costm.GMPrice) + Convert.ToDouble(Costm.YQPrice);
+                    }
+                    Costm.CCprice = Convert.ToDecimal(CB * 1.6);
+                    Costm.CostCprice = Convert.ToDecimal(CB);
+                    //var LableeNew = db.INV_labels.Where(k => k.id == item.Id).SingleOrDefault();
+                    //LableeNew.CCprice = Costm.CCprice;
+                    //LableeNew.BQPrice = Convert.ToDecimal(Convert.ToDouble(Costm.CCprice) * 2.5);
+                    AddOrUpdateF(Costm);
+                }
+                db.SaveChanges();
+            }
+        }
+        //根据产品ID和材质ID获取各个阶段成本
+        public static decimal GetCost(int ProductId,int WoodId,string GX)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var Costtable = (from p in db.WIP_workflow.Where(k => k.delete_flag == false)
+                                 where p.Product_Id == ProductId && p.Wood_Id == WoodId
+                                 where p.name.Contains(GX)
+                                 select p.cost).FirstOrDefault();
+                return Costtable;
+            }
+        }
     }
 }
