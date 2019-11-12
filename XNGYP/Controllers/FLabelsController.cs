@@ -12,18 +12,15 @@ namespace XNGYP.Controllers
         private static readonly LabelsService LSer = new LabelsService();
         private static readonly ToExcel ESer = new ToExcel();
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(SLabelsModel Models)
         {
-            SLabelsModel Models = new SLabelsModel();
-            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
-            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
+            Models.CKDroList = CHSer.GetFCKDrolist(Models.INVId, 4);
             return View(Models);
         }
-        public ActionResult UserIndex()
+        public ActionResult UserIndex(SLabelsModel Models)
         {
-            SLabelsModel Models = new SLabelsModel();
             Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
             Models.CKDroList = CHSer.GetFCKDrolist(Models.INVId,4);
@@ -53,21 +50,16 @@ namespace XNGYP.Controllers
         public ActionResult Edit(int Id)
         {
             LabelsModel Models = new LabelsModel();
-            Models.qty = 1;
             if (Id > 0)
             {
-                Models = LSer.GetDetailById(Id);
+                Models = LSer.GetFDetailById(Id);
             }
-            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
-            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
-            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
-            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
         [ValidateInput(false)]
         public ActionResult PostEdit(LabelsModel Models)
         {
-            if (LSer.Edit(Models) == true)
+            if (LSer.EditF(Models) == true)
             {
                 return Content("1");
             }

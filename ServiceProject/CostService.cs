@@ -52,7 +52,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-
+        public Decimal? GetChuChangPrice(int ProductId, int WoodId)
+        {
+            try { return CDal.GetChuChangPrice(ProductId, WoodId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool AddOrUpdateF(CostModel Models)
         {
             try { CDal.AddOrUpdateF(Models); return true; }

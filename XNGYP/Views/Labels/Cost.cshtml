@@ -1,23 +1,26 @@
 ﻿@model ModelProject.SLabelsModel
 @{
 	Layout = null;
+	List<SelectListItem> ArrSecPro = new List<SelectListItem>();
+    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
-	<i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>产品管理<span class="c-gray en">&gt;</span>家具价格控制
+	<i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>产品管理<span class="c-gray en">&gt;</span>工艺品价格控制
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
 	<div class="text-c">
+		<span class="select-box inline">
+			@Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
+			@Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
+		</span>
 		@*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
 		<span class="select-box inline">
-			@Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px" })
+			@Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
 		</span>
 		<span class="select-box inline">
-			@Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select", @style = "width:150px" })
-		</span>
-		<span class="select-box inline">
-			@Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select", @style = "width:150px" })
+			@Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
 		</span>
 		<button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
 	</div>
@@ -35,7 +38,6 @@
 					<th>产品图片</th>
 					<th>材质</th>
 					<th>色号</th>
-					<th>尺寸</th>
 					<th>所在仓库</th>
 					<th>进库日期</th>
 					<th>出厂价（元）</th>
@@ -57,15 +59,16 @@
 
 	var param = {};
 	$(function () { search(param); });
-	$("#btnSearch").click(function () {
-		//搜索条件
+	$("#btnSearch").click(function () {//搜索条件
+        var ProductSNId = $("#ProductSNId").val().trim();
+        var FatherId = $("#FatherId").val().trim();
 		var INVId = $("#INVId").val().trim();
-		var ProductSNId = $("#ProductSNId").val().trim();
 		var WoodId = $("#WoodId").val().trim();
-		//搜索
+        //搜索
+        param["ProductSNId"] = ProductSNId;
 		param["INVId"] = INVId;
-		param["ProductSNId"] = ProductSNId;
 		param["WoodId"] = WoodId;
+        param["FatherId"] = FatherId;
 		//初始化，然后绑定
 		$('.table-sort').DataTable().destroy();
 		search(param);
@@ -76,7 +79,7 @@
 			"aaSorting": [[10, "desc"]],//默认第几个排序
 			"bStateSave": true,//状态保存
 			"ajax": function (data, callback, settings) {
-				ajaxRequest("post", "/FLabels/PageList", param, function (result) {
+				ajaxRequest("post", "/Labels/PageList", param, function (result) {
 					//封装返回数据
 					var returnData = {};
 					returnData.data = result;
@@ -90,13 +93,13 @@
 					render: function (data, type, row) {
 						return '<input type="checkbox" value="' + row.Id + '" >';
 					},
-                    targets: 13,
-                    render: function (data, type, row) {
-                        var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'编辑出售价\',\'/Flabels/Edit\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑出售价"><i class="Hui-iconfont">&#xe6df;</i></a>';
-                        
-                        return StrCheck;
-                               
-                    }
+					targets: 12,
+					render: function (data, type, row) {
+						var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'编辑出售价\',\'/labels/EditCost\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑出售价"><i class="Hui-iconfont">&#xe6df;</i></a>';
+
+						return StrCheck;
+
+					}
 				}
 			],
 			"columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
@@ -117,7 +120,6 @@
 				},
 				{ "data": "WoodName", "defaultContent": "" },
 				{ "data": "Color", "defaultContent": "" },
-				{ "data": "Style", "defaultContent": "" },
 				{ "data": "INVName", "defaultContent": "" },
 				{
 					"data": "CreateTime", "render": function (data) {
@@ -125,7 +127,7 @@
 						return formatDateTime(NewTime);
 					}
 				},
-				{ "data": "CCprice", "defaultContent": "","className": "c-green"  },
+				{ "data": "CCprice", "defaultContent": "", "className": "c-green" },
 				{ "data": "BQPrice", "defaultContent": "", "className": "c-red" },
 			]
 		});

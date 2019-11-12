@@ -239,6 +239,8 @@
           <Property Name="OutDate" Type="datetime" />
           <Property Name="OutUserId" Type="int" />
           <Property Name="OutUserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BQPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="XNGYP_INV_Semi">
           <Key>
@@ -324,6 +326,9 @@
           <Property Name="FLPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="DeleteFlag" Type="bit" />
+          <Property Name="CostCprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MGQPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="XNGYP_Products_SN">
           <Key>
@@ -1398,6 +1403,8 @@
           <Property Name="OutDate" Type="DateTime" Precision="3" />
           <Property Name="OutUserId" Type="Int32" />
           <Property Name="OutUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CCprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BQPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_XNGYP_INV_Labels_INV_Name">
           <End Type="XNGYPModel.INV_Name" Role="INV_Name" Multiplicity="0..1" />
@@ -1705,6 +1712,9 @@
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="DeleteFlag" Type="Boolean" />
           <NavigationProperty Name="XNGYP_Products" Relationship="XNGYPModel.FK_XNGYP_Products_Price_XNGYP_Products" FromRole="XNGYP_Products_Price" ToRole="XNGYP_Products" />
+          <Property Name="CostCprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CCprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MGQPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_XNGYP_Products_Price_XNGYP_Products">
           <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="1" />
@@ -2144,6 +2154,8 @@
           <EntitySetMapping Name="XNGYP_INV_Labels">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_INV_Labels">
               <MappingFragment StoreEntitySet="XNGYP_INV_Labels">
+                <ScalarProperty Name="BQPrice" ColumnName="BQPrice" />
+                <ScalarProperty Name="CCprice" ColumnName="CCprice" />
                 <ScalarProperty Name="OutUserName" ColumnName="OutUserName" />
                 <ScalarProperty Name="OutUserId" ColumnName="OutUserId" />
                 <ScalarProperty Name="OutDate" ColumnName="OutDate" />
@@ -2305,6 +2317,9 @@
           <EntitySetMapping Name="XNGYP_Products_Price">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Products_Price">
               <MappingFragment StoreEntitySet="XNGYP_Products_Price">
+                <ScalarProperty Name="MGQPrice" ColumnName="MGQPrice" />
+                <ScalarProperty Name="CCprice" ColumnName="CCprice" />
+                <ScalarProperty Name="CostCprice" ColumnName="CostCprice" />
                 <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="FLPrice" ColumnName="FLPrice" />

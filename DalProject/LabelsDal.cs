@@ -63,6 +63,8 @@ namespace DalProject
                                 ProductSN=p.ProductSN,
                                 FatherId=p.FatherId,
                                 CreateTime=p.CreateTime,
+                                CCprice=p.CCprice,
+                                BQPrice=p.BQPrice,
                             }).ToList();
                 return List;
             }
@@ -104,6 +106,8 @@ namespace DalProject
                                 Style = p.style,
                                 ProductSN = p.product_SN,
                                 CreateTime = p.created_time,
+                                CCprice=p.CCprice,
+                                BQPrice = p.BQPrice,
                             }).ToList();
                 return List;
             }
@@ -185,6 +189,36 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
+        public void EditCost(LabelsModel Models)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                if (Models.Id > 0)
+                {
+                    var table = db.XNGYP_INV_Labels.Where(k => k.Id == Models.Id).SingleOrDefault();
+                    if (Models.BQPrice > Models.CCprice)
+                    {
+                        table.BQPrice = Models.BQPrice;
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
+        public void EditF(LabelsModel Models)
+        {
+            using (var db = new XNERPEntities())
+            {
+                if (Models.Id > 0)
+                {
+                    var table = db.INV_labels.Where(k => k.id == Models.Id).SingleOrDefault();
+                    if (Models.BQPrice > Models.CCprice)
+                    {
+                        table.BQPrice = Models.BQPrice;
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
         public LabelsModel GetDetailById(int Id)
         {
             using (var db = new XNGYPEntities())
@@ -210,6 +244,35 @@ namespace DalProject
                                   Grade = p.Grade,
                                   ProductSN = p.ProductSN,
                                   FatherId = p.FatherId,
+                                  CCprice = p.CCprice,
+                                  BQPrice = p.BQPrice,
+                              }).SingleOrDefault();
+                return tables;
+            }
+        }
+        public LabelsModel GetFDetailById(int Id)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var tables = (from p in db.INV_labels.Where(k => k.id == Id)
+                              select new LabelsModel
+                              {
+                                  Id = p.id,
+                                  ProductId = p.product_id,
+                                  ProductName = p.SYS_product.name,
+                                  Picture = p.SYS_product.picture,
+                                  ProductXL = p.SYS_product.SYS_product_SN.name,
+                                  Color = p.color,
+                                  WoodName = p.INV_wood_type.name,
+                                  INVId = p.inv_id,
+                                  INVName = p.INV_inventories.name,
+                                  InputDateTime = p.InputDateTime,
+                                  SN = p.SN,
+                                  Style = p.style,
+                                  ProductSN = p.product_SN,
+                                  CreateTime = p.created_time,
+                                  CCprice = p.CCprice,
+                                  BQPrice = p.BQPrice,
                               }).SingleOrDefault();
                 return tables;
             }

@@ -6,7 +6,7 @@
 }
 @Html.Action("_Meta", "Home")
 <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>系统管理<span class="c-gray en">&gt;</span>成本控制
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>财务管理<span class="c-gray en">&gt;</span>工艺品成本控制
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -28,21 +28,24 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th>系列</th>
-                    <th>产品</th>
-                    <th>材质</th>
-                    <th>木材成本</th>
-                    <th>辅料成本</th>
-                    <th>开料成本</th>
-                    <th>雕花成本</th>
-                    <th>木工成本</th>
-                    <th>刮磨成本</th>
-                    <th>油漆成本</th>
-                    <th>创建时间</th>
-                    <th width="120">操作</th>
-                </tr>
+				<tr class="text-l">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th>系列</th>
+					<th>产品</th>
+					<th>材质</th>
+					<th>木材成本</th>
+					<th>辅料成本</th>
+					<th>开料成本</th>
+					<th>木工前段</th>
+					<th>雕花成本</th>
+					<th>木工后段</th>
+					<th>刮磨成本</th>
+					<th>油漆成本</th>
+					<th>总成本(元)</th>
+					<th>出厂价(元)</th>
+					<th>创建时间</th>
+					<th width="120">操作</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -73,7 +76,7 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[11, "desc"]],//默认第几个排序
+            "aaSorting": [[1, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Cost/PageList", param, function (result) {
@@ -91,7 +94,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 12,
+                    targets: 15,
                     render: function (data, type, row) {
                         var StrCheck = "";
                             StrCheck = 
@@ -109,12 +112,14 @@
                 { "data": "WoodName", "defaultContent": "" },
                 { "data": "MCPrice", "defaultContent": "" },
                 { "data": "FLPrice", "defaultContent": "" },
-                { "data": "KLPrice", "defaultContent": "" },
+				{ "data": "KLPrice", "defaultContent": "" },
+				{ "data": "MGQPrice", "defaultContent": "" },
                 { "data": "DHPrice", "defaultContent": "" },
-                { "data": "MGPrice", "defaultContent": "" },
+                { "data": "MGHPrice", "defaultContent": "" },
                 { "data": "GMPrice", "defaultContent": "" },
                 { "data": "YQPrice", "defaultContent": "" },
-                
+                { "data": "CostCprice", "defaultContent": "","className": "c-red"  },
+                { "data": "CCprice", "defaultContent": "","className": "c-green"  },
                 {
                     "data": "CreateTime", "render": function (data) {
                         var NewTime = parseInt(data.replace(/\D/igm, ""));

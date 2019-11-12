@@ -1,6 +1,6 @@
 ﻿@model ModelProject.LabelsModel
 @{Layout = null;
-    }
+}
 
 @Html.Action("_Meta", "Home")
 
@@ -9,11 +9,11 @@
 	<form class="form form-horizontal" id="formadd">
 		@Html.HiddenFor(k => k.Id)
 		@Html.HiddenFor(k => k.CCprice)
-		
+
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>出售价：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				@Html.TextBoxFor(k => k.BQPrice, new { @class = "input-text",@style="width:200px;" }) 元
+				@Html.TextBoxFor(k => k.BQPrice, new { @class = "input-text", @style = "width:200px;" }) 元
 			</div>
 		</div>
 		<div style="height:30px;"></div>
@@ -31,41 +31,41 @@
 <script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
 <script type="text/javascript">
 
-    $(function () {
-        //表单验证
-        $("#formadd").validate({
-            rules: {
-                BQPrice: { required: true, },
+	$(function () {
+		//表单验证
+		$("#formadd").validate({
+			rules: {
+				BQPrice: { required: true, },
 			},
-            onkeyup: false,
-            focusCleanup: true,
-            success: "valid",
-            submitHandler: function (form) {
-                //构造上传数据
-                var param = {};
-                var paramArray = $(form).serializeArray();
-                for (var i = 0; i < paramArray.length; ++i) {
-                    var o = paramArray[i];
-                    param[o["name"]] = o["value"];
+			onkeyup: false,
+			focusCleanup: true,
+			success: "valid",
+			submitHandler: function (form) {
+				//构造上传数据
+				var param = {};
+				var paramArray = $(form).serializeArray();
+				for (var i = 0; i < paramArray.length; ++i) {
+					var o = paramArray[i];
+					param[o["name"]] = o["value"];
 				};
 				var CCprice = parseFloat($("#CCprice").val());
 				var BQPrice = parseFloat($("#BQPrice").val());
 				if (BQPrice <= CCprice) { layer.msg("出售价格不能低于出厂价！", { icon: 2, time: 1000 }); return; }
-                ajaxRequest("post", "/FLabels/PostEdit", param, function (d) {
-                    if (d == "1") {
-                        layer.msg("编辑成功！", { icon: 1, time: 1000 });
-                    } else {
-                        layer.msg("服务器错误！", { icon: 2, time: 1000 });
-                    }
-                    setTimeout(function () {
-                        parent.window.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    }, 1000);
-                });
-            }
-        });
-    });
+				ajaxRequest("post", "/Labels/PostEditCost", param, function (d) {
+					if (d == "1") {
+						layer.msg("编辑成功！", { icon: 1, time: 1000 });
+					} else {
+						layer.msg("服务器错误！", { icon: 2, time: 1000 });
+					}
+					setTimeout(function () {
+						parent.window.location.reload();
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					}, 1000);
+				});
+			}
+		});
+	});
 
 </script>
 

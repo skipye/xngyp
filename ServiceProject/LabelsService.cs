@@ -36,9 +36,33 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public LabelsModel GetFDetailById(int Id)
+        {
+            try { return CDal.GetFDetailById(Id); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool Edit(LabelsModel Models)
         {
             try { CDal.Edit(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool EditCost(LabelsModel Models)
+        {
+            try { CDal.EditCost(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool EditF(LabelsModel Models)
+        {
+            try { CDal.EditF(Models); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

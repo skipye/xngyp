@@ -50,6 +50,8 @@ namespace DataBase
         public Nullable<System.DateTime> OutDate { get; set; }
         public Nullable<int> OutUserId { get; set; }
         public string OutUserName { get; set; }
+        public Nullable<decimal> CCprice { get; set; }
+        public Nullable<decimal> BQPrice { get; set; }
     
         public virtual INV_Name INV_Name { get; set; }
         public virtual XNGYP_Products XNGYP_Products { get; set; }

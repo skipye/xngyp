@@ -27,6 +27,9 @@ namespace DataBase
         public Nullable<decimal> FLPrice { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<bool> DeleteFlag { get; set; }
+        public Nullable<decimal> CostCprice { get; set; }
+        public Nullable<decimal> CCprice { get; set; }
+        public Nullable<decimal> MGQPrice { get; set; }
     
         public virtual XNGYP_Products XNGYP_Products { get; set; }
     }

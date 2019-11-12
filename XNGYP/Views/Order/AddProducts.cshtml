@@ -97,7 +97,12 @@ $(function(){
 		    for (var i = 0; i < paramArray.length; ++i) {
 		        var o = paramArray[i];
 		        param[o["name"]] = o["value"];
-		    };
+			};
+			$.post("/Cost/GetChuChangPrice", { ProductId: param["FProductId"], WoodId: param["FWoodId"] }, function (d) {
+				var CCPrice = parseFloat(d)*2.5;
+				var OrderPrice = parseFloat($("#Price").val());
+				if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
+			})
 		    ajaxRequest("post", "/FOrder/PostAddProducts", param, function (d) {
 
 		        if (d == "1") {

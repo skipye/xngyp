@@ -29,17 +29,19 @@ namespace DalProject
                                 MCPrice = p.MCPrice,
                                 KLPrice = p.KLPrice,
                                 DHPrice = p.DHPrice,
-                                MGQPrice = p.MGPrice,
+                                MGHPrice = p.MGPrice,
+                                MGQPrice = p.MGQPrice,
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
-                                CreateTime=p.CreateTime
+                                CreateTime=p.CreateTime,
+                                CCprice = p.CCprice,
+                                CostCprice = p.CostCprice,
                             }).ToList();
                 
                 return List;
             }
         }
-        //新增和修改仓库设置
         public void AddOrUpdate(CostModel Models)
         {
             using (var db = new XNGYPEntities())
@@ -50,10 +52,24 @@ namespace DalProject
                     table.MCPrice = Models.MCPrice;
                     table.KLPrice = Models.KLPrice;
                     table.DHPrice = Models.DHPrice;
-                    table.MGPrice = Models.MGQPrice;
+                    table.MGPrice = Models.MGHPrice;
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.MGQPrice = Models.MGQPrice;
+
+                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGQPrice;
+                    table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
+
+                    var GYPLables = db.XNGYP_INV_Labels.Where(k => k.ProductsId == table.ProductId && k.WoodId == table.WoodId).ToList();
+                    if (GYPLables != null && GYPLables.Any())
+                    {
+                        foreach (var item in GYPLables)
+                        {
+                            item.CCprice = table.CCprice;
+                            item.BQPrice = table.CCprice * Convert.ToDecimal(2.5);
+                        }
+                    }
                 }
                 else
                 {
@@ -64,12 +80,26 @@ namespace DalProject
                     table.MCPrice = Models.MCPrice;
                     table.KLPrice = Models.KLPrice;
                     table.DHPrice = Models.DHPrice;
-                    table.MGPrice = Models.MGQPrice;
+                    table.MGPrice = Models.MGHPrice;
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.MGQPrice = Models.MGQPrice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
+                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGQPrice;
+                    table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
+
+                    var GYPLables = db.XNGYP_INV_Labels.Where(k => k.ProductsId == table.ProductId && k.WoodId == table.WoodId).ToList();
+                    if (GYPLables != null && GYPLables.Any())
+                    {
+                        foreach (var item in GYPLables)
+                        {
+                            item.CCprice = table.CCprice;
+                            item.BQPrice = table.CCprice * Convert.ToDecimal(2.5);
+                        }
+                    }
+
                     db.XNGYP_Products_Price.Add(table);
                 }
                 db.SaveChanges();
@@ -90,7 +120,8 @@ namespace DalProject
                                   MCPrice = p.MCPrice,
                                   KLPrice = p.KLPrice,
                                   DHPrice = p.DHPrice,
-                                  MGQPrice = p.MGPrice,
+                                  MGQPrice = p.MGQPrice,
+                                  MGHPrice=p.MGPrice,
                                   GMPrice = p.GMPrice,
                                   YQPrice = p.YQPrice,
                                   FLPrice = p.FLPrice,
@@ -147,6 +178,17 @@ namespace DalProject
                 return List;
             }
         }
+        //根据产品ID和材质ID获取出厂价格
+        public Decimal? GetChuChangPrice(int ProductId, int WoodId)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.SYS_product_Cost.Where(k => k.DeleteFlag == false && k.WoodId==WoodId && k.ProductId==ProductId)
+                            select p.CCprice
+                            ).FirstOrDefault();
+                return List;
+            }
+        }
         //新增和修改仓库设置
         public void AddOrUpdateF(CostModel Models)
         {
@@ -165,6 +207,8 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGHPrice;
+                    table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
                 }
                 else
                 {
@@ -185,6 +229,8 @@ namespace DalProject
                     table.CostCprice = Models.CostCprice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
+                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGHPrice;
+                    table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
                     db.SYS_product_Cost.Add(table);
                 }
                 db.SaveChanges();

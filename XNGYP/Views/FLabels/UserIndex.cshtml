@@ -1,12 +1,10 @@
 ﻿@model ModelProject.SLabelsModel
 @{
     Layout = null;
-    List<SelectListItem> ArrSecPro = new List<SelectListItem>();
-    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
 }
 @Html.Action("_Meta", "Home")
     <nav class="breadcrumb">
-        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>成品库管理
+        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>家具成品库管理
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
 <div class="page-container">
@@ -28,19 +26,20 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th>标签编码</th>
-                    <th>产品编码</th>
-                    <th>产品系列</th>
-                    <th>产品名称</th>
-                    <th>产品图片</th>
-                    <th>材质</th>
-                    <th>色号</th>
-                    <th>尺寸</th>
-                    <th>所在仓库</th>
-                    <th>进库日期</th>
-                </tr>
+				<tr class="text-l">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th>标签编码</th>
+					<th>产品编码</th>
+					<th>产品系列</th>
+					<th>产品名称</th>
+					<th>产品图片</th>
+					<th>材质</th>
+					<th>色号</th>
+					<th>尺寸</th>
+					<th>所在仓库</th>
+					<th>进库日期</th>
+					<th>出售价（元）</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -116,8 +115,9 @@
                         var NewTime = parseInt(data.replace(/\D/igm, ""));
                         return formatDateTime(NewTime);
                     }
-                 },
-                
+				},
+				
+                { "data": "BQPrice", "defaultContent": "","className": "c-red"  },
             ]
         });
     };

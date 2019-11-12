@@ -11,9 +11,8 @@ namespace XNGYP.Controllers
         private static readonly CostService CSer = new CostService();
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(SCostModel SModels)
         {
-            SCostModel SModels = new SCostModel();
             SModels.XLDroList = CHSer.GetProSNDrolist(SModels.ProductSNId);
             SModels.MCDroList = CHSer.GetWoodDrolist(SModels.WoodId);
             return View(SModels);
@@ -125,6 +124,13 @@ namespace XNGYP.Controllers
             }
             else return Content("0");
         }
-        
+        public Decimal? GetChuChangPrice(int ProductId, int WoodId)
+        {
+            try { return CSer.GetChuChangPrice(ProductId, WoodId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

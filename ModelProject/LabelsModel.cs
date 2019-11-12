@@ -54,7 +54,8 @@ namespace ModelProject
         public decimal? W_price { get; set; }
         public decimal? cc_prcie { get; set; }
         public decimal? PersonPrice { get; set; }
-
+        public decimal? CCprice { get; set; }
+        public decimal? BQPrice { get; set; }
     }
     public class SLabelsModel
     {

@@ -12,9 +12,17 @@ namespace XNGYP.Controllers
         private static readonly LabelsService LSer = new LabelsService();
         private static readonly ToExcel ESer = new ToExcel();
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(SLabelsModel Models)
         {
-            SLabelsModel Models = new SLabelsModel();
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
+            return View(Models);
+        }
+        [Authorize]
+        public ActionResult Cost(SLabelsModel Models)
+        {
             Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
             Models.CKDroList = CHSer.GetCKDrolist(Models.INVId, 4);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
@@ -67,10 +75,28 @@ namespace XNGYP.Controllers
             Models.SHDroList = CHSer.GetColorDrolist(Models.ColorId);
             return View(Models);
         }
+        public ActionResult EditCost(int Id)
+        {
+            LabelsModel Models = new LabelsModel();
+            if (Id > 0)
+            {
+                Models = LSer.GetDetailById(Id);
+            }
+            return View(Models);
+        }
         [ValidateInput(false)]
         public ActionResult PostEdit(LabelsModel Models)
         {
             if (LSer.Edit(Models) == true)
+            {
+                return Content("1");
+            }
+            else { return View(Models); }
+        }
+        [ValidateInput(false)]
+        public ActionResult PostEditCost(LabelsModel Models)
+        {
+            if (LSer.EditCost(Models) == true)
             {
                 return Content("1");
             }
