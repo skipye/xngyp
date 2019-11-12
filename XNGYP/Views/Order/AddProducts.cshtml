@@ -55,9 +55,12 @@
 		        var o = paramArray[i];
 		        param[o["name"]] = o["value"];
 			};
-
 			param["ProductId"] = $("#ProductId").find("option:selected").val();
 			param["ProductName"] = $("#ProductId").find("option:selected").text().split('_')[0];
+
+			var CCPrice = parseFloat($("#BQPrice").attr("rel"));
+			var OrderPrice = parseFloat($("#price").val());
+			if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
 		    ajaxRequest("post", "/Order/PostAddProducts", param, function (d) {
 		        if (d == "1") {
 		            layer.msg("添加成功！", { icon: 1, time: 1000 });
@@ -98,11 +101,9 @@ $(function(){
 		        var o = paramArray[i];
 		        param[o["name"]] = o["value"];
 			};
-			$.post("/Cost/GetChuChangPrice", { ProductId: param["FProductId"], WoodId: param["FWoodId"] }, function (d) {
-				var CCPrice = parseFloat(d)*2.5;
-				var OrderPrice = parseFloat($("#Price").val());
-				if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
-			})
+			var CCPrice = parseFloat($("#FBQPrice").attr("rel"));
+			var OrderPrice = parseFloat($("#Price").val());
+			if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
 		    ajaxRequest("post", "/FOrder/PostAddProducts", param, function (d) {
 
 		        if (d == "1") {
@@ -133,7 +134,9 @@ $(function(){
         var StrVal = $(this).find("option:selected").text();
         if (StrVal == "请选择材质")
         { StrVal = ""; }
-        $("#FWoodName").val(StrVal.split('_')[0]);
+		$("#FWoodName").val(StrVal.split('_')[0]);
+
+		GetFCCPric();
 	});
 	$("#ColorId").change(function () {
         var StrVal = $(this).find("option:selected").text();
@@ -149,6 +152,9 @@ $(function(){
 		$("#WoodSN").val(StrVal.split('_')[1]);
 		var SN = $("#ProductXLSN").val() + $("#FatherSN").val() + $("#WoodSN").val();
 		$("#SN").val(SN);
+
+		GetCCPric();
+
 	});
 	$("#ProductSNId").change(function () {
         var FatherId = $("#ProductSNId").val();
@@ -214,6 +220,7 @@ $(function(){
 		$("#Length").val(length);
 		$("#Width").val(width);
 		$("#Height").val(height);
+		GetFCCPric();
 	});
 	$("#ProductId").change(function () {
         var StrText = $(this).find("option:selected").text();
@@ -224,7 +231,8 @@ $(function(){
         $("#ProductName").val(ProductName);
         $("#length").val(length);
         $("#width").val(width);
-        $("#height").val(height);
+		$("#height").val(height);
+		GetCCPric();
     });
     $("#CustomFlag").click(function () {
         var StrVal = $(this).val();
@@ -259,19 +267,29 @@ $(function(){
                 var ProUrl = "@Url.Action("GetProNameDrolistBySN","Products")";
                 $.post(ProUrl, { ProSN: FatherId }, function (data) {
                     $('#ProductId').empty();
-                    $('#ProductId').append(data);
-
-                    $("select#ProductId option").each(function (index, domEle) {
-                        var StrText = $(this).text();
-                        var ProductName = StrText.split('_')[0];
+					$('#ProductId').append(data);
+					var StrText =$("#ProductId").find("option:selected").text();
+					var ProductName = StrText.split('_')[0];
                         var length = StrText.split('_')[1];
                         var width = StrText.split('_')[2];
-                        var height = StrText.split('_')[3];
+						var height = StrText.split('_')[3];
+						$("#ProductId").val($("#ProductId").find("option:selected").val());
                         $("#ProductName").val(ProductName);
                         $("#length").val(length);
                         $("#width").val(width);
                         $("#height").val(height);
-                    });
+      //              $("select#ProductId option").each(function (index, domEle) {
+      //                  var StrText = $(this).text();
+      //                  var ProductName = StrText.split('_')[0];
+      //                  var length = StrText.split('_')[1];
+      //                  var width = StrText.split('_')[2];
+						//var height = StrText.split('_')[3];
+						//$("#ProductId").val($(this).val());
+      //                  $("#ProductName").val(ProductName);
+      //                  $("#length").val(length);
+      //                  $("#width").val(width);
+      //                  $("#height").val(height);
+      //              });
                 });
             }
         });
@@ -281,8 +299,25 @@ $(function(){
                 $(this).attr("selected", true);
                 $("#WoodName").val(FItem.split('_')[0]);
             }
-        });
-    });
+		});
+		
+		GetCCPric();
+	});
+
+	function GetCCPric() {
+		var ProductId = $("#ProductId").find("option:selected").val();
+		var WoodId = $("#WoodId").find("option:selected").val();
+		$.post("/Cost/GetGYPCCPrice", { ProductId: ProductId, WoodId: WoodId }, function (d) {
+			if (d > 0) { $("#BQPrice").html("当前售价：" + parseFloat(d) * 2.5 + "元"); $("#BQPrice").attr("rel", parseFloat(d) * 2.5); } else { $("#BQPrice").html(""); $("#BQPrice").attr("rel", "");}
+		});
+	}
+	function GetFCCPric() {
+		var ProductId = $("#FProductId").find("option:selected").val();
+		var WoodId = $("#FWoodId").find("option:selected").val();
+		$.post("/Cost/GetChuChangPrice", { ProductId: ProductId, WoodId: WoodId }, function (d) {
+			if (d > 0) { $("#FBQPrice").html("当前售价：" + parseFloat(d) * 2.5 + "元"); $("#FBQPrice").attr("rel", parseFloat(d) * 2.5); } else { $("#FBQPrice").html(""); $("#FBQPrice").attr("rel", "");}
+		});
+	}
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

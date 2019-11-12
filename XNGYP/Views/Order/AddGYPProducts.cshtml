@@ -21,8 +21,9 @@
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">产品编号：</label>
-			<div class="formControls col-xs-8 col-sm-4">
-				@Html.TextBoxFor(k => k.OrderNum, new { @class = "input-text", @style = "width:250px;" })
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.OrderNum, new { @class = "input-text", @style = "width:200px;" })
+				
 			</div>
 		</div>
 		<div class="row cl">
@@ -67,6 +68,8 @@
 				<span class="inline">
 					@Html.TextBoxFor(k => k.price, new { @class = "input-text", @style = "width:120px;" }) <span>元</span>
 					-  @Html.TextBoxFor(k => k.Qty, new { @class = "input-text", @style = "width:100px;" }) <span>件</span>
+					<span id="BQPrice" class="c-red" rel=""></span>
+
 				</span>
 			</div>
 		</div>

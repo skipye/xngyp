@@ -60,6 +60,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public Decimal? GetGYPCCPrice(int ProductId, int WoodId)
+        {
+            try { return CDal.GetGYPCCPrice(ProductId, WoodId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool AddOrUpdateF(CostModel Models)
         {
             try { CDal.AddOrUpdateF(Models); return true; }

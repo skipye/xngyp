@@ -189,7 +189,17 @@ namespace DalProject
                 return List;
             }
         }
-        //新增和修改仓库设置
+        //根据产品ID和材质ID获取工艺品出厂价格
+        public Decimal? GetGYPCCPrice(int ProductId, int WoodId)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_Products_Price.Where(k => k.DeleteFlag == false && k.WoodId == WoodId && k.ProductId == ProductId)
+                            select p.CCprice
+                            ).FirstOrDefault();
+                return List;
+            }
+        }
         public void AddOrUpdateF(CostModel Models)
         {
             using (var db = new XNERPEntities())
@@ -209,6 +219,16 @@ namespace DalProject
                     table.FLPrice = Models.FLPrice;
                     table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGHPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
+
+                    var GYPLables = db.INV_labels.Where(k => k.product_id == table.ProductId && k.wood_id == table.WoodId).ToList();
+                    if (GYPLables != null && GYPLables.Any())
+                    {
+                        foreach (var item in GYPLables)
+                        {
+                            item.CCprice = table.CCprice;
+                            item.BQPrice = table.CCprice * Convert.ToDecimal(2.5);
+                        }
+                    }
                 }
                 else
                 {
@@ -231,6 +251,15 @@ namespace DalProject
                     table.DeleteFlag = false;
                     table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGHPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
+                    var GYPLables = db.INV_labels.Where(k => k.product_id == table.ProductId && k.wood_id == table.WoodId).ToList();
+                    if (GYPLables != null && GYPLables.Any())
+                    {
+                        foreach (var item in GYPLables)
+                        {
+                            item.CCprice = table.CCprice;
+                            item.BQPrice = table.CCprice * Convert.ToDecimal(2.5);
+                        }
+                    }
                     db.SYS_product_Cost.Add(table);
                 }
                 db.SaveChanges();

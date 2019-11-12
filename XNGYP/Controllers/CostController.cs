@@ -132,5 +132,13 @@ namespace XNGYP.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        public Decimal? GetGYPCCPrice(int ProductId, int WoodId)
+        {
+            try { return CSer.GetGYPCCPrice(ProductId, WoodId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
