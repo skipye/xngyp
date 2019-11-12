@@ -27,6 +27,7 @@ namespace ModelProject
         public List<SelectListItem> MCDroList { get; set; }
         public decimal? CCprice { get; set; }
         public decimal? CostCprice { get; set; }
+        public decimal? PersonPrice { get; set; }
     }
     public class SCostModel
     {

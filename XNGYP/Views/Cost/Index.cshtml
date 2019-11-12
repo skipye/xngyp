@@ -33,14 +33,15 @@
 					<th>系列</th>
 					<th>产品</th>
 					<th>材质</th>
-					<th>木材成本</th>
-					<th>辅料成本</th>
+					<th>木材成本(元)</th>
+					<th>辅料成本(元)</th>
 					<th>开料成本</th>
 					<th>木工前段</th>
 					<th>雕花成本</th>
 					<th>木工后段</th>
 					<th>刮磨成本</th>
 					<th>油漆成本</th>
+					<th>人工成本(元)</th>
 					<th>总成本(元)</th>
 					<th>出厂价(元)</th>
 					<th>创建时间</th>
@@ -77,7 +78,7 @@
     function search(param) {
         $('.table-sort').dataTable({
             "aaSorting": [[1, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Cost/PageList", param, function (result) {
                     //封装返回数据
@@ -94,7 +95,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 15,
+                    targets: 16,
                     render: function (data, type, row) {
                         var StrCheck = "";
                             StrCheck = 
@@ -110,14 +111,15 @@
                 { "data": "ProductSN", "className": "text-overflow" },
                 { "data": "ProductName", "className": "text-overflow" },
                 { "data": "WoodName", "defaultContent": "" },
-                { "data": "MCPrice", "defaultContent": "" },
-                { "data": "FLPrice", "defaultContent": "" },
+                { "data": "MCPrice", "defaultContent": "","className": "c-primary" },
+                { "data": "FLPrice", "defaultContent": "","className": "c-primary" },
 				{ "data": "KLPrice", "defaultContent": "" },
 				{ "data": "MGQPrice", "defaultContent": "" },
                 { "data": "DHPrice", "defaultContent": "" },
                 { "data": "MGHPrice", "defaultContent": "" },
                 { "data": "GMPrice", "defaultContent": "" },
-                { "data": "YQPrice", "defaultContent": "" },
+				{ "data": "YQPrice", "defaultContent": "" },
+				{"data": "PersonPrice", "defaultContent": "", "className": "c-primary"},
                 { "data": "CostCprice", "defaultContent": "","className": "c-red"  },
                 { "data": "CCprice", "defaultContent": "","className": "c-green"  },
                 {

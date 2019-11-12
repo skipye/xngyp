@@ -37,6 +37,7 @@ namespace DalProject
                                 CreateTime=p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
+                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice
                             }).ToList();
                 
                 return List;
@@ -73,6 +74,9 @@ namespace DalProject
                 }
                 else
                 {
+                    var OldCost = db.XNGYP_Products_Price.Where(k => k.ProductId == Models.ProductId && k.WoodId == Models.WoodId && k.DeleteFlag == false).SingleOrDefault();
+                    if (OldCost != null) { return; }
+
                     XNGYP_Products_Price table = new XNGYP_Products_Price();
                     table.ProductId = Models.ProductId??0;
                     table.WoodId = Models.WoodId ?? 0;
@@ -174,6 +178,7 @@ namespace DalProject
                                 CreateTime = p.CreateTime,
                                 CCprice=p.CCprice,
                                 CostCprice=p.CostCprice,
+                                PersonPrice= p.KLPrice+p.DHPrice+ p.MGQPrice+ p.MGHPrice+ p.GMPrice + p.YQPrice
                             }).ToList();
                 return List;
             }
@@ -232,6 +237,8 @@ namespace DalProject
                 }
                 else
                 {
+                    var OldCost = db.SYS_product_Cost.Where(k => k.ProductId == Models.ProductId && k.WoodId == Models.WoodId && k.DeleteFlag == false).SingleOrDefault();
+                    if (OldCost != null) { return; }
                     SYS_product_Cost table = new SYS_product_Cost();
                     table.ProductId = Models.ProductId;
                     table.WoodId = Models.WoodId;

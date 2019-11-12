@@ -58,9 +58,9 @@
 			param["ProductId"] = $("#ProductId").find("option:selected").val();
 			param["ProductName"] = $("#ProductId").find("option:selected").text().split('_')[0];
 
-			var CCPrice = parseFloat($("#BQPrice").attr("rel"));
-			var OrderPrice = parseFloat($("#price").val());
-			if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
+			//var CCPrice = parseFloat($("#BQPrice").attr("rel"));
+			//var OrderPrice = parseFloat($("#price").val());
+			//if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
 		    ajaxRequest("post", "/Order/PostAddProducts", param, function (d) {
 		        if (d == "1") {
 		            layer.msg("添加成功！", { icon: 1, time: 1000 });
@@ -101,9 +101,9 @@ $(function(){
 		        var o = paramArray[i];
 		        param[o["name"]] = o["value"];
 			};
-			var CCPrice = parseFloat($("#FBQPrice").attr("rel"));
-			var OrderPrice = parseFloat($("#Price").val());
-			if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
+			//var CCPrice = parseFloat($("#FBQPrice").attr("rel"));
+			//var OrderPrice = parseFloat($("#Price").val());
+			//if (OrderPrice <= CCPrice) { layer.msg("单价不能小于出售价！", { icon: 2, time: 1000 }); return; }
 		    ajaxRequest("post", "/FOrder/PostAddProducts", param, function (d) {
 
 		        if (d == "1") {
@@ -314,6 +314,7 @@ $(function(){
 	function GetFCCPric() {
 		var ProductId = $("#FProductId").find("option:selected").val();
 		var WoodId = $("#FWoodId").find("option:selected").val();
+		alert(ProductId+";"+WoodId);
 		$.post("/Cost/GetChuChangPrice", { ProductId: ProductId, WoodId: WoodId }, function (d) {
 			if (d > 0) { $("#FBQPrice").html("当前售价：" + parseFloat(d) * 2.5 + "元"); $("#FBQPrice").attr("rel", parseFloat(d) * 2.5); } else { $("#FBQPrice").html(""); $("#FBQPrice").attr("rel", "");}
 		});
