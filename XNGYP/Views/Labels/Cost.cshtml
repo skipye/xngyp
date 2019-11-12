@@ -76,7 +76,7 @@
 
 	function search(param) {
 		$('.table-sort').dataTable({
-			"aaSorting": [[10, "desc"]],//默认第几个排序
+			"aaSorting": [[9, "desc"]],//默认第几个排序
 			"bStateSave": true,//状态保存
 			"ajax": function (data, callback, settings) {
 				ajaxRequest("post", "/Labels/PageList", param, function (result) {
