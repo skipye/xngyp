@@ -100,5 +100,21 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool AddGYPCost()
+        {
+            try { CDal.AddGYPCost(); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool UpdateGYPSN()
+        {
+            try { CDal.UpdateGYPSN(); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

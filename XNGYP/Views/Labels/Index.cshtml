@@ -56,7 +56,7 @@
                     <th>进库日期</th>
                     <th>状态</th>
                     <th>所属方式</th>
-                    <th width="120">操作</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -133,6 +133,7 @@
 					"data": "Picture", "className": "text-overflow", "render": function (data) {
 						var picpath = "<img src=\"/images/nopic.png\" class=\"ConvertImg picreload\" id=\"ConvertImg\" />";
                         if (data != null && data != "") {
+                            data = "http://gyp.xiangninghm.com/" + data;
                             picpath = "<a href=" + data + " target=\"blank\"><img src=" + data + " class=\"ConvertImg picreload\" id=\"ConvertImg\" /></a>";
                         }
 						return picpath;

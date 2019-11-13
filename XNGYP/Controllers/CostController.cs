@@ -124,6 +124,14 @@ namespace XNGYP.Controllers
             }
             else return Content("0");
         }
+        public ActionResult AddGYPCost()
+        {
+            if (CSer.AddGYPCost() == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
+        }
         public Decimal? GetChuChangPrice(int ProductId, int WoodId)
         {
             try { return CSer.GetChuChangPrice(ProductId, WoodId); }
@@ -139,6 +147,14 @@ namespace XNGYP.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public ActionResult UpdateGYPSN()
+        {
+            if (CSer.UpdateGYPSN() == true)
+            {
+                return Content("1");
+            }
+            else return Content("0");
         }
     }
 }

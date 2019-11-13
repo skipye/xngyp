@@ -12,10 +12,10 @@
         @*<span class="select-box inline">
             @Html.DropDownListFor(k => k.DepartmentId, Model.DepartmentDroList, new { @class = "select" })
         </span>*@
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="开始时间">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" placeholder="开始时间" value="@Model.StartTime">
         -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="结束时间">
-        @Html.TextBoxFor(k => k.UserName, new { @placeholder = "客户名称", @style = "width:150px", @class = "input-text" })
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" placeholder="结束时间" value="@Model.EndTime">
+        
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜素</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -62,11 +62,11 @@
     $(function () { search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
-        var UserName = $("#UserName").val().trim();
+        //var UserName = $("#UserName").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
         //搜索
-        param["UserName"] = UserName;
+        //param["UserName"] = UserName;
         param["StartTime"] = StartTime;
 		param["EndTime"] = EndTime;
 		param["UserId"] = 3285;

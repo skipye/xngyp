@@ -3,16 +3,16 @@
     Layout = null;
 }
 @Html.Action("_Meta", "Home")
-<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>订单列表
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>订单管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
 <div class="page-container">
     <div class="text-c">
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
-        @Html.TextBoxFor(k => k.UserName, new { @placeholder = "客户名称", @style = "width:150px", @class = "input-text" })
+        @*@Html.TextBoxFor(k => k.UserName, new { @placeholder = "客户名称", @style = "width:150px", @class = "input-text" })*@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜素</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -60,11 +60,11 @@
     $(function () { search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
-        var UserName = $("#UserName").val().trim();
+        //var UserName = $("#UserName").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
         //搜索
-        param["UserName"] = UserName;
+        //param["UserName"] = UserName;
         param["StartTime"] = StartTime;
         param["EndTime"] = EndTime;
         //初始化，然后绑定

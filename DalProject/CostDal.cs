@@ -212,8 +212,6 @@ namespace DalProject
                 if (Models.Id > 0)
                 {
                     var table = db.SYS_product_Cost.Where(k => k.Id == Models.Id).SingleOrDefault();
-                    table.WoodId = Models.WoodId;
-                    table.WoodName = Models.WoodName;
                     table.MCPrice = Models.MCPrice;
                     table.KLPrice = Models.KLPrice;
                     table.DHPrice = Models.DHPrice;
@@ -397,6 +395,68 @@ namespace DalProject
                                  where p.name.Contains(GX)
                                  select p.cost).FirstOrDefault();
                 return Costtable;
+            }
+        }
+        //把库存工艺品的所有产品计算成本
+        public void AddGYPCost()
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var LablesTable = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Status == 1)
+                                   orderby p.CreateTime descending
+                                   select new LabelsModel
+                                   {
+                                       Id = p.Id,
+                                       ProductId = p.ProductsId,
+                                       WoodId = p.WoodId,
+                                       WoodName=p.WoodName,
+                                   }).ToList();
+                int OldProductId = 0;
+                int OldWoodId = 0;
+                foreach (var item in LablesTable)
+                {
+                    if (item.ProductId == OldProductId && item.WoodId == OldWoodId)
+                    {
+                        continue;
+                    }
+                    OldProductId = item.ProductId;
+                    OldWoodId = item.WoodId ?? 0;
+
+                    CostModel Costm = new CostModel();
+                    Costm.ProductId = item.ProductId;
+                    Costm.WoodId = item.WoodId;
+                    Costm.WoodName = item.WoodName;
+                    AddOrUpdate(Costm);
+                }
+                db.SaveChanges();
+            }
+        }
+        //修改产品
+        public void UpdateGYPSN()
+        {
+            Random r = new Random();
+            using (var db = new XNGYPEntities())
+            {
+                var LablesTable = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Status == 1)
+                                   orderby p.CreateTime descending
+                                   select new LabelsModel
+                                   {
+                                       Id = p.Id,
+                                       ProductId = p.ProductsId,
+                                       WoodId = p.WoodId,
+                                       WoodName = p.WoodName,
+                                       ProductSN=p.ProductSN,
+                                   }).ToList();
+                foreach (var item in LablesTable)
+                {
+                    var NewLabes = db.XNGYP_INV_Labels.Where(k => k.Id == item.Id).SingleOrDefault();
+                    if (!string.IsNullOrEmpty(item.ProductSN)) {
+
+                        NewLabes.ProductSN = item.ProductSN + r.Next(100, 1000);
+                    }
+                    
+                }
+                db.SaveChanges();
             }
         }
     }

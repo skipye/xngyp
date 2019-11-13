@@ -42,11 +42,8 @@
     $(function () { search(param); });
     function search(param) {
         $('.table-sort').dataTable({
-            "bStateSave": true,
-            "pading": false,
-            "destroy": true,
-            "searching": true,
-            "autoWidth": true,
+            "aaSorting": [[5, "desc"]],//默认第几个排序
+			"bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Products/SNPageList", param, function (result) {
                     //封装返回数据

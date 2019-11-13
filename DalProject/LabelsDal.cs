@@ -114,6 +114,7 @@ namespace DalProject
         }
         public void AddOrUpdate(LabelsModel Models)
         {
+            Random r = new Random();
             using (var db = new XNGYPEntities())
             {
                 if (Models.Id > 0)
@@ -132,7 +133,7 @@ namespace DalProject
                     table.CreateTime = DateTime.Now;
                     table.Grade = Models.Grade;
                     table.FatherId = Models.FatherId;
-                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade;
+                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade+ r.Next(100, 1000);
                 }
                 else
                 {
@@ -162,7 +163,7 @@ namespace DalProject
                         table.WIPContractIid = 0;
                         table.Grade = Models.Grade;
                         table.FatherId = Models.FatherId;
-                        table.ProductSN = Models.ProductXL+Models.ProductSN+Models.WoodNameXL+Models.Grade;
+                        table.ProductSN = Models.ProductXL+Models.ProductSN+Models.WoodNameXL+Models.Grade+ i.ToString("000");
                         db.XNGYP_INV_Labels.Add(table);
                     }
                 }

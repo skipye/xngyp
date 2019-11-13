@@ -6,7 +6,7 @@
 }
 @Html.Action("_Meta", "Home")
     <nav class="breadcrumb">
-        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>工艺品成品库管理
+        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>工艺品库存管理
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
 <div class="page-container">
@@ -65,15 +65,15 @@
         var FatherId = $("#FatherId").val().trim();
 		var INVId = $("#INVId").val().trim();
 		var WoodId = $("#WoodId").val().trim();
-        var StartTime = $("#logmin").val().trim();
-        var EndTime = $("#logmax").val().trim();
+        //var StartTime = $("#logmin").val().trim();
+        //var EndTime = $("#logmax").val().trim();
         //搜索
         param["ProductSNId"] = ProductSNId;
 		param["INVId"] = INVId;
 		param["WoodId"] = WoodId;
         param["FatherId"] = FatherId;
-        param["StartTime"] = StartTime;
-        param["EndTime"] = EndTime;
+        //param["StartTime"] = StartTime;
+        //param["EndTime"] = EndTime;
         param["Status"] = 1;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();

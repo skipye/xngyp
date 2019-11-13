@@ -24,7 +24,7 @@ namespace XNGYP.Controllers
             {
                 SModels.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
             }
-            SModels.DepartmentDroList = USer.GetDepartmentDrolist(SModels.DepartmentId);
+            //SModels.DepartmentDroList = USer.GetDepartmentDrolist(SModels.DepartmentId);
             return View(SModels);
         }
         public ActionResult PageList(SContractHeaderModel SRmodels)
@@ -92,6 +92,15 @@ namespace XNGYP.Controllers
         {
             SContractHeaderModel SModels = new SContractHeaderModel();
             SModels.SaleUserId = USer.GetCurrentUserName().UserId;
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(SModels.StartTime))
+            {
+                SModels.StartTime = datetime.AddDays(1 - datetime.Day).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModels.EndTime))
+            {
+                SModels.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
             return View(SModels);
         }
         public ActionResult DepartmentIndex()

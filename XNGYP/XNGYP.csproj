@@ -185,6 +185,7 @@
     <Content Include="css\webuploader\0.1.5\webuploader.nolog.min.js" />
     <Content Include="css\webuploader\0.1.5\webuploader.withoutimage.js" />
     <Content Include="css\webuploader\0.1.5\webuploader.withoutimage.min.js" />
+    <Content Include="favicon.ico" />
     <Content Include="images\nopic.png" />
     <Content Include="js\jQuery.print.js" />
     <Content Include="css\login.css" />
