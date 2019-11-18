@@ -100,7 +100,7 @@ namespace DalProject
                         foreach (var item in GYPLables)
                         {
                             item.CCprice = table.CCprice;
-                            item.BQPrice = table.CCprice * Convert.ToDecimal(2.5);
+                            item.BQPrice = table.CCprice * Convert.ToDecimal(1.8);
                         }
                     }
 

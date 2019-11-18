@@ -82,7 +82,7 @@ namespace DalProject
                                 operator_name = p.operator_name,
                                 Amount = p.Amount,
                                 Remaks = p.Remaks,
-                                CreateTime=p.CreateTime
+                                CreateTime=p.CreateTime,
                             }).ToList();
                 return List;
             }
