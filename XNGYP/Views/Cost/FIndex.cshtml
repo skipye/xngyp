@@ -30,7 +30,7 @@
                     <th width="25"><input type="checkbox" name="" value=""></th>
                     <th>系列</th>
                     <th>产品(ID)</th>
-                    <th>材质</th>
+                    <th>材质(ID)</th>
 					<th>木材成本(元)</th>
 					<th>辅料成本(元)</th>
                     <th>开料成本</th>
@@ -109,7 +109,10 @@
                     "data": "ProductName", "className": "text-overflow", "render": function (data,type, row) {
                         return data +"("+row.ProductId+")" ;
                     }},
-                { "data": "WoodName", "defaultContent": "" },
+                {
+                    "data": "WoodName", "className": "text-overflow", "render": function (data, type, row) {
+                        return data + "(" + row.WoodId + ")";
+                    } },
                 { "data": "MCPrice", "defaultContent": "","className": "c-primary" },
                 { "data": "FLPrice", "defaultContent": "","className": "c-primary" },
                 { "data": "KLPrice", "defaultContent": "" },

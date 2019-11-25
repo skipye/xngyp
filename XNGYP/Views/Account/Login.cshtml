@@ -20,18 +20,18 @@
                 <div class="row cl">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
                     <div class="formControls col-xs-8">
-                        @Html.TextBoxFor(k => k.UserName, new { @placeholder = "姓名或手机号",@class="input-text size-L"})
+                        @Html.TextBoxFor(k => k.UserName, new { @placeholder = "姓名或手机号",@class="input-text size-L radius"})
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
                     <div class="formControls col-xs-8">
-                        @Html.PasswordFor(k => k.PassWord, new { @placeholder = "密码" ,@class="input-text size-L"})
+                        @Html.PasswordFor(k => k.PassWord, new { @placeholder = "密码" ,@class="input-text size-L radius"})
                     </div>
                 </div>
                 <div class="row cl">
                     <div class="formControls col-xs-8 col-xs-offset-3">
-                        <input id="valiCode" class="input-text size-L" type="text" placeholder="验证码" style="width:150px;"><!--onblur="if(this.value==''){this.value='验证码'}" onclick="if(this.value=='验证码'){this.value='';}" value="验证码" -->
+                        <input id="valiCode" class="input-text size-M radius" type="text" placeholder="验证码" style="width:150px;"><!--onblur="if(this.value==''){this.value='验证码'}" onclick="if(this.value=='验证码'){this.value='';}" value="验证码" -->
                         <img src="@Url.Action("GetValidatorGraphics","Account")" alt="验证码" id="vcodurl"><a id="kanbuq" href="javascript:void(0);">看不清，换一张</a>
                     </div>
                 </div>
@@ -45,8 +45,8 @@
                 </div>
                 <div class="row cl">
                     <div class="formControls col-xs-8 col-xs-offset-3">
-                        <input id="loginbtn" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-                        <input type="reset" class="btn btn-default radius size-L ml-30" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+                        <input id="loginbtn" type="button" class="btn btn-success radius size-XL" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+                        <input type="reset" class="btn btn-default radius size-XL ml-30" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
                     </div>
                 </div>
             </form>
