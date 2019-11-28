@@ -69,7 +69,46 @@ namespace DalProject
                 return Models;
             }
         }
-        
+        public ContractModel GetFPageList(SContractHeaderModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.CRM_contract_header.Where(k => k.delete_flag == false && k.status==1)
+                            where !string.IsNullOrEmpty(SModel.SN) ? p.SN.Contains(SModel.SN) : true
+                            where p.created_time > StartTime
+                            where p.created_time < EndTime
+                            orderby p.created_time descending
+                            select new ContractHeaderModel
+                            {
+                                Id = p.id,
+                                SN = p.SN,
+                                Customer = p.CRM_customers.name,
+                                Amount = p.amount,
+                                Status = p.status,
+                                Prepay = p.prepay,
+                                CheckedUserName = p.check_user_name,
+                                FRFlag = p.FR_flag,
+                                OrderTime = p.HTDate,
+                                CreateTime = p.created_time,
+                                CWCheckStatus = p.CWStatus,
+                                Remark = p.Remark,
+                            }).ToList();
+                ContractModel Models = new ContractModel();
+                Models.data = List;
+                Models.HTTotail = List.Sum(k => k.Amount);
+                return Models;
+            }
+        }
         public void AddOrUpdate(ContractHeaderModel Models)
         {
             using (var db = new XNGYPEntities())
@@ -93,6 +132,7 @@ namespace DalProject
                     table.DDOrder = Models.DDOrder;
                     table.YDOrder = Models.YDOrder;
                     table.Remark = Models.Remark;
+                    table.FreightCarrier = Models.FreightCarrier;
                 }
                 else
                 {
@@ -124,6 +164,7 @@ namespace DalProject
                     table.DDOrder = Models.DDOrder;
                     table.YDOrder = Models.YDOrder;
                     table.Remark = Models.Remark;
+                    table.FreightCarrier = Models.FreightCarrier;
                     db.Contract_Header.Add(table);
 
                     FinanceModel FModels = new FinanceModel();
@@ -171,12 +212,36 @@ namespace DalProject
                                   YDOrder = p.YDOrder,
                                   DDOrder=p.DDOrder,
                                   CreateTime=p.CreateTime,
-                                  Remark = p.Remark,
+                                  FreightCarrier = p.FreightCarrier,
+                Remark = p.Remark,
             }).SingleOrDefault();
                 return tables;
             }
         }
-       
+        public ContractHeaderModel GetFDetailById(int Id)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var tables = (from p in db.CRM_contract_header.Where(k => k.delete_flag == false && k.id == Id)
+
+                              orderby p.created_time descending
+                              select new ContractHeaderModel
+                              {
+                                  Id = p.id,
+                                  SN = p.SN,
+                                  Customer = p.CRM_customers.name,
+                                  DeliveryDate = p.delivery_date,
+                                  Amount = p.amount,
+                                  DeliveryAddress = p.delivery_address,
+                                  OrderTime = p.HTDate,
+                                  DeliverChannel = p.delivery_channel,
+                                  CreateTime = p.created_time,
+                                  FreightCarrier = p.freight_carrier,
+                                  Remark = p.Remark,
+                              }).SingleOrDefault();
+                return tables;
+            }
+        }
         public void Delete(string ListId)
         {
             using (var db = new XNGYPEntities())
@@ -194,7 +259,7 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        public void Checked(string ListId)
+        public void Checked(string ListId, int CheckedId)
         {
             using (var db = new XNGYPEntities())
             {
@@ -205,7 +270,7 @@ namespace DalProject
                     {
                         int Id = Convert.ToInt32(item);
                         var tables = db.Contract_Header.Where(k => k.Id == Id).SingleOrDefault();
-                        tables.Status = 1;
+                        tables.Status = CheckedId;
                         tables.CheckedUserId = new UserDal().GetCurrentUserName().UserId;
                         tables.CheckedUserName = new UserDal().GetCurrentUserName().UserName;
                         tables.CheckedTime = DateTime.Now;
@@ -603,6 +668,31 @@ namespace DalProject
                 return Models;
             }
         }
+        public List<ContractProductsModel> GetFProductListByOrder(int HTId)
+        {
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.CRM_contract_detail.Where(k => k.delete_flag == false && k.header_id == HTId)
+                            orderby p.created_time descending
+                            select new ContractProductsModel
+                            {
+                                Id = p.id,
+                                ProductName = p.SYS_product.name,
+                                Color = p.color,
+                                WoodName = p.INV_wood_type.name,
+                                length = p.length,
+                                width = p.width,
+                                height = p.height,
+                                price = p.price,
+                                hardware_part = p.hardware_part,
+                                decoration_part = p.decoration_part,
+                                req_others = p.req_others,
+                                Qty = p.qty,
+                            }).ToList();
+                
+                return List;
+            }
+        }
         //添加家具订单
         public void AddFOrder(int Id)
         {
@@ -642,6 +732,8 @@ namespace DalProject
                                       DeliveryAddress = p.DeliveryAddress,
                                       Customer = p.DeliveryLinkMan,
                                       TelPhone = p.DeliveryLinkTel,
+                                      FreightCarrier = p.FreightCarrier,
+                                      Remark = p.Remark
                                   }).SingleOrDefault();
                     CHModels = CHTabl;
                     IsF = true;
@@ -670,6 +762,7 @@ namespace DalProject
                     table.status = 0;
                     table.created_time = DateTime.Now;
                     table.delete_flag = false;
+                    table.Remark = CHModels.Remark;
                     db.CRM_contract_header.Add(table);
                     db.SaveChanges();
                     var HeaderId = table.id;

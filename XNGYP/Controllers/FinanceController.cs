@@ -30,6 +30,20 @@ namespace XNGYP.Controllers
             SModels.DepartmentDroList = USer.GetDepartmentDrolist(SModels.DepartmentId);
             return View(SModels);
         }
+        [Authorize]
+        public ActionResult FOrder(SContractHeaderModel SModels)
+        {
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(SModels.StartTime))
+            {
+                SModels.StartTime = datetime.AddDays(1 - datetime.Day).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModels.EndTime))
+            {
+                SModels.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            return View(SModels);
+        }
         public ActionResult Money()
         {
             SContractHeaderModel SModels = new SContractHeaderModel();
@@ -76,6 +90,26 @@ namespace XNGYP.Controllers
             var Models = FSer.GetFKShowList(Id);
             return View(Models);
         }
-
+        public ActionResult FFR(int Id)
+        {
+            FinanceModel Models = new FinanceModel();
+            Models.Id = Id;
+            return View(Models);
+        }
+        public ActionResult FostFFR(FinanceModel Models)
+        {
+            Models.operator_id = USer.GetCurrentUserName().UserId;
+            Models.operator_name = USer.GetCurrentUserName().UserName;
+            if (FSer.AddOrUpdateF(Models) == true)
+            {
+                return Content("1");
+            }
+            else { return View(Models); }
+        }
+        public ActionResult ShowF(int Id)
+        {
+            var Models = FSer.GetFFKShowList(Id);
+            return View(Models);
+        }
     }
 }

@@ -25,5 +25,22 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool AddOrUpdateF(FinanceModel Models)
+        {
+            try { FDal.AddOrUpdateF(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        //收款记录
+        public List<FinanceModel> GetFFKShowList(int Id)
+        {
+            try { return FDal.GetFFKShowList(Id); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

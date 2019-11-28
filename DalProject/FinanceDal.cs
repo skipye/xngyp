@@ -87,6 +87,97 @@ namespace DalProject
                 return List;
             }
         }
-        
+        public void AddOrUpdateF(FinanceModel Models)
+        {
+            decimal Total = 0;
+            decimal Prepay = 0;
+            decimal Pay = 0;
+            string OrderSN = "";
+            string Customer = "";
+            DateTime HtDate = DateTime.Now;
+            using (var db = new XNERPEntities())
+            {
+                var OrderTable = db.CRM_contract_header.Where(k => k.id == Models.Id).FirstOrDefault();
+                Total = OrderTable.amount;
+                Prepay = OrderTable.prepay??0;
+                Pay = Models.Amount??0;
+                OrderSN = OrderTable.SN;
+                Customer = OrderTable.CRM_customers.name;
+                HtDate = OrderTable.created_time;
+            }
+            using (var db = new XNFinanceEntities())
+            {
+                //添加付款操作日志
+                FR_contract_logs SFLtable = new FR_contract_logs();
+                SFLtable.HTId = Models.Id;
+                SFLtable.HTSN = OrderSN;
+                SFLtable.Customer = Customer;
+                SFLtable.PayModel = Models.PayModel;
+                SFLtable.Amount = Models.Amount;
+                SFLtable.operator_id = new UserDal().GetCurrentUserName().UserId;
+                SFLtable.operator_name = new UserDal().GetCurrentUserName().UserName;
+                SFLtable.CreateTime = DateTime.Now;
+                SFLtable.Remaks = Models.Remaks;
+                SFLtable.PayStatus = 1;
+                db.FR_contract_logs.Add(SFLtable);
+
+                var table = db.FR_contract.Where(k => k.contract_id == Models.Id).SingleOrDefault();//判断是否存在
+                if (table != null && table.id > 0)
+                {
+                    table.amount = Models.Amount + table.amount;
+                    table.operator_id = Models.operator_id;
+                    table.operator_name = Models.operator_name;
+
+                    Pay = table.amount??0;
+                }
+                else
+                {
+                    FR_contract Stable = new FR_contract();
+                    Stable.contract_id = Models.Id;
+                    Stable.SN = OrderSN;
+                    Stable.customer = Customer;
+                    Stable.total = Total;
+                    Stable.amount = Models.Amount;
+                    Stable.operator_id = SFLtable.operator_id;
+                    Stable.operator_name = SFLtable.operator_name;
+                    Stable.created_time = DateTime.Now;
+                    Stable.receive_date = HtDate;
+                    db.FR_contract.Add(Stable);
+                }
+                db.SaveChanges();
+            }
+            using (var db = new XNERPEntities())
+            {
+                var OrderTable = db.CRM_contract_header.Where(k => k.id == Models.Id).FirstOrDefault();
+                if (Models.Amount > 0 && Pay >= Prepay && Pay < Total)//更新合同的付款状态
+                {
+                    OrderTable.FR_flag = 1;
+                }
+                if (Pay >= Total)
+                { OrderTable.FR_flag = 2; }
+                db.SaveChanges();
+            }
+        }
+        //收款记录
+        public List<FinanceModel> GetFFKShowList(int Id)
+        {
+            using (var db = new XNFinanceEntities())
+            {
+                var List = (from p in db.FR_contract_logs.Where(k => k.HTId == Id)
+                            orderby p.CreateTime descending
+                            select new FinanceModel
+                            {
+                                Id = p.Id,
+                                HTSN = p.HTSN,
+                                Customer = p.Customer,
+                                PayModel = p.PayModel,
+                                operator_name = p.operator_name,
+                                Amount = p.Amount,
+                                Remaks = p.Remaks,
+                                CreateTime = p.CreateTime,
+                            }).ToList();
+                return List;
+            }
+        }
     }
 }

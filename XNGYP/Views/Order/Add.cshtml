@@ -20,149 +20,156 @@
 
 
 <article class="page-container">
-    <form class="form form-horizontal" id="formadd">
-        @Html.HiddenFor(k => k.Id)
-        @Html.HiddenFor(k => k.SN)
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户名称：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <span class="select-box inline">
-                    @Html.TextBoxFor(k => k.Customer, new { @class = "input-text", @style = "width:200px;" })
-                    @Html.DropDownListFor(k => k.CustomerId, Model.CustomerDroList, new { @class = "select" })
+	<form class="form form-horizontal" id="formadd">
+		@Html.HiddenFor(k => k.Id)
+		@Html.HiddenFor(k => k.SN)
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box inline">
+					@Html.TextBoxFor(k => k.Customer, new { @class = "input-text", @style = "width:200px;" })
+					@Html.DropDownListFor(k => k.CustomerId, Model.CustomerDroList, new { @class = "select" })
 
-                </span>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>合同日期：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @*<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">*@
-                @Html.TextBoxFor(k => k.HTDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;", @readonly = "@readonly" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>销售方式：</label>
-            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-                <div class="radio-box">
-                    @Html.RadioButtonFor(k => k.SaleFlag, "1")
-                    <label for="sex-1">来源线上</label>
-                    @Html.TextBoxFor(k => k.DDOrder, new { @class = "input-text", @style = "width:180px;", @placeholder = "选择线上请输入订单号" })
-                </div>
-                <div class="radio-box">
-                    @Html.RadioButtonFor(k => k.SaleFlag, "2")
-                    <label for="sex-1">来源线下</label>
-                </div>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货方式：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                <span class="select-box inline">
-                    @Html.DropDownListFor(k => k.SHFlag, ArrSH, new { @class = "select" })
-                </span>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>交货日期：</label>
-            <div class="formControls col-xs-8 col-sm-4">
-                @*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
-                @Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:200px;" })
-            </div>
-        </div>
-        <div id="SH1" class="sh">
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自提点：</label>
-                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-                    <div class="radio-box">
-                        @Html.RadioButtonFor(k => k.ZTDFlag, "1")
-                        <label for="sex-1">月星店</label>
-                    </div>
-                    <div class="radio-box">
-                        @Html.RadioButtonFor(k => k.ZTDFlag, "2")
-                        <label for="sex-1">红星店</label>
-                    </div>
-                    <div class="radio-box">
-                        @Html.RadioButtonFor(k => k.ZTDFlag, "3")
-                        <label for="sex-1">工厂店</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="SH2" class="sh">
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货地址：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    @Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
-                <div class="formControls col-xs-8 col-sm-4">
-                    @Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运单号：</label>
-                <div class="formControls col-xs-8 col-sm-4">
-                    @Html.TextBoxFor(k => k.YDOrder, new { @class = "input-text" })
-                </div>
-            </div>
-        </div>
-        <div id="SH3" class="sh">
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>合同日期：</label>
+			<div class="formControls col-xs-8 col-sm-4">
+				@*<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">*@
+				@Html.TextBoxFor(k => k.HTDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;", @readonly = "@readonly" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>销售方式：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					@Html.RadioButtonFor(k => k.SaleFlag, "1")
+					<label for="sex-1">来源线上</label>
+					@Html.TextBoxFor(k => k.DDOrder, new { @class = "input-text", @style = "width:180px;", @placeholder = "选择线上请输入订单号" })
+				</div>
+				<div class="radio-box">
+					@Html.RadioButtonFor(k => k.SaleFlag, "2")
+					<label for="sex-1">来源线下</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货方式：</label>
+			<div class="formControls col-xs-8 col-sm-4">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.SHFlag, ArrSH, new { @class = "select" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>交货日期：</label>
+			<div class="formControls col-xs-8 col-sm-4">
+				@*<input type="text" onfocus="WdatePicker()" id="logmax" class="input-text Wdate" style="width:120px;">*@
+				@Html.TextBoxFor(k => k.DeliveryDate, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:200px;" })
+			</div>
+		</div>
+		<div id="SH1" class="sh">
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>自提点：</label>
+				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+					<div class="radio-box">
+						@Html.RadioButtonFor(k => k.ZTDFlag, "1")
+						<label for="sex-1">月星店</label>
+					</div>
+					<div class="radio-box">
+						@Html.RadioButtonFor(k => k.ZTDFlag, "2")
+						<label for="sex-1">红星店</label>
+					</div>
+					<div class="radio-box">
+						@Html.RadioButtonFor(k => k.ZTDFlag, "3")
+						<label for="sex-1">工厂店</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="SH2" class="sh">
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发货地址：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					@Html.TextBoxFor(k => k.DeliveryAddress, new { @class = "input-text" })
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
+				<div class="formControls col-xs-8 col-sm-4">
+					@Html.TextBoxFor(k => k.DeliveryLinkTel, new { @class = "input-text" })
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运单号：</label>
+				<div class="formControls col-xs-8 col-sm-4">
+					@Html.TextBoxFor(k => k.YDOrder, new { @class = "input-text" })
+				</div>
+			</div>
+		</div>
+		<div id="SH3" class="sh">
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货通道：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<span class="select-box inline">
+						@Html.DropDownListFor(k => k.DeliverChannel, ArrBY, new { @class = "select" })
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运费承担方：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.FreightCarrier, ArrYF, new { @class = "select", @style = "width:250px;" } )
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>应收金额：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.Prepay, new { @class = "input-text", @style = "width:150px;" }) 元
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>实收金额：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.RealPrice, new { @class = "input-text", @style = "width:150px;" }) 元
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>收款方式：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					@Html.RadioButtonFor(k => k.FRStatus, "1")
+					<label for="sex-1">微信/支付宝</label>
+				</div>
+				<div class="radio-box">
+					@Html.RadioButtonFor(k => k.FRStatus, "2")
+					<label for="sex-1">现金</label>
+				</div>
+				<div class="radio-box">
+					@Html.RadioButtonFor(k => k.FRStatus, "3")
+					<label for="sex-1">刷卡</label>
+				</div>
 
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>送货通道：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <span class="select-box inline">
-                        @Html.DropDownListFor(k => k.DeliverChannel, ArrBY, new { @class = "select" })
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>应收金额：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.Prepay, new { @class = "input-text", @style = "width:150px;" }) 元
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>实收金额：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextBoxFor(k => k.RealPrice, new { @class = "input-text", @style = "width:150px;" }) 元
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>收款方式：</label>
-            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-                <div class="radio-box">
-                    @Html.RadioButtonFor(k => k.FRStatus, "1")
-                    <label for="sex-1">微信/支付宝</label>
-                </div>
-                <div class="radio-box">
-                    @Html.RadioButtonFor(k => k.FRStatus, "2")
-                    <label for="sex-1">现金</label>
-                </div>
-                <div class="radio-box">
-                    @Html.RadioButtonFor(k => k.FRStatus, "3")
-                    <label for="sex-1">刷卡</label>
-                </div>
-
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">备注：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                @Html.TextAreaFor(k => k.Remark, new { @class = "textarea" })
-                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
-            </div>
-        </div>
-        <div class="row cl">
-            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-                <button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-            </div>
-        </div>
-    </form>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">备注：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextAreaFor(k => k.Remark, new { @class = "textarea" })
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				<button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
 </article>
 
 @Html.Action("_Footer", "Home")

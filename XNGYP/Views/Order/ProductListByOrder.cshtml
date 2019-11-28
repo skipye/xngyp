@@ -13,6 +13,9 @@
 					<th>产品编号</th>
 					<th>产品名称</th>
 					<th>材质</th>
+					<th>长(mm)</th>
+					<th>宽(mm)</th>
+					<th>高(mm)</th>
 					<th>色号</th>
 					<th>单价（元）</th>
 					<th>数量</th>
@@ -26,8 +29,11 @@
 				<tr style="height:35px;">
 					<td>@(i)</td>
 					<td>@item.SN</td>
-					<td>@item.ProductSN _ @item.ProductName </td>
+					<td>@item.ProductName </td>
 					<td>@item.WoodName </td>
+					<td>@Convert.ToDecimal(item.length).ToString("0") </td>
+					<td>@Convert.ToDecimal(item.width).ToString("0") </td>
+					<td>@Convert.ToDecimal(item.height).ToString("0") </td>
 					<td>@item.Color</td>
 					<td>@item.price</td>
 					<td>@item.Qty</td>

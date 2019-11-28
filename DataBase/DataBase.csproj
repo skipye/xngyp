@@ -61,11 +61,20 @@
     <Compile Include="CRM_contract_header.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CRM_customers.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ehr_department.cs">
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ehr_employee.cs">
       <DependentUpon>SaleHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FR_contract.cs">
+      <DependentUpon>XNFinance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FR_contract_logs.cs">
+      <DependentUpon>XNFinance.tt</DependentUpon>
     </Compile>
     <Compile Include="INV_inventories.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
@@ -133,6 +142,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>XNERPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="XNFinance.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNFinance.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNFinance.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNFinance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XNFinance.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XNFinance.edmx</DependentUpon>
     </Compile>
     <Compile Include="XNGYP.Context.cs">
       <AutoGen>True</AutoGen>
@@ -246,6 +270,13 @@
     <None Include="XNERPModel.edmx.diagram">
       <DependentUpon>XNERPModel.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="XNFinance.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XNFinance.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="XNFinance.edmx.diagram">
+      <DependentUpon>XNFinance.edmx</DependentUpon>
+    </None>
     <None Include="XNGYP.edmx.diagram">
       <DependentUpon>XNGYP.edmx</DependentUpon>
     </None>
@@ -273,6 +304,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>XNERPModel.edmx</DependentUpon>
       <LastGenOutput>XNERPModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNFinance.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNFinance.edmx</DependentUpon>
+      <LastGenOutput>XNFinance.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XNFinance.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XNFinance.edmx</DependentUpon>
+      <LastGenOutput>XNFinance.cs</LastGenOutput>
     </Content>
     <Content Include="XNGYP.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

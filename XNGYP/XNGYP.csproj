@@ -796,6 +796,9 @@
     <Content Include="Views\Cost\AddF.cshtml" />
     <Content Include="Views\Labels\Cost.cshtml" />
     <Content Include="Views\Labels\EditCost.cshtml" />
+    <Content Include="Views\Finance\FOrder.cshtml" />
+    <Content Include="Views\Finance\FFR.cshtml" />
+    <Content Include="Views\Finance\ShowF.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

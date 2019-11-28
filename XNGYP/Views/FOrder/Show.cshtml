@@ -13,12 +13,11 @@
  
     <p class="ditem">合同编号：@Model.SN</p>
     <p class="ditem">客户姓名：@Model.Customer</p>
-    <p class="ditem">业务员：@Model.SaleUserName</p>
+    <p class="ditem">送货通道：@Model.DeliverChannel</p>
     <p class="ditem">合同日期：@Convert.ToDateTime(Model.OrderTime).ToString("yyyy-MM-dd")</p>
     <p class="ditem">合同总金额：@Model.Amount</p>
-    <p class="ditem">发货方式：@(Model.SHFlag==1?"自提":Model.SHFlag==2?"邮寄":"送货")
-    @if (Model.SHFlag == 1) {<b class='c-green'> @ZTDArr[Convert.ToInt32(Model.ZTDFlag) - 1]</b>}
+    <p class="ditem">运费承担方：@(Model.FreightCarrier)
 </p>
     <div style="clear:both"></div>
-     @Html.Action("ProductListByOrder", "Order",new { Id=Model.Id})
+     @Html.Action("ProductListByOrder", "FOrder",new { Id=Model.Id})
 </div>

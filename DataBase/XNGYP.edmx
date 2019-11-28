@@ -103,6 +103,7 @@
           <Property Name="SaleFlag" Type="int" />
           <Property Name="DDOrder" Type="nvarchar" MaxLength="50" />
           <Property Name="YDOrder" Type="nvarchar" MaxLength="50" />
+          <Property Name="FreightCarrier" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="INV_Name">
           <Key>
@@ -1934,6 +1935,7 @@
           <NavigationProperty Name="Contract_Detail" Relationship="XNGYPModel.FK_Contract_Detail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_Detail" />
           <NavigationProperty Name="Contract_FDetail" Relationship="XNGYPModel.FK_Contract_FDetail_Contract_Header" FromRole="Contract_Header" ToRole="Contract_FDetail" />
           <NavigationProperty Name="XNGYP_Customers" Relationship="XNGYPModel.FK_Contract_Header_XNGYP_Customers" FromRole="Contract_Header" ToRole="XNGYP_Customers" />
+          <Property Name="FreightCarrier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Contract_Detail_Contract_Header">
           <End Type="XNGYPModel.Contract_Header" Role="Contract_Header" Multiplicity="0..1" />
@@ -2434,6 +2436,7 @@
           <EntitySetMapping Name="Contract_Header">
             <EntityTypeMapping TypeName="XNGYPModel.Contract_Header">
               <MappingFragment StoreEntitySet="Contract_Header">
+                <ScalarProperty Name="FreightCarrier" ColumnName="FreightCarrier" />
                 <ScalarProperty Name="YDOrder" ColumnName="YDOrder" />
                 <ScalarProperty Name="DDOrder" ColumnName="DDOrder" />
                 <ScalarProperty Name="SaleFlag" ColumnName="SaleFlag" />

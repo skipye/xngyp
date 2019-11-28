@@ -219,7 +219,7 @@ namespace ModelProject
         public string EndTime { get; set; }
         public int? SaleFlag { get; set; }
     }
-    public class FR_contract
+    public class FRContract
     {
         public decimal Totailamount { get; set; }
     }

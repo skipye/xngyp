@@ -118,7 +118,7 @@ namespace XNGYP.Controllers
             else return Content("False");
             
         }
-        public ActionResult Checked(string ListId)
+        public ActionResult Checked(string ListId, int CheckedId)
         {
             if (string.IsNullOrEmpty(ListId) == true)
             {
@@ -126,7 +126,7 @@ namespace XNGYP.Controllers
             }
             else
             {
-                if (NSer.Checked(ListId) == true)
+                if (NSer.Checked(ListId, CheckedId) == true)
                 {
                     return Content("True");
                 }

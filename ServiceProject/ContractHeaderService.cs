@@ -19,6 +19,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public ContractModel GetFPageList(SContractHeaderModel SModel)
+        {
+            try { return CHDal.GetFPageList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool AddOrUpdate(ContractHeaderModel Models)
         {
             try { CHDal.AddOrUpdate(Models); return true; }
@@ -35,6 +43,14 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public ContractHeaderModel GetFDetailById(int Id)
+        {
+            try { return CHDal.GetFDetailById(Id); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool Delete(string ListId)
         {
             try { CHDal.Delete(ListId); return true; }
@@ -43,9 +59,9 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public bool Checked(string ListId)
+        public bool Checked(string ListId, int CheckedId)
         {
-            try { CHDal.Checked(ListId); return true; }
+            try { CHDal.Checked(ListId, CheckedId); return true; }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -182,6 +198,14 @@ namespace ServiceProject
         public List<ContractProductsModel> GetProductListByOrder(int HTId)
         {
             try { return CHDal.GetProductListByOrder(HTId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public List<ContractProductsModel> GetFProductListByOrder(int HTId)
+        {
+            try { return CHDal.GetFProductListByOrder(HTId); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

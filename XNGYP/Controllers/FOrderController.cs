@@ -30,9 +30,9 @@ namespace XNGYP.Controllers
             SModels.DepartmentDroList = USer.GetDepartmentDrolist(SModels.DepartmentId);
             return View(SModels);
         }
-        public ActionResult PageList(SContractHeaderModel SRmodels)
+        public ActionResult FPageList(SContractHeaderModel SRmodels)
         {
-            var models = NSer.GetPageList(SRmodels);
+            var models = NSer.GetFPageList(SRmodels);
             return new ContentResult
             {
                 Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(models),
@@ -68,7 +68,7 @@ namespace XNGYP.Controllers
         
         public ActionResult ProductListByOrder(int Id)
         {
-            var PageList = NSer.GetProductListByOrder(Id);
+            var PageList = NSer.GetFProductListByOrder(Id);
             return View(PageList);
         }
         public ActionResult DeleteProduct(int Id)
@@ -81,7 +81,7 @@ namespace XNGYP.Controllers
         }
         public ActionResult Show(int Id)
         {
-            var Models = NSer.GetDetailById(Id);
+            var Models = NSer.GetFDetailById(Id);
             return View(Models);
         }
 

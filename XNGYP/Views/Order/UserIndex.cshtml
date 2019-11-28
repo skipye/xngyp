@@ -103,7 +103,7 @@
                     targets: 14,
                     render: function (data, type, row) {
                         var StrCheck = "";
-                        if (row.Status == 0) {
+                        if (row.Status == 0 || row.Status == 2) {
                             StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'查看产品\',\'/Order/ProductListByOrder\', \'' + row.Id + '\', \'800\', \'500\')" title="查看产品"><i class="Hui-iconfont f-14">&#xe687;</i></a>' +
                                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'添加产品\',\'/Order/AddProducts\', \'' + row.Id + '\', \'800\', \'620\')" title="添加产品"><i class="Hui-iconfont f-14">&#xe670;</i></a>' +
                                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="订单编辑"><i class="Hui-iconfont f-14">&#xe6df;</i></a>' +
@@ -149,9 +149,11 @@
                 },
                 {
                     "data": "Status", "render": function (data) {
-                        var StrStatus = "<b class='c-warning'>否</b>";
-                        if (data == true)
-                        { StrStatus = "<b class='c-green'>是</b>"; }
+                         var StrStatus = "<b class='c-warning'>否</b>";
+                                if (data == 1)
+								{ StrStatus = "<b class='c-green'>是</b>"; }
+								if (data == 2)
+                                { StrStatus = "<b class='c-warning'>被驳回</b>"; }
                         return StrStatus;
                     }
                 },

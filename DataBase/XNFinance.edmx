@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="XNFinanceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="FR_contract">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contract_id" Type="int" Nullable="false" />
+          <Property Name="SN" Type="varchar" MaxLength="20" />
+          <Property Name="customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="total" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="receive_date" Type="datetime" />
+          <Property Name="pay_mode" Type="varchar" MaxLength="50" />
+          <Property Name="amount" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="operator_id" Type="int" />
+          <Property Name="operator_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_time" Type="smalldatetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FR_contract_logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HTId" Type="int" />
+          <Property Name="HTSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="PayModel" Type="nvarchar" MaxLength="50" />
+          <Property Name="operator_id" Type="int" />
+          <Property Name="operator_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Remaks" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="PayStatus" Type="int" />
+        </EntityType>
+        <EntityContainer Name="XNFinanceModelStoreContainer">
+          <EntitySet Name="FR_contract" EntityType="Self.FR_contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FR_contract_logs" EntityType="Self.FR_contract_logs" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XNFinanceModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="FR_contract">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contract_id" Type="Int32" Nullable="false" />
+          <Property Name="SN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="total" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="receive_date" Type="DateTime" Precision="3" />
+          <Property Name="pay_mode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="operator_id" Type="Int32" />
+          <Property Name="operator_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="XNFinanceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FR_contract" EntityType="Self.FR_contract" />
+          <EntitySet Name="FR_contract_logs" EntityType="XNFinanceModel.FR_contract_logs" />
+        </EntityContainer>
+        <EntityType Name="FR_contract_logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HTId" Type="Int32" />
+          <Property Name="HTSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PayModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="operator_id" Type="Int32" />
+          <Property Name="operator_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Remaks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="PayStatus" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XNFinanceModelStoreContainer" CdmEntityContainer="XNFinanceEntities">
+          <EntitySetMapping Name="FR_contract">
+            <EntityTypeMapping TypeName="XNFinanceModel.FR_contract">
+              <MappingFragment StoreEntitySet="FR_contract">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="contract_id" ColumnName="contract_id" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="customer" ColumnName="customer" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="receive_date" ColumnName="receive_date" />
+                <ScalarProperty Name="pay_mode" ColumnName="pay_mode" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="operator_name" ColumnName="operator_name" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FR_contract_logs">
+            <EntityTypeMapping TypeName="XNFinanceModel.FR_contract_logs">
+              <MappingFragment StoreEntitySet="FR_contract_logs">
+                <ScalarProperty Name="PayStatus" ColumnName="PayStatus" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Remaks" ColumnName="Remaks" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="operator_name" ColumnName="operator_name" />
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="PayModel" ColumnName="PayModel" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="HTSN" ColumnName="HTSN" />
+                <ScalarProperty Name="HTId" ColumnName="HTId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

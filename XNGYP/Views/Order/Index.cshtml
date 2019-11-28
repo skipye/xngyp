@@ -92,7 +92,7 @@
                     orderable: false,
                     render: function (data, type, row) {
                         var StrArr = "";
-                        if (row.CWCheckStatus == 0) {
+                        if (row.CWCheckStatus == 0 || row.CWCheckStatus == 2) {
                             StrArr= '<input type="checkbox" value="' + row.Id + '" >';
                         }
                         return StrArr;
@@ -151,9 +151,11 @@
                         },
                         {
                             "data": "Status", "render": function (data) {
-                                var StrStatus = "<b class='c-warning'>否</b>";
-                                if (data == true)
-                                { StrStatus = "<b class='c-green'>是</b>"; }
+                                 var StrStatus = "<b class='c-warning'>否</b>";
+                                if (data == 1)
+								{ StrStatus = "<b class='c-green'>是</b>"; }
+								if (data == 2)
+                                { StrStatus = "<b class='c-warning'>被驳回</b>"; }
                                 return StrStatus;
                             }
                         },

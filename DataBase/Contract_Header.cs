@@ -54,6 +54,7 @@ namespace DataBase
         public Nullable<int> SaleFlag { get; set; }
         public string DDOrder { get; set; }
         public string YDOrder { get; set; }
+        public string FreightCarrier { get; set; }
     
         public virtual ICollection<Contract_Detail> Contract_Detail { get; set; }
         public virtual ICollection<Contract_FDetail> Contract_FDetail { get; set; }
