@@ -116,7 +116,7 @@ namespace DalProject
                 SFLtable.Amount = Models.Amount;
                 SFLtable.operator_id = new UserDal().GetCurrentUserName().UserId;
                 SFLtable.operator_name = new UserDal().GetCurrentUserName().UserName;
-                SFLtable.CreateTime = DateTime.Now;
+                SFLtable.CreateTime = Models.CreateTime ?? DateTime.Now;
                 SFLtable.Remaks = Models.Remaks;
                 SFLtable.PayStatus = 1;
                 db.FR_contract_logs.Add(SFLtable);
@@ -140,7 +140,7 @@ namespace DalProject
                     Stable.amount = Models.Amount;
                     Stable.operator_id = SFLtable.operator_id;
                     Stable.operator_name = SFLtable.operator_name;
-                    Stable.created_time = DateTime.Now;
+                    Stable.created_time = Models.CreateTime??DateTime.Now;
                     Stable.receive_date = HtDate;
                     db.FR_contract.Add(Stable);
                 }

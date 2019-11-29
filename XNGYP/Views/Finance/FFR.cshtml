@@ -11,38 +11,46 @@
 
 <script type="text/javascript" src="~/js/jquery.min.js"></script>
 <article class="page-container">
-    <form class="form form-horizontal" id="formadd">
-        @Html.HiddenFor(k => k.Id)
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>付款方式：</label>
-            <div class="formControls col-xs-8 col-sm-6">
-                <span class="select-box" style="width:150px;">
-                    @Html.DropDownListFor(k => k.PayModel, TypeDroList, new { @class = "select" })
-                </span>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>付款金额：</label>
-            <div class="formControls col-xs-8 col-sm-6">
-                @Html.TextBoxFor(k => k.Amount, new { @class = "input-text" })
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">备注：</label>
-            <div class="formControls col-xs-8 col-sm-8">
-                @Html.TextBoxFor(k => k.Remaks, new { @class = "input-text" })
-            </div>
-        </div>
+	<form class="form form-horizontal" id="formadd">
+		@Html.HiddenFor(k => k.Id)
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>付款方式：</label>
+			<div class="formControls col-xs-8 col-sm-6">
+				<span class="select-box" style="width:150px;">
+					@Html.DropDownListFor(k => k.PayModel, TypeDroList, new { @class = "select" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>付款金额：</label>
+			<div class="formControls col-xs-8 col-sm-6">
+				@Html.TextBoxFor(k => k.Amount, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>收款日期：</label>
+			<div class="formControls col-xs-8 col-sm-6">
+				@*<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">*@
+				@Html.TextBoxFor(k => k.CreateTime, new { @class = "input-text Wdate", @onfocus = "WdatePicker()", @style = "width:150px;", @readonly = "@readonly" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">备注：</label>
+			<div class="formControls col-xs-8 col-sm-8">
+				@Html.TextBoxFor(k => k.Remaks, new { @class = "input-text" })
+			</div>
+		</div>
 
-        <div class="row cl">
-            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-                <button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-           </div>
-        </div>
-    </form>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
 </article>
 <script type="text/javascript" src="~/js/ajaxScript.js"></script>
+<script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="~/js/layer/layer.js"></script>
 <script type="text/javascript" src="~/js/jquery.validation/jquery.validate.js"></script>
 <script type="text/javascript" src="~/js/jquery.validation/messages_zh.js"></script>
