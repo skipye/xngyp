@@ -88,6 +88,7 @@ namespace XNGYP.Controllers
             }
             else { return View(Models); }
         }
+        [Authorize]
         public ActionResult UserIndex()
         {
             SContractHeaderModel SModels = new SContractHeaderModel();

@@ -167,10 +167,12 @@ namespace DalProject
                     table.FreightCarrier = Models.FreightCarrier;
                     db.Contract_Header.Add(table);
 
-                    FinanceModel FModels = new FinanceModel();
-                    FModels.Id = Models.Id;
-                    FModels.PayStatus = Models.FRStatus;
-                    FModels.Amount = Models.RealPrice;
+                    //如有新的订单发生通知
+                    OrderModel OModels = new OrderModel();
+                    OModels.OrderSN = table.SN;
+                    OModels.SaleName = table.SaleUserName;
+                    OModels.SendTel = "18321909838";
+                    SendSMSDal.Send(OModels,1);//销售经理
                 }
                 db.SaveChanges();
             }
@@ -213,8 +215,8 @@ namespace DalProject
                                   DDOrder=p.DDOrder,
                                   CreateTime=p.CreateTime,
                                   FreightCarrier = p.FreightCarrier,
-                Remark = p.Remark,
-            }).SingleOrDefault();
+                                  Remark = p.Remark,
+                       }).SingleOrDefault();
                 return tables;
             }
         }
@@ -274,6 +276,24 @@ namespace DalProject
                         tables.CheckedUserId = new UserDal().GetCurrentUserName().UserId;
                         tables.CheckedUserName = new UserDal().GetCurrentUserName().UserName;
                         tables.CheckedTime = DateTime.Now;
+
+                        if (CheckedId == 1)
+                        {
+                            OrderModel OModels = new OrderModel();
+                            OModels.OrderSN = tables.SN;
+                            if (tables.SaleFlag == 1) {
+                                OModels.Custmor = tables.XNGYP_Customers.Name;
+                                OModels.SendTel = "13636445362";
+                                SendSMSDal.Send(OModels, 4);//仓库
+                            }
+                            else { 
+                                //如有新的订单发生通知
+                                
+                                OModels.SendTel = "18621809046";
+                                SendSMSDal.Send(OModels, 2);//财务
+                            }
+                        }
+                        
                     }
                 }
                 db.SaveChanges();
@@ -296,6 +316,16 @@ namespace DalProject
                         tables.CWCheckTime = DateTime.Now;
                         if (CheckedId == 1)
                         {
+                            OrderModel OModels = new OrderModel();
+                            OModels.OrderSN = tables.SN;
+
+                            if (tables.SaleFlag == 1)
+                            {
+                                OModels.Custmor = tables.XNGYP_Customers.Name;
+                                OModels.SendTel = "13636445362";
+                                SendSMSDal.Send(OModels, 4);//仓库
+                            }
+                            else { OModels.SendTel = "13524680161"; SendSMSDal.Send(OModels, 3); }//厂长
                             AddFOrder(Id);//添加家具订单
                         }
                     }
@@ -793,6 +823,14 @@ namespace DalProject
 
                     }
                     db.SaveChanges();
+
+                    OrderModel OModels = new OrderModel();
+                    OModels.OrderSN = table.SN;
+                    OModels.SaleName = "唐锐";
+                    OModels.SendTel = "18017153881";
+                    SendSMSDal.Send(OModels, 1);
+                    
+
                 }
             }
         }
