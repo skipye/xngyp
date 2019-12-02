@@ -81,6 +81,7 @@ namespace DalProject
             {
                 EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
             }
+            ContractModel Models = new ContractModel();
             using (var db = new XNERPEntities())
             {
                 var List = (from p in db.CRM_contract_header.Where(k => k.delete_flag == false && k.status==1)
@@ -103,11 +104,20 @@ namespace DalProject
                                 CWCheckStatus = p.CWStatus,
                                 Remark = p.Remark,
                             }).ToList();
-                ContractModel Models = new ContractModel();
                 Models.data = List;
                 Models.HTTotail = List.Sum(k => k.Amount);
-                return Models;
             }
+            using (var db = new XNFinanceEntities())
+            {
+                if (Models.data != null && Models.data.Any())
+                {
+                    foreach (var item in Models.data)
+                    {
+                        item.RealPrice = db.FR_contract.Where(k => k.contract_id == item.Id).Sum(k => k.amount)??0;
+                    }
+                }
+            }
+            return Models;
         }
         public void AddOrUpdate(ContractHeaderModel Models)
         {

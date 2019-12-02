@@ -35,10 +35,11 @@
                     <th>合同时间</th>
                     <th>合同总金额</th>
                     <th>预付款</th>
+                    <th>已收款</th>
+                    <th>尾款</th>
                     <th>付款状态</th>
                     <th>是否审核</th>
                     <th>审核人员</th>
-                    <th>财务审核</th>
                     <th>操作时间</th>
                     <th>备注</th>
                     <th width="120">操作</th>
@@ -103,7 +104,7 @@
                         return StrArr;
                     }
                 }, {
-                    targets: 12,//把第九列的样式改为超链接
+                    targets: 13,//把第九列的样式改为超链接
                     render: function (data, type, row) {
                         var StrCheck = "";
 						StrCheck += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="FR(\'收款\',\'/Finance/FFR\', \'' + row.Id + '\', \'600\', \'400\')" data-url=\'/Finance/FFR\' title="收款"><i class="Hui-iconfont f-14">&#xe637;</i></a>' +
@@ -127,7 +128,12 @@
                             }
                         },
                         { "data": "Amount", "defaultContent": "", "className": "textoverflow" },
-                        { "data": "Prepay", "defaultContent": "", "className": "textoverflow" },
+                { "data": "Prepay", "defaultContent": "", "className": "textoverflow" },
+                { "data": "RealPrice", "defaultContent": "", "className": "textoverflow c-green" },
+                {
+                    "data": "Amount", "defaultContent": "", "className": "textoverflow c-red", "render": function (data, type, row) {
+                        return row.Amount - row.RealPrice;
+                            } },
                         {
                             "data": "FRFlag", "render": function (data, type, row) {
                                 var StatusName = "<span class=\"label label-warning radius\">未付款</span>";
@@ -148,17 +154,7 @@
                             }
                         },
                         { "data": "CheckedUserName", "defaultContent": "" },
-                        {
-                            "data": "CWCheckStatus", "render": function (data) {
-                                var StrStatus = "<b class='c-warning'>否</b>";
-                                if (data == 1)
-								{ StrStatus = "<b class='c-green'>是</b>"; }
-								if (data == 2)
-                                { StrStatus = "<b class='c-warning'>被驳回</b>"; }
-                                return StrStatus;
-                            }
-                },
-                       
+                        
                         {
                             "data": "CreateTime", "render": function (data) {
                                 var NewTime = parseInt(data.replace(/\D/igm, ""));
