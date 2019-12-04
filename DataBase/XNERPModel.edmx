@@ -225,6 +225,8 @@
           <Property Name="DeleteFlag" Type="bit" />
           <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CostCprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PersonPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Volume" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SYS_product_SN">
           <Key>
@@ -881,6 +883,8 @@
           <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_SYS_product_Cost_SYS_product" FromRole="SYS_product_Cost" ToRole="SYS_product" />
           <Property Name="CCprice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CostCprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PersonPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Volume" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_SYS_product_Cost_INV_wood_type">
           <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="0..1" />
@@ -1190,6 +1194,8 @@
           <EntitySetMapping Name="SYS_product_Cost">
             <EntityTypeMapping TypeName="XNERPModel.SYS_product_Cost">
               <MappingFragment StoreEntitySet="SYS_product_Cost">
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="PersonPrice" ColumnName="PersonPrice" />
                 <ScalarProperty Name="CostCprice" ColumnName="CostCprice" />
                 <ScalarProperty Name="CCprice" ColumnName="CCprice" />
                 <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />

@@ -116,5 +116,13 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool UpdateFCost()
+        {
+            try { CDal.UpdateFCost(); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

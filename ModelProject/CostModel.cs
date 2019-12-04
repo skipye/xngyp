@@ -28,6 +28,7 @@ namespace ModelProject
         public decimal? CCprice { get; set; }
         public decimal? CostCprice { get; set; }
         public decimal? PersonPrice { get; set; }
+        public decimal? Volume { get; set; }
     }
     public class SCostModel
     {

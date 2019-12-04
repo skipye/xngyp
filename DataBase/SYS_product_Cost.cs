@@ -30,6 +30,8 @@ namespace DataBase
         public Nullable<bool> DeleteFlag { get; set; }
         public Nullable<decimal> CCprice { get; set; }
         public Nullable<decimal> CostCprice { get; set; }
+        public Nullable<decimal> PersonPrice { get; set; }
+        public Nullable<decimal> Volume { get; set; }
     
         public virtual INV_wood_type INV_wood_type { get; set; }
         public virtual SYS_product SYS_product { get; set; }
