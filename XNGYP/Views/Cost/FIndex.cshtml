@@ -17,34 +17,36 @@
         </span>
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","DeleteF")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="javascript:void(0);" onclick="addwindow('添加成本', '/Cost/AddF', '800', '600')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加成本</a>
-        <a href="@Url.Action("AddFCost","Cost")" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>成本</a>
-    </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","DeleteF")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+		<a href="javascript:void(0);" onclick="addwindow('添加成本', '/Cost/AddF', '800', '600')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加成本</a>
+		<a href="@Url.Action("AddFCost","Cost")" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>成本</a>
+		<a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
+	</div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th>系列</th>
-                    <th>产品(ID)</th>
-                    <th>材质(ID)</th>
+				<tr class="text-l">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th>系列</th>
+					<th>产品(ID)</th>
+					<th>材质(ID)</th>
+					<th>材积</th>
 					<th>木材成本(元)</th>
 					<th>辅料成本(元)</th>
-                    <th>开料成本</th>
-                    <th>木工前段</th>
-                    <th>雕花成本</th>
-                    <th>木工后段</th>
-                    <th>刮磨成本</th>
-                    <th>油漆成本</th>
+					<th>开料成本</th>
+					<th>木工前段</th>
+					<th>雕花成本</th>
+					<th>木工后段</th>
+					<th>刮磨成本</th>
+					<th>油漆成本</th>
 					<th>人工成本(元)</th>
-                    <th>总成本(元)</th>
-                    <th>出厂价(元)</th>
-                    <th>创建时间</th>
-                    <th width="120">操作</th>
-                </tr>
+					<th>总成本(元)</th>
+					<th>出厂价(元)</th>
+					<th>创建时间</th>
+					<th>操作</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -91,7 +93,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 16,
+                    targets: 17,
                     render: function (data, type, row) {
                         var StrCheck = "";
                             StrCheck = 
@@ -112,7 +114,9 @@
                 {
                     "data": "WoodName", "className": "text-overflow", "render": function (data, type, row) {
                         return data + "(" + row.WoodId + ")";
-                    } },
+					}
+				},
+				{ "data": "Volume", "defaultContent": "" },
                 { "data": "MCPrice", "defaultContent": "","className": "c-primary" },
                 { "data": "FLPrice", "defaultContent": "","className": "c-primary" },
                 { "data": "KLPrice", "defaultContent": "" },
@@ -134,6 +138,11 @@
             ]
         });
     };
-
+	function toExcelout() {
+        var ProductSNId = $("#ProductSNId").val().trim();
+        var WoodId = $("#WoodId").val().trim();
+        window.location.href = "/Cost/ToFExcelOut?ProductSNId=" + ProductSNId + '&WoodId=' + WoodId;
+        //$.post(ExcelUrl, {}, function (d) { });
+    };
 
 </script> 

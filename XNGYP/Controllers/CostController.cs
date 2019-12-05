@@ -10,6 +10,7 @@ namespace XNGYP.Controllers
     {
         private static readonly CostService CSer = new CostService();
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
+        private static readonly ToExcel ESer = new ToExcel();
         [Authorize]
         public ActionResult Index(SCostModel SModels)
         {
@@ -155,6 +156,11 @@ namespace XNGYP.Controllers
                 return Content("1");
             }
             else return Content("0");
+        }
+        public void ToFExcelOut(SCostModel SModel)
+        {
+            var models = CSer.ToFExcelOut(SModel);
+            ESer.CreateExcel(models, "成本" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }
 }

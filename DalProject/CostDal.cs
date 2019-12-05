@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -178,10 +179,87 @@ namespace DalProject
                                 CreateTime = p.CreateTime,
                                 CCprice=p.CCprice,
                                 CostCprice=p.CostCprice,
-                                PersonPrice= p.KLPrice+p.DHPrice+ p.MGQPrice+ p.MGHPrice+ p.GMPrice + p.YQPrice
+                                Volume=p.SYS_product.volume,
+                                PersonPrice= p.PersonPrice,
                             }).ToList();
                 return List;
             }
+        }
+        //导出家具成本
+        public DataTable ToFExcelOut(SCostModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+            
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.SYS_product_Cost.Where(k => k.DeleteFlag == false)
+                            where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? p.SYS_product.product_SN_id == SModel.ProductSNId : true
+                            where SModel.WoodId != null && SModel.WoodId > 0 ? p.WoodId == SModel.WoodId : true
+                            orderby p.CreateTime
+                            select new CostModel
+                            {
+                                Id = p.Id,
+                                ProductId = p.ProductId,
+                                ProductName = p.SYS_product.name,
+                                ProductSN = p.SYS_product.SYS_product_SN.name,
+                                WoodId = p.WoodId,
+                                WoodName = p.INV_wood_type.name,
+                                MCPrice = p.MCPrice,
+                                KLPrice = p.KLPrice,
+                                DHPrice = p.DHPrice,
+                                MGQPrice = p.MGQPrice,
+                                MGHPrice = p.MGHPrice,
+                                GMPrice = p.GMPrice,
+                                YQPrice = p.YQPrice,
+                                FLPrice = p.FLPrice,
+                                CreateTime = p.CreateTime,
+                                CCprice = p.CCprice,
+                                CostCprice = p.CostCprice,
+                                Volume = p.SYS_product.volume,
+                                PersonPrice = p.PersonPrice
+                            }).ToList();
+                if (List != null && List.Any())
+                {
+                    Exceltable.Columns.Add("系列", typeof(string));
+                    Exceltable.Columns.Add("产品(ID)", typeof(string));
+                    Exceltable.Columns.Add("材质(ID)", typeof(string));
+                    Exceltable.Columns.Add("材积", typeof(string));
+                    Exceltable.Columns.Add("木材成本(元)", typeof(string));
+                    Exceltable.Columns.Add("辅料成本(元)", typeof(string));
+                    Exceltable.Columns.Add("开料成本", typeof(string));
+                    Exceltable.Columns.Add("木工前段", typeof(string));
+                    Exceltable.Columns.Add("雕花成本", typeof(string));
+                    Exceltable.Columns.Add("木工后段", typeof(string));
+                    Exceltable.Columns.Add("刮磨成本", typeof(string));
+                    Exceltable.Columns.Add("油漆成本", typeof(string));
+                    Exceltable.Columns.Add("人工成本(元)", typeof(string));
+                    Exceltable.Columns.Add("总成本(元)", typeof(string));
+                    Exceltable.Columns.Add("出厂价(元)", typeof(string));
+                    Exceltable.Columns.Add("出厂价(1.8)", typeof(string));
+                    foreach (var item in List)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["系列"] = item.ProductSN;
+                        row["产品(ID)"] = item.ProductName+"("+ item.ProductId + ")";
+                        row["材质(ID)"] = item.WoodName + "(" + item.WoodId + ")";
+                        row["材积"] = item.Volume;
+                        row["木材成本(元)"] = item.MCPrice;
+                        row["辅料成本(元)"] = item.FLPrice;
+                        row["开料成本"] = item.KLPrice;
+                        row["木工前段"] = item.MGQPrice;
+                        row["雕花成本"] = item.DHPrice;
+                        row["木工后段"] = item.MGHPrice;
+                        row["刮磨成本"] = item.GMPrice;
+                        row["油漆成本"] = item.YQPrice;
+                        row["人工成本(元)"] = item.PersonPrice;
+                        row["总成本(元)"] = item.CostCprice;
+                        row["出厂价(元)"] = item.CCprice;
+                        row["出厂价(1.8)"] = item.CostCprice*Convert.ToDecimal(1.8);
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
         }
         //根据产品ID和材质ID获取出厂价格
         public Decimal? GetChuChangPrice(int ProductId, int WoodId)
@@ -220,7 +298,8 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
-                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGHPrice;
+                    table.PersonPrice= table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.MGHPrice;
+                    table.CostCprice = table.MCPrice + table.FLPrice + table.PersonPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
 
                     var GYPLables = db.INV_labels.Where(k => k.product_id == table.ProductId && k.wood_id == table.WoodId).ToList();
@@ -254,9 +333,10 @@ namespace DalProject
                     table.CostCprice = Models.CostCprice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
-                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGHPrice;
+                    table.PersonPrice = table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice +  table.MGHPrice; ;
+                    table.CostCprice = table.MCPrice + table.PersonPrice + table.FLPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
-                    table.PersonPrice = Models.PersonPrice;
+                    
                     var GYPLables = db.INV_labels.Where(k => k.product_id == table.ProductId && k.wood_id == table.WoodId).ToList();
                     if (GYPLables != null && GYPLables.Any())
                     {
@@ -487,16 +567,18 @@ namespace DalProject
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
                                 Volume = p.SYS_product.volume ?? 0,
-                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGHPrice + p.GMPrice + p.YQPrice
+                                PersonPrice = p.SYS_product.reserved1,
+                                OldPersonPrice=p.PersonPrice,
                             }).ToList();
                 foreach (var item in List)
                 {
                     var NewTable = db.SYS_product_Cost.Where(k => k.Id == item.Id).FirstOrDefault();
+                    NewTable.PersonPrice = item.PersonPrice;
                     NewTable.FLPrice = 0;
-                    NewTable.MCPrice = Convert.ToDecimal(Math.Floor(item.MCPrice.Value/100) * 100);
-                    NewTable.PersonPrice = Convert.ToDecimal(Math.Floor(item.PersonPrice.Value / 100) * 100);
+                    NewTable.MCPrice = Convert.ToDecimal(Math.Floor(item.MCPrice.Value / 100) * 100);
+                    //NewTable.PersonPrice = Convert.ToDecimal(Math.Floor(item.PersonPrice.Value / 100) * 100);
                     NewTable.CostCprice = NewTable.MCPrice + NewTable.PersonPrice;
-                    NewTable.CCprice= Convert.ToDecimal(Math.Floor((NewTable.CostCprice.Value* Convert.ToDecimal(1.6)) / 100)*100);
+                    NewTable.CCprice = Convert.ToDecimal(Math.Floor((NewTable.CostCprice.Value * Convert.ToDecimal(1.6)) / 100) * 100);
                     NewTable.Volume = item.Volume;
                 }
                 db.SaveChanges();

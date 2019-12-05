@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -119,6 +120,17 @@ namespace ServiceProject
         public bool UpdateFCost()
         {
             try { CDal.UpdateFCost(); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public DataTable ToFExcelOut(SCostModel SModel)
+        {
+            try
+            {
+                return CDal.ToFExcelOut(SModel);
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
