@@ -4,17 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="XNHRModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="XNHRModelStoreContainer">
-          <EntitySet Name="ehr_department" EntityType="XNHRModel.Store.ehr_department" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ehr_employee" EntityType="XNHRModel.Store.ehr_employee" store:Type="Tables" Schema="dbo" />
-        </EntityContainer>
+    <Schema Namespace="XNHRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="ehr_department">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="parent" Type="int" Nullable="false" />
           <Property Name="son" Type="int" Nullable="false" />
           <Property Name="maps" Type="varchar" MaxLength="256" />
@@ -25,8 +21,8 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="number" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="128" />
           <Property Name="user" Type="nvarchar" MaxLength="64" />
           <Property Name="password" Type="nvarchar" MaxLength="64" />
@@ -55,8 +51,8 @@
           <Property Name="other" Type="nvarchar" MaxLength="512" />
           <Property Name="groupname" Type="nvarchar" MaxLength="32" />
           <Property Name="group" Type="int" />
-          <Property Name="branchname" Type="varchar" />
-          <Property Name="branch" Type="varchar" />
+          <Property Name="branchname" Type="varchar" MaxLength="8000" />
+          <Property Name="branch" Type="varchar" MaxLength="8000" />
           <Property Name="officialtime" Type="datetime" />
           <Property Name="quitdate" Type="datetime" />
           <Property Name="shifts" Type="varchar" MaxLength="128" />
@@ -65,10 +61,160 @@
           <Property Name="leveltext" Type="varchar" MaxLength="256" />
           <Property Name="roledepartment" Type="varchar" MaxLength="4000" />
           <Property Name="roledepartmentname" Type="varchar" MaxLength="4000" />
-          <Property Name="amount" Type="decimal" Scale="2" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="salary_type" Type="tinyint" />
-          <Property Name="society_insure" Type="decimal" Scale="2" />
+          <Property Name="society_insure" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="ehr_postday">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="employee" Type="bigint" Nullable="false" />
+          <Property Name="department" Type="int" Nullable="false" />
+          <Property Name="departmentname" Type="nvarchar" MaxLength="64" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="time1" Type="datetime" />
+          <Property Name="time2" Type="datetime" />
+          <Property Name="time3" Type="datetime" />
+          <Property Name="time4" Type="datetime" />
+          <Property Name="time5" Type="datetime" />
+          <Property Name="time6" Type="datetime" />
+          <Property Name="time7" Type="datetime" />
+          <Property Name="time8" Type="datetime" />
+          <Property Name="time9" Type="datetime" />
+          <Property Name="time10" Type="datetime" />
+          <Property Name="time11" Type="datetime" />
+          <Property Name="time12" Type="datetime" />
+          <Property Name="more" Type="smallint" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="ehr_sum">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="employee" Type="bigint" Nullable="false" />
+          <Property Name="department" Type="int" Nullable="false" />
+          <Property Name="departmentname" Type="nvarchar" MaxLength="64" />
+          <Property Name="d_start" Type="smalldatetime" Nullable="false" />
+          <Property Name="d_end" Type="smalldatetime" Nullable="false" />
+          <Property Name="registration" Type="smalldatetime" />
+          <Property Name="positive" Type="smalldatetime" />
+          <Property Name="rest" Type="real" />
+          <Property Name="belate" Type="int" />
+          <Property Name="leaveearly" Type="int" />
+          <Property Name="absenteeism" Type="int" />
+          <Property Name="leave" Type="int" />
+          <Property Name="overtime" Type="int" />
+          <Property Name="workovertime" Type="int" />
+          <Property Name="holidayovertime" Type="int" />
+          <Property Name="workingtime" Type="int" />
+          <Property Name="shouldworkingtime" Type="int" />
+          <Property Name="shouldworkingday" Type="real" />
+          <Property Name="workingday" Type="real" />
+          <Property Name="leaveday" Type="real" />
+          <Property Name="leavenumber" Type="int" />
+          <Property Name="belatenumber" Type="int" />
+          <Property Name="leaveearlynumber" Type="int" />
+          <Property Name="absenteeismnumber" Type="int" />
+          <Property Name="replacementnumber" Type="int" />
+          <Property Name="mark" Type="nvarchar" MaxLength="512" />
+          <Property Name="leaverecord" Type="nvarchar" MaxLength="512" />
+          <Property Name="d1" Type="varchar" MaxLength="4000" />
+          <Property Name="d2" Type="varchar" MaxLength="4000" />
+          <Property Name="d3" Type="varchar" MaxLength="4000" />
+          <Property Name="d4" Type="varchar" MaxLength="4000" />
+          <Property Name="d5" Type="varchar" MaxLength="4000" />
+          <Property Name="d6" Type="varchar" MaxLength="4000" />
+          <Property Name="d7" Type="varchar" MaxLength="4000" />
+          <Property Name="d8" Type="varchar" MaxLength="4000" />
+          <Property Name="d9" Type="varchar" MaxLength="4000" />
+          <Property Name="d10" Type="varchar" MaxLength="4000" />
+          <Property Name="d11" Type="varchar" MaxLength="4000" />
+          <Property Name="d12" Type="varchar" MaxLength="4000" />
+          <Property Name="d13" Type="varchar" MaxLength="4000" />
+          <Property Name="d14" Type="varchar" MaxLength="4000" />
+          <Property Name="d15" Type="varchar" MaxLength="4000" />
+          <Property Name="d16" Type="varchar" MaxLength="4000" />
+          <Property Name="d17" Type="varchar" MaxLength="4000" />
+          <Property Name="d18" Type="varchar" MaxLength="4000" />
+          <Property Name="d19" Type="varchar" MaxLength="4000" />
+          <Property Name="d20" Type="varchar" MaxLength="4000" />
+          <Property Name="d21" Type="varchar" MaxLength="4000" />
+          <Property Name="d22" Type="varchar" MaxLength="4000" />
+          <Property Name="d23" Type="varchar" MaxLength="4000" />
+          <Property Name="d24" Type="varchar" MaxLength="4000" />
+          <Property Name="d25" Type="varchar" MaxLength="4000" />
+          <Property Name="d26" Type="varchar" MaxLength="4000" />
+          <Property Name="d27" Type="varchar" MaxLength="4000" />
+          <Property Name="d28" Type="varchar" MaxLength="4000" />
+          <Property Name="d29" Type="varchar" MaxLength="4000" />
+          <Property Name="d30" Type="varchar" MaxLength="4000" />
+          <Property Name="d31" Type="varchar" MaxLength="4000" />
+          <Property Name="early" Type="int" />
+          <Property Name="in" Type="int" />
+          <Property Name="late" Type="int" />
+          <Property Name="user" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="HR_Times">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Department" Type="int" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="d_start" Type="smalldatetime" />
+          <Property Name="d_end" Type="smalldatetime" />
+          <Property Name="workingtime" Type="int" />
+          <Property Name="shouldworkingtime" Type="int" />
+          <Property Name="shouldworkingday" Type="real" />
+          <Property Name="workingday" Type="real" />
+          <Property Name="d1" Type="nvarchar" MaxLength="500" />
+          <Property Name="d2" Type="nvarchar" MaxLength="500" />
+          <Property Name="d3" Type="nvarchar" MaxLength="500" />
+          <Property Name="d4" Type="nvarchar" MaxLength="500" />
+          <Property Name="d5" Type="nvarchar" MaxLength="500" />
+          <Property Name="d6" Type="nvarchar" MaxLength="500" />
+          <Property Name="d7" Type="nvarchar" MaxLength="500" />
+          <Property Name="d8" Type="nvarchar" MaxLength="500" />
+          <Property Name="d9" Type="nvarchar" MaxLength="500" />
+          <Property Name="d10" Type="nvarchar" MaxLength="500" />
+          <Property Name="d11" Type="nvarchar" MaxLength="500" />
+          <Property Name="d12" Type="nvarchar" MaxLength="500" />
+          <Property Name="d13" Type="nvarchar" MaxLength="500" />
+          <Property Name="d14" Type="nvarchar" MaxLength="500" />
+          <Property Name="d15" Type="nvarchar" MaxLength="500" />
+          <Property Name="d16" Type="nvarchar" MaxLength="500" />
+          <Property Name="d17" Type="nvarchar" MaxLength="500" />
+          <Property Name="d18" Type="nvarchar" MaxLength="500" />
+          <Property Name="d19" Type="nvarchar" MaxLength="500" />
+          <Property Name="d20" Type="nvarchar" MaxLength="500" />
+          <Property Name="d21" Type="nvarchar" MaxLength="500" />
+          <Property Name="d22" Type="nvarchar" MaxLength="500" />
+          <Property Name="d23" Type="nvarchar" MaxLength="500" />
+          <Property Name="d24" Type="nvarchar" MaxLength="500" />
+          <Property Name="d25" Type="nvarchar" MaxLength="500" />
+          <Property Name="d26" Type="nvarchar" MaxLength="500" />
+          <Property Name="d27" Type="nvarchar" MaxLength="500" />
+          <Property Name="d28" Type="nvarchar" MaxLength="500" />
+          <Property Name="d29" Type="nvarchar" MaxLength="500" />
+          <Property Name="d30" Type="nvarchar" MaxLength="500" />
+          <Property Name="d31" Type="nvarchar" MaxLength="500" />
+          <Property Name="WordDay" Type="int" />
+        </EntityType>
+        <EntityContainer Name="XNHRModelStoreContainer">
+          <EntitySet Name="ehr_department" EntityType="Self.ehr_department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ehr_employee" EntityType="Self.ehr_employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ehr_postday" EntityType="Self.ehr_postday" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ehr_sum" EntityType="Self.ehr_sum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HR_Times" EntityType="Self.HR_Times" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -76,6 +222,9 @@
         <EntityContainer Name="XNHREntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ehr_employee" EntityType="XNHRModel.ehr_employee" />
           <EntitySet Name="ehr_department" EntityType="XNHRModel.ehr_department" />
+          <EntitySet Name="ehr_postday" EntityType="XNHRModel.ehr_postday" />
+          <EntitySet Name="ehr_sum" EntityType="XNHRModel.ehr_sum" />
+          <EntitySet Name="HR_Times" EntityType="XNHRModel.HR_Times" />
         </EntityContainer>
         <EntityType Name="ehr_employee">
           <Key>
@@ -136,6 +285,149 @@
           <Property Type="String" Name="maps" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="number" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="charparent" MaxLength="128" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ehr_postday">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="employee" Type="Int64" Nullable="false" />
+          <Property Name="department" Type="Int32" Nullable="false" />
+          <Property Name="departmentname" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="time1" Type="DateTime" Precision="3" />
+          <Property Name="time2" Type="DateTime" Precision="3" />
+          <Property Name="time3" Type="DateTime" Precision="3" />
+          <Property Name="time4" Type="DateTime" Precision="3" />
+          <Property Name="time5" Type="DateTime" Precision="3" />
+          <Property Name="time6" Type="DateTime" Precision="3" />
+          <Property Name="time7" Type="DateTime" Precision="3" />
+          <Property Name="time8" Type="DateTime" Precision="3" />
+          <Property Name="time9" Type="DateTime" Precision="3" />
+          <Property Name="time10" Type="DateTime" Precision="3" />
+          <Property Name="time11" Type="DateTime" Precision="3" />
+          <Property Name="time12" Type="DateTime" Precision="3" />
+          <Property Name="more" Type="Int16" />
+          <Property Name="count" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ehr_sum">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="employee" Type="Int64" Nullable="false" />
+          <Property Name="department" Type="Int32" Nullable="false" />
+          <Property Name="departmentname" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="d_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="d_end" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="registration" Type="DateTime" Precision="0" />
+          <Property Name="positive" Type="DateTime" Precision="0" />
+          <Property Name="rest" Type="Single" />
+          <Property Name="belate" Type="Int32" />
+          <Property Name="leaveearly" Type="Int32" />
+          <Property Name="absenteeism" Type="Int32" />
+          <Property Name="leave" Type="Int32" />
+          <Property Name="overtime" Type="Int32" />
+          <Property Name="workovertime" Type="Int32" />
+          <Property Name="holidayovertime" Type="Int32" />
+          <Property Name="workingtime" Type="Int32" />
+          <Property Name="shouldworkingtime" Type="Int32" />
+          <Property Name="shouldworkingday" Type="Single" />
+          <Property Name="workingday" Type="Single" />
+          <Property Name="leaveday" Type="Single" />
+          <Property Name="leavenumber" Type="Int32" />
+          <Property Name="belatenumber" Type="Int32" />
+          <Property Name="leaveearlynumber" Type="Int32" />
+          <Property Name="absenteeismnumber" Type="Int32" />
+          <Property Name="replacementnumber" Type="Int32" />
+          <Property Name="mark" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="leaverecord" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d1" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d2" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d3" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d4" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d5" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d6" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d7" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d8" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d9" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d10" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d11" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d12" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d13" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d14" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d15" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d16" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d17" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d18" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d19" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d20" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d21" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d22" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d23" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d24" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d25" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d26" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d27" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d28" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d29" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d30" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="d31" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="early" Type="Int32" />
+          <Property Name="in" Type="Int32" />
+          <Property Name="late" Type="Int32" />
+          <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="HR_Times">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="Int32" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="d_start" Type="DateTime" Precision="0" />
+          <Property Name="d_end" Type="DateTime" Precision="0" />
+          <Property Name="workingtime" Type="Int32" />
+          <Property Name="shouldworkingtime" Type="Int32" />
+          <Property Name="shouldworkingday" Type="Single" />
+          <Property Name="workingday" Type="Single" />
+          <Property Name="d1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d5" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d6" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d7" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d8" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d9" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d10" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d11" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d12" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d13" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d14" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d15" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d16" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d17" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d18" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d19" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d20" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d21" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d22" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d23" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d24" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d25" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d26" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d27" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d28" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d29" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d30" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="d31" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="WordDay" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -205,6 +497,152 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ehr_postday">
+            <EntityTypeMapping TypeName="XNHRModel.ehr_postday">
+              <MappingFragment StoreEntitySet="ehr_postday">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="more" ColumnName="more" />
+                <ScalarProperty Name="time12" ColumnName="time12" />
+                <ScalarProperty Name="time11" ColumnName="time11" />
+                <ScalarProperty Name="time10" ColumnName="time10" />
+                <ScalarProperty Name="time9" ColumnName="time9" />
+                <ScalarProperty Name="time8" ColumnName="time8" />
+                <ScalarProperty Name="time7" ColumnName="time7" />
+                <ScalarProperty Name="time6" ColumnName="time6" />
+                <ScalarProperty Name="time5" ColumnName="time5" />
+                <ScalarProperty Name="time4" ColumnName="time4" />
+                <ScalarProperty Name="time3" ColumnName="time3" />
+                <ScalarProperty Name="time2" ColumnName="time2" />
+                <ScalarProperty Name="time1" ColumnName="time1" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="departmentname" ColumnName="departmentname" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="employee" ColumnName="employee" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ehr_sum">
+            <EntityTypeMapping TypeName="XNHRModel.ehr_sum">
+              <MappingFragment StoreEntitySet="ehr_sum">
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="late" ColumnName="late" />
+                <ScalarProperty Name="in" ColumnName="in" />
+                <ScalarProperty Name="early" ColumnName="early" />
+                <ScalarProperty Name="d31" ColumnName="d31" />
+                <ScalarProperty Name="d30" ColumnName="d30" />
+                <ScalarProperty Name="d29" ColumnName="d29" />
+                <ScalarProperty Name="d28" ColumnName="d28" />
+                <ScalarProperty Name="d27" ColumnName="d27" />
+                <ScalarProperty Name="d26" ColumnName="d26" />
+                <ScalarProperty Name="d25" ColumnName="d25" />
+                <ScalarProperty Name="d24" ColumnName="d24" />
+                <ScalarProperty Name="d23" ColumnName="d23" />
+                <ScalarProperty Name="d22" ColumnName="d22" />
+                <ScalarProperty Name="d21" ColumnName="d21" />
+                <ScalarProperty Name="d20" ColumnName="d20" />
+                <ScalarProperty Name="d19" ColumnName="d19" />
+                <ScalarProperty Name="d18" ColumnName="d18" />
+                <ScalarProperty Name="d17" ColumnName="d17" />
+                <ScalarProperty Name="d16" ColumnName="d16" />
+                <ScalarProperty Name="d15" ColumnName="d15" />
+                <ScalarProperty Name="d14" ColumnName="d14" />
+                <ScalarProperty Name="d13" ColumnName="d13" />
+                <ScalarProperty Name="d12" ColumnName="d12" />
+                <ScalarProperty Name="d11" ColumnName="d11" />
+                <ScalarProperty Name="d10" ColumnName="d10" />
+                <ScalarProperty Name="d9" ColumnName="d9" />
+                <ScalarProperty Name="d8" ColumnName="d8" />
+                <ScalarProperty Name="d7" ColumnName="d7" />
+                <ScalarProperty Name="d6" ColumnName="d6" />
+                <ScalarProperty Name="d5" ColumnName="d5" />
+                <ScalarProperty Name="d4" ColumnName="d4" />
+                <ScalarProperty Name="d3" ColumnName="d3" />
+                <ScalarProperty Name="d2" ColumnName="d2" />
+                <ScalarProperty Name="d1" ColumnName="d1" />
+                <ScalarProperty Name="leaverecord" ColumnName="leaverecord" />
+                <ScalarProperty Name="mark" ColumnName="mark" />
+                <ScalarProperty Name="replacementnumber" ColumnName="replacementnumber" />
+                <ScalarProperty Name="absenteeismnumber" ColumnName="absenteeismnumber" />
+                <ScalarProperty Name="leaveearlynumber" ColumnName="leaveearlynumber" />
+                <ScalarProperty Name="belatenumber" ColumnName="belatenumber" />
+                <ScalarProperty Name="leavenumber" ColumnName="leavenumber" />
+                <ScalarProperty Name="leaveday" ColumnName="leaveday" />
+                <ScalarProperty Name="workingday" ColumnName="workingday" />
+                <ScalarProperty Name="shouldworkingday" ColumnName="shouldworkingday" />
+                <ScalarProperty Name="shouldworkingtime" ColumnName="shouldworkingtime" />
+                <ScalarProperty Name="workingtime" ColumnName="workingtime" />
+                <ScalarProperty Name="holidayovertime" ColumnName="holidayovertime" />
+                <ScalarProperty Name="workovertime" ColumnName="workovertime" />
+                <ScalarProperty Name="overtime" ColumnName="overtime" />
+                <ScalarProperty Name="leave" ColumnName="leave" />
+                <ScalarProperty Name="absenteeism" ColumnName="absenteeism" />
+                <ScalarProperty Name="leaveearly" ColumnName="leaveearly" />
+                <ScalarProperty Name="belate" ColumnName="belate" />
+                <ScalarProperty Name="rest" ColumnName="rest" />
+                <ScalarProperty Name="positive" ColumnName="positive" />
+                <ScalarProperty Name="registration" ColumnName="registration" />
+                <ScalarProperty Name="d_end" ColumnName="d_end" />
+                <ScalarProperty Name="d_start" ColumnName="d_start" />
+                <ScalarProperty Name="departmentname" ColumnName="departmentname" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="employee" ColumnName="employee" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HR_Times">
+            <EntityTypeMapping TypeName="XNHRModel.HR_Times">
+              <MappingFragment StoreEntitySet="HR_Times">
+                <ScalarProperty Name="WordDay" ColumnName="WordDay" />
+                <ScalarProperty Name="d31" ColumnName="d31" />
+                <ScalarProperty Name="d30" ColumnName="d30" />
+                <ScalarProperty Name="d29" ColumnName="d29" />
+                <ScalarProperty Name="d28" ColumnName="d28" />
+                <ScalarProperty Name="d27" ColumnName="d27" />
+                <ScalarProperty Name="d26" ColumnName="d26" />
+                <ScalarProperty Name="d25" ColumnName="d25" />
+                <ScalarProperty Name="d24" ColumnName="d24" />
+                <ScalarProperty Name="d23" ColumnName="d23" />
+                <ScalarProperty Name="d22" ColumnName="d22" />
+                <ScalarProperty Name="d21" ColumnName="d21" />
+                <ScalarProperty Name="d20" ColumnName="d20" />
+                <ScalarProperty Name="d19" ColumnName="d19" />
+                <ScalarProperty Name="d18" ColumnName="d18" />
+                <ScalarProperty Name="d17" ColumnName="d17" />
+                <ScalarProperty Name="d16" ColumnName="d16" />
+                <ScalarProperty Name="d15" ColumnName="d15" />
+                <ScalarProperty Name="d14" ColumnName="d14" />
+                <ScalarProperty Name="d13" ColumnName="d13" />
+                <ScalarProperty Name="d12" ColumnName="d12" />
+                <ScalarProperty Name="d11" ColumnName="d11" />
+                <ScalarProperty Name="d10" ColumnName="d10" />
+                <ScalarProperty Name="d9" ColumnName="d9" />
+                <ScalarProperty Name="d8" ColumnName="d8" />
+                <ScalarProperty Name="d7" ColumnName="d7" />
+                <ScalarProperty Name="d6" ColumnName="d6" />
+                <ScalarProperty Name="d5" ColumnName="d5" />
+                <ScalarProperty Name="d4" ColumnName="d4" />
+                <ScalarProperty Name="d3" ColumnName="d3" />
+                <ScalarProperty Name="d2" ColumnName="d2" />
+                <ScalarProperty Name="d1" ColumnName="d1" />
+                <ScalarProperty Name="workingday" ColumnName="workingday" />
+                <ScalarProperty Name="shouldworkingday" ColumnName="shouldworkingday" />
+                <ScalarProperty Name="shouldworkingtime" ColumnName="shouldworkingtime" />
+                <ScalarProperty Name="workingtime" ColumnName="workingtime" />
+                <ScalarProperty Name="d_end" ColumnName="d_end" />
+                <ScalarProperty Name="d_start" ColumnName="d_start" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -222,6 +660,7 @@
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

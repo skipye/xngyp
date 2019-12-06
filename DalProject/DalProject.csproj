@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HRTimesDal.cs" />
     <Compile Include="SendSMSDal.cs" />
     <Compile Include="CostDal.cs" />
     <Compile Include="FinanceDal.cs" />

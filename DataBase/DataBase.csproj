@@ -68,13 +68,22 @@
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ehr_employee.cs">
-      <DependentUpon>SaleHRModel.tt</DependentUpon>
+      <DependentUpon>XNHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ehr_postday.cs">
+      <DependentUpon>XNHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ehr_sum.cs">
+      <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FR_contract.cs">
       <DependentUpon>XNFinance.tt</DependentUpon>
     </Compile>
     <Compile Include="FR_contract_logs.cs">
       <DependentUpon>XNFinance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HR_Times.cs">
+      <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="INV_inventories.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>

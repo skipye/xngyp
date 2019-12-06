@@ -144,5 +144,8 @@ a{color:#333}a:hover,a:focus,.maincolor,.maincolor a{color:#06c}
     .textoverflow { max-width: 150px !important;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 }
 
-
+.Stextoverflow {
+   
+    white-space: nowrap;
+}
 .ditem {float: left;width: 48%; margin-left: 1%;}
