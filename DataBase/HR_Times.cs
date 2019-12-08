@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class HR_Times
     {
+        public HR_Times()
+        {
+            this.HR_WorkTime = new HashSet<HR_WorkTime>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> Department { get; set; }
@@ -56,5 +61,10 @@ namespace DataBase
         public string d30 { get; set; }
         public string d31 { get; set; }
         public Nullable<int> WordDay { get; set; }
+        public string TopMonthTX { get; set; }
+        public string MonthTX { get; set; }
+        public string TotalTX { get; set; }
+    
+        public virtual ICollection<HR_WorkTime> HR_WorkTime { get; set; }
     }
 }

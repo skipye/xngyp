@@ -20,6 +20,37 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        
+        public bool AddOrUpdate(SHRTimesModel Models)
+        {
+            try { CDal.AddOrUpdate(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public SHRTimesModel GetDetailById(SHRTimesModel Models)
+        {
+            try { return CDal.GetDetailById(Models); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public HRTimesModel GetCWTime(int Id)
+        {
+            try { return CDal.GetCWTime(Id); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool EditCWTime(HRTimesModel Models)
+        {
+            try { CDal.EditCWTime(Models); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

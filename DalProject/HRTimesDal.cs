@@ -14,6 +14,7 @@ namespace DalProject
         {
             DateTime StartTime = Convert.ToDateTime("1999-12-31");
             DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            int CountColumn = 30;
             if (!string.IsNullOrEmpty(SModel.StartTime))
             {
                 StartTime = Convert.ToDateTime(SModel.StartTime);
@@ -22,9 +23,10 @@ namespace DalProject
             {
                 EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
             }
+            CountColumn = EndTime.AddDays(-1).Day;
             using (var db = new XNHREntities())
             {
-                var list = (from p in db.HR_Times.Where(k=>k.Department!=355)
+                var list = (from p in db.HR_Times.Where(k => k.Department != 355)
                             where p.d_start >= StartTime
                             where p.d_end <= EndTime
                             where SModel.TypeId == 2 ? p.Department == 350 : SModel.TypeId == 1 ? p.Department != 350 : true
@@ -34,8 +36,8 @@ namespace DalProject
                                 Name = p.Name,
                                 Department = p.Department,
                                 DepartmentName = p.DepartmentName,
-                                d_start=p.d_start,
-                                d_end=p.d_end,
+                                d_start = p.d_start,
+                                d_end = p.d_end,
                                 workingtime = p.workingtime,
                                 shouldworkingtime = p.shouldworkingtime,
                                 shouldworkingday = p.shouldworkingday,
@@ -72,58 +74,61 @@ namespace DalProject
                                 d30 = p.d30,
                                 d31 = p.d31,
                                 WorkDay = p.WordDay,
+                                TopMonthTX = p.TopMonthTX,
+                                MonthTX = p.MonthTX,
+                                TotalTX = p.TotalTX,
                             }).ToList();
                 if (list.Count == 0)
                 {
-                    var listNew = (from p in db.ehr_sum.Where(k => k.department != 355 && k.employee!= 3285 && k.employee!= 3204)
+                    var listNew = (from p in db.ehr_sum.Where(k => k.department != 355 && k.employee != 3285 && k.employee != 3204)
                                    where p.d_start >= StartTime
-                                where p.d_end <= EndTime
-                                where SModel.TypeId == 2 ? p.department == 350 : SModel.TypeId == 1 ? p.department != 350 : true
-                                select new HRTimesModel
-                                {
-                                    Id = p.id,
-                                    Name = p.name,
-                                    Department = p.department,
-                                    DepartmentName = p.departmentname,
-                                    d_start = p.d_start,
-                                    d_end = p.d_end,
-                                    workingtime = p.workingtime,
-                                    shouldworkingtime = p.shouldworkingtime,
-                                    shouldworkingday = p.shouldworkingday,
-                                    workingday = p.workingday,
-                                    d1 = p.d1,
-                                    d2 = p.d2,
-                                    d3 = p.d3,
-                                    d4 = p.d4,
-                                    d5 = p.d5,
-                                    d6 = p.d6,
-                                    d7 = p.d7,
-                                    d8 = p.d8,
-                                    d9 = p.d9,
-                                    d10 = p.d10,
-                                    d11 = p.d11,
-                                    d12 = p.d12,
-                                    d13 = p.d13,
-                                    d14 = p.d14,
-                                    d15 = p.d15,
-                                    d16 = p.d16,
-                                    d17 = p.d17,
-                                    d18 = p.d18,
-                                    d19 = p.d19,
-                                    d20 = p.d20,
-                                    d21 = p.d21,
-                                    d22 = p.d22,
-                                    d23 = p.d23,
-                                    d24 = p.d24,
-                                    d25 = p.d25,
-                                    d26 = p.d26,
-                                    d27 = p.d27,
-                                    d28 = p.d28,
-                                    d29 = p.d29,
-                                    d30 = p.d30,
-                                    d31 = p.d31,
-                                    
-                                }).ToList();
+                                   where p.d_end <= EndTime
+                                   where SModel.TypeId == 2 ? p.department == 350 : SModel.TypeId == 1 ? p.department != 350 : true
+                                   select new HRTimesModel
+                                   {
+                                       Id = p.id,
+                                       Name = p.name,
+                                       Department = p.department,
+                                       DepartmentName = p.departmentname,
+                                       d_start = p.d_start,
+                                       d_end = p.d_end,
+                                       workingtime = p.workingtime,
+                                       shouldworkingtime = p.shouldworkingtime,
+                                       shouldworkingday = p.shouldworkingday,
+                                       workingday = p.workingday,
+                                       d1 = p.d1,
+                                       d2 = p.d2,
+                                       d3 = p.d3,
+                                       d4 = p.d4,
+                                       d5 = p.d5,
+                                       d6 = p.d6,
+                                       d7 = p.d7,
+                                       d8 = p.d8,
+                                       d9 = p.d9,
+                                       d10 = p.d10,
+                                       d11 = p.d11,
+                                       d12 = p.d12,
+                                       d13 = p.d13,
+                                       d14 = p.d14,
+                                       d15 = p.d15,
+                                       d16 = p.d16,
+                                       d17 = p.d17,
+                                       d18 = p.d18,
+                                       d19 = p.d19,
+                                       d20 = p.d20,
+                                       d21 = p.d21,
+                                       d22 = p.d22,
+                                       d23 = p.d23,
+                                       d24 = p.d24,
+                                       d25 = p.d25,
+                                       d26 = p.d26,
+                                       d27 = p.d27,
+                                       d28 = p.d28,
+                                       d29 = p.d29,
+                                       d30 = p.d30,
+                                       d31 = p.d31,
+
+                                   }).ToList();
                     foreach (var item in listNew)
                     {
                         var tables = new HR_Times();
@@ -167,14 +172,138 @@ namespace DalProject
                         tables.d29 = item.d29;
                         tables.d30 = item.d30;
                         tables.d31 = item.d31;
-                        tables.WordDay = Convert.ToInt32(item.d1.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d2.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d3.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d4.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d5.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d6.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d7.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d8.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d9.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d10.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d11.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d12.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d13.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d14.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d15.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d16.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d17.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d18.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d19.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d20.Length > 0 ? 1 : 0) +Convert.ToInt32(item.d21.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d22.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d23.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d24.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d25.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d26.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d27.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d28.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d29.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d30.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d1.Length > 0 ? 1 :0);
+                        tables.WordDay = Convert.ToInt32(item.d1.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d2.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d3.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d4.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d5.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d6.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d7.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d8.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d9.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d10.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d11.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d12.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d13.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d14.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d15.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d16.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d17.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d18.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d19.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d20.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d21.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d22.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d23.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d24.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d25.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d26.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d27.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d28.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d29.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d30.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d1.Length > 0 ? 1 : 0);
                         db.HR_Times.Add(tables);
                     }
                     db.SaveChanges();
                 }
-
+                else
+                {
+                    foreach (var item in list)
+                    {
+                        var table = db.HR_WorkTime.Where(k => k.HRId == item.Id).ToList();
+                        if (table != null)
+                        {
+                            item.d1 = item.d1 == "" && table.Where(k => k.WorkDate == "d1").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d1").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d1").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d1").Select(k => k.Remark).FirstOrDefault() + " " + item.d1 : item.d1 + " " + table.Where(k => k.WorkDate == "d1").Select(k => k.Remark).FirstOrDefault() : item.d1;
+                            item.d2 = item.d2 == "" && table.Where(k => k.WorkDate == "d2").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d2").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d2").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d2").Select(k => k.Remark).FirstOrDefault() + " " + item.d2 : item.d2 + " " + table.Where(k => k.WorkDate == "d2").Select(k => k.Remark).FirstOrDefault() : item.d2;
+                            item.d3 = item.d3 == "" && table.Where(k => k.WorkDate == "d3").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d3").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d3").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d3").Select(k => k.Remark).FirstOrDefault() + " " + item.d3 : item.d3 + " " + table.Where(k => k.WorkDate == "d3").Select(k => k.Remark).FirstOrDefault() : item.d3;
+                            item.d4 = item.d4 == "" && table.Where(k => k.WorkDate == "d4").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d4").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d4").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d4").Select(k => k.Remark).FirstOrDefault() + " " + item.d4 : item.d4 + " " + table.Where(k => k.WorkDate == "d4").Select(k => k.Remark).FirstOrDefault() : item.d4;
+                            item.d5 = item.d5 == "" && table.Where(k => k.WorkDate == "d5").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d5").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d5").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d5").Select(k => k.Remark).FirstOrDefault() + " " + item.d5 : item.d5 + " " + table.Where(k => k.WorkDate == "d5").Select(k => k.Remark).FirstOrDefault() : item.d5;
+                            item.d6 = item.d6 == "" && table.Where(k => k.WorkDate == "d6").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d6").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d6").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d6").Select(k => k.Remark).FirstOrDefault() + " " + item.d6 : item.d6 + " " + table.Where(k => k.WorkDate == "d6").Select(k => k.Remark).FirstOrDefault() : item.d6;
+                            item.d7 = item.d7 == "" && table.Where(k => k.WorkDate == "d7").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d7").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d7").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d7").Select(k => k.Remark).FirstOrDefault() + " " + item.d7 : item.d7 + " " + table.Where(k => k.WorkDate == "d7").Select(k => k.Remark).FirstOrDefault() : item.d7;
+                            item.d8 = item.d8 == "" && table.Where(k => k.WorkDate == "d8").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d8").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d8").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d8").Select(k => k.Remark).FirstOrDefault() + " " + item.d8 : item.d8 + " " + table.Where(k => k.WorkDate == "d8").Select(k => k.Remark).FirstOrDefault() : item.d8;
+                            item.d9 = item.d9 == "" && table.Where(k => k.WorkDate == "d9").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d9").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d9").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d9").Select(k => k.Remark).FirstOrDefault() + " " + item.d9 : item.d9 + " " + table.Where(k => k.WorkDate == "d9").Select(k => k.Remark).FirstOrDefault() : item.d9;
+                            item.d10 = item.d10 == "" && table.Where(k => k.WorkDate == "d10").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d10").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d10").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d10").Select(k => k.Remark).FirstOrDefault() + " " + item.d10 : item.d10 + " " + table.Where(k => k.WorkDate == "d10").Select(k => k.Remark).FirstOrDefault() : item.d10;
+                            item.d11 = item.d11 == "" && table.Where(k => k.WorkDate == "d11").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d11").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d11").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d11").Select(k => k.Remark).FirstOrDefault() + " " + item.d11 : item.d11 + " " + table.Where(k => k.WorkDate == "d11").Select(k => k.Remark).FirstOrDefault() : item.d11;
+                            item.d12 = item.d12 == "" && table.Where(k => k.WorkDate == "d12").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d12").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d12").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d12").Select(k => k.Remark).FirstOrDefault() + " " + item.d12 : item.d12 + " " + table.Where(k => k.WorkDate == "d12").Select(k => k.Remark).FirstOrDefault() : item.d12;
+                            
+                            item.d13 = item.d13 == "" && table.Where(k => k.WorkDate == "d13").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d13").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d13").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d13").Select(k => k.Remark).FirstOrDefault() + " " + item.d13 : item.d13 + " " + table.Where(k => k.WorkDate == "d13").Select(k => k.Remark).FirstOrDefault() : item.d13;
+                            item.d14 = item.d14 == "" && table.Where(k => k.WorkDate == "d14").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d14").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d14").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d14").Select(k => k.Remark).FirstOrDefault() + " " + item.d14 : item.d14 + " " + table.Where(k => k.WorkDate == "d14").Select(k => k.Remark).FirstOrDefault() : item.d14;
+                            item.d15 = item.d15 == "" && table.Where(k => k.WorkDate == "d15").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d15").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d15").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d15").Select(k => k.Remark).FirstOrDefault() + " " + item.d15 : item.d15 + " " + table.Where(k => k.WorkDate == "d15").Select(k => k.Remark).FirstOrDefault() : item.d15;
+                            item.d16 = item.d16 == "" && table.Where(k => k.WorkDate == "d16").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d16").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d16").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d16").Select(k => k.Remark).FirstOrDefault() + " " + item.d16 : item.d16 + " " + table.Where(k => k.WorkDate == "d16").Select(k => k.Remark).FirstOrDefault() : item.d16;
+                            item.d17 = item.d17 == "" && table.Where(k => k.WorkDate == "d17").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d17").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d17").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d17").Select(k => k.Remark).FirstOrDefault() + " " + item.d17 : item.d17 + " " + table.Where(k => k.WorkDate == "d17").Select(k => k.Remark).FirstOrDefault() : item.d17;
+                            item.d18 = item.d18 == "" && table.Where(k => k.WorkDate == "d18").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d18").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d18").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d18").Select(k => k.Remark).FirstOrDefault() + " " + item.d18 : item.d18 + " " + table.Where(k => k.WorkDate == "d18").Select(k => k.Remark).FirstOrDefault() : item.d18;
+                            item.d19 = item.d19 == "" && table.Where(k => k.WorkDate == "d19").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d19").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d19").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d19").Select(k => k.Remark).FirstOrDefault() + " " + item.d19 : item.d19 + " " + table.Where(k => k.WorkDate == "d19").Select(k => k.Remark).FirstOrDefault() : item.d19;
+                            item.d20 = item.d20 == "" && table.Where(k => k.WorkDate == "d20").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d20").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d20").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d20").Select(k => k.Remark).FirstOrDefault() + " " + item.d20 : item.d20 + " " + table.Where(k => k.WorkDate == "d20").Select(k => k.Remark).FirstOrDefault() : item.d20;
+                            item.d21 = item.d21 == "" && table.Where(k => k.WorkDate == "d21").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d21").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d21").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d21").Select(k => k.Remark).FirstOrDefault() + " " + item.d21 : item.d21 + " " + table.Where(k => k.WorkDate == "d21").Select(k => k.Remark).FirstOrDefault() : item.d21;
+                            item.d22 = item.d22 == "" && table.Where(k => k.WorkDate == "d22").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d22").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d22").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d22").Select(k => k.Remark).FirstOrDefault() + " " + item.d22 : item.d22 + " " + table.Where(k => k.WorkDate == "d22").Select(k => k.Remark).FirstOrDefault() : item.d22;
+                            item.d23 = item.d23 == "" && table.Where(k => k.WorkDate == "d23").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d23").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d23").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d23").Select(k => k.Remark).FirstOrDefault() + " " + item.d23 : item.d23 + " " + table.Where(k => k.WorkDate == "d23").Select(k => k.Remark).FirstOrDefault() : item.d23;
+                            item.d24 = item.d24 == "" && table.Where(k => k.WorkDate == "d24").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d24").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d24").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d24").Select(k => k.Remark).FirstOrDefault() + " " + item.d24 : item.d24 + " " + table.Where(k => k.WorkDate == "d24").Select(k => k.Remark).FirstOrDefault() : item.d24;
+                            item.d25 = item.d25 == "" && table.Where(k => k.WorkDate == "d25").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d25").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d25").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d25").Select(k => k.Remark).FirstOrDefault() + " " + item.d25 : item.d25 + " " + table.Where(k => k.WorkDate == "d25").Select(k => k.Remark).FirstOrDefault() : item.d25;
+                            item.d26 = item.d26 == "" && table.Where(k => k.WorkDate == "d26").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d26").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d26").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d26").Select(k => k.Remark).FirstOrDefault() + " " + item.d26 : item.d26 + " " + table.Where(k => k.WorkDate == "d26").Select(k => k.Remark).FirstOrDefault() : item.d26;
+                            item.d27 = item.d27 == "" && table.Where(k => k.WorkDate == "d27").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d27").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d27").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d27").Select(k => k.Remark).FirstOrDefault() + " " + item.d27 : item.d27 + " " + table.Where(k => k.WorkDate == "d27").Select(k => k.Remark).FirstOrDefault() : item.d27;
+                            item.d28 = item.d28 == "" && table.Where(k => k.WorkDate == "d28").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d28").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d28").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d28").Select(k => k.Remark).FirstOrDefault() + " " + item.d28 : item.d28 + " " + table.Where(k => k.WorkDate == "d28").Select(k => k.Remark).FirstOrDefault() : item.d28;
+                            if (CountColumn>= 29)
+                            {
+                                item.d29 = item.d29 == "" && table.Where(k => k.WorkDate == "d29").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d29").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d29").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d29").Select(k => k.Remark).FirstOrDefault() + " " + item.d29 : item.d29 + " " + table.Where(k => k.WorkDate == "d29").Select(k => k.Remark).FirstOrDefault() : item.d29;
+                            }
+                            else { item.d29 = "无"; }
+                            if (CountColumn >= 30)
+                            {
+                                item.d30 = item.d30 == "" && table.Where(k => k.WorkDate == "d30").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d30").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d30").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d30").Select(k => k.Remark).FirstOrDefault() + " " + item.d30 : item.d30 + " " + table.Where(k => k.WorkDate == "d30").Select(k => k.Remark).FirstOrDefault() : item.d30;
+                            } else { item.d30 = "无"; }
+                            if (CountColumn >= 31)
+                            {
+                                item.d31 = item.d31 == "" && table.Where(k => k.WorkDate == "d31").FirstOrDefault() == null ? "休" : table.Where(k => k.WorkDate == "d31").FirstOrDefault() != null ? table.Where(k => k.WorkDate == "d31").Select(k => k.WorkTime).FirstOrDefault() == 1 ? table.Where(k => k.WorkDate == "d31").Select(k => k.Remark).FirstOrDefault() + " " + item.d31 : item.d31 + " " + table.Where(k => k.WorkDate == "d31").Select(k => k.Remark).FirstOrDefault() : item.d31;
+                            }
+                            else { item.d31 = "无"; }
+                        }
+                    }
+                }
                 return list;
             }
         }
+        public void AddOrUpdate(SHRTimesModel Models)
+        {
+            Random r = new Random();
+            using (var db = new XNHREntities())
+            {
+                var table = db.HR_WorkTime.Where(k => k.HRId == Models.HRId && k.WorkDate == Models.WorkDate).SingleOrDefault();
+                if (table!=null)
+                {
+                    table.WorkTime = Models.WorkTime;
+                    table.Remark = Models.Remark;
+                }
+                else
+                {
+                    HR_WorkTime tables = new HR_WorkTime();
+                    tables.Id = Guid.NewGuid();
+                    tables.HRId = Models.HRId;
+                    tables.WorkDate = Models.WorkDate;
+                    tables.WorkTime = Models.WorkTime;
+                    tables.Remark = Models.Remark;
+                    tables.CreateTime = DateTime.Now;
+                    
+                    db.HR_WorkTime.Add(tables);
+                }
+                db.SaveChanges();
+            }
+        }
+        public SHRTimesModel GetDetailById(SHRTimesModel Models)
+        {
+            using (var db = new XNHREntities())
+            {
+                var tables = (from p in db.HR_WorkTime.Where(k => k.HRId == Models.HRId && k.WorkDate == Models.WorkDate)
+                              select new SHRTimesModel
+                              {
+                                  HRId = Models.HRId,
+                                  WorkDate = Models.WorkDate,
+                                  WorkTime = p.WorkTime,
+                                  Remark = p.Remark,
+                              }).SingleOrDefault();
+                return tables;
+            }
+        }
+        public HRTimesModel GetCWTime(int Id)
+        {
+            using (var db = new XNHREntities())
+            {
+                var table = (from p in db.HR_Times.Where(k => k.Id == Id)
+                             select new HRTimesModel
+                             {
+                                 Id = p.Id,
+                                 shouldworkingday = p.shouldworkingday,
+                                 WorkDay = p.WordDay,
+                                 TopMonthTX = p.TopMonthTX,
+                                 MonthTX = p.MonthTX,
+                                 TotalTX = p.TotalTX,
+                             }).FirstOrDefault();
+                return table;
+            }
+        }
+        public void EditCWTime(HRTimesModel Models)
+        {
+            using (var db = new XNHREntities())
+            {
+                var table = db.HR_Times.Where(k => k.Id == Models.Id).SingleOrDefault();
+                table.shouldworkingday = Models.shouldworkingday;
+                table.WordDay = Models.WorkDay;
+                table.TopMonthTX = Models.TopMonthTX;
+                table.MonthTX = Models.MonthTX;
+                table.TotalTX = Models.TotalTX;
+                db.SaveChanges();
+            }
+        }
+
     }
 }

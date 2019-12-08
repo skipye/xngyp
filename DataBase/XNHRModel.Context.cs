@@ -30,5 +30,6 @@ namespace DataBase
         public DbSet<ehr_postday> ehr_postday { get; set; }
         public DbSet<ehr_sum> ehr_sum { get; set; }
         public DbSet<HR_Times> HR_Times { get; set; }
+        public DbSet<HR_WorkTime> HR_WorkTime { get; set; }
     }
 }

@@ -85,6 +85,9 @@
     <Compile Include="HR_Times.cs">
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HR_WorkTime.cs">
+      <DependentUpon>XNHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="INV_inventories.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>

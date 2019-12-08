@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="XNHRModel.ehr_postday" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="XNHRModel.ehr_sum" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="XNHRModel.HR_Times" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="XNHRModel.HR_WorkTime" Width="1.5" PointX="12" PointY="4.125" />
+        <AssociationConnector Association="XNHRModel.FK_HR_WorkTime_HR_Times" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

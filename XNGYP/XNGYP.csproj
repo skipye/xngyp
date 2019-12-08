@@ -802,7 +802,11 @@
     <Content Include="Views\Finance\FFR.cshtml" />
     <Content Include="Views\Finance\ShowF.cshtml" />
     <Content Include="Views\HR\Index.cshtml" />
-    <Content Include="Views\HR\UserIndex.cshtml" />
+    <Content Include="Views\HR\CWIndex.cshtml" />
+    <Content Include="Views\HR\Work.cshtml" />
+    <Content Include="Views\HR\GRIndex.cshtml" />
+    <Content Include="Views\HR\CWWork.cshtml" />
+    <Content Include="Views\HR\CWGRIndex.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

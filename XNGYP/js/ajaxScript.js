@@ -12,6 +12,14 @@
 //    }
 //});
 //操作日志，MSGSTatus状态：登录：1，增加：2，删：3，改：4，审核：5，驳回：6，客户：7,安排生产：8
+//考勤补录数据
+function hrmsg(Id,d) {
+	var PostUrl = "/HR/Work";
+	var title = $(this).attr("title");
+	var WorkDate = "d" + d;
+	layer_show(title, PostUrl + "?HRId=" + Id + "&WorkDate=" + WorkDate, 650, 300);
+
+}
 function AddWorkLogs(MSG, MSGSTatus)
 {
     var PostUrl = '/Users/AddWorkLogs';

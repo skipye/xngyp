@@ -22,15 +22,48 @@ namespace XNGYP.Controllers
             if (string.IsNullOrEmpty(SModel.EndTime))
             {
                 SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
-                SModel.columnCount = datetime.AddDays(1 - datetime.Day).AddDays(-1).Day;
-                SModel.StrColumn = "";
-                for (int j = 1; j <= SModel.columnCount; j++)
-                {
-                    string Dian = ",";
-                    if (j == Convert.ToInt32(SModel.columnCount))
-                    { Dian = ""; }
-                    SModel.StrColumn += "{ \"data\": \"d"+j+"\", \"defaultContent\": \"\", \"className\": \"Stextoverflow\" }"+ Dian + "";
-                }
+            }
+            return View(SModel);
+        }
+        [Authorize]
+        public ActionResult GRIndex(SHRTimesModel SModel)
+        {
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(SModel.StartTime))
+            {
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModel.EndTime))
+            {
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            return View(SModel);
+        }
+        [Authorize]
+        public ActionResult CWIndex(SHRTimesModel SModel)
+        {
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(SModel.StartTime))
+            {
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModel.EndTime))
+            {
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            return View(SModel);
+        }
+        [Authorize]
+        public ActionResult CWGRIndex(SHRTimesModel SModel)
+        {
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(SModel.StartTime))
+            {
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModel.EndTime))
+            {
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
             }
             return View(SModel);
         }
@@ -43,6 +76,36 @@ namespace XNGYP.Controllers
                 ContentType = "application/json"
             };
         }
-        
+        public ActionResult Work(SHRTimesModel SModels)
+        {
+            SHRTimesModel models = new SHRTimesModel();
+            models = LSer.GetDetailById(SModels);
+            if (models != null)
+            { SModels = models; }
+            return View(SModels);
+        }
+        [ValidateInput(false)]
+        public ActionResult PostWork(SHRTimesModel Models)
+        {
+            if (LSer.AddOrUpdate(Models) == true)
+            {
+                return Content("1");
+            }
+            else { return View(Models); }
+        }
+        public ActionResult CWWork(int Id)
+        {
+            var models = LSer.GetCWTime(Id);
+            return View(models);
+        }
+        [ValidateInput(false)]
+        public ActionResult PostCWWork(HRTimesModel Models)
+        {
+            if (LSer.EditCWTime(Models) == true)
+            {
+                return Content("1");
+            }
+            else { return View(Models); }
+        }
     }
 }

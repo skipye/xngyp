@@ -49,13 +49,20 @@ namespace ModelProject
         public string d30 { get; set; }
         public string d31 { get; set; }
         public int? WorkDay { get; set; }
+        public string TopMonthTX { get; set; }
+        public string MonthTX { get; set; }
+        public string TotalTX { get; set; }
     }
     public class SHRTimesModel
     {
+        public int? HRId { get; set; }
         public int TypeId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public int columnCount { get; set; }
         public string StrColumn { get; set; }
+        public string WorkDate { get; set; }
+        public int? WorkTime { get; set; }
+        public string Remark { get; set; }
     }
 }
