@@ -569,15 +569,34 @@ namespace DalProject
                                 Volume = p.SYS_product.volume ?? 0,
                                 PersonPrice = p.SYS_product.reserved1,
                                 OldPersonPrice=p.PersonPrice,
+                                MCDPrice=p.INV_wood_type.prcie,
+                                ProductAreaId=p.SYS_product.product_area_id,
+                                W_BZ = p.INV_wood_type.g_bz ?? 0,
                             }).ToList();
                 foreach (var item in List)
                 {
+                    double CCL = 0.42;
+                    if (item.ProductAreaId == 6)
+                    {
+                        CCL = 0.45;
+                    }
+                    double Woodunit = 0;//吨，材积/出材率*比重*数量
+
+                    Woodunit = Convert.ToDouble(item.Volume) / CCL * Convert.ToDouble(item.W_BZ);
+                    
                     var NewTable = db.SYS_product_Cost.Where(k => k.Id == item.Id).FirstOrDefault();
-                    NewTable.PersonPrice = item.PersonPrice;
-                    NewTable.FLPrice = 0;
+                    //NewTable.PersonPrice = item.PersonPrice;
+                    //NewTable.FLPrice = 0;
                     NewTable.MCPrice = Convert.ToDecimal(Math.Floor(item.MCPrice.Value / 100) * 100);
-                    //NewTable.PersonPrice = Convert.ToDecimal(Math.Floor(item.PersonPrice.Value / 100) * 100);
                     NewTable.CostCprice = NewTable.MCPrice + NewTable.PersonPrice;
+                    if (item.MCDPrice <= 2000)
+                    {
+                        NewTable.MCFY = Convert.ToDecimal(Math.Floor(Woodunit * 2000 * 0.6 / 10) * 10);
+                    }
+                    else { NewTable.MCFY = 0; }
+                    
+                    //NewTable.PersonPrice = Convert.ToDecimal(Math.Floor(item.PersonPrice.Value / 100) * 100);
+                    
                     NewTable.CCprice = Convert.ToDecimal(Math.Floor((NewTable.CostCprice.Value * Convert.ToDecimal(1.6)) / 100) * 100);
                     NewTable.Volume = item.Volume;
                 }

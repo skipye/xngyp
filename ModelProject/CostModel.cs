@@ -30,6 +30,9 @@ namespace ModelProject
         public decimal? PersonPrice { get; set; }
         public decimal? Volume { get; set; }
         public decimal? OldPersonPrice { get; set; }
+        public decimal? MCDPrice { get; set; }
+        public int? ProductAreaId { get; set; }
+        public decimal? W_BZ { get; set; }
     }
     public class SCostModel
     {

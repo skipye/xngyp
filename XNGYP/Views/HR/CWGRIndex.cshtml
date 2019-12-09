@@ -65,7 +65,7 @@
 					<th>30</th>
 					<th>31</th>
 					<th>出勤</th>
-					<th>上班</th>
+					<th>加班</th>
 					<th style="width:100px;">操作</th>
 				</tr>
             </thead>
@@ -106,7 +106,7 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[2, "desc"]],//默认第几个排序
+            "aaSorting": [[1, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "scrollX": true,
             "bAutoWidth": false,
@@ -181,8 +181,8 @@
 				{ "data": "d29", "defaultContent": "", "className": "Stextoverflow" },
 				{ "data": "d30", "defaultContent": "", "className": "Stextoverflow" },
 				{ "data": "d31", "defaultContent": "", "className": "Stextoverflow" },
-				{ "data": "shouldworkingday", "defaultContent": "", "className": "c-primary" },
-				{ "data": "WorkDay", "defaultContent": "", "className": "c-green" },
+				{ "data": "WorkDay", "defaultContent": "", "className": "c-primary" },
+				{ "data": "MonthTX", "defaultContent": "", "className": "c-green" },
             ],
         });
     };
@@ -191,6 +191,6 @@
    function toExcelout() {
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=2";
+        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=2&DCTypeId=2";
     };
 </script> 

@@ -109,7 +109,7 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[2, "desc"]],//默认第几个排序
+            "aaSorting": [[1, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "scrollX": true,
             "bAutoWidth": false,
@@ -196,6 +196,6 @@
    function toExcelout() {
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=1";
+        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=1&DCTypeId=1";
     };
 </script> 

@@ -64,5 +64,6 @@ namespace ModelProject
         public string WorkDate { get; set; }
         public int? WorkTime { get; set; }
         public string Remark { get; set; }
+        public int DCTypeId { get; set; }
     }
 }

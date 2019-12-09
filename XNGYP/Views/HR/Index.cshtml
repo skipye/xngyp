@@ -90,14 +90,11 @@
 		param["EndTime"] = EndTime;
 		param["TypeId"] = 1;
 		search(param);
-
-		
     });
     $("#btnSearch").click(function () {
         //搜索条件
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        var TypeId = $("#TypeId").val().trim();
         //搜索
         param["StartTime"] = StartTime;
         param["EndTime"] = EndTime;
@@ -370,6 +367,6 @@
      function toExcelout() {
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=3";
+        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=1&DCTypeId=3";
     };
 </script> 

@@ -604,7 +604,7 @@ namespace DalProject
                     Exceltable.Columns.Add("29", typeof(string));
                     Exceltable.Columns.Add("30", typeof(string));
                     Exceltable.Columns.Add("31", typeof(string));
-                    if (SModel.TypeId == 1)
+                    if (SModel.DCTypeId == 1)
                     {
                         Exceltable.Columns.Add("应出勤", typeof(string));
                         Exceltable.Columns.Add("实出勤", typeof(string));
@@ -612,7 +612,7 @@ namespace DalProject
                         Exceltable.Columns.Add("本月调休", typeof(string));
                         Exceltable.Columns.Add("累计调休", typeof(string));
                     }
-                    if (SModel.TypeId == 2)
+                    if (SModel.DCTypeId == 2 || SModel.DCTypeId == 4)
                     {
                         Exceltable.Columns.Add("出勤", typeof(string));
                         Exceltable.Columns.Add("上班", typeof(string));
@@ -654,7 +654,7 @@ namespace DalProject
                         row["29"] = item.d29;
                         row["30"] = item.d30;
                         row["31"] = item.d10;
-                        if (SModel.TypeId == 1)
+                        if (SModel.DCTypeId == 1)
                         {
                             row["应出勤"] = item.shouldworkingday;
                             row["实出勤"] = item.WorkDay;
@@ -662,10 +662,10 @@ namespace DalProject
                             row["本月调休"] = item.MonthTX;
                             row["累计调休"] = item.TotalTX;
                         }
-                        if (SModel.TypeId == 2)
+                        if (SModel.DCTypeId == 2 || SModel.DCTypeId == 4)
                         {
-                            row["出勤"] = item.shouldworkingday;
-                            row["上班"] = item.WorkDay;
+                            row["出勤"] = item.WorkDay;
+                            row["加班"] = item.MonthTX;
                         }
                         Exceltable.Rows.Add(row);
                     }

@@ -10,13 +10,13 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>出勤：</label>
 			<div class="formControls col-xs-8 col-sm-7">
-				@Html.TextBoxFor(k => k.shouldworkingday, new { @class = "input-text" })
+				@Html.TextBoxFor(k => k.WorkDay, new { @class = "input-text" })
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上班：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>加班：</label>
 			<div class="formControls col-xs-8 col-sm-7">
-				@Html.TextBoxFor(k => k.WorkDay, new { @class = "input-text" })
+				@Html.TextBoxFor(k => k.MonthTX, new { @class = "input-text" })
 			</div>
 		</div>
 		
