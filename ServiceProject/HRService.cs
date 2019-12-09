@@ -52,5 +52,16 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public DataTable ToExcelOut(SHRTimesModel SModel)
+        {
+            try
+            {
+                return CDal.ToExcelOut(SModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
-            
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
     </div>
     <div class="mt-20 checkmodel">
@@ -193,5 +193,9 @@
         });
     };
 
-   
+   function toExcelout() {
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=1";
+    };
 </script> 

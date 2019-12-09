@@ -21,7 +21,7 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
-            
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
     </div>
     <div class="mt-20 checkmodel">
@@ -64,11 +64,8 @@
 					<th>29</th>
 					<th>30</th>
 					<th>31</th>
-					<th>应出勤</th>
-					<th>实出勤</th>
-					<th>上月累计调休</th>
-					<th>本月调休</th>
-					<th>累计调休</th>
+					<th>出勤</th>
+					<th>上班</th>
 					<th style="width:100px;">操作</th>
 				</tr>
             </thead>
@@ -130,9 +127,9 @@
                         return StrArr;
                     }
                 }, {
-                    targets: 40,//把第九列的样式改为超链接
+                    targets: 37,//把第九列的样式改为超链接
                     render: function (data, type, row) {
-                        var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'考勤编辑\',\'/HR/CWWork\', \'' + row.Id + '\', \'650\', \'400\')" title="考勤编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
+                        var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'考勤编辑\',\'/HR/CWGRWork\', \'' + row.Id + '\', \'650\', \'300\')" title="考勤编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
 
                         return StrCheck;
 
@@ -186,12 +183,14 @@
 				{ "data": "d31", "defaultContent": "", "className": "Stextoverflow" },
 				{ "data": "shouldworkingday", "defaultContent": "", "className": "c-primary" },
 				{ "data": "WorkDay", "defaultContent": "", "className": "c-green" },
-				{ "data": "TopMonthTX", "defaultContent": "", "className": "c-green" },
-				{ "data": "MonthTX", "defaultContent": "", "className": "c-green" },
-				{ "data": "TotalTX", "defaultContent": "", "className": "c-green" },
             ],
         });
     };
 
    
+   function toExcelout() {
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        window.location.href = "/HR/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime+"&TypeId=2";
+    };
 </script> 

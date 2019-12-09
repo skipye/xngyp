@@ -807,6 +807,7 @@
     <Content Include="Views\HR\GRIndex.cshtml" />
     <Content Include="Views\HR\CWWork.cshtml" />
     <Content Include="Views\HR\CWGRIndex.cshtml" />
+    <Content Include="Views\HR\CWGRWork.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

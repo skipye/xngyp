@@ -17,11 +17,11 @@ namespace XNGYP.Controllers
             DateTime datetime = DateTime.Now;
             if (string.IsNullOrEmpty(SModel.StartTime))
             {
-                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).ToString("yyyy-MM-dd");
             }
             if (string.IsNullOrEmpty(SModel.EndTime))
             {
-                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
             }
             return View(SModel);
         }
@@ -31,11 +31,11 @@ namespace XNGYP.Controllers
             DateTime datetime = DateTime.Now;
             if (string.IsNullOrEmpty(SModel.StartTime))
             {
-                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).ToString("yyyy-MM-dd");
             }
             if (string.IsNullOrEmpty(SModel.EndTime))
             {
-                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
             }
             return View(SModel);
         }
@@ -45,11 +45,11 @@ namespace XNGYP.Controllers
             DateTime datetime = DateTime.Now;
             if (string.IsNullOrEmpty(SModel.StartTime))
             {
-                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).ToString("yyyy-MM-dd");
             }
             if (string.IsNullOrEmpty(SModel.EndTime))
             {
-                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
             }
             return View(SModel);
         }
@@ -59,11 +59,11 @@ namespace XNGYP.Controllers
             DateTime datetime = DateTime.Now;
             if (string.IsNullOrEmpty(SModel.StartTime))
             {
-                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-1).ToString("yyyy-MM-dd");
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).ToString("yyyy-MM-dd");
             }
             if (string.IsNullOrEmpty(SModel.EndTime))
             {
-                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddDays(-1).ToString("yyyy-MM-dd");
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
             }
             return View(SModel);
         }
@@ -98,6 +98,11 @@ namespace XNGYP.Controllers
             var models = LSer.GetCWTime(Id);
             return View(models);
         }
+        public ActionResult CWGRWork(int Id)
+        {
+            var models = LSer.GetCWTime(Id);
+            return View(models);
+        }
         [ValidateInput(false)]
         public ActionResult PostCWWork(HRTimesModel Models)
         {
@@ -106,6 +111,11 @@ namespace XNGYP.Controllers
                 return Content("1");
             }
             else { return View(Models); }
+        }
+        public void ToExcelOut(SHRTimesModel SModel)
+        {
+            var models = LSer.ToExcelOut(SModel);
+            ESer.CreateExcel(models, "考勤" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }
 }
