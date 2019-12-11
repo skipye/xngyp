@@ -9,15 +9,16 @@
 {
 	<table class="table table-border table-bordered table-bg table-hover table-sort">
 		<thead>
-			<tr>
-				<th>序号</th>
-				<th>订单编号</th>
-				<th>客户名称</th>
-				<th>付款方式</th>
-				<th>收款金额</th>
-				<th>操作人</th>
-				<th>付款时间</th>
-			</tr>
+            <tr>
+                <th>序号</th>
+                <th>订单编号</th>
+                <th>客户名称</th>
+                <th>付款方式</th>
+                <th>收款金额</th>
+                <th>操作人</th>
+                <th>付款时间</th>
+                <th>备注</th>
+            </tr>
 		</thead>
 		<tbody>
 			@foreach (var item in Model)
@@ -30,7 +31,7 @@
 					<td>@item.Amount </td>
 					<td>@item.operator_name </td>
 					<td>@Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd HH:mm") </td>
-					
+                    <td>@item.Remaks</td>
 				</tr>
 				i++;
 			}

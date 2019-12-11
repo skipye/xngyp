@@ -181,6 +181,8 @@ namespace DalProject
                                 CostCprice=p.CostCprice,
                                 Volume=p.SYS_product.volume,
                                 PersonPrice= p.PersonPrice,
+                                MCFY=p.MCFY,
+                                RGFY=p.RGFY,
                             }).ToList();
                 return List;
             }
@@ -301,6 +303,25 @@ namespace DalProject
                     table.PersonPrice= table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.MGHPrice;
                     table.CostCprice = table.MCPrice + table.FLPrice + table.PersonPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
+                    table.RGFY= table.PersonPrice * Convert.ToDecimal(0.6);
+                    var MCDPrice = table.INV_wood_type.prcie;
+                    var ProductAreaId = table.SYS_product.product_area_id;
+                    var W_BZ = table.INV_wood_type.g_bz ?? 0;
+                    
+                    double CCL = 0.42;
+                    if (ProductAreaId == 6)
+                    {
+                        CCL = 0.45;
+                    }
+                    double Woodunit = 0;//吨，材积/出材率*比重*数量
+                    Woodunit = Convert.ToDouble(table.Volume) / CCL * Convert.ToDouble(W_BZ);
+                    if (MCDPrice <= 20000)
+                    {
+                        table.MCFY = Convert.ToDecimal(Math.Floor(Woodunit * 20000 * 0.6 / 10) * 10);
+
+                        table.CCprice = table.MCPrice + table.PersonPrice + table.MCFY + table.RGFY;
+                    }
+                    else { table.MCFY = 0; }
 
                     var GYPLables = db.INV_labels.Where(k => k.product_id == table.ProductId && k.wood_id == table.WoodId).ToList();
                     if (GYPLables != null && GYPLables.Any())
@@ -456,8 +477,10 @@ namespace DalProject
                     {
                         CB = WoodCB + Convert.ToDouble(Costm.KLPrice) + Convert.ToDouble(Costm.MGQPrice) + Convert.ToDouble(Costm.MGHPrice) + Convert.ToDouble(Costm.DHPrice) + Convert.ToDouble(Costm.GMPrice) + Convert.ToDouble(Costm.YQPrice);
                     }
-                    Costm.CCprice = Convert.ToDecimal(Convert.ToDecimal(CB * 1.6).ToString("00"));
                     Costm.CostCprice = Convert.ToDecimal(Convert.ToDecimal(CB).ToString("00"));
+
+                    Costm.CCprice = Convert.ToDecimal(Convert.ToDecimal(CB * 1.6).ToString("00"));
+                    
                     //var LableeNew = db.INV_labels.Where(k => k.id == item.Id).SingleOrDefault();
                     //LableeNew.CCprice = Costm.CCprice;
                     //LableeNew.BQPrice = Convert.ToDecimal(Convert.ToDouble(Costm.CCprice) * 2.5);
@@ -589,15 +612,19 @@ namespace DalProject
                     //NewTable.FLPrice = 0;
                     NewTable.MCPrice = Convert.ToDecimal(Math.Floor(item.MCPrice.Value / 100) * 100);
                     NewTable.CostCprice = NewTable.MCPrice + NewTable.PersonPrice;
-                    if (item.MCDPrice <= 2000)
+                    NewTable.CCprice = Convert.ToDecimal(Math.Floor((NewTable.CostCprice.Value * Convert.ToDecimal(1.6)) / 100) * 100);
+                    NewTable.RGFY = Convert.ToDecimal(Math.Floor(item.OldPersonPrice.Value * Convert.ToDecimal(0.6) / 10) * 10);
+                    if (item.MCDPrice <= 20000)
                     {
-                        NewTable.MCFY = Convert.ToDecimal(Math.Floor(Woodunit * 2000 * 0.6 / 10) * 10);
+                        NewTable.MCFY = Convert.ToDecimal(Math.Floor(Woodunit * 20000 * 0.6 / 10) * 10);
+                        
+                        NewTable.CCprice = NewTable.MCPrice + NewTable.PersonPrice + NewTable.MCFY + NewTable.RGFY;
                     }
                     else { NewTable.MCFY = 0; }
                     
                     //NewTable.PersonPrice = Convert.ToDecimal(Math.Floor(item.PersonPrice.Value / 100) * 100);
                     
-                    NewTable.CCprice = Convert.ToDecimal(Math.Floor((NewTable.CostCprice.Value * Convert.ToDecimal(1.6)) / 100) * 100);
+                    
                     NewTable.Volume = item.Volume;
                 }
                 db.SaveChanges();

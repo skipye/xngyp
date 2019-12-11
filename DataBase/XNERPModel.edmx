@@ -228,6 +228,7 @@
           <Property Name="PersonPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Volume" Type="decimal" Precision="18" Scale="2" />
           <Property Name="MCFY" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RGFY" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SYS_product_SN">
           <Key>
@@ -887,6 +888,7 @@
           <Property Name="PersonPrice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Volume" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MCFY" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RGFY" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_SYS_product_Cost_INV_wood_type">
           <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="0..1" />
@@ -1196,6 +1198,7 @@
           <EntitySetMapping Name="SYS_product_Cost">
             <EntityTypeMapping TypeName="XNERPModel.SYS_product_Cost">
               <MappingFragment StoreEntitySet="SYS_product_Cost">
+                <ScalarProperty Name="RGFY" ColumnName="RGFY" />
                 <ScalarProperty Name="MCFY" ColumnName="MCFY" />
                 <ScalarProperty Name="Volume" ColumnName="Volume" />
                 <ScalarProperty Name="PersonPrice" ColumnName="PersonPrice" />

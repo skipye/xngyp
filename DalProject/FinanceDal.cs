@@ -26,7 +26,7 @@ namespace DalProject
                 SFLtable.Amount = Models.Amount;
                 SFLtable.operator_id = new UserDal().GetCurrentUserName().UserId;
                 SFLtable.operator_name = new UserDal().GetCurrentUserName().UserName;
-                SFLtable.CreateTime = DateTime.Now;
+                SFLtable.CreateTime = Models.CreateTime ?? DateTime.Now;
                 SFLtable.Remaks = Models.Remaks;
                 SFLtable.PayStatus = Models.PayStatus;
                 db.XNGYP_FR_Logs.Add(SFLtable);
@@ -121,14 +121,29 @@ namespace DalProject
                 SFLtable.PayStatus = 1;
                 db.FR_contract_logs.Add(SFLtable);
 
-                var table = db.FR_contract.Where(k => k.contract_id == Models.Id).SingleOrDefault();//判断是否存在
-                if (table != null && table.id > 0)
+                var table = db.FR_contract.Where(k => k.contract_id == Models.Id).OrderBy(k=>k.created_time);//判断是否存在
+                if (table != null)
                 {
-                    table.amount = Models.Amount + table.amount;
-                    table.operator_id = Models.operator_id;
-                    table.operator_name = Models.operator_name;
-
-                    Pay = table.amount??0;
+                    if (table.Count() > 1)
+                    {
+                        FR_contract Stable = new FR_contract();
+                        Stable.contract_id = Models.Id;
+                        Stable.SN = OrderSN;
+                        Stable.customer = Customer;
+                        Stable.total = Total;
+                        Stable.amount = Models.Amount;
+                        Stable.operator_id = SFLtable.operator_id;
+                        Stable.operator_name = SFLtable.operator_name;
+                        Stable.created_time = Models.CreateTime ?? DateTime.Now;
+                        Stable.receive_date = HtDate;
+                        db.FR_contract.Add(Stable);
+                    }
+                    else {
+                        table.FirstOrDefault().amount = Models.Amount + table.FirstOrDefault().amount;
+                        table.FirstOrDefault().operator_id = Models.operator_id;
+                        table.FirstOrDefault().operator_name = Models.operator_name;
+                        Pay = table.FirstOrDefault().amount ?? 0;
+                    }
                 }
                 else
                 {

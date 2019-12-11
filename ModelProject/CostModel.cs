@@ -33,6 +33,8 @@ namespace ModelProject
         public decimal? MCDPrice { get; set; }
         public int? ProductAreaId { get; set; }
         public decimal? W_BZ { get; set; }
+        public decimal? MCFY { get; set; }
+        public decimal? RGFY { get; set; }
     }
     public class SCostModel
     {
