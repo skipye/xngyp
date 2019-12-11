@@ -218,7 +218,9 @@ namespace DalProject
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
                                 Volume = p.SYS_product.volume,
-                                PersonPrice = p.PersonPrice
+                                PersonPrice = p.PersonPrice,
+                                MCFY = p.MCFY,
+                                RGFY = p.RGFY,
                             }).ToList();
                 if (List != null && List.Any())
                 {
@@ -235,9 +237,10 @@ namespace DalProject
                     Exceltable.Columns.Add("刮磨成本", typeof(string));
                     Exceltable.Columns.Add("油漆成本", typeof(string));
                     Exceltable.Columns.Add("人工成本(元)", typeof(string));
+                    Exceltable.Columns.Add("木材费用(元)", typeof(string));
+                    Exceltable.Columns.Add("人工费用(元)", typeof(string));
                     Exceltable.Columns.Add("总成本(元)", typeof(string));
                     Exceltable.Columns.Add("出厂价(元)", typeof(string));
-                    Exceltable.Columns.Add("出厂价(1.8)", typeof(string));
                     foreach (var item in List)
                     {
                         DataRow row = Exceltable.NewRow();
@@ -254,9 +257,10 @@ namespace DalProject
                         row["刮磨成本"] = item.GMPrice;
                         row["油漆成本"] = item.YQPrice;
                         row["人工成本(元)"] = item.PersonPrice;
+                        row["木材费用(元)"] = item.MCFY;
+                        row["人工费用(元)"] = item.RGFY;
                         row["总成本(元)"] = item.CostCprice;
                         row["出厂价(元)"] = item.CCprice;
-                        row["出厂价(1.8)"] = item.CostCprice*Convert.ToDecimal(1.8);
                         Exceltable.Rows.Add(row);
                     }
                 }

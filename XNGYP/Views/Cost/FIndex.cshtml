@@ -110,11 +110,11 @@
                 { "data": "Id" },
                 { "data": "ProductSN", "className": "text-overflow" },
                 {
-                    "data": "ProductName", "className": "text-overflow", "render": function (data,type, row) {
+                    "data": "ProductName", "render": function (data,type, row) {
                         return data +"("+row.ProductId+")" ;
                     }},
                 {
-                    "data": "WoodName", "className": "text-overflow", "render": function (data, type, row) {
+                    "data": "WoodName", "render": function (data, type, row) {
                         return data + "(" + row.WoodId + ")";
 					}
 				},
