@@ -122,7 +122,7 @@ namespace DalProject
                 db.FR_contract_logs.Add(SFLtable);
 
                 var table = db.FR_contract.Where(k => k.contract_id == Models.Id).OrderBy(k=>k.created_time);//判断是否存在
-                if (table != null)
+                if (table != null && table.Count()>0)
                 {
                     if (table.Count() > 1)
                     {
@@ -139,10 +139,11 @@ namespace DalProject
                         db.FR_contract.Add(Stable);
                     }
                     else {
-                        table.FirstOrDefault().amount = Models.Amount + table.FirstOrDefault().amount;
-                        table.FirstOrDefault().operator_id = Models.operator_id;
-                        table.FirstOrDefault().operator_name = Models.operator_name;
-                        Pay = table.FirstOrDefault().amount ?? 0;
+                        var NewTable = db.FR_contract.Where(k => k.contract_id == Models.Id).FirstOrDefault();
+                        NewTable.amount = Models.Amount + NewTable.amount;
+                        NewTable.operator_id = Models.operator_id;
+                        NewTable.operator_name = Models.operator_name;
+                        Pay = NewTable.amount ?? 0;
                     }
                 }
                 else
