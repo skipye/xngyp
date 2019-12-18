@@ -99,6 +99,8 @@ namespace ModelProject
         public int? SaleFlag { get; set; }
         public string DDOrder { get; set; }
         public string YDOrder { get; set; }
+        public int? HTProCount { get; set; }
+        public int? HTFProCount { get; set; }
     }
     public class SContractHeaderModel
     {

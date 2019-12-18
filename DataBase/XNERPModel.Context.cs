@@ -37,5 +37,6 @@ namespace DataBase
         public DbSet<SYS_product_Cost> SYS_product_Cost { get; set; }
         public DbSet<WIP_workflow> WIP_workflow { get; set; }
         public DbSet<CRM_customers> CRM_customers { get; set; }
+        public DbSet<WIP_workorder> WIP_workorder { get; set; }
     }
 }

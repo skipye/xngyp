@@ -188,7 +188,15 @@
     <Content Include="css\webuploader\0.1.5\webuploader.withoutimage.js" />
     <Content Include="css\webuploader\0.1.5\webuploader.withoutimage.min.js" />
     <Content Include="favicon.ico" />
+    <Content Include="images\kailiao.jpg" />
+    <Content Include="images\mgqd.jpg" />
     <Content Include="images\nopic.png" />
+    <Content Include="images\shwx.jpg" />
+    <Content Include="images\WIP_DK.png" />
+    <Content Include="images\WIP_GM.png" />
+    <Content Include="images\WIP_MG.png" />
+    <Content Include="images\WIP_YQ.png" />
+    <Content Include="images\WIP_ZZ.png" />
     <Content Include="js\Buttons-1.6.1\css\buttons.bootstrap.css" />
     <Content Include="js\Buttons-1.6.1\css\buttons.bootstrap.min.css" />
     <Content Include="js\Buttons-1.6.1\css\buttons.bootstrap4.css" />
@@ -808,6 +816,9 @@
     <Content Include="Views\HR\CWWork.cshtml" />
     <Content Include="Views\HR\CWGRIndex.cshtml" />
     <Content Include="Views\HR\CWGRWork.cshtml" />
+    <Content Include="Views\WorkOrder\Work.cshtml" />
+    <Content Include="Views\WorkOrder\WorkFlow.cshtml" />
+    <Content Include="Views\WorkOrder\FWork.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

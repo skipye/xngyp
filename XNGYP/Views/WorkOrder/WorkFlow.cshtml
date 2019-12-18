@@ -3,6 +3,15 @@
     Layout = null;
     List<SelectListItem> ArrSecPro = new List<SelectListItem>();
     ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+    List<SelectListItem> GYItem = new List<SelectListItem>();
+    GYItem.Add(new SelectListItem { Value = "", Text = "全部工序" });
+    GYItem.Add(new SelectListItem { Value = "1", Text = "开料" });
+    GYItem.Add(new SelectListItem { Value = "2", Text = "木工前段" });
+    GYItem.Add(new SelectListItem { Value = "3", Text = "雕花" });
+    GYItem.Add(new SelectListItem { Value = "4", Text = "木工后段" });
+    GYItem.Add(new SelectListItem { Value = "5", Text = "刮磨" });
+    GYItem.Add(new SelectListItem { Value = "6", Text = "油漆" });
+    GYItem.Add(new SelectListItem { Value = "7", Text = "配件安装" });
 }
 @Html.Action("_Meta", "Home")
 @*<nav class="breadcrumb">
@@ -11,14 +20,20 @@
 </nav>*@
 <div class="page-container">
     <div class="text-c">
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px", })
-            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select",@style = "width:150px", })
-        </span>
-        @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
-        <span class="select-box inline">
+        @*<span class="select-box inline">
+            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
+            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
             @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
+        </span>*@
+        
+        <span class="select-box inline">
+            
+            @Html.DropDownListFor(k => k.GXId, GYItem, new { @class = "select", @style = "width:150px", })
+
         </span>
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -34,6 +49,7 @@
                 <tr class="text-l">
                     <th width="25"><input type="checkbox" name="" value=""></th>
                     <th>产品名称</th>
+                    <th>工序</th>
                     <th>任务单号</th>
                     <th>生产价格</th>
                     <th>生产状态</th>
@@ -54,19 +70,25 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="~/js/ajaxScript.js?v=7"></script>
+<script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript">
 
     var param = {};
-    $(function () {param["GXId"] = "@Model.GXId"; search(param); });
+    $(function () {param["GXId"] = 1; search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
-        var ProductSNId = $("#ProductSNId").val().trim();
-        var FatherId = $("#FatherId").val().trim();
-        var WoodId = $("#WoodId").val().trim();
+        //var ProductSNId = $("#ProductSNId").val().trim();
+        //var FatherId = $("#FatherId").val().trim();
+        //var WoodId = $("#WoodId").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
         //搜索
-        param["ProductSNId"] = ProductSNId;
-        param["FatherId"] = FatherId;
-        param["WoodId"] = WoodId;
+        //param["ProductSNId"] = ProductSNId;
+        //param["FatherId"] = FatherId;
+        //param["WoodId"] = WoodId;
+        param["StartTime"] = StartTime;
+        param["EndTime"] = EndTime;
+        param["GXId"] = $("#GXId").val().trim();
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -75,7 +97,7 @@
     function search(param) {
         $('.table-sort').dataTable({
             "aaSorting": [[5, "desc"]],//默认第几个排序
-            "bStateSave": false,//状态保存
+            "bStateSave": true,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/WorkOrder/GetFlowList", param, function (result) {
                     //封装返回数据
@@ -92,7 +114,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" ref="' + row.Status + '" >';
                     }
                 }, {
-                    targets: 10,
+                    targets: 11,
                     render: function (data, type, row) {
                         var strArr = "";
                         if (row.Status == 0) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="submitWork(this, \'' + row.Id + '\')" title="提交任务" data-url=\'/WorkOrder/Checked\'><i class="Hui-iconfont">&#xe603;</i></a>'; }
@@ -105,8 +127,10 @@
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
                 { "data": "ProductName", "defaultContent": "" },
+                { "data": "Name", "defaultContent": "" },
+                
                 { "data": "workorder", "defaultContent": "" },
-                { "data": "cost", "defaultContent": "" },
+                { "data": "cost", "defaultContent": "0" },
                 { "data": "Status",  "render": function (data) {
                         var GradeName = "";
                     if (data == 1) { GradeName = "<b class='c-red'>生产完成，待审核</b>"; }
@@ -131,8 +155,8 @@
                         return NewTime;
                     }
                  },
-                { "data": "UserName", "defaultContent": "" },
-                { "data": "CheckedUser", "defaultContent": "" },
+                { "data": "UserName", "defaultContent": "" ,"className": "c-red"},
+                { "data": "CheckedUser", "defaultContent": "" , "className": "c-primary"},
                 { "data": "Flag", "render": function (data) {
                        var GradeName = "<b class='c-red'>预投产品</b>";
                     if (data == 1) { GradeName = "<b class='c-red'>销售产品</b>"; }

@@ -31,6 +31,7 @@
           <Property Name="delete_flag" Type="bit" Nullable="false" />
           <Property Name="LabelsCount" Type="int" />
           <Property Name="SemiCount" Type="int" />
+          <Property Name="SendCount" Type="int" />
         </EntityType>
         <EntityType Name="CRM_contract_header">
           <Key>
@@ -270,6 +271,31 @@
           <Property Name="created_time" Type="datetime" Nullable="false" />
           <Property Name="delete_flag" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="WIP_workorder">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="workorder" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CRM_contract_detail_id" Type="int" />
+          <Property Name="WIP_contract_id" Type="int" />
+          <Property Name="qty" Type="int" Nullable="false" />
+          <Property Name="BOM_ready_date" Type="datetime" />
+          <Property Name="paper_path" Type="varchar" MaxLength="50" />
+          <Property Name="BOM_path" Type="varchar" MaxLength="50" />
+          <Property Name="BOM_over_date" Type="datetime" />
+          <Property Name="timetable_ready_date" Type="datetime" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+          <Property Name="closed_flag" Type="bit" Nullable="false" />
+          <Property Name="remark" Type="text" />
+          <Property Name="reserved1" Type="int" />
+          <Property Name="reserved2" Type="int" />
+          <Property Name="reserved3" Type="varchar" MaxLength="50" />
+          <Property Name="reserved4" Type="varchar" MaxLength="50" />
+          <Property Name="reserved5" Type="varchar" MaxLength="50" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+        </EntityType>
         <Association Name="FK_CRM_contract_detail_CRM_contract_header">
           <End Role="CRM_contract_header" Type="Self.CRM_contract_header" Multiplicity="1" />
           <End Role="CRM_contract_detail" Type="Self.CRM_contract_detail" Multiplicity="*" />
@@ -415,6 +441,7 @@
           <EntitySet Name="SYS_product_Cost" EntityType="Self.SYS_product_Cost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_product_SN" EntityType="Self.SYS_product_SN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WIP_workflow" EntityType="Self.WIP_workflow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WIP_workorder" EntityType="Self.WIP_workorder" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CRM_contract_detail_CRM_contract_header" Association="Self.FK_CRM_contract_detail_CRM_contract_header">
             <End Role="CRM_contract_header" EntitySet="CRM_contract_header" />
             <End Role="CRM_contract_detail" EntitySet="CRM_contract_detail" />
@@ -533,6 +560,15 @@
             <End Role="CRM_customers" EntitySet="CRM_customers" />
             <End Role="CRM_contract_header" EntitySet="CRM_contract_header" />
           </AssociationSet>
+          <EntitySet Name="WIP_workorder" EntityType="XNERPModel.WIP_workorder" />
+          <AssociationSet Name="WIP_workflowWIP_workorder" Association="XNERPModel.WIP_workflowWIP_workorder">
+            <End Role="WIP_workflow" EntitySet="WIP_workflow" />
+            <End Role="WIP_workorder" EntitySet="WIP_workorder" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_productWIP_workflow" Association="XNERPModel.SYS_productWIP_workflow">
+            <End Role="SYS_product" EntitySet="SYS_product" />
+            <End Role="WIP_workflow" EntitySet="WIP_workflow" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -616,6 +652,7 @@
           <NavigationProperty Name="CRM_contract_detail" Relationship="XNERPModel.FK_CRM_contract_detail_SYS_product" FromRole="SYS_product" ToRole="CRM_contract_detail" />
           <NavigationProperty Name="INV_labels" Relationship="XNERPModel.SYS_productINV_labels" FromRole="SYS_product" ToRole="INV_labels" />
           <NavigationProperty Name="SYS_product_Cost" Relationship="XNERPModel.FK_SYS_product_Cost_SYS_product" FromRole="SYS_product" ToRole="SYS_product_Cost" />
+          <NavigationProperty Name="WIP_workflow" Relationship="XNERPModel.SYS_productWIP_workflow" FromRole="SYS_product" ToRole="WIP_workflow" />
         </EntityType>
         <Association Name="FK_SYS_product_SYS_product_area">
           <End Type="XNERPModel.SYS_product_area" Role="SYS_product_area" Multiplicity="0..1" />
@@ -697,6 +734,7 @@
           <NavigationProperty Name="INV_wood_type" Relationship="XNERPModel.FK_CRM_contract_detail_INV_wood_type" FromRole="CRM_contract_detail" ToRole="INV_wood_type" />
           <NavigationProperty Name="SYS_colors" Relationship="XNERPModel.FK_CRM_contract_detail_SYS_colors" FromRole="CRM_contract_detail" ToRole="SYS_colors" />
           <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_CRM_contract_detail_SYS_product" FromRole="CRM_contract_detail" ToRole="SYS_product" />
+          <Property Name="SendCount" Type="Int32" />
         </EntityType>
         <EntityType Name="CRM_contract_header">
           <Key>
@@ -943,6 +981,8 @@
           <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="delete_flag" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="INV_wood_type" Relationship="XNERPModel.FK_WIP_workflow_INV_wood_type" FromRole="WIP_workflow" ToRole="INV_wood_type" />
+          <NavigationProperty Name="WIP_workorder" Relationship="XNERPModel.WIP_workflowWIP_workorder" FromRole="WIP_workflow" ToRole="WIP_workorder" />
+          <NavigationProperty Name="SYS_product" Relationship="XNERPModel.SYS_productWIP_workflow" FromRole="WIP_workflow" ToRole="SYS_product" />
         </EntityType>
         <Association Name="FK_WIP_workflow_INV_wood_type">
           <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="0..1" />
@@ -992,6 +1032,56 @@
             </Principal>
             <Dependent Role="CRM_contract_header">
               <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WIP_workorder">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="workorder" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CRM_contract_detail_id" Type="Int32" />
+          <Property Name="WIP_contract_id" Type="Int32" />
+          <Property Name="qty" Type="Int32" Nullable="false" />
+          <Property Name="BOM_ready_date" Type="DateTime" Precision="3" />
+          <Property Name="paper_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BOM_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BOM_over_date" Type="DateTime" Precision="3" />
+          <Property Name="timetable_ready_date" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Byte" Nullable="false" />
+          <Property Name="closed_flag" Type="Boolean" Nullable="false" />
+          <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="reserved1" Type="Int32" />
+          <Property Name="reserved2" Type="Int32" />
+          <Property Name="reserved3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reserved4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reserved5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="WIP_workflow" Relationship="XNERPModel.WIP_workflowWIP_workorder" FromRole="WIP_workorder" ToRole="WIP_workflow" />
+        </EntityType>
+        <Association Name="WIP_workflowWIP_workorder">
+          <End Type="XNERPModel.WIP_workflow" Role="WIP_workflow" Multiplicity="*" />
+          <End Type="XNERPModel.WIP_workorder" Role="WIP_workorder" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="WIP_workorder">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WIP_workflow">
+              <PropertyRef Name="wo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_productWIP_workflow">
+          <End Type="XNERPModel.SYS_product" Role="SYS_product" Multiplicity="0..1" />
+          <End Type="XNERPModel.WIP_workflow" Role="WIP_workflow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WIP_workflow">
+              <PropertyRef Name="Product_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1092,6 +1182,7 @@
           <EntitySetMapping Name="CRM_contract_detail">
             <EntityTypeMapping TypeName="XNERPModel.CRM_contract_detail">
               <MappingFragment StoreEntitySet="CRM_contract_detail">
+                <ScalarProperty Name="SendCount" ColumnName="SendCount" />
                 <ScalarProperty Name="SemiCount" ColumnName="SemiCount" />
                 <ScalarProperty Name="LabelsCount" ColumnName="LabelsCount" />
                 <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
@@ -1274,6 +1365,32 @@
                 <ScalarProperty Name="name_E" ColumnName="name_E" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WIP_workorder">
+            <EntityTypeMapping TypeName="XNERPModel.WIP_workorder">
+              <MappingFragment StoreEntitySet="WIP_workorder">
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="reserved5" ColumnName="reserved5" />
+                <ScalarProperty Name="reserved4" ColumnName="reserved4" />
+                <ScalarProperty Name="reserved3" ColumnName="reserved3" />
+                <ScalarProperty Name="reserved2" ColumnName="reserved2" />
+                <ScalarProperty Name="reserved1" ColumnName="reserved1" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="closed_flag" ColumnName="closed_flag" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="timetable_ready_date" ColumnName="timetable_ready_date" />
+                <ScalarProperty Name="BOM_over_date" ColumnName="BOM_over_date" />
+                <ScalarProperty Name="BOM_path" ColumnName="BOM_path" />
+                <ScalarProperty Name="paper_path" ColumnName="paper_path" />
+                <ScalarProperty Name="BOM_ready_date" ColumnName="BOM_ready_date" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="WIP_contract_id" ColumnName="WIP_contract_id" />
+                <ScalarProperty Name="CRM_contract_detail_id" ColumnName="CRM_contract_detail_id" />
+                <ScalarProperty Name="workorder" ColumnName="workorder" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

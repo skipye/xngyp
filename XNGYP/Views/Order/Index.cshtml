@@ -39,6 +39,7 @@
                     <th>销售人员</th>
                     <th>财务审核</th>
                     <th>销售方式</th>
+                    <th>销售产品(件)</th>
                     <th>操作时间</th>
                     <th>备注</th>
                     <th width="120">操作</th>
@@ -98,13 +99,15 @@
                         return StrArr;
                     }
                 }, {
-                    targets: 14,//把第九列的样式改为超链接
+                    targets: 15,//把第九列的样式改为超链接
                     render: function (data, type, row) {
                         var StrCheck = "";
                         if (row.Status == 0)
                         {
+                            if (row.HTProCount > 0 || row.HTFProCount > 0) {
                             StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="checked(this, \'' + row.Id + '\')" data-url=\'/Order/Checked\' title="审核"><i class="Hui-iconfont f-14">&#xe615;</i></a>';
-                        }
+
+                          }  }
                         if (row.CWCheckStatus == 0 || row.CWCheckStatus == 2) {
                             StrCheck += 
                                 '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="订单编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
@@ -178,13 +181,19 @@
                         if (data == 1)
                         { StrStatus = "<b class='c-green'>来源线上</b>" + DDor +""; }
                                 return StrStatus;
-                            }},
+                    }
+                },
+                {
+                    "data": "HTProCount", "render": function (data, type, row) {
+                        return data + row.HTFProCount;
+                            } },
                         {
                             "data": "CreateTime", "render": function (data) {
                                 var NewTime = parseInt(data.replace(/\D/igm, ""));
                                 return formatDateTime(NewTime);
                             }
-				},
+                },
+                        
 						{ "data": "Remark", "defaultContent": "", "className": "textoverflow" },
 
             ]

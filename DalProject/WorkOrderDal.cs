@@ -390,15 +390,25 @@ namespace DalProject
         //生产进度情况查询
         public List<WorkFromModel> GetFlowList(SWorkFromModel SModel)
         {
-            int GXId = 1;
-            if (SModel.GXId != null && SModel.GXId > 0)
-            { GXId = SModel.GXId.Value; }
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.XNGYP_WorkFrom.Where(k => k.DeleteFlag == false && k.XNGYP_WorkOrder.DeleteFlag == false && k.XNGYP_WorkOrder.ClosedFlag==false && k.GXId== GXId)
+                var List = (from p in db.XNGYP_WorkFrom.Where(k => k.DeleteFlag == false && k.XNGYP_WorkOrder.DeleteFlag == false && k.XNGYP_WorkOrder.ClosedFlag==false)
                             where SModel.ProductSNId != null && SModel.ProductSNId>0 ? p.XNGYP_Products.ProductsSNId == SModel.ProductSNId : true
                             where SModel.FatherId != null && SModel.FatherId > 0 ? p.XNGYP_Products.FatherId == SModel.FatherId : true
                             where SModel.WoodId != null && SModel.WoodId > 0 ? p.WoodId == SModel.WoodId : true
+                            where SModel.GXId != null && SModel.GXId > 0 ? p.GXId == SModel.GXId : true
+                            where p.CreateTime > StartTime
+                            where p.CreateTime < EndTime
                             orderby p.CreateTime descending
                             select new WorkFromModel
                             {
@@ -416,6 +426,45 @@ namespace DalProject
                                 CheckedUser = p.CheckedUser,
                                 cost = p.cost,
                                 Flag = p.Flag,
+                            }).ToList();
+                return List;
+            }
+        }
+        //家具生产情况
+        public List<WorkFromModel> GetFWorkFromList(SWorkFromModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.WIP_workflow.Where(k => k.delete_flag == false && k.WIP_workorder.delete_flag == false)
+                            where !string.IsNullOrEmpty(SModel.GXName) ? p.name == SModel.GXName : true
+                            where p.created_time > StartTime
+                            where p.created_time < EndTime
+                            orderby p.created_time descending
+                            select new WorkFromModel
+                            {
+                                Id = p.id,
+                                Name = p.name,
+                                workorder = p.WIP_workorder.workorder,
+                                ProductName = p.SYS_product.name,
+                                UserName = p.user_name,
+                                exp_begin_date = p.exp_begin_date,
+                                exp_end_date = p.exp_end_date,
+                                act_begin_date = p.act_begin_date,
+                                act_end_date = p.act_end_date,
+                                Status = p.status,
+                                CheckedUser = p.checked_user_name,
+                                cost = p.cost,
+                                source = p.reserved2,
                             }).ToList();
                 return List;
             }

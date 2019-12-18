@@ -125,6 +125,15 @@ namespace XNGYP.Controllers
                 ContentType = "application/json"
             };
         }
+        public ActionResult GetFFlowList(SWorkFromModel SModel)
+        {
+            var PageList = WSer.GetFFlowList(SModel);
+            return new ContentResult
+            {
+                Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
+                ContentType = "application/json"
+            };
+        }
         public ActionResult Checked(string ListId, int status)
         {
             if (!string.IsNullOrEmpty(ListId) == true && WSer.Checked(ListId,status) == true)
@@ -133,6 +142,46 @@ namespace XNGYP.Controllers
             }
             else return Content("0");
             
+        }
+        //工作
+        public ActionResult Work()
+        {
+            return View();
+        }
+        //工序任务
+        public ActionResult FWork(SWorkFromModel SModel)
+        {
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(SModel.StartTime))
+            {
+                SModel.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-3).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModel.EndTime))
+            {
+                SModel.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(SModel.GXName))
+            {
+                SModel.GXName = "刮磨";
+            }
+            return View(SModel);
+        }
+        public ActionResult WorkFlow()
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(Models.StartTime))
+            {
+                Models.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-3).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(Models.EndTime))
+            {
+                Models.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = 1;
+            return View(Models);
         }
     }
 }

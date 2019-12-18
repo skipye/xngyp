@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+@Html.Action("_Meta", "Home")
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>工序管理
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    
+    <div class="portfolio-content">
+        <ul class="cl portfolio-area">
+            <li class="item" onclick="openfull('开料管理', '/WorkOrder/WorkFlow','1')">
+                <div class="portfoliobox">
+                    开料管理
+                    <div class="picbox"><a  href="javascript:void(0);"><img src="~/images/kailiao.jpg"></a></div>
+                    <div class="textbox">开料管理</div>
+                </div>
+            </li>
+            <li class="item" onclick="openfull('木工前段', '/WorkOrder/WorkFlow','2')">
+                <div class="portfoliobox">
+                    木工前段
+                    <div class="picbox "><a href="javascript:void(0);"><img src="~/images/mgqd.jpg"></a></div>
+                    <div class="textbox">木工前段</div>
+                </div>
+            </li>
+            <li class="item" onclick="openfull('雕花管理', '/WorkOrder/WorkFlow','3')">
+                <div class="portfoliobox">
+                    雕花管理
+                    <div class="picbox"><a href="javascript:void(0);"><img src="~/images/WIP_DK.png"></a></div>
+                    <div class="textbox">雕花管理</div>
+                </div>
+            </li>
+            <li class="item" onclick="openfull('木工后段', '/WorkOrder/WorkFlow','4')">
+                <div class="portfoliobox">
+                    木工后段
+                    <div class="picbox"><a href="javascript:void(0);"><img src="~/images/WIP_MG.png"></a></div>
+                    <div class="textbox">木工后段</div>
+                </div>
+            </li>
+            <li class="item" onclick="openfull('刮磨管理', '/WorkOrder/WorkFlow','5')">
+                <div class="portfoliobox">
+                    刮磨管理
+                    <div class="picbox"><a href="javascript:void(0);"><img src="~/images/WIP_GM.png"></a></div>
+                    <div class="textbox">刮磨管理</div>
+                </div>
+            </li>
+            <li class="item" onclick="openfull('油漆管理', '/WorkOrder/WorkFlow','6')">
+                <div class="portfoliobox">
+                    油漆管理
+                    <div class="picbox"><a href="javascript:void(0);"><img src="~/images/WIP_YQ.png"></a></div>
+                    <div class="textbox">油漆管理</div>
+                </div>
+            </li>
+            <li class="item" onclick="openfull('配件安装', '/WorkOrder/WorkFlow','7')">
+                <div class="portfoliobox">
+                    配件安装
+                    <div class="picbox"><a href="javascript:void(0);"><img src="~/images/WIP_ZZ.png"></a></div>
+                    <div class="textbox">配件安装</div>
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+@Html.Action("_Footer", "Home")
+<script type="text/javascript" src="~/js/ajaxScript.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".portfolio-area li").Huihover();
+    });
+</script>

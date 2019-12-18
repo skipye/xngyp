@@ -62,6 +62,8 @@ namespace DalProject
                                 SaleFlag=p.SaleFlag,
                                 Remark=p.Remark,
                                 DDOrder=p.DDOrder,
+                                HTProCount=p.Contract_Detail.Count,
+                                HTFProCount=p.Contract_FDetail.Count,
                             }).ToList();
                 ContractModel Models = new ContractModel();
                 Models.data = List;
@@ -337,6 +339,10 @@ namespace DalProject
                             }
                             else { OModels.SendTel = "13524680161"; SendSMSDal.Send(OModels, 3); }//厂长
                             AddFOrder(Id);//添加家具订单
+                        }
+                        if (CheckedId == 2)
+                        {
+                            tables.Status = 0;
                         }
                     }
                 }

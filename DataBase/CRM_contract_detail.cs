@@ -36,6 +36,7 @@ namespace DataBase
         public bool delete_flag { get; set; }
         public Nullable<int> LabelsCount { get; set; }
         public Nullable<int> SemiCount { get; set; }
+        public Nullable<int> SendCount { get; set; }
     
         public virtual CRM_contract_header CRM_contract_header { get; set; }
         public virtual INV_wood_type INV_wood_type { get; set; }

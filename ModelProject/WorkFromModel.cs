@@ -48,6 +48,9 @@ namespace ModelProject
         public int? WoodId { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
         public List<SelectListItem> MCDroList { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+        public string GXName { get; set; }
     }
     public class WorkOrderEven
     {

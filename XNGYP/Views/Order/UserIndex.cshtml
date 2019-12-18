@@ -102,13 +102,13 @@
                  {
                     targets: 14,
                     render: function (data, type, row) {
-                        var StrCheck = "";
+                        var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="printpage(\'打印订单\',\'/Order/Print\', \'' + row.Id + '\', \'900\', \'620\')" title="打印订单"><i class="Hui-iconfont f-14">&#xe632;</i></a>';
                         if (row.Status == 0 || row.Status == 2) {
-                            StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'查看产品\',\'/Order/ProductListByOrder\', \'' + row.Id + '\', \'800\', \'500\')" title="查看产品"><i class="Hui-iconfont f-14">&#xe687;</i></a>' +
+                            StrCheck += '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'查看产品\',\'/Order/ProductListByOrder\', \'' + row.Id + '\', \'800\', \'500\')" title="查看产品"><i class="Hui-iconfont f-14">&#xe687;</i></a>' +
                                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'添加产品\',\'/Order/AddProducts\', \'' + row.Id + '\', \'800\', \'620\')" title="添加产品"><i class="Hui-iconfont f-14">&#xe670;</i></a>' +
                                        '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="订单编辑"><i class="Hui-iconfont f-14">&#xe6df;</i></a>' +
-                                       '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Order/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
-                        } else { StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="printpage(\'打印订单\',\'/Order/Print\', \'' + row.Id + '\', \'900\', \'620\')" title="打印订单"><i class="Hui-iconfont f-14">&#xe632;</i></a>'; }
+                                '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Order/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
+                        }
                         return StrCheck ;
                     }
                 }

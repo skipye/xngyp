@@ -229,12 +229,21 @@ function edit(title, url, id) {
     layer.full(index);
 }
 function add(title, url) {
-    var MSG = title + "增加操作，增加网址：" + url;
-    AddWorkLogs(MSG, 2);
+    //var MSG = title + "增加操作，增加网址：" + url;
+    //AddWorkLogs(MSG, 2);
     var index = layer.open({
         type: 2,
         title: title,
         content: url 
+    });
+    layer.full(index);
+}
+//打开新的页面
+function openfull(title, url,id) {
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url + "?Id=" + id
     });
     layer.full(index);
 }

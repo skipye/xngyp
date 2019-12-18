@@ -1,32 +1,37 @@
 ﻿@model ModelProject.SWorkFromModel
 @{
     Layout = null;
-    List<SelectListItem> ArrSecPro = new List<SelectListItem>();
-    ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+    List<SelectListItem> GYItem = new List<SelectListItem>();
+    GYItem.Add(new SelectListItem { Value = "", Text = "全部工序" });
+    GYItem.Add(new SelectListItem { Value = "开料", Text = "开料" });
+    GYItem.Add(new SelectListItem { Value = "木工前段", Text = "木工前段" });
+    GYItem.Add(new SelectListItem { Value = "雕花", Text = "雕花" });
+    GYItem.Add(new SelectListItem { Value = "木工后段", Text = "木工后段" });
+    GYItem.Add(new SelectListItem { Value = "刮磨", Text = "刮磨" });
+    GYItem.Add(new SelectListItem { Value = "油漆", Text = "油漆" });
+    GYItem.Add(new SelectListItem { Value = "配件安装", Text = "配件安装" });
 }
 @Html.Action("_Meta", "Home")
-@*<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>开料管理
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>*@
+<nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>家具工序管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
 <div class="page-container">
     <div class="text-c">
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px", })
-            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select",@style = "width:150px", })
+            @Html.DropDownListFor(k => k.GXName, GYItem, new { @class = "select", @style = "width:150px", })
         </span>
-        @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
-        </span>
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    @*<div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
             <a href="javascript:void(0);" onclick="submitWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中提交任务</a>
             <a href="javascript:void(0);" onclick="checkedWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中审核</a>
         </span>
-    </div>
+    </div>*@
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -34,6 +39,7 @@
                 <tr class="text-l">
                     <th width="25"><input type="checkbox" name="" value=""></th>
                     <th>产品名称</th>
+                    <th>工序</th>
                     <th>任务单号</th>
                     <th>生产价格</th>
                     <th>生产状态</th>
@@ -42,7 +48,6 @@
                     <th>接单人</th>
                     <th>审核人</th>
                     <th>来源</th>
-                    <th width="120">操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -53,20 +58,20 @@
 @Html.Action("_Footer", "Home")
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=7"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js"></script>
 <script type="text/javascript">
 
     var param = {};
-    $(function () {param["GXId"] = "@Model.GXId"; search(param); });
+    $(function () {param["GXName"] = "刮磨"; search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
-        var ProductSNId = $("#ProductSNId").val().trim();
-        var FatherId = $("#FatherId").val().trim();
-        var WoodId = $("#WoodId").val().trim();
+        var GXName = $("#GXName").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
         //搜索
-        param["ProductSNId"] = ProductSNId;
-        param["FatherId"] = FatherId;
-        param["WoodId"] = WoodId;
+        param["GXName"] = GXName;
+        param["StartTime"] = StartTime;
+        param["EndTime"] = EndTime;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -74,10 +79,10 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[5, "desc"]],//默认第几个排序
+            "aaSorting": [[4, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
-                ajaxRequest("post", "/WorkOrder/GetFlowList", param, function (result) {
+                $.post("/WorkOrder/GetFFlowList", param, function (result) {
                     //封装返回数据
                     var returnData = {};
                     returnData.data = result;
@@ -91,20 +96,12 @@
                     render: function (data, type, row) {
                         return '<input type="checkbox" value="' + row.Id + '" ref="' + row.Status + '" >';
                     }
-                }, {
-                    targets: 10,
-                    render: function (data, type, row) {
-                        var strArr = "";
-                        if (row.Status == 0) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="submitWork(this, \'' + row.Id + '\')" title="提交任务" data-url=\'/WorkOrder/Checked\'><i class="Hui-iconfont">&#xe603;</i></a>'; }
-                        if (row.Status == 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="checkedWork(this, \'' + row.Id + '\')" title="审核" data-url=\'/WorkOrder/Checked\' val=\'2\'><i class="Hui-iconfont">&#xe614;</i></a>'; }
-                        
-                        return strArr;
-                    }
                 }
             ],
             "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
                 { "data": "Id" },
                 { "data": "ProductName", "defaultContent": "" },
+                { "data": "Name", "defaultContent": "" },
                 { "data": "workorder", "defaultContent": "" },
                 { "data": "cost", "defaultContent": "" },
                 { "data": "Status",  "render": function (data) {
@@ -114,12 +111,14 @@
                     else if (data == 3) { GradeName = "<b class='c-red'>被驳回</b>"; }
                     else { GradeName = "<b class='c-red'>生产中</b>";}
                     return GradeName;
-                }
-                },
+                }},
                 {
                     "data": "act_begin_date", "render": function (data) {
-                        var NewTime = parseInt(data.replace(/\D/igm, ""));
-                        return formatDate(NewTime);
+                        var NewTime = "";
+                        if (data != null) { var NewTime = parseInt(data.replace(/\D/igm, ""));
+                            return formatDate(NewTime);
+                        }
+                        return NewTime;
                     }
                 },
                 {
@@ -131,26 +130,11 @@
                         return NewTime;
                     }
                  },
-                { "data": "UserName", "defaultContent": "" },
-                { "data": "CheckedUser", "defaultContent": "" },
-                { "data": "Flag", "render": function (data) {
-                       var GradeName = "<b class='c-red'>预投产品</b>";
-                    if (data == 1) { GradeName = "<b class='c-red'>销售产品</b>"; }
-                    return GradeName;
-                    } },
-                
+                { "data": "UserName", "defaultContent": "" ,"className": "c-red"},
+                { "data": "CheckedUser", "defaultContent": "", "className": "c-primary" },
+                { "data": "source", "defaultContent": ""},
+
             ]
         });
     };
-    $("#ProductSNId").change(function () {
-            var FatherId = $("#ProductSNId").val();
-			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
-            $.post(ProUrl, { FatherId: FatherId }, function (data) {
-                //alert(data);
-                $('#FatherId').empty();
-                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
-                $('#FatherId').append(data);
-            });
-    });
-
 </script> 
