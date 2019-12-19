@@ -44,6 +44,78 @@ namespace DalProject
                 return List;
             }
         }
+        //导出工艺品成本
+        public DataTable ToExcelOut(SCostModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_Products_Price.Where(k => k.DeleteFlag == false)
+                            where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? p.XNGYP_Products.ProductsSNId == SModel.ProductSNId : true
+                            where SModel.FatherId != null && SModel.FatherId > 0 ? p.XNGYP_Products.FatherId == SModel.FatherId : true
+                            where SModel.WoodId != null && SModel.WoodId > 0 ? p.Id == SModel.WoodId : true
+                            orderby p.CreateTime
+                            select new CostModel
+                            {
+                                Id = p.Id,
+                                ProductId = p.ProductId,
+                                ProductName = p.XNGYP_Products.name,
+                                ProductSN = p.XNGYP_Products.XNGYP_Products_SN1.name,
+                                WoodId = p.WoodId,
+                                WoodName = p.WoodName,
+                                MCPrice = p.MCPrice,
+                                KLPrice = p.KLPrice,
+                                DHPrice = p.DHPrice,
+                                MGHPrice = p.MGPrice,
+                                MGQPrice = p.MGQPrice,
+                                GMPrice = p.GMPrice,
+                                YQPrice = p.YQPrice,
+                                FLPrice = p.FLPrice,
+                                CreateTime = p.CreateTime,
+                                CCprice = p.CCprice,
+                                CostCprice = p.CostCprice,
+                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice
+                            }).ToList();
+                if (List != null && List.Any())
+                {
+                    Exceltable.Columns.Add("系列", typeof(string));
+                    Exceltable.Columns.Add("产品(ID)", typeof(string));
+                    Exceltable.Columns.Add("材质(ID)", typeof(string));
+                    Exceltable.Columns.Add("木材成本(元)", typeof(string));
+                    Exceltable.Columns.Add("辅料成本(元)", typeof(string));
+                    Exceltable.Columns.Add("开料成本", typeof(string));
+                    Exceltable.Columns.Add("木工前段", typeof(string));
+                    Exceltable.Columns.Add("雕花成本", typeof(string));
+                    Exceltable.Columns.Add("木工后段", typeof(string));
+                    Exceltable.Columns.Add("刮磨成本", typeof(string));
+                    Exceltable.Columns.Add("油漆成本", typeof(string));
+                    Exceltable.Columns.Add("人工成本(元)", typeof(string));
+                    Exceltable.Columns.Add("总成本(元)", typeof(string));
+                    Exceltable.Columns.Add("出厂价(元)", typeof(string));
+                    foreach (var item in List)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["系列"] = item.ProductSN;
+                        row["产品(ID)"] = item.ProductName + "(" + item.ProductId + ")";
+                        row["材质(ID)"] = item.WoodName + "(" + item.WoodId + ")";
+                        row["木材成本(元)"] = item.MCPrice;
+                        row["辅料成本(元)"] = item.FLPrice;
+                        row["开料成本"] = item.KLPrice;
+                        row["木工前段"] = item.MGQPrice;
+                        row["雕花成本"] = item.DHPrice;
+                        row["木工后段"] = item.MGHPrice;
+                        row["刮磨成本"] = item.GMPrice;
+                        row["油漆成本"] = item.YQPrice;
+                        row["人工成本(元)"] = item.PersonPrice;
+                        row["总成本(元)"] = item.CostCprice;
+                        row["出厂价(元)"] = item.CCprice;
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
+        }
         public void AddOrUpdate(CostModel Models)
         {
             using (var db = new XNGYPEntities())

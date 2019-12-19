@@ -35,7 +35,7 @@ namespace DalProject
                             {
                                 Id = p.Id,
                                 ProductId = p.ProductId,
-                                ProductName = p.ProductName,
+                                ProductName = p.XNGYP_Products.name,
                                 Color = p.ColorName,
                                 ColorId=p.ColorId,
                                 WoodId=p.WoodId,

@@ -160,7 +160,12 @@ namespace XNGYP.Controllers
         public void ToFExcelOut(SCostModel SModel)
         {
             var models = CSer.ToFExcelOut(SModel);
-            ESer.CreateExcel(models, "成本" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+            ESer.CreateExcel(models, "家具成本" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+        }
+        public void ToExcelOut(SCostModel SModel)
+        {
+            var models = CSer.ToExcelOut(SModel);
+            ESer.CreateExcel(models, "工艺品成本" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }
 }
