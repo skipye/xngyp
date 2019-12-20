@@ -57,11 +57,21 @@ namespace XNGYP.Controllers
         }
         public ActionResult Logs()
         {
-            return View();
+            SWorkLogsModel Models = new SWorkLogsModel();
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(Models.StartTime))
+            {
+                Models.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-3).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(Models.EndTime))
+            {
+                Models.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            return View(Models);
         }
-        public ActionResult LogsPgae()
+        public ActionResult LogsPgae(SWorkLogsModel SModel)
         {
-            var PageList = USer.GetLogsPageList();
+            var PageList = USer.GetLogsPageList(SModel);
             return new ContentResult
             {
                 Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),

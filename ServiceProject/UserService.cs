@@ -19,9 +19,9 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
-        public List<WorkLogsModel> GetLogsPageList()
+        public List<WorkLogsModel> GetLogsPageList(SWorkLogsModel SModel)
         {
-            try { return UDal.GetLogsPageList(); }
+            try { return UDal.GetLogsPageList(SModel); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

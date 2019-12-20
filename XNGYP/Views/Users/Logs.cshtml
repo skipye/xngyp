@@ -1,4 +1,4 @@
-﻿@model ModelProject.SUsersModel
+﻿@model ModelProject.SWorkLogsModel
 @{
     Layout = null;
 }
@@ -8,10 +8,12 @@
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-    @*<div class="text-c">
-        @Html.TextBoxFor(k => k.Name, new { @placeholder = "用户名", @style = "width:250px", @class = "input-text" })
+    <div class="text-c">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
-    </div>*@
+    </div>
     @*<div class="cl pd-5 bg-1 bk-gray mt-20">
         <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Users")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
         <a href="javascript:void(0);" onclick="add('添加用户', '/Users/Add', '600', '400')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加用户</a>
@@ -20,8 +22,8 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
                 <tr class="text-l">
-                    <th width="80">用户</th>
-                    <th width="140">操作时间</th>
+                    <th>用户</th>
+                    <th>操作时间</th>
                     <th>事件</th>
                 </tr>
             </thead>
@@ -37,12 +39,14 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { search(param); });
+    $(function () {
+        param["StartTime"] = "@Model.StartTime";
+        param["EndTime"] = "@Model.EndTime";
+        search(param);
+    });
     $("#btnSearch").click(function () {
-        //搜索条件
-        var Name = $("#Name").val().trim();
-        //搜索
-        param["Name"] = Name;
+        param["StartTime"] = $("#logmin").val().trim();
+        param["EndTime"] =  $("#logmax").val().trim();
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -51,7 +55,7 @@
     function search(param) {
         $('.table-sort').dataTable({
             "aaSorting": [[1, "desc"]],//默认第几个排序
-            "bStateSave": false,//状态保存
+            "bAutoWidth": false,
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Users/LogsPgae", param, function (result) {
                     //封装返回数据

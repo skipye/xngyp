@@ -148,6 +148,23 @@ namespace XNGYP.Controllers
         {
             return View();
         }
+        public ActionResult WorkFrom(int Id)
+        {
+            SWorkFromModel Models = new SWorkFromModel();
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(Models.StartTime))
+            {
+                Models.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-3).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(Models.EndTime))
+            {
+                Models.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
+            Models.XLDroList = CHSer.GetProSNDrolist(Models.ProductSNId);
+            Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
+            Models.GXId = Id;
+            return View(Models);
+        }
         //工序任务
         public ActionResult FWork(SWorkFromModel SModel)
         {

@@ -26,11 +26,23 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        public List<WorkLogsModel> GetLogsPageList()
+        public List<WorkLogsModel> GetLogsPageList(SWorkLogsModel SModel)
         {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
             using (var db = new XNGYPEntities())
             {
                 var List = (from p in db.WorkLogs
+                            where p.CreateTime>StartTime
+                            where p.CreateTime<EndTime
                             orderby p.Id descending
                             select new WorkLogsModel
                             {

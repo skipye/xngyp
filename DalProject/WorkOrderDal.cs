@@ -97,7 +97,7 @@ namespace DalProject
                                     WWTable.BOM_ready_date = DateTime.Now;
                                     Status = 1;
                                 }
-                                WWTable.WorkOrder = WorkOrder;
+                                WWTable.WorkOrder = WorkOrder+j;
                                 WWTable.ProductId = ProductId;
                                 if (CId > 0) { WWTable.Contract_Detail_Id = CId; WWTable.Flag = 1; }
                                 if (WId > 0) { WWTable.WIP_PreCast_Id = WId; WWTable.Flag = 2; }
@@ -111,8 +111,7 @@ namespace DalProject
                                 WWTable.WoodId = WoodId;
                                 WWTable.WoodName = WoodName;
                                 db.XNGYP_WorkOrder.Add(WWTable);
-                                i++;
-
+                                
                             }
                         }
                         else {
@@ -140,6 +139,8 @@ namespace DalProject
                             i++;
                         }
                     }
+                    i++;
+
                 }
                 db.SaveChanges();
             }

@@ -258,8 +258,8 @@ namespace DalProject
         {
             using (var db = new XNHREntities())
             {
-                string StrSqlImg = string.Format(@"delete HR_Times where d_start>='{0}' and d_start<='{1}'", StartTime, EndTime);
-                db.Database.ExecuteSqlCommand(StrSqlImg);//先删除图片后面在添加
+                string StrSqlImg = string.Format(@"delete HR_Times where d_start>='{0}' and d_end<='{1}'", StartTime, EndTime);
+                db.Database.ExecuteSqlCommand(StrSqlImg);
 
                 var listNew = (from p in db.ehr_sum.Where(k => k.department != 355)
                                where p.d_start >= StartTime

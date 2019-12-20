@@ -58,7 +58,6 @@
                     <th>接单人</th>
                     <th>审核人</th>
                     <th>来源</th>
-                    <th width="120">操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -112,15 +111,6 @@
                     orderable: false,
                     render: function (data, type, row) {
                         return '<input type="checkbox" value="' + row.Id + '" ref="' + row.Status + '" >';
-                    }
-                }, {
-                    targets: 11,
-                    render: function (data, type, row) {
-                        var strArr = "";
-                        if (row.Status == 0) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="submitWork(this, \'' + row.Id + '\')" title="提交任务" data-url=\'/WorkOrder/Checked\'><i class="Hui-iconfont">&#xe603;</i></a>'; }
-                        if (row.Status == 1) { strArr = '<a href="javascript:void(0);" style="text-decoration:none" onclick="checkedWork(this, \'' + row.Id + '\')" title="审核" data-url=\'/WorkOrder/Checked\' val=\'2\'><i class="Hui-iconfont">&#xe614;</i></a>'; }
-                        
-                        return strArr;
                     }
                 }
             ],

@@ -3,19 +3,32 @@
     Layout = null;
     List<SelectListItem> ArrSecPro = new List<SelectListItem>();
     ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+    List<SelectListItem> GYItem = new List<SelectListItem>();
+    GYItem.Add(new SelectListItem { Value = "", Text = "全部工序" });
+    GYItem.Add(new SelectListItem { Value = "1", Text = "开料" });
+    GYItem.Add(new SelectListItem { Value = "2", Text = "木工前段" });
+    GYItem.Add(new SelectListItem { Value = "3", Text = "雕花" });
+    GYItem.Add(new SelectListItem { Value = "4", Text = "木工后段" });
+    GYItem.Add(new SelectListItem { Value = "5", Text = "刮磨" });
+    GYItem.Add(new SelectListItem { Value = "6", Text = "油漆" });
+    GYItem.Add(new SelectListItem { Value = "7", Text = "配件安装" });
 }
 @Html.Action("_Meta", "Home")
-
+@*<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>生产管理<span class="c-gray en">&gt;</span>开料管理
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>*@
 <div class="page-container">
     <div class="text-c">
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px", })
-            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select",@style = "width:150px", })
-        </span>
-        @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
-        <span class="select-box inline">
+        @*<span class="select-box inline">
+            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
+            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
             @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
-        </span>
+        </span>*@
+       
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -24,8 +37,9 @@
             <a href="javascript:void(0);" onclick="checkedWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中审核</a>
         </span>
     </div>
-    <div class="mt-20 checkmodel" style="width:100%;">
-        <table class="table table-border table-bordered table-bg table-hover table-sort" style="width:100%;">
+    <div class="mt-20 checkmodel">
+        @*@Html.Action("PageList","Article")*@
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
                 <tr class="text-l">
                     <th width="25"><input type="checkbox" name="" value=""></th>
@@ -39,7 +53,7 @@
                     <th>接单人</th>
                     <th>审核人</th>
                     <th>来源</th>
-                    <th width="120">操作</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -51,19 +65,22 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="~/js/ajaxScript.js?v=7"></script>
+<script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript">
-
+    var GXId = "@Model.GXId";
     var param = {};
-    $(function () {param["GXId"] = "@Model.GXId"; search(param); });
+    $(function () {
+        param["GXId"] = GXId;
+        search(param);
+    });
     $("#btnSearch").click(function () {
         //搜索条件
-        var ProductSNId = $("#ProductSNId").val().trim();
-        var FatherId = $("#FatherId").val().trim();
-        var WoodId = $("#WoodId").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
         //搜索
-        param["ProductSNId"] = ProductSNId;
-        param["FatherId"] = FatherId;
-        param["WoodId"] = WoodId;
+        param["StartTime"] = StartTime;
+        param["EndTime"] = EndTime;
+        param["GXId"] = GXId;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);
@@ -73,6 +90,7 @@
         $('.table-sort').dataTable({
             "aaSorting": [[5, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
+            "bAutoWidth": false,
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/WorkOrder/GetFlowList", param, function (result) {
                     //封装返回数据
@@ -129,8 +147,8 @@
                         return NewTime;
                     }
                  },
-                { "data": "UserName", "defaultContent": "" },
-                { "data": "CheckedUser", "defaultContent": "" },
+                { "data": "UserName", "defaultContent": "" ,"className": "c-red"},
+                { "data": "CheckedUser", "defaultContent": "" , "className": "c-primary"},
                 { "data": "Flag", "render": function (data) {
                        var GradeName = "<b class='c-red'>预投产品</b>";
                     if (data == 1) { GradeName = "<b class='c-red'>销售产品</b>"; }
@@ -140,15 +158,5 @@
             ]
         });
     };
-    $("#ProductSNId").change(function () {
-            var FatherId = $("#ProductSNId").val();
-			var ProUrl = "@Url.Action("GetSecSNDrolistByFatherId","Products")";
-            $.post(ProUrl, { FatherId: FatherId }, function (data) {
-                //alert(data);
-                $('#FatherId').empty();
-                $('#FatherId').append($('<option></option>').val("").text("请选择二级").attr("selected", true));
-                $('#FatherId').append(data);
-            });
-    });
 
 </script> 

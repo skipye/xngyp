@@ -819,6 +819,7 @@
     <Content Include="Views\WorkOrder\Work.cshtml" />
     <Content Include="Views\WorkOrder\WorkFlow.cshtml" />
     <Content Include="Views\WorkOrder\FWork.cshtml" />
+    <Content Include="Views\WorkOrder\WorkFrom.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

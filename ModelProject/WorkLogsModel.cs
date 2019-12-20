@@ -13,4 +13,9 @@ namespace ModelProject
         public int? MSGStatus { get; set; }
         public DateTime? CreateTime { get; set; }
     }
+    public class SWorkLogsModel
+    {
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+    }
 }
