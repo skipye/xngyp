@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistinctBy.cs" />
     <Compile Include="HRTimesDal.cs" />
     <Compile Include="SendSMSDal.cs" />
     <Compile Include="CostDal.cs" />

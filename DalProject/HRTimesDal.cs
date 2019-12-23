@@ -88,7 +88,7 @@ namespace DalProject
                                 TopMonthTX = p.TopMonthTX,
                                 MonthTX = p.MonthTX,
                                 TotalTX = p.TotalTX,
-                            }).ToList();
+                            }).ToList().DistinctBy(m => m.Name);
 
                 foreach (var item in list)
                 {
@@ -250,9 +250,10 @@ namespace DalProject
 
 
                 }
-                return list;
+                return list.ToList();
             }
         }
+        
         //下载考勤数据到新表中
         public void AddHRTimeInNewTable(DateTime StartTime, DateTime EndTime,int TypeId)
         {

@@ -632,7 +632,7 @@ namespace DalProject
                     var NewLabes = db.XNGYP_INV_Labels.Where(k => k.Id == item.Id).SingleOrDefault();
                     if (!string.IsNullOrEmpty(item.ProductSN)) {
 
-                        NewLabes.ProductSN = item.ProductSN + r.Next(100, 1000);
+                        NewLabes.ProductSN = item.ProductSN.Substring(0,8);
                     }
                     
                 }
