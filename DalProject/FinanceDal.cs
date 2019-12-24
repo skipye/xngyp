@@ -165,7 +165,7 @@ namespace DalProject
             using (var db = new XNERPEntities())
             {
                 var OrderTable = db.CRM_contract_header.Where(k => k.id == Models.Id).FirstOrDefault();
-                if (Models.Amount > 0 && Pay >= Prepay && Pay < Total)//更新合同的付款状态
+                if (Models.Amount >= 0 && Pay >= Prepay && Pay < Total)//更新合同的付款状态
                 {
                     OrderTable.FR_flag = 1;
                 }
