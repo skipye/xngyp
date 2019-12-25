@@ -16,7 +16,7 @@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>*@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Warehouse")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+        @*<a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Warehouse")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>*@
         <a href="javascript:void(0);" onclick="add('添加', '/Warehouse/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加仓库</a>
     </div>
     <div class="mt-20 checkmodel">
@@ -71,8 +71,7 @@
                 }, {
                     targets: 6,
                     render: function (data, type, row) {
-                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑仓库\',\'/Warehouse/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑仓库"><i class="Hui-iconfont">&#xe6df;</i></a>' +
-                               '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Warehouse/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
+                        return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑仓库\',\'/Warehouse/Add\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑仓库"><i class="Hui-iconfont">&#xe6df;</i></a>' ;
                     }
                 }
             ],
@@ -91,6 +90,6 @@
             ]
         });
     };
-
+   // + '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Warehouse/Delete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>'
 
 </script> 

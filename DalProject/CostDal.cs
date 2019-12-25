@@ -141,7 +141,7 @@ namespace DalProject
                         foreach (var item in GYPLables)
                         {
                             item.CCprice = table.CCprice;
-                            item.BQPrice = table.CCprice * Convert.ToDecimal(2.5);
+                            item.BQPrice = table.CCprice * Convert.ToDecimal(1.8);
                         }
                     }
                 }
@@ -430,10 +430,11 @@ namespace DalProject
                     table.CostCprice = Models.CostCprice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
-                    table.PersonPrice = table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice +  table.MGHPrice; ;
+                    table.PersonPrice = Models.PersonPrice; 
                     table.CostCprice = table.MCPrice + table.PersonPrice + table.FLPrice;
-                    table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
-                    
+                    table.CCprice = Models.CostCprice;
+                    table.RGFY = Models.RGFY;
+                    table.MCFY = Models.MCFY;
                     var GYPLables = db.INV_labels.Where(k => k.product_id == table.ProductId && k.wood_id == table.WoodId).ToList();
                     if (GYPLables != null && GYPLables.Any())
                     {
@@ -497,7 +498,7 @@ namespace DalProject
         {
             using (var db = new XNERPEntities())
             {
-                var LablesTable = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.flag >0 && k.status == 1)
+                var LablesTable = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.CCprice==null && k.status==1)
                                    orderby p.created_time descending
                                    select new LabelsModel
                                    {
@@ -549,17 +550,22 @@ namespace DalProject
                     Costm.GMPrice = GetCost(item.ProductId, item.WoodId ?? 0, "刮磨");
                     Costm.YQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "油漆");
                     Costm.PersonPrice = Convert.ToDecimal(Convert.ToDecimal(item.PersonPrice).ToString("00"));
-                    if (Costm.KLPrice > 0 && Costm.MGQPrice > 0 && Costm.MGHPrice > 0 && Costm.DHPrice > 0 && Costm.GMPrice > 0 && Costm.YQPrice>0)
+                    Costm.RGFY = Costm.PersonPrice * Convert.ToDecimal(0.6);
+                    if (Costm.KLPrice > 0 && Costm.MGQPrice > 0 && Costm.MGHPrice > 0 && Costm.DHPrice > 0 && Costm.GMPrice > 0 && Costm.YQPrice > 0)
                     {
                         CB = WoodCB + Convert.ToDouble(Costm.KLPrice) + Convert.ToDouble(Costm.MGQPrice) + Convert.ToDouble(Costm.MGHPrice) + Convert.ToDouble(Costm.DHPrice) + Convert.ToDouble(Costm.GMPrice) + Convert.ToDouble(Costm.YQPrice);
                     }
                     Costm.CostCprice = Convert.ToDecimal(Convert.ToDecimal(CB).ToString("00"));
 
                     Costm.CCprice = Convert.ToDecimal(Convert.ToDecimal(CB * 1.6).ToString("00"));
+                    if (item.W_price <= 20000)
+                    {
+                        Costm.MCFY = Convert.ToDecimal(Math.Floor(Woodunit * 20000 * 0.6 / 10) * 10);
+
+                        Costm.CCprice = Costm.MCPrice + Costm.PersonPrice + Costm.MCFY + Costm.RGFY;
+                    }
+                    else { Costm.MCFY = 0; }
                     
-                    //var LableeNew = db.INV_labels.Where(k => k.id == item.Id).SingleOrDefault();
-                    //LableeNew.CCprice = Costm.CCprice;
-                    //LableeNew.BQPrice = Convert.ToDecimal(Convert.ToDouble(Costm.CCprice) * 2.5);
                     AddOrUpdateF(Costm);
                 }
                 db.SaveChanges();
@@ -644,7 +650,7 @@ namespace DalProject
         {
             using (var db = new XNERPEntities())
             {
-                var List = (from p in db.SYS_product_Cost.Where(k => k.DeleteFlag == false)
+                var List = (from p in db.SYS_product_Cost.Where(k => k.DeleteFlag == false && k.CCprice ==null)
                             orderby p.CreateTime
                             select new CostModel
                             {

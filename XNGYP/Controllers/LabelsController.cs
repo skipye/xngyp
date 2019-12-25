@@ -144,7 +144,7 @@ namespace XNGYP.Controllers
         public void ToExcelOut(SLabelsModel SModels)
         {
             var models = LSer.ToExcelOut(SModels);
-            ESer.CreateExcel(models, "成品库库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+            ESer.CreateExcel(models, "工艺品库存" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
         public ActionResult WorkLabels(SLabelsModel SModel,int CRMId,int Qty)
         {

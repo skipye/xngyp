@@ -23,7 +23,11 @@
         </span>
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
-    
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="f-l">
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
+        </span>
+    </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -150,4 +154,12 @@
                 $('#FatherId').append(data);
             });
     });
+     function toExcelout() {
+        var ProductSNId = $("#ProductSNId").val().trim();
+        var FatherId = $("#FatherId").val().trim();
+         var INVId = $("#INVId").val().trim();
+         var WoodId = $("#WoodId").val().trim();
+        window.location.href = "/Labels/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&WoodId=' + WoodId ;
+        //$.post(ExcelUrl, {}, function (d) { });
+    };
 </script> 

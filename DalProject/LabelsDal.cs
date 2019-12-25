@@ -83,7 +83,7 @@ namespace DalProject
             }
             using (var db = new XNERPEntities())
             {
-                var List = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.flag>=0 && k.status==1)
+                var List = (from p in db.INV_labels.Where(k => k.delete_flag == false && k.flag>0 && k.status==1)
                             where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.SYS_product.product_SN_id : true
                             where SModel.INVId > 0 ? SModel.INVId == p.inv_id : true
                             where SModel.WoodId > 0 ? SModel.WoodId == p.wood_id : true

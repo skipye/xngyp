@@ -119,7 +119,7 @@ namespace XNGYP.Controllers
         }
         public ActionResult AddFCost()
         {
-            if (CSer.UpdateFCost() == true)
+            if (CSer.AddFCost() == true)
             {
                 return Content("1");
             }
