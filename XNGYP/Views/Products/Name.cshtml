@@ -20,7 +20,7 @@
 		<button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
-		<a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("NameDelete","Products")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+		@*<a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("NameDelete","Products")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>*@
 		<a href="javascript:void(0);" onclick="add('添加', '/Products/NameAdd', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加名称</a>
 	</div>
 	<div class="mt-20 checkmodel">
@@ -37,8 +37,8 @@
 					<th>宽（mm）</th>
 					<th>高（mm）</th>
 					<th>备注</th>
-					<th width="120">创建时间</th>
-					<th width="120">操作</th>
+					<th>创建时间</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody></tbody>
@@ -70,6 +70,7 @@
 		$('.table-sort').dataTable({
 			"aaSorting": [[9, "desc"]],//默认第几个排序
 			"bStateSave": true,//状态保存
+			"bAutoWidth": true,
 			"ajax": function (data, callback, settings) {
 				ajaxRequest("post", "/Products/NamePageList", param, function (result) {
 					//封装返回数据
@@ -88,8 +89,7 @@
 				}, {
 					targets: 10,
 					render: function (data, type, row) {
-						return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/Products/NameAdd\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>' +
-							'<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onClick="del(this,\'' + row.Id + '\')" data-url=\'/Products/NameDelete\' title="删除"><i class="Hui-iconfont f-14">&#xe6e2;</i></a>';
+						return '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="edit(\'编辑\',\'/Products/NameAdd\', \'' + row.Id + '\', \'600\', \'300\')" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
 					}
 				}
 			],
@@ -112,7 +112,7 @@
 				{
 					"data": "created_time", "render": function (data) {
 						var NewTime = parseInt(data.replace(/\D/igm, ""));
-						return formatDate(NewTime);
+						return formatDateTime(NewTime);
 					}
 				},
 

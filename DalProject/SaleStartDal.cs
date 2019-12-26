@@ -85,7 +85,7 @@ namespace DalProject
                                 Customer = p.Contract_Header.XNGYP_Customers.Name,
                                 ProductSN = p.ProductSN,
                                 ProductId = p.ProductId,
-                                ProductName = p.ProductName,
+                                ProductName = p.XNGYP_Products.name,
                                 delivery_date = p.Contract_Header.DeliveryDate,
                                 length = p.length,
                                 width = p.width,

@@ -11,7 +11,7 @@ namespace XNGYP.Controllers
         private static readonly UserService USer = new UserService();
         private static readonly CustomerService CSer = new CustomerService();
         private static readonly ContractHeaderService NSer = new ContractHeaderService();
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
             SContractHeaderModel SModels = new SContractHeaderModel();
@@ -88,7 +88,7 @@ namespace XNGYP.Controllers
             }
             else { return View(Models); }
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult UserIndex()
         {
             SContractHeaderModel SModels = new SContractHeaderModel();
@@ -200,6 +200,7 @@ namespace XNGYP.Controllers
             Models.HTProList = NSer.GetProductListByOrder(Id);
             return View(Models);
         }
+        [Authorize]
         //绑定订单
         public ActionResult BindOrder()
         {
