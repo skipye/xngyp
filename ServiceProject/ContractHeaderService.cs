@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using DalProject;
 using System.Web.Mvc;
+using System.Data;
 
 namespace ServiceProject
 {
@@ -206,6 +207,17 @@ namespace ServiceProject
         public List<ContractProductsModel> GetFProductListByOrder(int HTId)
         {
             try { return CHDal.GetFProductListByOrder(HTId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public DataTable ToExcelOut(SContractHeaderModel SModel)
+        {
+            try
+            {
+                return CHDal.ToExcelOut(SModel);
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

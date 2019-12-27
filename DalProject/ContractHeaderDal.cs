@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using DataBase;
 using System.Web.Mvc;
+using System.Data;
 
 namespace DalProject
 {
@@ -62,8 +63,8 @@ namespace DalProject
                                 SaleFlag=p.SaleFlag,
                                 Remark=p.Remark,
                                 DDOrder=p.DDOrder,
-                                HTProCount=p.Contract_Detail.Count,
-                                HTFProCount=p.Contract_FDetail.Count,
+                                HTProCount=p.Contract_Detail.Where(k=>k.DeleteFlag==false).Sum(k=>k.Qty),
+                                HTFProCount=p.Contract_FDetail.Where(k => k.DeleteFlag == false).Sum(k => k.Qty),
                             }).ToList();
                 ContractModel Models = new ContractModel();
                 Models.data = List;
@@ -850,7 +851,79 @@ namespace DalProject
                 }
             }
         }
-
+        //导出
+        public DataTable ToExcelOut(SContractHeaderModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            ContractModel Models = new ContractModel();
+            using (var db = new XNERPEntities())
+            {
+                var list = (from p in db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1)
+                            where !string.IsNullOrEmpty(SModel.SN) ? p.SN.Contains(SModel.SN) : true
+                            where p.created_time > StartTime
+                            where p.created_time < EndTime
+                            orderby p.created_time descending
+                            select new ContractHeaderModel
+                            {
+                                Id = p.id,
+                                SN = p.SN,
+                                Customer = p.CRM_customers.name,
+                                Amount = p.amount,
+                                Status = p.status,
+                                Prepay = p.prepay,
+                                CheckedUserName = p.check_user_name,
+                                FRFlag = p.FR_flag,
+                                OrderTime = p.HTDate,
+                                CreateTime = p.created_time,
+                                CWCheckStatus = p.CWStatus,
+                                Remark = p.Remark,
+                            }).ToList();
+                
+                if (list != null && list.Any())
+                {
+                    Exceltable.Columns.Add("客户名称", typeof(string));
+                    Exceltable.Columns.Add("合同编号", typeof(string));
+                    Exceltable.Columns.Add("合同时间", typeof(string));
+                    Exceltable.Columns.Add("合同总金额", typeof(string));
+                    Exceltable.Columns.Add("预付款", typeof(string));
+                    Exceltable.Columns.Add("已收款", typeof(string));
+                    Exceltable.Columns.Add("尾款", typeof(string));
+                    Exceltable.Columns.Add("付款状态", typeof(string));
+                    Exceltable.Columns.Add("审核人员", typeof(string));
+                    Exceltable.Columns.Add("操作时间", typeof(string));
+                    Exceltable.Columns.Add("备注", typeof(string));
+                    
+                    foreach (var item in list)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["客户名称"] = item.Customer;
+                        row["合同编号"] = item.SN;
+                        row["合同时间"] = item.OrderTime;
+                        row["合同总金额"] = item.Amount;
+                        row["预付款"] = item.Prepay;
+                        row["已收款"] = item.RealPrice;
+                        row["尾款"] = item.Amount - item.RealPrice;
+                        row["付款状态"] = item.FRFlag==1? "已付预付款": item.FRFlag == 2? "已付全款" : "未付款";
+                        row["审核人员"] = item.CheckedUserName;
+                        row["操作时间"] = item.CreateTime;
+                        row["备注"] = item.Remark;
+                        
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
+        }
 
     }
 }

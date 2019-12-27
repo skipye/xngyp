@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\SendSMSController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -820,6 +821,12 @@
     <Content Include="Views\WorkOrder\WorkFlow.cshtml" />
     <Content Include="Views\WorkOrder\FWork.cshtml" />
     <Content Include="Views\WorkOrder\WorkFrom.cshtml" />
+    <Content Include="Views\Admin\_Footer.cshtml" />
+    <Content Include="Views\Admin\_Header.cshtml" />
+    <Content Include="Views\Admin\_Menu.cshtml" />
+    <Content Include="Views\Admin\_Meta.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Welcome.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

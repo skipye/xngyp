@@ -685,7 +685,7 @@ namespace DalProject
                         row["28"] = item.d28;
                         row["29"] = item.d29;
                         row["30"] = item.d30;
-                        row["31"] = item.d10;
+                        row["31"] = item.d31;
                         if (SModel.DCTypeId == 1)
                         {
                             row["应出勤"] = item.shouldworkingday;

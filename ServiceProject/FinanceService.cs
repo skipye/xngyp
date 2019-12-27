@@ -42,5 +42,13 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public bool CWFOrderCheck(string ListId, int CheckedId)
+        {
+            try { FDal.CWFOrderCheck(ListId, CheckedId); return true; }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace XNGYP.Controllers
         private static readonly UserService USer = new UserService();
         private static readonly CustomerService CSer = new CustomerService();
         private static readonly ContractHeaderService NSer = new ContractHeaderService();
+        private static readonly ToExcel ESer = new ToExcel();
         [Authorize]
         public ActionResult Index()
         {
@@ -84,6 +85,10 @@ namespace XNGYP.Controllers
             var Models = NSer.GetFDetailById(Id);
             return View(Models);
         }
-
+        public void ToExcelOut(SContractHeaderModel SModel)
+        {
+            var models = NSer.ToExcelOut(SModel);
+            ESer.CreateExcel(models, "家具订单" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+        }
     }
 }

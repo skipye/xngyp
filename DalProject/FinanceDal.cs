@@ -168,9 +168,10 @@ namespace DalProject
                 if (Models.Amount >= 0 && Pay >= Prepay && Pay < Total)//更新合同的付款状态
                 {
                     OrderTable.FR_flag = 1;
+                    OrderTable.CWStatus = 1;
                 }
                 if (Pay >= Total)
-                { OrderTable.FR_flag = 2; }
+                { OrderTable.FR_flag = 2; OrderTable.CWStatus = 1; }
                 db.SaveChanges();
             }
         }
@@ -193,6 +194,29 @@ namespace DalProject
                                 CreateTime = p.CreateTime,
                             }).ToList();
                 return List;
+            }
+        }
+        //家具订单审核
+        public void CWFOrderCheck(string ListId, int CheckedId)
+        {
+            using (var db = new XNERPEntities())
+            {
+                string[] ArrId = ListId.Split('$');
+                foreach (var item in ArrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int Id = Convert.ToInt32(item);
+                        var tables = db.CRM_contract_header.Where(k => k.id == Id).SingleOrDefault();
+                        tables.CWStatus = CheckedId;
+                        if (CheckedId == 2)
+                        {
+                            tables.status = 0;
+                        }
+                    }
+                }
+
+                db.SaveChanges();
             }
         }
     }
