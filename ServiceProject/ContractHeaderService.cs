@@ -212,6 +212,17 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public DataTable ToFExcelOut(SContractHeaderModel SModel)
+        {
+            try
+            {
+                return CHDal.ToFExcelOut(SModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public DataTable ToExcelOut(SContractHeaderModel SModel)
         {
             try

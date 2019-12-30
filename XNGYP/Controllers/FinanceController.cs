@@ -11,6 +11,7 @@ namespace XNGYP.Controllers
         private static readonly UserService USer = new UserService();
         private static readonly FinanceService FSer = new FinanceService();
         private static readonly ContractHeaderService NSer = new ContractHeaderService();
+        private static readonly ToExcel ESer = new ToExcel();
         [Authorize]
         public ActionResult Order()
         {
@@ -115,6 +116,11 @@ namespace XNGYP.Controllers
                 return Content("True");
             }
             else return Content("False");
+        }
+        public void ToExcelOut(SContractHeaderModel SModels)
+        {
+            var models = NSer.ToExcelOut(SModels);
+            ESer.CreateExcel(models, "工艺品订单" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }
 }

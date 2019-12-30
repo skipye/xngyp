@@ -21,8 +21,9 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
             <a href="javascript:void(0);" onclick="checked(this,'0')" class="btn btn-primary radius" data-url="@Url.Action("CWChecked","Order")"><i class="Hui-iconfont">&#xe615;</i>批量审核</a>
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
-        <span class="f-r pr-10 c-green" style="line-height:40px;">合同总金额：<b id="HTTotail"></b>元</span>
+        <span class="f-r pr-10 c-green">合同总金额：<b id="HTTotail"></b>元</span>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -147,8 +148,8 @@
                             "data": "FRFlag", "render": function (data, type, row) {
                                 var StatusName = "<span class=\"label label-warning radius\">未付款</span>";
                                 if (data == 1)
-                                { StatusName = "<span class=\"label label-success radius\">已付预付款</span>"; }
-                                if (data == 2) { StatusName = "<span class=\"label label-danger radius\">已付全款</span>"; }
+                                { StatusName = "<span class=\"label label-success radius\">已收预付款</span>"; }
+                                if (data == 2) { StatusName = "<span class=\"label label-danger radius\">已收全款</span>"; }
                                 return StatusName;
                             }, "className": "checkedstatus",
                         },
@@ -194,5 +195,9 @@
         });
     };
 
-
+    function toExcelout() {
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        window.location.href = "/Finance/ToExcelOut?StartTime=" + StartTime + '&EndTime=' + EndTime;
+    };
 </script> 

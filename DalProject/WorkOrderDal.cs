@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -469,6 +470,146 @@ namespace DalProject
                             }).ToList();
                 return List;
             }
+        }
+        public DataTable ToFExcelOut(SWorkFromModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.WIP_workflow.Where(k => k.delete_flag == false && k.WIP_workorder.delete_flag == false)
+                            where !string.IsNullOrEmpty(SModel.GXName) ? p.name == SModel.GXName : true
+                            where p.created_time > StartTime
+                            where p.created_time < EndTime
+                            orderby p.created_time descending
+                            select new WorkFromModel
+                            {
+                                Id = p.id,
+                                Name = p.name,
+                                workorder = p.WIP_workorder.workorder,
+                                ProductName = p.SYS_product.name,
+                                UserName = p.user_name,
+                                exp_begin_date = p.exp_begin_date,
+                                exp_end_date = p.exp_end_date,
+                                act_begin_date = p.act_begin_date,
+                                act_end_date = p.act_end_date,
+                                Status = p.status,
+                                CheckedUser = p.checked_user_name,
+                                cost = p.cost,
+                                source = p.reserved2,
+                            }).ToList();
+                if (List != null && List.Any())
+                {
+                    Exceltable.Columns.Add("产品名称", typeof(string));
+                    Exceltable.Columns.Add("工序", typeof(string));
+                    Exceltable.Columns.Add("任务单号", typeof(string));
+                    Exceltable.Columns.Add("生产价格", typeof(string));
+                    Exceltable.Columns.Add("生产状态", typeof(string));
+                    Exceltable.Columns.Add("开始时间", typeof(string));
+                    Exceltable.Columns.Add("完成时间", typeof(string));
+                    Exceltable.Columns.Add("接单人", typeof(string));
+                    Exceltable.Columns.Add("审核人", typeof(string));
+                    Exceltable.Columns.Add("来源", typeof(string));
+                    foreach (var item in List)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["产品名称"] = item.ProductName;
+                        row["工序"] = item.Name;
+                        row["任务单号"] = item.workorder;
+                        row["生产价格"] = item.cost;
+                        row["生产状态"] = item.Status == 1 ? "生产完成，待审核" : item.Status == 2 ? "审核通过" : item.Status == 3 ? "被驳回" : "生产中";
+                        row["开始时间"] = Convert.ToDateTime(item.act_begin_date).ToString("yyyy-MM-dd");
+                        row["完成时间"] = Convert.ToDateTime(item.act_end_date).ToString("yyyy-MM-dd");
+                        row["接单人"] = item.UserName;
+                        row["审核人"] = item.CheckedUser;
+                        row["来源"] = item.source;
+
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
+        }
+        public DataTable ToExcelOut(SWorkFromModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime).AddDays(-1);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_WorkFrom.Where(k => k.DeleteFlag == false && k.XNGYP_WorkOrder.DeleteFlag == false && k.XNGYP_WorkOrder.ClosedFlag == false)
+                            where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? p.XNGYP_Products.ProductsSNId == SModel.ProductSNId : true
+                            where SModel.FatherId != null && SModel.FatherId > 0 ? p.XNGYP_Products.FatherId == SModel.FatherId : true
+                            where SModel.WoodId != null && SModel.WoodId > 0 ? p.WoodId == SModel.WoodId : true
+                            where SModel.GXId != null && SModel.GXId > 0 ? p.GXId == SModel.GXId : true
+                            where p.CreateTime > StartTime
+                            where p.CreateTime < EndTime
+                            orderby p.CreateTime descending
+                            select new WorkFromModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                workorder = p.XNGYP_WorkOrder.WorkOrder,
+                                ProductName = p.XNGYP_Products.name,
+                                Customer = p.XNGYP_WorkOrder.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                UserName = p.UserName,
+                                exp_begin_date = p.exp_begin_date,
+                                exp_end_date = p.exp_end_date,
+                                act_begin_date = p.act_begin_date,
+                                act_end_date = p.act_end_date,
+                                Status = p.Status,
+                                CheckedUser = p.CheckedUser,
+                                cost = p.cost,
+                                Flag = p.Flag,
+                            }).ToList();
+                if (List != null && List.Any())
+                {
+                    Exceltable.Columns.Add("产品名称", typeof(string));
+                    Exceltable.Columns.Add("工序", typeof(string));
+                    Exceltable.Columns.Add("任务单号", typeof(string));
+                    Exceltable.Columns.Add("生产价格", typeof(string));
+                    Exceltable.Columns.Add("生产状态", typeof(string));
+                    Exceltable.Columns.Add("开始时间", typeof(string));
+                    Exceltable.Columns.Add("完成时间", typeof(string));
+                    Exceltable.Columns.Add("接单人", typeof(string));
+                    Exceltable.Columns.Add("审核人", typeof(string));
+                    Exceltable.Columns.Add("来源", typeof(string));
+                    foreach (var item in List)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["产品名称"] = item.ProductName;
+                        row["工序"] = item.Name;
+                        row["任务单号"] = item.workorder;
+                        row["生产价格"] = item.cost;
+                        row["生产状态"] = item.Status == 1 ? "生产完成，待审核" : item.Status == 2 ? "审核通过" : item.Status == 3 ? "被驳回" : "生产中";
+                        row["开始时间"] = Convert.ToDateTime(item.act_begin_date).ToString("yyyy-MM-dd");
+                        row["完成时间"] = Convert.ToDateTime(item.act_end_date).ToString("yyyy-MM-dd");
+                        row["接单人"] = item.UserName;
+                        row["审核人"] = item.CheckedUser;
+                        row["来源"] = item.Flag == 1 ? "销售产品" : "预投产品";
+
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
         }
     }
 }

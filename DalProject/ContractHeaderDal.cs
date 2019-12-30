@@ -72,6 +72,96 @@ namespace DalProject
                 return Models;
             }
         }
+        public DataTable ToExcelOut(SContractHeaderModel SModel)
+        {
+            DataTable Exceltable = new DataTable();
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status==1)
+                            where !string.IsNullOrEmpty(SModel.SN) ? p.SN.Contains(SModel.SN) : true
+                            where SModel.CheckState == 1 ? p.Status == SModel.CheckState : true
+                            where SModel.DepartmentId > 0 ? p.SaleDepartmentId == SModel.DepartmentId : true
+                            where SModel.SaleUserId > 0 ? p.SaleUserId == SModel.SaleUserId : true
+                            where !string.IsNullOrEmpty(SModel.UserName) ? p.XNGYP_Customers.Name.Contains(SModel.UserName) : true
+                            where SModel.FR_flag >= 0 ? p.FRFlag == SModel.FR_flag : true
+                            where p.CreateTime > StartTime
+                            where p.CreateTime < EndTime
+                            orderby p.CreateTime descending
+                            select new ContractHeaderModel
+                            {
+                                Id = p.Id,
+                                SN = p.SN,
+                                Customer = p.XNGYP_Customers.Name,
+                                CustomerId = p.CustomerId,
+                                TelPhone = p.DeliveryLinkTel,
+                                DeliveryDate = p.DeliveryDate,
+                                DeliveryAddress = p.DeliveryAddress,
+                                Amount = p.Amount,
+                                Status = p.Status,
+                                Prepay = p.Prepay,
+                                SaleUserId = p.SaleUserId,
+                                SaleUserName = p.SaleUserName,
+                                SaleDepartmentId = p.SaleDepartmentId,
+                                SaleDepartment = p.SaleDepartment,
+                                CheckedUserName = p.CheckedUserName,
+                                FRFlag = p.FRFlag,
+                                OrderTime = p.HTDate,
+                                CheckedTime = p.CheckedTime,
+                                CreateTime = p.CreateTime,
+                                CWCheckStatus = p.CWCheckStatus,
+                                SHFlag = p.SHFlag,
+                                DeliverChannel = p.DeliverChannel,
+                                ZTDFlag = p.ZTDFlag,
+                                SaleFlag = p.SaleFlag,
+                                Remark = p.Remark,
+                                DDOrder = p.DDOrder,
+                            }).ToList();
+                if (List != null && List.Any())
+                {
+                    Exceltable.Columns.Add("客户名称", typeof(string));
+                    Exceltable.Columns.Add("合同编号", typeof(string));
+                    Exceltable.Columns.Add("合同时间", typeof(string));
+                    Exceltable.Columns.Add("发货方式", typeof(string));
+                    Exceltable.Columns.Add("合同总金额", typeof(string));
+                    Exceltable.Columns.Add("应收款", typeof(string));
+                    Exceltable.Columns.Add("付款状态", typeof(string));
+                    Exceltable.Columns.Add("是否审核", typeof(string));
+                    Exceltable.Columns.Add("销售人员", typeof(string));
+                    Exceltable.Columns.Add("财务审核", typeof(string));
+                    Exceltable.Columns.Add("销售方式", typeof(string));
+                    Exceltable.Columns.Add("操作时间", typeof(string));
+                    foreach (var item in List)
+                    {
+                        DataRow row = Exceltable.NewRow();
+                        row["客户名称"] = item.Customer;
+                        row["合同编号"] = item.SN;
+                        row["合同时间"] = Convert.ToDateTime(item.OrderTime).ToString("yyyy-MM-dd");
+                        row["发货方式"] = item.SHFlag==1? "自提" : item.SHFlag == 2 ? "邮寄" : "送货";
+                        row["合同总金额"] = item.Amount;
+                        row["应收款"] = item.Prepay;
+                        row["付款状态"] = item.FRFlag == 1 ? "已收预付款" : item.FRFlag == 2 ? "已收全款" : "未付款";
+                        row["是否审核"] = item.Status==1? "是" : item.Status == 2? "被驳回" : "否";
+                        row["销售人员"] = item.SaleUserName;
+                        row["财务审核"] = item.CWCheckStatus == 1 ? "是" : item.CWCheckStatus == 2 ? "被驳回" : "否";
+                        row["销售方式"] = item.SaleFlag == 1 ? "来源线上" : "来源线下";
+                        row["操作时间"] = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd");
+
+                        Exceltable.Rows.Add(row);
+                    }
+                }
+            }
+            return Exceltable;
+        }
         public ContractModel GetFPageList(SContractHeaderModel SModel)
         {
             DateTime StartTime = Convert.ToDateTime("1999-12-31");
@@ -852,7 +942,7 @@ namespace DalProject
             }
         }
         //导出
-        public DataTable ToExcelOut(SContractHeaderModel SModel)
+        public DataTable ToFExcelOut(SContractHeaderModel SModel)
         {
             DataTable Exceltable = new DataTable();
             DateTime StartTime = Convert.ToDateTime("1999-12-31");

@@ -259,8 +259,8 @@ namespace DalProject
         {
             using (var db = new XNHREntities())
             {
-                string StrSqlImg = string.Format(@"delete HR_Times where d_start>='{0}' and d_end<='{1}'", StartTime, EndTime);
-                db.Database.ExecuteSqlCommand(StrSqlImg);
+                //string StrSqlImg = string.Format(@"delete HR_Times where d_start>='{0}' and d_end<='{1}'", StartTime, EndTime);
+                //db.Database.ExecuteSqlCommand(StrSqlImg);
 
                 var listNew = (from p in db.ehr_sum.Where(k => k.department != 355)
                                where p.d_start >= StartTime
@@ -313,7 +313,9 @@ namespace DalProject
                                }).ToList();
                 foreach (var item in listNew)
                 {
-                    var tables = new HR_Times();
+                    var tables = db.HR_Times.Where(k => k.Name == item.Name && k.d_start>= StartTime && k.d_end<=EndTime).FirstOrDefault();
+                    if(tables!=null)
+                    { 
                     tables.Name = item.Name;
                     tables.Department = item.Department;
                     tables.DepartmentName = item.DepartmentName;
@@ -355,7 +357,8 @@ namespace DalProject
                     tables.d30 = item.d30;
                     tables.d31 = item.d31;
                     tables.WordDay = Convert.ToInt32(item.d1.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d2.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d3.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d4.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d5.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d6.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d7.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d8.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d9.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d10.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d11.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d12.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d13.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d14.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d15.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d16.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d17.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d18.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d19.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d20.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d21.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d22.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d23.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d24.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d25.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d26.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d27.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d28.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d29.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d30.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d1.Length > 0 ? 1 : 0);
-                    db.HR_Times.Add(tables);
+                    
+                    }
                 }
                 db.SaveChanges();
             }

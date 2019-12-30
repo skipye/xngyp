@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -62,6 +63,22 @@ namespace ServiceProject
         public List<WorkFromModel> GetFFlowList(SWorkFromModel SModel)
         {
             try { return WODal.GetFWorkFromList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public DataTable ToFExcelOut(SWorkFromModel SModel)
+        {
+            try{return WODal.ToFExcelOut(SModel);}
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public DataTable ToExcelOut(SWorkFromModel SModel)
+        {
+            try { return WODal.ToExcelOut(SModel); }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

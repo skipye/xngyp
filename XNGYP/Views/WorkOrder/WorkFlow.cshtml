@@ -40,6 +40,7 @@
         <span class="f-l">
             <a href="javascript:void(0);" onclick="submitWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中提交任务</a>
             <a href="javascript:void(0);" onclick="checkedWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中审核</a>
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
     </div>
     <div class="mt-20 checkmodel">
@@ -166,5 +167,11 @@
                 $('#FatherId').append(data);
             });
     });
-
+    function toExcelout() {
+        var GXId = $("#GXId").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        window.location.href = "/WorkOrder/ToExcelOut?GXId" + GXId+"&StartTime="+StartTime+"&EndTime="+EndTime;
+        //$.post(ExcelUrl, {}, function (d) { });
+    };
 </script> 

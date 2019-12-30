@@ -87,7 +87,7 @@ namespace XNGYP.Controllers
         }
         public void ToExcelOut(SContractHeaderModel SModel)
         {
-            var models = NSer.ToExcelOut(SModel);
+            var models = NSer.ToFExcelOut(SModel);
             ESer.CreateExcel(models, "家具订单" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
     }

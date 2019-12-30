@@ -19,19 +19,18 @@
 <div class="page-container">
     <div class="text-c">
         <span class="select-box inline">
-            @Html.DropDownListFor(k => k.GXName, GYItem, new { @class = "select", @style = "width:150px", })
+            @Html.DropDownListFor(k => k.GXName, GYItem, new { @class = "select", @style = "width:100px", })
         </span>
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
-    @*<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
-            <a href="javascript:void(0);" onclick="submitWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中提交任务</a>
-            <a href="javascript:void(0);" onclick="checkedWork(this,0)" data-url="/WorkOrder/Checked" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>选中审核</a>
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
         </span>
-    </div>*@
+    </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -59,6 +58,7 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="~/js/ajaxScript.js"></script>
+<script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -79,8 +79,11 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[4, "desc"]],//默认第几个排序
+            "aaSorting": [[5, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
+            "buttons":[
+        'copy', 'excel', 'pdf'
+    ],
             "ajax": function (data, callback, settings) {
                 $.post("/WorkOrder/GetFFlowList", param, function (result) {
                     //封装返回数据
@@ -136,5 +139,12 @@
 
             ]
         });
+        };
+    function toExcelout() {
+        var GXName = $("#GXName").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        window.location.href = "/WorkOrder/ToFExcelOut?GXName" + GXName+"&StartTime="+StartTime+"&EndTime="+EndTime;
+        //$.post(ExcelUrl, {}, function (d) { });
     };
 </script> 

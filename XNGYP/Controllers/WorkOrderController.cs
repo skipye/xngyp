@@ -1,9 +1,6 @@
 ﻿using ModelProject;
 using ServiceProject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -13,6 +10,7 @@ namespace XNGYP.Controllers
     {
         private static readonly WorkOrderService WSer = new WorkOrderService();
         private static readonly ContractHeaderService CHSer = new ContractHeaderService();
+        private static readonly ToExcel ESer = new ToExcel();
         [Authorize]
         public ActionResult Index()
         {
@@ -133,6 +131,16 @@ namespace XNGYP.Controllers
                 Content = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue }.Serialize(PageList),
                 ContentType = "application/json"
             };
+        }
+        public void ToFExcelOut(SWorkFromModel SModel)
+        {
+            var models = WSer.ToFExcelOut(SModel);
+            ESer.CreateExcel(models, "家具工序" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
+        }
+        public void ToExcelOut(SWorkFromModel SModel)
+        {
+            var models = WSer.ToExcelOut(SModel);
+            ESer.CreateExcel(models, "工艺品工序" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls");
         }
         public ActionResult Checked(string ListId, int status)
         {

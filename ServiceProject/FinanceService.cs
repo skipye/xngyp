@@ -2,6 +2,7 @@
 using ModelProject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace ServiceProject
 {
@@ -50,5 +51,6 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        
     }
 }
