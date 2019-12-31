@@ -81,7 +81,7 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="~/js/DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/js/ajaxScript.js?v=5"></script>
+<script type="text/javascript" src="~/js/ajaxScript.js?v=6"></script>
 <script type="text/javascript">
 
     var param = {};
@@ -129,7 +129,7 @@
                     orderable: false,
                     render: function (data, type, row) {
                         var StrArr = "";
-                        StrArr = '<input type="checkbox" value="' + row.Id + '" >';
+                        StrArr = '<input type="checkbox" value="' + row.Id + '" onclick="addclassodd(this)" >';
                         return StrArr;
                     }
                 }, {

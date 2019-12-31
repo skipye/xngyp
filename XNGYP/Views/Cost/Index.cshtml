@@ -44,6 +44,7 @@
 					<th>木工后段</th>
 					<th>刮磨成本</th>
 					<th>油漆成本</th>
+					<th>安装成本</th>
 					<th>人工成本(元)</th>
 					<th>总成本(元)</th>
 					<th>出厂价(元)</th>
@@ -98,7 +99,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 16,
+                    targets: 17,
                     render: function (data, type, row) {
                         var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'成本编辑\',\'/Cost/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="成本编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
                          
@@ -121,6 +122,7 @@
                 { "data": "MGHPrice", "defaultContent": "" },
                 { "data": "GMPrice", "defaultContent": "" },
 				{ "data": "YQPrice", "defaultContent": "" },
+				{ "data": "PJPrice", "defaultContent": "" },
 				{"data": "PersonPrice", "defaultContent": "", "className": "c-primary"},
                 { "data": "CostCprice", "defaultContent": "","className": "c-red"  },
                 { "data": "CCprice", "defaultContent": "","className": "c-green"  },

@@ -27,28 +27,29 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-                <tr class="text-l">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th>系列</th>
-                    <th>产品(ID)</th>
-                    <th>材质(ID)</th>
-                    <th>材积</th>
-                    <th>木材成本(元)</th>
-                    <th>辅料成本(元)</th>
-                    <th>开料成本</th>
-                    <th>木工前段</th>
-                    <th>雕花成本</th>
-                    <th>木工后段</th>
-                    <th>刮磨成本</th>
-                    <th>油漆成本</th>
-                    <th>人工成本(元)</th>
-                    <th>木材费用(元)</th>
-                    <th>人工费用(元)</th>
-                    <th>总成本(元)</th>
-                    <th>出厂价(元)</th>
-                    <th>创建时间</th>
-                    <th>操作</th>
-                </tr>
+				<tr class="text-l">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th>系列</th>
+					<th>产品(ID)</th>
+					<th>材质(ID)</th>
+					<th>材积</th>
+					<th>木材成本(元)</th>
+					<th>辅料成本(元)</th>
+					<th>开料成本</th>
+					<th>木工前段</th>
+					<th>雕花成本</th>
+					<th>木工后段</th>
+					<th>刮磨成本</th>
+					<th>油漆成本</th>
+					<th>安装成本</th>
+					<th>人工成本(元)</th>
+					<th>木材费用(元)</th>
+					<th>人工费用(元)</th>
+					<th>总成本(元)</th>
+					<th>出厂价(元)</th>
+					<th>创建时间</th>
+					<th>操作</th>
+				</tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -95,7 +96,7 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 19,
+                    targets: 20,
                     render: function (data, type, row) {
                         var StrCheck =  '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'成本编辑\',\'/Cost/AddF\', \'' + row.Id + '\', \'800\', \'600\')" title="成本编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
                            
@@ -124,7 +125,8 @@
                 { "data": "DHPrice", "defaultContent": "" },
                 { "data": "MGHPrice", "defaultContent": "" },
                 { "data": "GMPrice", "defaultContent": "" },
-                { "data": "YQPrice", "defaultContent": "" },
+				{ "data": "YQPrice", "defaultContent": "" },
+				{ "data": "PJPrice", "defaultContent": "" },
                 { "data": "PersonPrice", "defaultContent": "", "className": "c-primary" },
                 {"data": "MCFY", "defaultContent": "", "className": "c-primary"},
 				{"data": "RGFY", "defaultContent": "", "className": "c-primary"},

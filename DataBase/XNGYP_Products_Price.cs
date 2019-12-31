@@ -30,6 +30,7 @@ namespace DataBase
         public Nullable<decimal> CostCprice { get; set; }
         public Nullable<decimal> CCprice { get; set; }
         public Nullable<decimal> MGQPrice { get; set; }
+        public Nullable<decimal> PJPrice { get; set; }
     
         public virtual XNGYP_Products XNGYP_Products { get; set; }
     }

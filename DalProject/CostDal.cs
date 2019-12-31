@@ -35,6 +35,7 @@ namespace DalProject
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
+                                PJPrice=p.PJPrice,
                                 CreateTime=p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
@@ -72,6 +73,7 @@ namespace DalProject
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
+                                PJPrice = p.PJPrice,
                                 CreateTime = p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
@@ -130,9 +132,10 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.PJPrice = Models.PJPrice;
                     table.MGQPrice = Models.MGQPrice;
 
-                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGQPrice;
+                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGQPrice + table.PJPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
 
                     var GYPLables = db.XNGYP_INV_Labels.Where(k => k.ProductsId == table.ProductId && k.WoodId == table.WoodId).ToList();
@@ -161,6 +164,7 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.PJPrice = Models.PJPrice;
                     table.MGQPrice = Models.MGQPrice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
@@ -202,6 +206,7 @@ namespace DalProject
                                   GMPrice = p.GMPrice,
                                   YQPrice = p.YQPrice,
                                   FLPrice = p.FLPrice,
+                                  PJPrice=p.PJPrice,
                               }).SingleOrDefault();
                 return tables;
             }
@@ -248,6 +253,7 @@ namespace DalProject
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
+                                PJPrice = p.PJPrice,
                                 CreateTime = p.CreateTime,
                                 CCprice=p.CCprice,
                                 CostCprice=p.CostCprice,
@@ -286,6 +292,7 @@ namespace DalProject
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
+                                PJPrice = p.PJPrice,
                                 CreateTime = p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
@@ -308,6 +315,7 @@ namespace DalProject
                     Exceltable.Columns.Add("木工后段", typeof(string));
                     Exceltable.Columns.Add("刮磨成本", typeof(string));
                     Exceltable.Columns.Add("油漆成本", typeof(string));
+                    Exceltable.Columns.Add("安装成本", typeof(string));
                     Exceltable.Columns.Add("人工成本(元)", typeof(string));
                     Exceltable.Columns.Add("木材费用(元)", typeof(string));
                     Exceltable.Columns.Add("人工费用(元)", typeof(string));
@@ -328,6 +336,7 @@ namespace DalProject
                         row["木工后段"] = item.MGHPrice;
                         row["刮磨成本"] = item.GMPrice;
                         row["油漆成本"] = item.YQPrice;
+                        row["安装成本"] = item.PJPrice;
                         row["人工成本(元)"] = item.PersonPrice;
                         row["木材费用(元)"] = item.MCFY;
                         row["人工费用(元)"] = item.RGFY;
@@ -376,7 +385,8 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
-                    table.PersonPrice= table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.MGHPrice;
+                    table.PJPrice = Models.PJPrice;
+                    table.PersonPrice= table.KLPrice + table.DHPrice + table.MGQPrice + table.GMPrice + table.YQPrice + table.MGHPrice+table.PJPrice;
                     table.CostCprice = table.MCPrice + table.FLPrice + table.PersonPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
                     table.RGFY= table.PersonPrice * Convert.ToDecimal(0.6);
@@ -425,6 +435,7 @@ namespace DalProject
                     table.GMPrice = Models.GMPrice;
                     table.YQPrice = Models.YQPrice;
                     table.FLPrice = Models.FLPrice;
+                    table.PJPrice = Models.PJPrice;
                     table.CCprice = Models.CCprice;
                     table.CCprice = Models.CCprice;
                     table.CostCprice = Models.CostCprice;
@@ -469,6 +480,7 @@ namespace DalProject
                                   GMPrice = p.GMPrice,
                                   YQPrice = p.YQPrice,
                                   FLPrice = p.FLPrice,
+                                  PJPrice=p.PJPrice,
                                   CCprice = p.CCprice,
                                   CostCprice = p.CostCprice,
                               }).SingleOrDefault();
@@ -668,6 +680,7 @@ namespace DalProject
                                 GMPrice = p.GMPrice,
                                 YQPrice = p.YQPrice,
                                 FLPrice = p.FLPrice,
+                                PJPrice=p.PJPrice,
                                 CreateTime = p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,

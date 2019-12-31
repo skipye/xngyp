@@ -230,6 +230,7 @@
           <Property Name="Volume" Type="decimal" Precision="18" Scale="2" />
           <Property Name="MCFY" Type="decimal" Precision="18" Scale="2" />
           <Property Name="RGFY" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PJPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SYS_product_SN">
           <Key>
@@ -569,6 +570,10 @@
             <End Role="SYS_product" EntitySet="SYS_product" />
             <End Role="WIP_workflow" EntitySet="WIP_workflow" />
           </AssociationSet>
+          <AssociationSet Name="CRM_contract_detailWIP_workorder" Association="XNERPModel.CRM_contract_detailWIP_workorder">
+            <End Role="CRM_contract_detail" EntitySet="CRM_contract_detail" />
+            <End Role="WIP_workorder" EntitySet="WIP_workorder" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -735,6 +740,7 @@
           <NavigationProperty Name="SYS_colors" Relationship="XNERPModel.FK_CRM_contract_detail_SYS_colors" FromRole="CRM_contract_detail" ToRole="SYS_colors" />
           <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_CRM_contract_detail_SYS_product" FromRole="CRM_contract_detail" ToRole="SYS_product" />
           <Property Name="SendCount" Type="Int32" />
+          <NavigationProperty Name="WIP_workorder" Relationship="XNERPModel.CRM_contract_detailWIP_workorder" FromRole="CRM_contract_detail" ToRole="WIP_workorder" />
         </EntityType>
         <EntityType Name="CRM_contract_header">
           <Key>
@@ -927,6 +933,7 @@
           <Property Name="Volume" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MCFY" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="RGFY" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PJPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_SYS_product_Cost_INV_wood_type">
           <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="0..1" />
@@ -1060,6 +1067,7 @@
           <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="delete_flag" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="WIP_workflow" Relationship="XNERPModel.WIP_workflowWIP_workorder" FromRole="WIP_workorder" ToRole="WIP_workflow" />
+          <NavigationProperty Name="CRM_contract_detail" Relationship="XNERPModel.CRM_contract_detailWIP_workorder" FromRole="WIP_workorder" ToRole="CRM_contract_detail" />
         </EntityType>
         <Association Name="WIP_workflowWIP_workorder">
           <End Type="XNERPModel.WIP_workflow" Role="WIP_workflow" Multiplicity="*" />
@@ -1082,6 +1090,18 @@
             </Principal>
             <Dependent Role="WIP_workflow">
               <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CRM_contract_detailWIP_workorder">
+          <End Type="XNERPModel.CRM_contract_detail" Role="CRM_contract_detail" Multiplicity="0..1" />
+          <End Type="XNERPModel.WIP_workorder" Role="WIP_workorder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_contract_detail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WIP_workorder">
+              <PropertyRef Name="CRM_contract_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1289,6 +1309,7 @@
           <EntitySetMapping Name="SYS_product_Cost">
             <EntityTypeMapping TypeName="XNERPModel.SYS_product_Cost">
               <MappingFragment StoreEntitySet="SYS_product_Cost">
+                <ScalarProperty Name="PJPrice" ColumnName="PJPrice" />
                 <ScalarProperty Name="RGFY" ColumnName="RGFY" />
                 <ScalarProperty Name="MCFY" ColumnName="MCFY" />
                 <ScalarProperty Name="Volume" ColumnName="Volume" />

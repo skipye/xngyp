@@ -48,7 +48,7 @@ namespace ModelProject
         public string d29 { get; set; }
         public string d30 { get; set; }
         public string d31 { get; set; }
-        public int? WorkDay { get; set; }
+        public string WorkDay { get; set; }
         public string TopMonthTX { get; set; }
         public string MonthTX { get; set; }
         public string TotalTX { get; set; }

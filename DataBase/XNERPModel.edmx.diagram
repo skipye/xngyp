@@ -34,6 +34,7 @@
         <EntityTypeShape EntityType="XNERPModel.WIP_workorder" Width="1.5" PointX="10.375" PointY="7.75" />
         <AssociationConnector Association="XNERPModel.WIP_workflowWIP_workorder" />
         <AssociationConnector Association="XNERPModel.SYS_productWIP_workflow" />
+        <AssociationConnector Association="XNERPModel.CRM_contract_detailWIP_workorder" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

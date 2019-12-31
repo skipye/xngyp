@@ -60,7 +60,7 @@ namespace DataBase
         public string d29 { get; set; }
         public string d30 { get; set; }
         public string d31 { get; set; }
-        public Nullable<int> WordDay { get; set; }
+        public string WordDay { get; set; }
         public string TopMonthTX { get; set; }
         public string MonthTX { get; set; }
         public string TotalTX { get; set; }

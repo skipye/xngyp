@@ -20,6 +20,7 @@ namespace ModelProject
         public decimal? GMPrice { get; set; }
         public decimal? YQPrice { get; set; }
         public decimal? FLPrice { get; set; }
+        public decimal? PJPrice { get; set; }
         public DateTime? CreateTime { get; set; }
         public int? FatherId { get; set; }
         public int? ProductSNId { get; set; }

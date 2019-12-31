@@ -16,6 +16,10 @@ h4{line-height:30px}
 .big-page .Hui-article-box,.big-page .dislpayArrow,.big-page .breadcrumb{left:0px}
 .big-page .Hui-aside{ left:-200px}
 .page-container{ padding:20px}
+.odd{background:#f5f5f5;}
+.addodd{}
+.addodd td{color:red;}
+.even{background:#EDF1FE;}
 @media (max-width: 767px) {
 	.page-container{ padding:15px}
 }

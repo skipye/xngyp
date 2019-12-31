@@ -827,6 +827,7 @@
     <Content Include="Views\Admin\_Meta.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Welcome.cshtml" />
+    <Content Include="Views\Order\OrderSearch.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -34,6 +34,7 @@ namespace DataBase
         public Nullable<decimal> Volume { get; set; }
         public Nullable<decimal> MCFY { get; set; }
         public Nullable<decimal> RGFY { get; set; }
+        public Nullable<decimal> PJPrice { get; set; }
     
         public virtual INV_wood_type INV_wood_type { get; set; }
         public virtual SYS_product SYS_product { get; set; }

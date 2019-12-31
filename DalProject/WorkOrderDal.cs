@@ -497,6 +497,8 @@ namespace DalProject
                                 Name = p.name,
                                 workorder = p.WIP_workorder.workorder,
                                 ProductName = p.SYS_product.name,
+                                WoodName=p.INV_wood_type.name,
+                                HTSN=p.WIP_workorder.CRM_contract_detail.CRM_contract_header.SN,
                                 UserName = p.user_name,
                                 exp_begin_date = p.exp_begin_date,
                                 exp_end_date = p.exp_end_date,
@@ -510,6 +512,8 @@ namespace DalProject
                 if (List != null && List.Any())
                 {
                     Exceltable.Columns.Add("产品名称", typeof(string));
+                    Exceltable.Columns.Add("合同号", typeof(string));
+                    Exceltable.Columns.Add("木材名称", typeof(string));
                     Exceltable.Columns.Add("工序", typeof(string));
                     Exceltable.Columns.Add("任务单号", typeof(string));
                     Exceltable.Columns.Add("生产价格", typeof(string));
@@ -523,6 +527,8 @@ namespace DalProject
                     {
                         DataRow row = Exceltable.NewRow();
                         row["产品名称"] = item.ProductName;
+                        row["合同号"] = item.HTSN;
+                        row["木材名称"] = item.WoodName;
                         row["工序"] = item.Name;
                         row["任务单号"] = item.workorder;
                         row["生产价格"] = item.cost;
@@ -569,6 +575,8 @@ namespace DalProject
                                 workorder = p.XNGYP_WorkOrder.WorkOrder,
                                 ProductName = p.XNGYP_Products.name,
                                 Customer = p.XNGYP_WorkOrder.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                WoodName = p.XNGYP_WorkOrder.WoodName,
+                                HTSN = p.XNGYP_WorkOrder.Contract_Detail.Contract_Header.SN,
                                 UserName = p.UserName,
                                 exp_begin_date = p.exp_begin_date,
                                 exp_end_date = p.exp_end_date,
@@ -582,6 +590,8 @@ namespace DalProject
                 if (List != null && List.Any())
                 {
                     Exceltable.Columns.Add("产品名称", typeof(string));
+                    Exceltable.Columns.Add("合同号", typeof(string));
+                    Exceltable.Columns.Add("木材名称", typeof(string));
                     Exceltable.Columns.Add("工序", typeof(string));
                     Exceltable.Columns.Add("任务单号", typeof(string));
                     Exceltable.Columns.Add("生产价格", typeof(string));
@@ -595,6 +605,8 @@ namespace DalProject
                     {
                         DataRow row = Exceltable.NewRow();
                         row["产品名称"] = item.ProductName;
+                        row["合同号"] = item.HTSN;
+                        row["木材名称"] = item.WoodName;
                         row["工序"] = item.Name;
                         row["任务单号"] = item.workorder;
                         row["生产价格"] = item.cost;

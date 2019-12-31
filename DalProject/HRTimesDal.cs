@@ -314,50 +314,97 @@ namespace DalProject
                 foreach (var item in listNew)
                 {
                     var tables = db.HR_Times.Where(k => k.Name == item.Name && k.d_start>= StartTime && k.d_end<=EndTime).FirstOrDefault();
-                    if(tables!=null)
-                    { 
-                    tables.Name = item.Name;
-                    tables.Department = item.Department;
-                    tables.DepartmentName = item.DepartmentName;
-                    tables.workingtime = item.workingtime;
-                    tables.d_start = item.d_start;
-                    tables.d_end = item.d_end;
-                    tables.shouldworkingtime = item.shouldworkingtime;
-                    tables.shouldworkingday = item.shouldworkingday;
-                    tables.workingday = item.workingday;
-                    tables.d1 = item.d1;
-                    tables.d2 = item.d2;
-                    tables.d3 = item.d3;
-                    tables.d4 = item.d4;
-                    tables.d5 = item.d5;
-                    tables.d6 = item.d6;
-                    tables.d7 = item.d7;
-                    tables.d8 = item.d8;
-                    tables.d9 = item.d9;
-                    tables.d10 = item.d10;
-                    tables.d11 = item.d11;
-                    tables.d12 = item.d12;
-                    tables.d13 = item.d13;
-                    tables.d14 = item.d14;
-                    tables.d15 = item.d15;
-                    tables.d16 = item.d16;
-                    tables.d17 = item.d17;
-                    tables.d18 = item.d18;
-                    tables.d19 = item.d19;
-                    tables.d20 = item.d20;
-                    tables.d21 = item.d21;
-                    tables.d22 = item.d22;
-                    tables.d23 = item.d23;
-                    tables.d24 = item.d24;
-                    tables.d25 = item.d25;
-                    tables.d26 = item.d26;
-                    tables.d27 = item.d27;
-                    tables.d28 = item.d28;
-                    tables.d29 = item.d29;
-                    tables.d30 = item.d30;
-                    tables.d31 = item.d31;
-                    tables.WordDay = Convert.ToInt32(item.d1.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d2.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d3.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d4.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d5.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d6.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d7.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d8.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d9.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d10.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d11.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d12.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d13.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d14.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d15.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d16.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d17.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d18.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d19.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d20.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d21.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d22.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d23.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d24.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d25.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d26.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d27.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d28.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d29.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d30.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d1.Length > 0 ? 1 : 0);
-                    
+                    if (tables != null)
+                    {
+                        tables.Name = item.Name;
+                        tables.Department = item.Department;
+                        tables.DepartmentName = item.DepartmentName;
+                        tables.workingtime = item.workingtime;
+                        tables.d_start = item.d_start;
+                        tables.d_end = item.d_end;
+                        tables.shouldworkingtime = item.shouldworkingtime;
+                        tables.shouldworkingday = item.shouldworkingday;
+                        tables.workingday = item.workingday;
+                        tables.d1 = item.d1;
+                        tables.d2 = item.d2;
+                        tables.d3 = item.d3;
+                        tables.d4 = item.d4;
+                        tables.d5 = item.d5;
+                        tables.d6 = item.d6;
+                        tables.d7 = item.d7;
+                        tables.d8 = item.d8;
+                        tables.d9 = item.d9;
+                        tables.d10 = item.d10;
+                        tables.d11 = item.d11;
+                        tables.d12 = item.d12;
+                        tables.d13 = item.d13;
+                        tables.d14 = item.d14;
+                        tables.d15 = item.d15;
+                        tables.d16 = item.d16;
+                        tables.d17 = item.d17;
+                        tables.d18 = item.d18;
+                        tables.d19 = item.d19;
+                        tables.d20 = item.d20;
+                        tables.d21 = item.d21;
+                        tables.d22 = item.d22;
+                        tables.d23 = item.d23;
+                        tables.d24 = item.d24;
+                        tables.d25 = item.d25;
+                        tables.d26 = item.d26;
+                        tables.d27 = item.d27;
+                        tables.d28 = item.d28;
+                        tables.d29 = item.d29;
+                        tables.d30 = item.d30;
+                        tables.d31 = item.d31;
+                        if (string.IsNullOrEmpty(tables.WordDay))
+                        {
+                            tables.WordDay = Convert.ToString(Convert.ToInt32(item.d1.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d2.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d3.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d4.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d5.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d6.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d7.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d8.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d9.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d10.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d11.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d12.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d13.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d14.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d15.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d16.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d17.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d18.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d19.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d20.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d21.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d22.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d23.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d24.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d25.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d26.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d27.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d28.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d29.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d30.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d1.Length > 0 ? 1 : 0));
+                        }
+                    }
+                    else {
+                        var Newtables = new HR_Times();
+                        Newtables.Name = item.Name;
+                        Newtables.Department = item.Department;
+                        Newtables.DepartmentName = item.DepartmentName;
+                        Newtables.workingtime = item.workingtime;
+                        Newtables.d_start = item.d_start;
+                        Newtables.d_end = item.d_end;
+                        Newtables.shouldworkingtime = item.shouldworkingtime;
+                        Newtables.shouldworkingday = item.shouldworkingday;
+                        Newtables.workingday = item.workingday;
+                        Newtables.d1 = item.d1;
+                        Newtables.d2 = item.d2;
+                        Newtables.d3 = item.d3;
+                        Newtables.d4 = item.d4;
+                        Newtables.d5 = item.d5;
+                        Newtables.d6 = item.d6;
+                        Newtables.d7 = item.d7;
+                        Newtables.d8 = item.d8;
+                        Newtables.d9 = item.d9;
+                        Newtables.d10 = item.d10;
+                        Newtables.d11 = item.d11;
+                        Newtables.d12 = item.d12;
+                        Newtables.d13 = item.d13;
+                        Newtables.d14 = item.d14;
+                        Newtables.d15 = item.d15;
+                        Newtables.d16 = item.d16;
+                        Newtables.d17 = item.d17;
+                        Newtables.d18 = item.d18;
+                        Newtables.d19 = item.d19;
+                        Newtables.d20 = item.d20;
+                        Newtables.d21 = item.d21;
+                        Newtables.d22 = item.d22;
+                        Newtables.d23 = item.d23;
+                        Newtables.d24 = item.d24;
+                        Newtables.d25 = item.d25;
+                        Newtables.d26 = item.d26;
+                        Newtables.d27 = item.d27;
+                        Newtables.d28 = item.d28;
+                        Newtables.d29 = item.d29;
+                        Newtables.d30 = item.d30;
+                        Newtables.d31 = item.d31;
+                        Newtables.WordDay = Convert.ToString(Convert.ToInt32(item.d1.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d2.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d3.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d4.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d5.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d6.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d7.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d8.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d9.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d10.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d11.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d12.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d13.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d14.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d15.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d16.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d17.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d18.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d19.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d20.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d21.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d22.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d23.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d24.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d25.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d26.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d27.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d28.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d29.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d30.Length > 0 ? 1 : 0) + Convert.ToInt32(item.d1.Length > 0 ? 1 : 0));
+                        db.HR_Times.Add(Newtables);
                     }
                 }
                 db.SaveChanges();

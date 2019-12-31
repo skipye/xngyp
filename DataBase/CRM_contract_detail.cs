@@ -14,6 +14,11 @@ namespace DataBase
     
     public partial class CRM_contract_detail
     {
+        public CRM_contract_detail()
+        {
+            this.WIP_workorder = new HashSet<WIP_workorder>();
+        }
+    
         public int id { get; set; }
         public int header_id { get; set; }
         public int product_id { get; set; }
@@ -42,5 +47,6 @@ namespace DataBase
         public virtual INV_wood_type INV_wood_type { get; set; }
         public virtual SYS_colors SYS_colors { get; set; }
         public virtual SYS_product SYS_product { get; set; }
+        public virtual ICollection<WIP_workorder> WIP_workorder { get; set; }
     }
 }

@@ -9,8 +9,8 @@
         <EntityTypeShape EntityType="XNHRModel.ehr_department" Width="1.5" PointX="7.9199099670722664" PointY="27.002140400466576" />
         <EntityTypeShape EntityType="XNHRModel.ehr_postday" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="XNHRModel.ehr_sum" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="XNHRModel.HR_Times" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="XNHRModel.HR_WorkTime" Width="1.5" PointX="12" PointY="4.125" />
+        <EntityTypeShape EntityType="XNHRModel.HR_Times" Width="1.5" PointX="9.75" PointY="15.5" />
         <AssociationConnector Association="XNHRModel.FK_HR_WorkTime_HR_Times" />
       </Diagram>
     </edmx:Diagrams>

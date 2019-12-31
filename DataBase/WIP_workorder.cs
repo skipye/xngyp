@@ -41,5 +41,6 @@ namespace DataBase
         public bool delete_flag { get; set; }
     
         public virtual ICollection<WIP_workflow> WIP_workflow { get; set; }
+        public virtual CRM_contract_detail CRM_contract_detail { get; set; }
     }
 }

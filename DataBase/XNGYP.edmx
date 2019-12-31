@@ -330,6 +330,7 @@
           <Property Name="CostCprice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="MGQPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PJPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="XNGYP_Products_SN">
           <Key>
@@ -788,6 +789,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_XNGYP_WorkOrder_Contract_Detail1">
+          <End Role="Contract_Detail" Type="Self.Contract_Detail" Multiplicity="0..1" />
+          <End Role="XNGYP_WorkOrder" Type="Self.XNGYP_WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract_Detail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="XNGYP_WorkOrder">
+              <PropertyRef Name="Contract_Detail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_XNGYP_WorkOrder_XNGYP_Products">
           <End Role="XNGYP_Products" Type="Self.XNGYP_Products" Multiplicity="0..1" />
           <End Role="XNGYP_WorkOrder" Type="Self.XNGYP_WorkOrder" Multiplicity="*" />
@@ -938,6 +951,10 @@
             <End Role="XNGYP_WorkFrom" EntitySet="XNGYP_WorkFrom" />
           </AssociationSet>
           <AssociationSet Name="FK_XNGYP_WorkOrder_Contract_Detail" Association="Self.FK_XNGYP_WorkOrder_Contract_Detail">
+            <End Role="Contract_Detail" EntitySet="Contract_Detail" />
+            <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_XNGYP_WorkOrder_Contract_Detail1" Association="Self.FK_XNGYP_WorkOrder_Contract_Detail1">
             <End Role="Contract_Detail" EntitySet="Contract_Detail" />
             <End Role="XNGYP_WorkOrder" EntitySet="XNGYP_WorkOrder" />
           </AssociationSet>
@@ -1716,6 +1733,7 @@
           <Property Name="CostCprice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CCprice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MGQPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PJPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_XNGYP_Products_Price_XNGYP_Products">
           <End Type="XNGYPModel.XNGYP_Products" Role="XNGYP_Products" Multiplicity="1" />
@@ -2319,6 +2337,7 @@
           <EntitySetMapping Name="XNGYP_Products_Price">
             <EntityTypeMapping TypeName="XNGYPModel.XNGYP_Products_Price">
               <MappingFragment StoreEntitySet="XNGYP_Products_Price">
+                <ScalarProperty Name="PJPrice" ColumnName="PJPrice" />
                 <ScalarProperty Name="MGQPrice" ColumnName="MGQPrice" />
                 <ScalarProperty Name="CCprice" ColumnName="CCprice" />
                 <ScalarProperty Name="CostCprice" ColumnName="CostCprice" />

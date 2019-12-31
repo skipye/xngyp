@@ -477,4 +477,9 @@ $(".number").keyup(function () {  //keyup事件处理
     $(this).val($(this).val().replace(/\D|^0/g, ''));
 }).css("number", "disabled");  //CSS设置输入法不可用
 
-var Arritem = new Array("已开工单","_", "图纸料单就绪", "开料完成", "雕花完成", "木工完成", "刮磨完成", "油漆完成", "配件安装完成");
+var Arritem = new Array("已开工单", "_", "图纸料单就绪", "开料完成", "雕花完成", "木工完成", "刮磨完成", "油漆完成", "配件安装完成");
+
+
+function addclassodd(obj) {
+	$(obj).parent().parent().addClass("addodd");
+}

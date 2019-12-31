@@ -206,7 +206,7 @@
           <Property Name="d29" Type="nvarchar" MaxLength="500" />
           <Property Name="d30" Type="nvarchar" MaxLength="500" />
           <Property Name="d31" Type="nvarchar" MaxLength="500" />
-          <Property Name="WordDay" Type="int" />
+          <Property Name="WordDay" Type="nvarchar" MaxLength="50" />
           <Property Name="TopMonthTX" Type="nvarchar" MaxLength="50" />
           <Property Name="MonthTX" Type="nvarchar" MaxLength="50" />
           <Property Name="TotalTX" Type="nvarchar" MaxLength="50" />
@@ -255,8 +255,8 @@
           <EntitySet Name="ehr_department" EntityType="XNHRModel.ehr_department" />
           <EntitySet Name="ehr_postday" EntityType="XNHRModel.ehr_postday" />
           <EntitySet Name="ehr_sum" EntityType="XNHRModel.ehr_sum" />
-          <EntitySet Name="HR_Times" EntityType="XNHRModel.HR_Times" />
           <EntitySet Name="HR_WorkTime" EntityType="XNHRModel.HR_WorkTime" />
+          <EntitySet Name="HR_Times" EntityType="XNHRModel.HR_Times" />
           <AssociationSet Name="FK_HR_WorkTime_HR_Times" Association="XNHRModel.FK_HR_WorkTime_HR_Times">
             <End Role="HR_Times" EntitySet="HR_Times" />
             <End Role="HR_WorkTime" EntitySet="HR_WorkTime" />
@@ -418,6 +418,18 @@
           <Property Name="late" Type="Int32" />
           <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="HR_WorkTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="HRId" Type="Int32" />
+          <Property Name="WorkTime" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="WorkDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HR_Times" Relationship="XNHRModel.FK_HR_WorkTime_HR_Times" FromRole="HR_WorkTime" ToRole="HR_Times" />
+        </EntityType>
         <EntityType Name="HR_Times">
           <Key>
             <PropertyRef Name="Id" />
@@ -463,23 +475,11 @@
           <Property Name="d29" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="d30" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="d31" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="WordDay" Type="Int32" />
-          <NavigationProperty Name="HR_WorkTime" Relationship="XNHRModel.FK_HR_WorkTime_HR_Times" FromRole="HR_Times" ToRole="HR_WorkTime" />
+          <Property Name="WordDay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TopMonthTX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MonthTX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TotalTX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="HR_WorkTime">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="HRId" Type="Int32" />
-          <Property Name="WorkTime" Type="Int32" />
-          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="HR_Times" Relationship="XNHRModel.FK_HR_WorkTime_HR_Times" FromRole="HR_WorkTime" ToRole="HR_Times" />
-          <Property Name="WorkDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HR_WorkTime" Relationship="XNHRModel.FK_HR_WorkTime_HR_Times" FromRole="HR_Times" ToRole="HR_WorkTime" />
         </EntityType>
         <Association Name="FK_HR_WorkTime_HR_Times">
           <End Type="XNHRModel.HR_Times" Role="HR_Times" Multiplicity="0..1" />
@@ -659,6 +659,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="HR_WorkTime">
+            <EntityTypeMapping TypeName="XNHRModel.HR_WorkTime">
+              <MappingFragment StoreEntitySet="HR_WorkTime">
+                <ScalarProperty Name="WorkDate" ColumnName="WorkDate" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="WorkTime" ColumnName="WorkTime" />
+                <ScalarProperty Name="HRId" ColumnName="HRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="HR_Times">
             <EntityTypeMapping TypeName="XNHRModel.HR_Times">
               <MappingFragment StoreEntitySet="HR_Times">
@@ -706,18 +718,6 @@
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="Department" ColumnName="Department" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HR_WorkTime">
-            <EntityTypeMapping TypeName="XNHRModel.HR_WorkTime">
-              <MappingFragment StoreEntitySet="HR_WorkTime">
-                <ScalarProperty Name="WorkDate" ColumnName="WorkDate" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="WorkTime" ColumnName="WorkTime" />
-                <ScalarProperty Name="HRId" ColumnName="HRId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

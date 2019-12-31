@@ -4,7 +4,7 @@
 }
 @Html.Action("_Meta", "Home")
     <nav class="breadcrumb">
-        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>销售管理<span class="c-gray en">&gt;</span>订单管理
+        <i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>产品管理<span class="c-gray en">&gt;</span>订单查询
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
 <div class="page-container">
@@ -15,13 +15,8 @@
         @*@Html.TextBoxFor(k => k.UserName, new { @placeholder = "客户名称", @style = "width:150px", @class = "input-text" })*@
         <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜素</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <span class="f-l">
-            <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Order")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-            <a href="javascript:void(0);" onclick="checked(this,'0')" class="btn btn-primary radius" data-url="@Url.Action("Checked","Order")"><i class="Hui-iconfont">&#xe615;</i>批量审核</a>
-        </span>
-        <span class="f-r pr-10 c-green" style="line-height:40px;">合同总金额：<b id="HTTotail"></b>元</span>
-    </div>
+    @*<div class="cl pd-5 bg-1 bk-gray mt-20">
+    </div>*@
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -32,8 +27,6 @@
                     <th>合同编号</th>
                     <th>合同时间</th>
                     <th>发货方式</th>
-                    <th>合同总金额</th>
-                    <th>应收金额</th>
                     <th>付款状态</th>
                     <th>是否审核</th>
                     <th>销售人员</th>
@@ -42,7 +35,6 @@
                     <th>销售产品(件)</th>
                     <th>操作时间</th>
                     <th>备注</th>
-                    <th width="120">操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -92,28 +84,8 @@
                     targets: 0,
                     orderable: false,
                     render: function (data, type, row) {
-                        var StrArr = "";
-                        if (row.CWCheckStatus == 0 || row.CWCheckStatus == 2) {
-                            StrArr= '<input type="checkbox" value="' + row.Id + '" onclick="addclassodd(this)" >';
-                        }
+                        var StrArr = '<input type="checkbox" value="' + row.Id + '">';
                         return StrArr;
-                    }
-                }, {
-                    targets: 15,//把第九列的样式改为超链接
-                    render: function (data, type, row) {
-                        var StrCheck = "";
-                        if (row.Status == 0)
-                        {
-                            if (row.HTProCount > 0 || row.HTFProCount > 0) {
-                            StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="checked(this, \'' + row.Id + '\')" data-url=\'/Order/Checked\' title="审核"><i class="Hui-iconfont f-14">&#xe615;</i></a>';
-
-                          }  }
-                        if (row.CWCheckStatus == 0 || row.CWCheckStatus == 2) {
-                            StrCheck += 
-                                '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'订单编辑\',\'/Order/Add\', \'' + row.Id + '\', \'800\', \'600\')" title="订单编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
-                        }
-                        return StrCheck;
-                               
                     }
                 }
             ],
@@ -140,8 +112,6 @@
                                 return StrStatus;
                             }
                         },
-                        { "data": "Amount", "defaultContent": "", "className": "textoverflow" },
-                        { "data": "Prepay", "defaultContent": "", "className": "textoverflow" },
                         {
                             "data": "FRFlag", "render": function (data, type, row) {
                                 var StatusName = "<span class=\"label label-warning radius\">未付款</span>";
