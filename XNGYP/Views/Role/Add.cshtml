@@ -93,12 +93,7 @@
                     } else {
                         layer.msg("服务器错误！", { icon: 2, time: 1000 });
                     }
-                    setTimeout(function () {
-                        parent.window.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    }, 1000);
-
+                    ResetClick();
                 });
 
             }

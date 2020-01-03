@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\FurnitureOrderController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\SendSMSController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -828,6 +829,13 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Welcome.cshtml" />
     <Content Include="Views\Order\OrderSearch.cshtml" />
+    <Content Include="Views\FurnitureOrder\AddF.cshtml" />
+    <Content Include="Views\FurnitureOrder\AddProducts.cshtml" />
+    <Content Include="Views\FurnitureOrder\DepartmentIndex.cshtml" />
+    <Content Include="Views\FurnitureOrder\Index.cshtml" />
+    <Content Include="Views\FurnitureOrder\ProductListByOrder.cshtml" />
+    <Content Include="Views\FurnitureOrder\Show.cshtml" />
+    <Content Include="Views\FurnitureOrder\UserIndex.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

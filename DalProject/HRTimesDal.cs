@@ -323,7 +323,6 @@ namespace DalProject
                         tables.d_start = item.d_start;
                         tables.d_end = item.d_end;
                         tables.shouldworkingtime = item.shouldworkingtime;
-                        tables.shouldworkingday = item.shouldworkingday;
                         tables.workingday = item.workingday;
                         tables.d1 = item.d1;
                         tables.d2 = item.d2;

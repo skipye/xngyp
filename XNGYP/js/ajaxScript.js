@@ -483,3 +483,12 @@ var Arritem = new Array("已开工单", "_", "图纸料单就绪", "开料完成
 function addclassodd(obj) {
 	$(obj).parent().parent().addClass("addodd");
 }
+
+//并刷新并点击事件
+function ResetClick() {
+    setTimeout(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.$("#btnSearch").click();
+        parent.layer.close(index);
+    }, 1000);
+}

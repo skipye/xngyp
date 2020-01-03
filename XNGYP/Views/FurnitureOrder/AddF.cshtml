@@ -1,0 +1,97 @@
+﻿@model ModelProject.FContractProductsModel
+@{
+	Layout = null;
+	List<SelectListItem> ArrWJ = new List<SelectListItem>();
+	ArrWJ.Add(new SelectListItem { Text = "常规", Value = "常规" });
+	ArrWJ.Add(new SelectListItem { Text = "定制", Value = "定制" });
+	ArrWJ.Add(new SelectListItem { Text = "木拉手", Value = "木拉手" });
+	ArrWJ.Add(new SelectListItem { Text = "挖拉手", Value = "挖拉手" });
+	ArrWJ.Add(new SelectListItem { Text = "其他", Value = "其他" });
+	List<SelectListItem> ArrProName = new List<SelectListItem>();
+	ArrProName.Add(new SelectListItem { Text = "请选择产品名称", Value = "" });
+	List<SelectListItem> ArrCL = new List<SelectListItem>();
+	ArrCL.Add(new SelectListItem { Text = "是否定制", Value = "" });
+	ArrCL.Add(new SelectListItem { Text = "是", Value = "true" });
+	ArrCL.Add(new SelectListItem { Text = "否", Value = "false", Selected = true });
+}
+	<form class="form form-horizontal" id="Fformadd">
+		@Html.HiddenFor(k => k.FContractHeadId)
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.ProductXLId, Model.ProXLDroList, new { @class = "select", @style = "width:150px;" })
+					@Html.DropDownListFor(k => k.ProductAreaId, Model.AreaDroList, new { @class = "select", @style = "width:150px;" })
+					@Html.DropDownListFor(k => k.FProductId, ArrProName, new { @class = "select", @style = "width:180px;" })
+					@Html.HiddenFor(k => k.FProductName)
+					@Html.HiddenFor(k => k.ProductArea)
+					@Html.HiddenFor(k => k.FProductXL)
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>材质+色号：</label>
+			<div class="formControls col-xs-8 col-sm-8">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.FWoodId, Model.WoodDroList, new { @class = "select", @style = "width:150px;" })
+					@Html.DropDownListFor(k => k.FColorId, Model.ColorDroList, new { @class = "select", @style = "width:130px;" })
+					@Html.TextBoxFor(k => k.FColor, new { @class = "input-text", @style = "width:150px;" })
+					@Html.HiddenFor(k => k.FWoodName)
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">是否定制：</label>
+			<div class="formControls col-xs-8 col-sm-4">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.CustomFlag, ArrCL, new { @class = "select" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">长+宽+高：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.Length, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+				@Html.TextBoxFor(k => k.Width, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+				@Html.TextBoxFor(k => k.Height, new { @class = "input-text number", @style = "width:120px;" })<span>mm</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单价+数量：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="inline">
+					@Html.TextBoxFor(k => k.Price, new { @class = "input-text number", @style = "width:120px;" }) <span>元</span>
+					-  @Html.TextBoxFor(k => k.FQty, new { @class = "input-text number", @style = "width:100px;" }) <span>件</span>
+
+					<span id="FBQPrice" class="c-red" rel=""></span>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>五金配件：</label>
+			<div class="formControls col-xs-8 col-sm-4">
+				<span class="select-box inline">
+					@Html.DropDownListFor(k => k.hardware_part, ArrWJ, new { @class = "select" })
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>配饰：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextBoxFor(k => k.decoration_part, new { @class = "input-text" })
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">其他要求：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@Html.TextAreaFor(k => k.Others, new { @class = "textarea" })
+			</div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="width:120px;"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				<button onClick="removeIframe();" class="btn btn-default radius ml-30" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>

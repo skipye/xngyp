@@ -31,43 +31,49 @@
         @*@Html.Action("PageList","Article")*@
         <table class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
-				<tr class="text-l">
-					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th>姓名</th>
-					<th>部门</th>
-					<th>月份</th>
-					<th>1</th>
-					<th>2</th>
-					<th>3</th>
-					<th>4</th>
-					<th>5</th>
-					<th>6</th>
-					<th>7</th>
-					<th>8</th>
-					<th>9</th>
-					<th>10</th>
-					<th>11</th>
-					<th>12</th>
-					<th>13</th>
-					<th>14</th>
-					<th>15</th>
-					<th>16</th>
-					<th>17</th>
-					<th>18</th>
-					<th>19</th>
-					<th>20</th>
-					<th>21</th>
-					<th>22</th>
-					<th>23</th>
-					<th>24</th>
-					<th>25</th>
-					<th>26</th>
-					<th>27</th>
-					<th>28</th>
-					<th>29</th>
-					<th>30</th>
-					<th>31</th>
-				</tr>
+                <tr class="text-l">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th>姓名</th>
+                    <th>部门</th>
+                    <th>月份</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                    <th>11</th>
+                    <th>12</th>
+                    <th>13</th>
+                    <th>14</th>
+                    <th>15</th>
+                    <th>16</th>
+                    <th>17</th>
+                    <th>18</th>
+                    <th>19</th>
+                    <th>20</th>
+                    <th>21</th>
+                    <th>22</th>
+                    <th>23</th>
+                    <th>24</th>
+                    <th>25</th>
+                    <th>26</th>
+                    <th>27</th>
+                    <th>28</th>
+                    <th>29</th>
+                    <th>30</th>
+                    <th>31</th>
+                    <th>应出勤</th>
+                    <th>实出勤</th>
+                    <th>上月累计调休</th>
+                    <th>本月调休</th>
+                    <th>累计调休</th>
+                    <th style="width:100px;">操作</th>
+                </tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -126,6 +132,15 @@
                         var StrArr = "";
                         StrArr = '<input type="checkbox" value="' + row.Id + '"  onclick="addclassodd(this)" >';
                         return StrArr;
+                    }
+                }
+                , {
+                    targets: 40,//把第九列的样式改为超链接
+                    render: function (data, type, row) {
+                        var StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'考勤编辑\',\'/HR/CWWork\', \'' + row.Id + '\', \'650\', \'400\')" title="考勤编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
+
+                        return StrCheck;
+
                     }
                 }
             ],
@@ -359,7 +374,12 @@
 						}
 						return str;
 					}
-				},
+                },
+                { "data": "shouldworkingday", "defaultContent": "", "className": "c-primary" },
+				{ "data": "WorkDay", "defaultContent": "", "className": "c-green" },
+				{ "data": "TopMonthTX", "defaultContent": "", "className": "c-green" },
+				{ "data": "MonthTX", "defaultContent": "", "className": "c-green" },
+				{ "data": "TotalTX", "defaultContent": "", "className": "c-green" },
             ],
         });
     };
