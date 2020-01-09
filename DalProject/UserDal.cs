@@ -78,7 +78,7 @@ namespace DalProject
         public LoginModel IsLogin(LoginModel models)
         {
             LoginModel ReturnModel = new LoginModel();
-            using (var db = new XNHREntities())
+            using (var db = new SaleHREntities())
             {
                 ReturnModel = (from p in db.ehr_employee.Where(k => k.password == models.PassWord && k.status == 1)
                               where !string.IsNullOrEmpty(models.UserName) ? p.name == models.UserName : true
@@ -94,7 +94,7 @@ namespace DalProject
             }
             if (ReturnModel == null)
             {
-                using (var db = new SaleHREntities())
+                using (var db = new XNHREntities())
                 {
                     ReturnModel = (from p in db.ehr_employee.Where(k => k.password == models.PassWord && k.status == 1)
                                    where !string.IsNullOrEmpty(models.UserName) ? p.name == models.UserName : true

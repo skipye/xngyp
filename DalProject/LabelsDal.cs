@@ -449,16 +449,15 @@ namespace DalProject
                 int LabelsCount = UpdateCount;
                 int qty = 1;
                 var CRMTables = db.Contract_Detail.Where(k => k.Id == CRM_Id).SingleOrDefault();
-                CRMTables.LabelseCount = UpdateCount;
+                CRMTables.LabelseCount = UpdateCount+ CRMTables.LabelseCount??0;
                 qty = CRMTables.Qty??0;
-                if ((qty - LabelsCount) <= 0)//判断是否已经没了
+                if ((qty - CRMTables.LabelseCount) <= 0)//判断是否已经没了
                 {
                     CRMTables.Status = 4;
                 }
                 db.SaveChanges();
             }
         }
-        //半成品审核
         public void CheckMore(string ListId, int InvId,int Grade)
         {
             using (var db = new XNGYPEntities())
@@ -504,6 +503,8 @@ namespace DalProject
                             Worktable.ClosedFlag = true;//关闭工单
                         }
                         i++;
+
+                      new CostDal().AddGYPCostNew(Id);
                     }
                 }
                 db.SaveChanges();
@@ -541,6 +542,9 @@ namespace DalProject
                             tables.OutUserId= HTables.OperatorId;
                             tables.OutUserName = HTables.Operator;
                             tables.Status = 9;
+
+                            var CRMTable = db.Contract_Detail.Where(k => k.Id == CRMId).FirstOrDefault();
+                            CRMTable.Status = 5;
                         }
                     }
                 }

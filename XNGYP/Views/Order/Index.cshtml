@@ -102,7 +102,7 @@
                     targets: 15,//把第九列的样式改为超链接
                     render: function (data, type, row) {
                         var StrCheck = "";
-                        if (row.Status == 0)
+                        if (row.Status == 0 || row.Status == 2 )
                         {
                             if (row.HTProCount > 0 || row.HTFProCount > 0) {
                             StrCheck = '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="checked(this, \'' + row.Id + '\')" data-url=\'/Order/Checked\' title="审核"><i class="Hui-iconfont f-14">&#xe615;</i></a>';

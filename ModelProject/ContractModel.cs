@@ -220,6 +220,7 @@ namespace ModelProject
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public int? SaleFlag { get; set; }
+        public bool? IsKG { get; set; }
     }
     public class FRContract
     {

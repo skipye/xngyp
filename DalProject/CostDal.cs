@@ -554,13 +554,13 @@ namespace DalProject
                     Costm.ProductId = item.ProductId;
                     Costm.WoodId = item.WoodId;
                     Costm.MCPrice = Convert.ToDecimal(Convert.ToDecimal(WoodCB).ToString("00"));
-                    Costm.KLPrice = GetCost(item.ProductId, item.WoodId ?? 0, "开料");
+                    Costm.KLPrice = GetFCost(item.ProductId, item.WoodId ?? 0, "开料");
                     Costm.FLPrice = 0;
-                    Costm.MGQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工前段");
-                    Costm.MGHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工后段");
-                    Costm.DHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "雕花");
-                    Costm.GMPrice = GetCost(item.ProductId, item.WoodId ?? 0, "刮磨");
-                    Costm.YQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "油漆");
+                    Costm.MGQPrice = GetFCost(item.ProductId, item.WoodId ?? 0, "木工前段");
+                    Costm.MGHPrice = GetFCost(item.ProductId, item.WoodId ?? 0, "木工后段");
+                    Costm.DHPrice = GetFCost(item.ProductId, item.WoodId ?? 0, "雕花");
+                    Costm.GMPrice = GetFCost(item.ProductId, item.WoodId ?? 0, "刮磨");
+                    Costm.YQPrice = GetFCost(item.ProductId, item.WoodId ?? 0, "油漆");
                     Costm.PersonPrice = Convert.ToDecimal(Convert.ToDecimal(item.PersonPrice).ToString("00"));
                     Costm.RGFY = Costm.PersonPrice * Convert.ToDecimal(0.6);
                     if (Costm.KLPrice > 0 && Costm.MGQPrice > 0 && Costm.MGHPrice > 0 && Costm.DHPrice > 0 && Costm.GMPrice > 0 && Costm.YQPrice > 0)
@@ -584,7 +584,7 @@ namespace DalProject
             }
         }
         //根据产品ID和材质ID获取各个阶段成本
-        public static decimal GetCost(int ProductId,int WoodId,string GX)
+        public static decimal GetFCost(int ProductId,int WoodId,string GX)
         {
             using (var db = new XNERPEntities())
             {
@@ -593,6 +593,52 @@ namespace DalProject
                                  where p.name.Contains(GX)
                                  select p.cost).FirstOrDefault();
                 return Costtable;
+            }
+        }
+        //根据产品ID和材质ID获取各个阶段成本
+        public static decimal GetCost(int ProductId, int WoodId, string GX)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var Costtable = (from p in db.XNGYP_WorkFrom.Where(k => k.DeleteFlag == false)
+                                 where p.ProductId == ProductId && p.WoodId == WoodId
+                                 where p.Name.Contains(GX)
+                                 select p.cost).FirstOrDefault();
+                return Costtable??0;
+            }
+        }
+        //把库存工艺品的所有产品计算成本
+        public void AddGYPCostNew(int Id)
+        {
+            using (var db = new XNGYPEntities())
+            {
+                var LablesTable = (from p in db.XNGYP_INV_Labels.Where(k => k.Id == Id)
+                                   orderby p.CreateTime descending
+                                   select new LabelsModel
+                                   {
+                                       Id = p.Id,
+                                       ProductId = p.ProductsId,
+                                       WoodId = p.WoodId,
+                                       WoodName = p.WoodName,
+                                   }).ToList();
+                foreach (var item in LablesTable)
+                {
+                    
+                    CostModel Costm = new CostModel();
+                    Costm.ProductId = item.ProductId;
+                    Costm.WoodId = item.WoodId;
+                    Costm.WoodName = item.WoodName;
+                    //Costm.MCPrice = Convert.ToDecimal(Convert.ToDecimal(WoodCB).ToString("00"));
+                    Costm.KLPrice = GetCost(item.ProductId, item.WoodId ?? 0, "开料");
+                    Costm.FLPrice = 0;
+                    Costm.MGQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工前段");
+                    Costm.MGHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工后段");
+                    Costm.DHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "雕花");
+                    Costm.GMPrice = GetCost(item.ProductId, item.WoodId ?? 0, "刮磨");
+                    Costm.YQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "油漆");
+                    Costm.PJPrice = GetCost(item.ProductId, item.WoodId ?? 0, "配件安装");
+                    AddOrUpdate(Costm);
+                }
             }
         }
         //把库存工艺品的所有产品计算成本
@@ -624,6 +670,15 @@ namespace DalProject
                     Costm.ProductId = item.ProductId;
                     Costm.WoodId = item.WoodId;
                     Costm.WoodName = item.WoodName;
+                    //Costm.MCPrice = Convert.ToDecimal(Convert.ToDecimal(WoodCB).ToString("00"));
+                    Costm.KLPrice = GetCost(item.ProductId, item.WoodId ?? 0, "开料");
+                    Costm.FLPrice = 0;
+                    Costm.MGQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工前段");
+                    Costm.MGHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "木工后段");
+                    Costm.DHPrice = GetCost(item.ProductId, item.WoodId ?? 0, "雕花");
+                    Costm.GMPrice = GetCost(item.ProductId, item.WoodId ?? 0, "刮磨");
+                    Costm.YQPrice = GetCost(item.ProductId, item.WoodId ?? 0, "油漆");
+                    Costm.PJPrice = GetCost(item.ProductId, item.WoodId ?? 0, "配件安装");
                     AddOrUpdate(Costm);
                 }
                 db.SaveChanges();

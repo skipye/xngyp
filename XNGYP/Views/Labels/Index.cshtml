@@ -28,13 +28,14 @@
 		<button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
 	</div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <span class="f-l">
-            <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Labels")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-            <a href="javascript:void(0);" onclick="add('盘点入库', '/Labels/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>盘点入库</a>
-            <a href="javascript:void(0);" onclick="ConfirmINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("MoveINV","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中移库</a>
-            <a href="javascript:void(0);" onclick="DeliveryINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Delivery","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中送货维修</a>
-            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
-        </span>
+		<span class="f-l">
+			<a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Labels")"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+			<a href="javascript:void(0);" onclick="add('盘点入库', '/Labels/Add', '600', '300')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>盘点入库</a>
+			<a href="javascript:void(0);" onclick="ConfirmINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("MoveINV","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中移库</a>
+			<a href="javascript:void(0);" onclick="DeliveryINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Delivery","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中送货维修</a>
+			<a href="javascript:void(0);" onclick="ConfirmINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Check","Labels")"><i class="Hui-iconfont">&#xe615;</i>选中入库</a>
+			<a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
+		</span>
     </div>
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -96,8 +97,8 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[12, "desc"]],//默认第几个排序
-            "bStateSave": true,//状态保存
+            "aaSorting": [[13, "desc"]],//默认第几个排序
+            "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Labels/PageList", param, function (result) {
                     //封装返回数据

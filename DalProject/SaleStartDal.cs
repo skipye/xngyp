@@ -28,6 +28,7 @@ namespace DalProject
                             where !string.IsNullOrEmpty(SModel.SN) ? p.Contract_Header.SN.Contains(SModel.SN) : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.ProductName.Contains(SModel.ProductName) : true
                             where !string.IsNullOrEmpty(SModel.Customer) ? p.Contract_Header.XNGYP_Customers.Name.Contains(SModel.Customer) : true
+                            where SModel.IsKG==true?p.Status>0: SModel.IsKG == false ? p.Status <= 0:true
                             where SModel.SaleFlag!=null && SModel.SaleFlag==1?p.Contract_Header.SaleFlag==1:true
                             where p.CreateTime > StartTime
                             where p.CreateTime < EndTime
