@@ -1,0 +1,48 @@
+﻿@using Common;
+@model ModelProject.CKModel
+@{
+    Layout = null;
+
+	DateTime TimeNow = DateTime.Now;
+    var YearStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd");
+    var YearEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd");
+    var MonthStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd");
+    var MonthEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd");
+    var WeekStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd");
+    var WeekEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd");
+    var StartTime = TimeNow.ToString("yyyy-MM-dd");
+	var EndTime = TimeNow.AddDays(1).ToString("yyyy-MM-dd");
+}
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">出库情况（<span class="c-green">单位：件</span>）</th>
+			</tr>
+			<tr class="text-c">
+				<th>类别</th>
+				<th>今日</th>
+				<th>本周</th>
+				<th>本月</th>
+				<th>本年</th>
+				<th>总共</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>家具</td>
+				<td class="c-blue" onclick="goUrl('家具今日出库','@Url.Action("FDeliveryList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.FCK.TodayCount??0)</td>
+				<td class="c-blue" onclick="goUrl('家具本周出库','@Url.Action("FDeliveryList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.FCK.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具本月出库','@Url.Action("FDeliveryList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.FCK.MonthCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具本年出库','@Url.Action("FDeliveryList","Admin",new { StartTime=YearStartTime,EndTime=YearEndTime})')">@(Model.FCK.YearCount ?? 0)</td>
+				<td>@(Model.FCK.TotalCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>工艺品</td>
+				<td class="c-blue" onclick="goUrl('工艺品今日出库','@Url.Action("DeliveryList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.CK.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品本周出库','@Url.Action("DeliveryList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.CK.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品本月出库','@Url.Action("DeliveryList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.CK.MonthCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品本年出库','@Url.Action("DeliveryList","Admin",new { StartTime=YearStartTime,EndTime=YearEndTime})')">@(Model.CK.YearCount ?? 0)</td>
+				<td>@(Model.CK.TotalCount ?? 0)</td>
+			</tr>
+		</tbody>
+	</table>

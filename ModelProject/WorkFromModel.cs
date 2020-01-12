@@ -46,6 +46,7 @@ namespace ModelProject
         public int? ProductSNId { get; set; }
         public int? FatherId { get; set; }
         public int? WoodId { get; set; }
+        public int? Status { get; set; }
         public List<SelectListItem> XLDroList { get; set; }
         public List<SelectListItem> MCDroList { get; set; }
         public string StartTime { get; set; }

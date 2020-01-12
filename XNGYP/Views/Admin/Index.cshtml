@@ -18,246 +18,19 @@
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
             
-            <div class="page-container">
-                <table class="table table-border table-bordered table-bg">
-                    <thead>
-                        <tr>
-                            <th colspan="7" scope="col">出库情况</th>
-                        </tr>
-                        <tr class="text-c">
-                            <th>类别</th>
-                            <th>总共</th>
-                            <th>今日</th>
-                            <th>本周</th>
-                            <th>本月</th>
-                            <th>本年</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-c">
-                            <td>家具</td>
-                            <td>92</td>
-                            <td>9</td>
-                            <td>0</td>
-                            <td>8</td>
-                            <td>8</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>工艺品</td>
-                            <td>92</td>
-                            <td>9</td>
-                            <td>0</td>
-                            <td>8</td>
-                            <td>8</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-border table-bordered table-bg mt-20">
-                    <thead>
-                        <tr>
-                            <th colspan="7" scope="col">库存情况</th>
-                        </tr>
-                        <tr class="text-c">
-                            <th>统计</th>
-                            <th onclick="goUrl('工艺品(半)','/Semi/')">工艺品(半)</th>
-                            <th onclick="goUrl('工艺品(半)','/Semi/')">工艺品(成)</th>
-                            <th onclick="goUrl('家具(半)','/Labels/')">家具(半)</th>
-                            <th onclick="goUrl('家具(半)','/Labels/')">家具(成)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-c">
-                            <td>总数</td>
-                            <td>92</td>
-                            <td>9</td>
-                            <td>8</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>今日</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>昨日</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>本周</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>本月</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-border table-bordered table-bg mt-20">
-                    <thead>
-                        <tr>
-                            <th colspan="7" scope="col">销售情况</th>
-                        </tr>
-                        <tr class="text-c">
-                            <th>统计</th>
-                            <th>工艺品(合同)</th>
-                            <th>工艺品(金额)</th>
-                            <th>家具(合同)</th>
-                            <th>家具(金额)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-c">
-                            <td>总数</td>
-                            <td>92</td>
-                            <td>9</td>
-                            <td>0</td>
-                            <td>8</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>今日</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>昨日</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>本周</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>本月</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr class="text-c">
-                            <td>本年</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
+			<div class="page-container">
+				<p class="f-20 text-success">
+					欢迎进入香凝工艺<span class="f-14">总裁分析系统！@*以下是<span id="yeartime" class="c-green f-18"></span>年数据*@</span>
+					<br /><span id="top_time" class="c-green"></span>
+				</p>
+				@Html.Action("_CK", "Admin")
+				@Html.Action("_KC", "Admin")
+				@Html.Action("_XS", "Admin")
+				@Html.Action("_SK", "Admin")
 
-                <table class="table table-border table-bordered table-bg mt-20">
-                    <thead>
-                        <tr>
-                            <th colspan="3" scope="col">生产情况</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th width="30%">在制品</th>
-                            <td>家具：1212 件</td>
-                            <td>工艺品：1212 件</td>
-                        </tr>
-                        <tr>
-                            <th width="30%">开料</th>
-                            <td>12 件</td>
-                            <td>12 件</td>
-                        </tr>
-                        <tr>
-                            <td>木工前段</td>
-                            <td>16 件</td>
-                            <td>12 件</td>
-                        </tr>
-                        <tr>
-                            <td>雕花</td>
-                            <td>18 件</td>
-                            <td>12 件</td>
-                        </tr>
-                        <tr>
-                            <td>木工后段</td>
-                            <td>80 件</td>
-                            <td>12 件</td>
-                        </tr>
-                        <tr>
-                            <td>刮磨</td>
-                            <td>79 件</td>
-                            <td>12 件</td>
-                        </tr>
-                        <tr>
-                            <td>油漆</td>
-                            <td>121 件</td>
-                            <td>12 件</td>
-                        </tr>
-                        <tr>
-                            <td>配件安装</td>
-                            <td>18 件</td>
-                            <td>12 件</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-                <table class="table table-border table-bordered table-bg mt-20">
-                    <thead>
-                        <tr>
-                            <th colspan="3" scope="col">考勤情况(打卡情况)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th width="30%">高筛</th>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                        <tr>
-                            <th width="30%">金秋叶</th>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                        <tr>
-                            <td>谈昌蔚</td>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                        <tr>
-                            <td>王钱凤</td>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                        <tr>
-                            <td>杨迪</td>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                        <tr>
-                            <td>李志刚</td>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                        <tr>
-                            <td>易艳</td>
-                            <td>08:28 17:06</td>
-                            <td>累计上班：26 天</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+				@Html.Action("_GX", "Admin")
+				@Html.Action("_HRList", "Admin")
+			</div>
         </div>
     </div>
 </section>
@@ -277,7 +50,12 @@
 
     $(function () {
         var parentHead = $("head", parent.document).html();
-        $("head").html(parentHead);
+		$("head").html(parentHead);
+
+		var date=new Date;
+
+		var y = date.getFullYear();
+		$("#yeartime").html(y);
     });
     /*个人信息*/
     function goUrl(title,url) {

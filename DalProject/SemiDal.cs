@@ -1,4 +1,5 @@
-﻿using DataBase;
+﻿using Common;
+using DataBase;
 using ModelProject;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,48 @@ namespace DalProject
                             }).ToList();
                 return List;
             }
+        }
+        public AdminModel GetSemiCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNGYPEntities())
+            {
+                Models.TotalCount = db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false && k.Status == 1).Count();
+                Models.YearCount = db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false && k.InputDate > YearStartTime && k.InputDate < YearEndTime).Count();
+                Models.MonthCount = db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false && k.InputDate > MonthStartTime && k.InputDate < MonthEndTime).Count();
+                Models.WeekCount = db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false && k.InputDate > WeekStartTime && k.InputDate < WeekEndTime).Count();
+                Models.TodayCount = db.XNGYP_INV_Semi.Where(k => k.DeleteFlag == false  && k.InputDate > StartTime).Count();
+            }
+            return Models;
+        }
+        public AdminModel GetFSemiCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNERPEntities())
+            {
+                Models.TotalCount = db.INV_semi.Where(k => k.delete_flag == false && k.status == 1).Count();
+                Models.YearCount = db.INV_semi.Where(k => k.delete_flag == false  && k.input_date > YearStartTime && k.input_date < YearEndTime).Count();
+                Models.MonthCount = db.INV_semi.Where(k => k.delete_flag == false && k.input_date > MonthStartTime && k.input_date < MonthEndTime).Count();
+                Models.WeekCount = db.INV_semi.Where(k => k.delete_flag == false  && k.input_date > WeekStartTime && k.input_date < WeekEndTime).Count();
+                Models.TodayCount = db.INV_semi.Where(k => k.delete_flag == false && k.input_date > StartTime).Count();
+            }
+            return Models;
         }
         public void AddOrUpdate(SemiModel Models)
         {

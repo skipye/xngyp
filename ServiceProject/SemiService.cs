@@ -20,6 +20,22 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public AdminModel GetSemiCount()
+        {
+            try { return CDal.GetSemiCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public AdminModel GetFSemiCount()
+        {
+            try { return CDal.GetFSemiCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public SemiModel GetDetailById(int Id)
         {
             try { return CDal.GetDetailById(Id); }

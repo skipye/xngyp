@@ -92,5 +92,21 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public GXModel GetFGXCount()
+        {
+            try { return WODal.GetFGXCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public GXModel GetGXCount()
+        {
+            try { return WODal.GetGXCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

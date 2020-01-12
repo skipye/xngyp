@@ -64,6 +64,9 @@
     <Compile Include="CRM_customers.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CRM_delivery_tmp_header.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ehr_department.cs">
       <DependentUpon>XNHRModel.tt</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="INV_Name_Type.cs">
       <DependentUpon>XNGYP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INV_semi.cs">
+      <DependentUpon>XNERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="INV_wood_type.cs">
       <DependentUpon>XNERPModel.tt</DependentUpon>

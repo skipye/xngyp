@@ -409,6 +409,8 @@ namespace DalProject
                             where SModel.FatherId != null && SModel.FatherId > 0 ? p.XNGYP_Products.FatherId == SModel.FatherId : true
                             where SModel.WoodId != null && SModel.WoodId > 0 ? p.WoodId == SModel.WoodId : true
                             where SModel.GXId != null && SModel.GXId > 0 ? p.GXId == SModel.GXId : true
+                            where !string.IsNullOrEmpty(SModel.GXName) ? p.Name == SModel.GXName : true
+                            where SModel.Status != null && SModel.Status > 0 ? p.Status == SModel.Status : true
                             where p.CreateTime > StartTime
                             where p.CreateTime < EndTime
                             orderby p.CreateTime descending
@@ -432,6 +434,42 @@ namespace DalProject
                 return List;
             }
         }
+        public GXModel GetGXCount()
+        {
+            GXModel Models = new GXModel();
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_WorkFrom.Where(k => k.DeleteFlag == false && k.XNGYP_WorkOrder.DeleteFlag == false && k.XNGYP_WorkOrder.ClosedFlag == false)
+                            where p.Status == 0
+                            orderby p.CreateTime descending
+                            select new WorkFromModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                workorder = p.XNGYP_WorkOrder.WorkOrder,
+                                ProductName = p.XNGYP_Products.name,
+                                Customer = p.XNGYP_WorkOrder.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                UserName = p.UserName,
+                                exp_begin_date = p.exp_begin_date,
+                                exp_end_date = p.exp_end_date,
+                                act_begin_date = p.act_begin_date,
+                                act_end_date = p.act_end_date,
+                                Status = p.Status,
+                                CheckedUser = p.CheckedUser,
+                                cost = p.cost,
+                                Flag = p.Flag,
+                            }).ToList();
+                Models.TotalCount = List.Count;
+                Models.KLCount = List.Where(k => k.Name == "开料").Count();
+                Models.MGQCount = List.Where(k => k.Name == "木工前段").Count();
+                Models.DHCount = List.Where(k => k.Name == "雕花").Count();
+                Models.MGHCount = List.Where(k => k.Name == "木工后段").Count();
+                Models.YQCount = List.Where(k => k.Name == "油漆").Count();
+                Models.GMCount = List.Where(k => k.Name == "刮磨").Count();
+                Models.PJACount = List.Where(k => k.Name == "配件安装").Count();
+            }
+            return Models;
+        }
         //家具生产情况
         public List<WorkFromModel> GetFWorkFromList(SWorkFromModel SModel)
         {
@@ -449,6 +487,7 @@ namespace DalProject
             {
                 var List = (from p in db.WIP_workflow.Where(k => k.delete_flag == false && k.WIP_workorder.delete_flag == false)
                             where !string.IsNullOrEmpty(SModel.GXName) ? p.name == SModel.GXName : true
+                            where SModel.Status != null && SModel.Status > 0?p.status== SModel.Status:true
                             where p.created_time > StartTime
                             where p.created_time < EndTime
                             orderby p.created_time descending
@@ -470,6 +509,41 @@ namespace DalProject
                             }).ToList();
                 return List;
             }
+        }
+        public GXModel GetFGXCount()
+        {
+            GXModel Models = new GXModel();
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.WIP_workflow.Where(k => k.delete_flag == false && k.WIP_workorder.delete_flag == false)
+                            where p.status==1
+                            orderby p.created_time descending
+                            select new WorkFromModel
+                            {
+                                Id = p.id,
+                                Name = p.name,
+                                workorder = p.WIP_workorder.workorder,
+                                ProductName = p.SYS_product.name,
+                                UserName = p.user_name,
+                                exp_begin_date = p.exp_begin_date,
+                                exp_end_date = p.exp_end_date,
+                                act_begin_date = p.act_begin_date,
+                                act_end_date = p.act_end_date,
+                                Status = p.status,
+                                CheckedUser = p.checked_user_name,
+                                cost = p.cost,
+                                source = p.reserved2,
+                            }).ToList();
+                Models.TotalCount = List.Count;
+                Models.KLCount = List.Where(k => k.Name == "开料").Count();
+                Models.MGQCount = List.Where(k => k.Name == "木工前段").Count();
+                Models.DHCount = List.Where(k => k.Name == "雕花").Count();
+                Models.MGHCount = List.Where(k => k.Name == "木工后段").Count();
+                Models.YQCount = List.Where(k => k.Name == "油漆").Count();
+                Models.GMCount = List.Where(k => k.Name == "刮磨").Count();
+                Models.PJACount = List.Where(k => k.Name == "配件安装").Count();
+            }
+            return Models;
         }
         public DataTable ToFExcelOut(SWorkFromModel SModel)
         {

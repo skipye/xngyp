@@ -38,5 +38,7 @@ namespace DataBase
         public DbSet<WIP_workflow> WIP_workflow { get; set; }
         public DbSet<CRM_customers> CRM_customers { get; set; }
         public DbSet<WIP_workorder> WIP_workorder { get; set; }
+        public DbSet<CRM_delivery_tmp_header> CRM_delivery_tmp_header { get; set; }
+        public DbSet<INV_semi> INV_semi { get; set; }
     }
 }

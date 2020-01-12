@@ -239,5 +239,31 @@ namespace DalProject
             }
             return items;
         }
+        public List<CRMItem> GetHRList()
+        {
+            string StrNow = DateTime.Now.ToString("yyyy-MM-dd");
+            string strSql = string.Format(@"select m.id as Id ,m.name as Name ,m.tel,n.time1,n.time2,n.time3,n.time4,n.time5,n.time6 
+                                            from ehr_employee m left join ehr_postday n on m.id=n.employee 
+                                            where n.date='{0}' and m.status='1'", StrNow);
+
+            using (var db = new XNHREntities())
+            {
+                var table = db.Database.SqlQuery<CRMItem>(strSql);
+                var list = (from p in table
+                            select new CRMItem
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                tel = p.tel,
+                                time1 = p.time1,
+                                time2 = p.time2,
+                                time3 = p.time3,
+                                time4 = p.time4,
+                                time5 = p.time5,
+                                time6 = p.time6
+                            }).ToList();
+                return list;
+            }
+        }
     }
 }

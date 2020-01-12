@@ -836,6 +836,22 @@
     <Content Include="Views\FurnitureOrder\ProductListByOrder.cshtml" />
     <Content Include="Views\FurnitureOrder\Show.cshtml" />
     <Content Include="Views\FurnitureOrder\UserIndex.cshtml" />
+    <Content Include="Views\Admin\_CK.cshtml" />
+    <Content Include="Views\Admin\FDeliveryList.cshtml" />
+    <Content Include="Views\Admin\DeliveryList.cshtml" />
+    <Content Include="Views\Admin\_KC.cshtml" />
+    <Content Include="Views\Admin\FLabelsList.cshtml" />
+    <Content Include="Views\Admin\LabelsList.cshtml" />
+    <Content Include="Views\Admin\_XS.cshtml" />
+    <Content Include="Views\Admin\FHTList.cshtml" />
+    <Content Include="Views\Admin\HTList.cshtml" />
+    <Content Include="Views\Admin\_SK.cshtml" />
+    <Content Include="Views\Admin\FSKList.cshtml" />
+    <Content Include="Views\Admin\SKList.cshtml" />
+    <Content Include="Views\Admin\_HRList.cshtml" />
+    <Content Include="Views\Admin\_GX.cshtml" />
+    <Content Include="Views\Admin\FGXList.cshtml" />
+    <Content Include="Views\Admin\GXList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,59 @@
+﻿@using Common;
+@model ModelProject.XSModel
+@{
+    Layout = null;
+
+	DateTime TimeNow = DateTime.Now;
+    var YearStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd");
+    var YearEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd");
+    var MonthStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd");
+    var MonthEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd");
+    var WeekStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd");
+    var WeekEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd");
+    var StartTime = TimeNow.ToString("yyyy-MM-dd");
+	var EndTime = TimeNow.AddDays(1).ToString("yyyy-MM-dd");
+}
+	<table class="table table-border table-bordered table-bg mt-10">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">销售情况（<span class="c-green">单位：个/元</span>）</th>
+			</tr>
+			<tr class="text-c">
+				<th width="30px">类别</th>
+				<th>今日</th>
+				<th>本周</th>
+				<th>本月</th>
+				<th>本年</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>家具(合同)</td>
+				<td class="c-blue" onclick="goUrl('家具(合同)今日','@Url.Action("FHTList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.FSXHT.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具(合同)本周','@Url.Action("FHTList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.FSXHT.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具(合同)本月','@Url.Action("FHTList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.FSXHT.MonthCount ?? 0)</td>
+				<td>@(Model.FSXHT.YearCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>工艺品(合同)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(合同)今日','@Url.Action("HTList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.SXHT.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(合同)本周','@Url.Action("HTList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.SXHT.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(合同)本月','@Url.Action("HTList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.SXHT.MonthCount ?? 0)</td>
+				<td>@(Model.SXHT.YearCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>家具(金额)</td>
+				<td class="c-blue" onclick="goUrl('家具(金额)今日','@Url.Action("FHTList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.FSX.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具(金额)本周','@Url.Action("FHTList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.FSX.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具(金额)本月','@Url.Action("FHTList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.FSX.MonthCount ?? 0)</td>
+				<td>@(Model.FSX.YearCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>工艺品(金额)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(金额)今日','@Url.Action("HTList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.SX.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(金额)本周','@Url.Action("HTList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.SX.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(金额)本月','@Url.Action("HTList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.SX.MonthCount ?? 0)</td>
+				<td>@(Model.SX.YearCount ?? 0)</td>
+			</tr>
+		</tbody>
+	</table>

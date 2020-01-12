@@ -1,0 +1,64 @@
+﻿@using Common;
+@model ModelProject.KCModel
+@{
+    Layout = null;
+
+	DateTime TimeNow = DateTime.Now;
+    var YearStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd");
+    var YearEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd");
+    var MonthStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd");
+    var MonthEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd");
+    var WeekStartTime = DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd");
+    var WeekEndTime = DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd");
+    var StartTime = TimeNow.ToString("yyyy-MM-dd");
+	var EndTime = TimeNow.AddDays(1).ToString("yyyy-MM-dd");
+}
+	<table class="table table-border table-bordered table-bg mt-10">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">库存情况（<span class="c-green">单位：件</span>）</th>
+			</tr>
+			<tr class="text-c">
+				<th>类别</th>
+				<th>今日</th>
+				<th>本周</th>
+				<th>本月</th>
+				<th>本年</th>
+				<th>总共</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>家具(半)</td>
+				<td>@(Model.FSKC.TodayCount ?? 0)</td>
+				<td>@(Model.FSKC.WeekCount ?? 0)</td>
+				<td>@(Model.FSKC.MonthCount ?? 0)</td>
+				<td>@(Model.FSKC.YearCount ?? 0)</td>
+				<td>@(Model.FSKC.TotalCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>家具(成)</td>
+				<td class="c-blue" onclick="goUrl('家具今日入库','@Url.Action("FLabelsList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.FKC.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具本周入库','@Url.Action("FLabelsList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.FKC.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('家具本月入库','@Url.Action("FLabelsList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.FKC.MonthCount ?? 0)</td>
+				<td>@(Model.FKC.YearCount ?? 0)</td>
+				<td>@(Model.FKC.TotalCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>工艺品(半)</td>
+				<td>@(Model.SKC.TodayCount ?? 0)</td>
+				<td>@(Model.SKC.WeekCount ?? 0)</td>
+				<td>@(Model.SKC.MonthCount ?? 0)</td>
+				<td>@(Model.SKC.YearCount ?? 0)</td>
+				<td>@(Model.SKC.TotalCount ?? 0)</td>
+			</tr>
+			<tr class="text-c">
+				<td>工艺品(成)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(成)今日入库','@Url.Action("LabelsList","Admin",new { StartTime=StartTime,EndTime=EndTime})')">@(Model.KC.TodayCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(成)本周入库','@Url.Action("LabelsList","Admin",new { StartTime=WeekStartTime,EndTime=WeekEndTime})')">@(Model.KC.WeekCount ?? 0)</td>
+				<td class="c-blue" onclick="goUrl('工艺品(成)本月入库','@Url.Action("LabelsList","Admin",new { StartTime=MonthStartTime,EndTime=MonthEndTime})')">@(Model.KC.MonthCount ?? 0)</td>
+				<td>@(Model.KC.YearCount ?? 0)</td>
+				<td>@(Model.KC.TotalCount ?? 0)</td>
+			</tr>
+		</tbody>
+	</table>

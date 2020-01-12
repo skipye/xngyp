@@ -1,4 +1,5 @@
-﻿using DataBase;
+﻿using Common;
+using DataBase;
 using ModelProject;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,27 @@ namespace DalProject
                 return List;
             }
         }
+        public AdminModel GetLabelsCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNGYPEntities())
+            {
+                Models.TotalCount = db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Status == 1).Count();
+                Models.YearCount = db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false &&  k.CreateTime > YearStartTime && k.CreateTime < YearEndTime).Count();
+                Models.MonthCount = db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false  && k.CreateTime > MonthStartTime && k.CreateTime < MonthEndTime).Count();
+                Models.WeekCount = db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false  && k.CreateTime > WeekStartTime && k.CreateTime < WeekEndTime).Count();
+                Models.TodayCount = db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false  && k.CreateTime > StartTime).Count();
+            }
+            return Models;
+        }
         public List<LabelsModel> GetFLabelsList(SLabelsModel SModel)
         {
             DateTime StartTime = Convert.ToDateTime("1999-12-31");
@@ -111,6 +133,27 @@ namespace DalProject
                             }).ToList();
                 return List;
             }
+        }
+        public AdminModel GetFLabelsCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNERPEntities())
+            {
+                Models.TotalCount = db.INV_labels.Where(k => k.delete_flag == false &&  k.status == 1).Count();
+                Models.YearCount = db.INV_labels.Where(k => k.delete_flag == false && k.flag > 0 && k.status == 1 && k.created_time > YearStartTime && k.created_time < YearEndTime).Count();
+                Models.MonthCount = db.INV_labels.Where(k => k.delete_flag == false && k.flag > 0 && k.status == 1 && k.created_time > MonthStartTime && k.created_time < MonthEndTime).Count();
+                Models.WeekCount = db.INV_labels.Where(k => k.delete_flag == false && k.flag > 0 && k.status == 1 && k.created_time > WeekStartTime && k.created_time < WeekEndTime).Count();
+                Models.TodayCount = db.INV_labels.Where(k => k.delete_flag == false && k.flag > 0 && k.status == 1 && k.created_time > StartTime).Count();
+            }
+            return Models;
         }
         public void AddOrUpdate(LabelsModel Models)
         {

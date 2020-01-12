@@ -94,6 +94,23 @@
           <Property Name="delete_flag" Type="bit" Nullable="false" />
           <Property Name="ListUserId" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="CRM_delivery_tmp_header">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contract_header_id" Type="int" Nullable="false" />
+          <Property Name="contract_detail_id" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="int" Nullable="false" />
+          <Property Name="created_time" Type="smalldatetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+          <Property Name="label_id" Type="int" />
+          <Property Name="OrderNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="CW_checked" Type="bit" />
+          <Property Name="CZ_checked" Type="bit" />
+          <Property Name="status" Type="bit" />
+          <Property Name="DeliverTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="INV_inventories">
           <Key>
             <PropertyRef Name="id" />
@@ -133,6 +150,31 @@
           <Property Name="InputDateTime" Type="datetime" />
           <Property Name="CCprice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="BQPrice" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="INV_semi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="wood_id" Type="int" Nullable="false" />
+          <Property Name="color" Type="varchar" MaxLength="50" />
+          <Property Name="inv_id" Type="int" />
+          <Property Name="input_date" Type="datetime" />
+          <Property Name="input_user_id" Type="int" />
+          <Property Name="input_user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="output_date" Type="datetime" />
+          <Property Name="output_user_id" Type="int" />
+          <Property Name="output_user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="created_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="bit" Nullable="false" />
+          <Property Name="CRM_id" Type="int" />
+          <Property Name="WIP_id" Type="int" />
+          <Property Name="Work_id" Type="int" />
+          <Property Name="length" Type="int" />
+          <Property Name="width" Type="int" />
+          <Property Name="height" Type="int" />
         </EntityType>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -357,6 +399,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CRM_delivery_tmp_header_CRM_contract_detail">
+          <End Role="CRM_contract_detail" Type="Self.CRM_contract_detail" Multiplicity="1" />
+          <End Role="CRM_delivery_tmp_header" Type="Self.CRM_delivery_tmp_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_contract_detail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CRM_delivery_tmp_header">
+              <PropertyRef Name="contract_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_delivery_tmp_header_CRM_contract_header">
+          <End Role="CRM_contract_header" Type="Self.CRM_contract_header" Multiplicity="1" />
+          <End Role="CRM_delivery_tmp_header" Type="Self.CRM_delivery_tmp_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_contract_header">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CRM_delivery_tmp_header">
+              <PropertyRef Name="contract_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_semi_INV_inventories">
+          <End Role="INV_inventories" Type="Self.INV_inventories" Multiplicity="0..1" />
+          <End Role="INV_semi" Type="Self.INV_semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_inventories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="INV_semi">
+              <PropertyRef Name="inv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_semi_INV_wood_type">
+          <End Role="INV_wood_type" Type="Self.INV_wood_type" Multiplicity="1" />
+          <End Role="INV_semi" Type="Self.INV_semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_wood_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="INV_semi">
+              <PropertyRef Name="wood_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_semi_SYS_product">
+          <End Role="SYS_product" Type="Self.SYS_product" Multiplicity="1" />
+          <End Role="INV_semi" Type="Self.INV_semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="INV_semi">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SYS_product_Cost_INV_wood_type">
           <End Role="INV_wood_type" Type="Self.INV_wood_type" Multiplicity="0..1" />
           <End Role="SYS_product_Cost" Type="Self.SYS_product_Cost" Multiplicity="*" />
@@ -433,8 +535,10 @@
           <EntitySet Name="CRM_contract_detail" EntityType="Self.CRM_contract_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_contract_header" EntityType="Self.CRM_contract_header" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_customers" EntityType="Self.CRM_customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_delivery_tmp_header" EntityType="Self.CRM_delivery_tmp_header" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INV_inventories" EntityType="Self.INV_inventories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INV_labels" EntityType="Self.INV_labels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INV_semi" EntityType="Self.INV_semi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INV_wood_type" EntityType="Self.INV_wood_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_colors" EntityType="Self.SYS_colors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_product" EntityType="Self.SYS_product" Schema="dbo" store:Type="Tables" />
@@ -462,6 +566,26 @@
           <AssociationSet Name="FK_CRM_contract_header_CRM_customers" Association="Self.FK_CRM_contract_header_CRM_customers">
             <End Role="CRM_customers" EntitySet="CRM_customers" />
             <End Role="CRM_contract_header" EntitySet="CRM_contract_header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_delivery_tmp_header_CRM_contract_detail" Association="Self.FK_CRM_delivery_tmp_header_CRM_contract_detail">
+            <End Role="CRM_contract_detail" EntitySet="CRM_contract_detail" />
+            <End Role="CRM_delivery_tmp_header" EntitySet="CRM_delivery_tmp_header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_delivery_tmp_header_CRM_contract_header" Association="Self.FK_CRM_delivery_tmp_header_CRM_contract_header">
+            <End Role="CRM_contract_header" EntitySet="CRM_contract_header" />
+            <End Role="CRM_delivery_tmp_header" EntitySet="CRM_delivery_tmp_header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_semi_INV_inventories" Association="Self.FK_INV_semi_INV_inventories">
+            <End Role="INV_inventories" EntitySet="INV_inventories" />
+            <End Role="INV_semi" EntitySet="INV_semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_semi_INV_wood_type" Association="Self.FK_INV_semi_INV_wood_type">
+            <End Role="INV_wood_type" EntitySet="INV_wood_type" />
+            <End Role="INV_semi" EntitySet="INV_semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_semi_SYS_product" Association="Self.FK_INV_semi_SYS_product">
+            <End Role="SYS_product" EntitySet="SYS_product" />
+            <End Role="INV_semi" EntitySet="INV_semi" />
           </AssociationSet>
           <AssociationSet Name="FK_SYS_product_Cost_INV_wood_type" Association="Self.FK_SYS_product_Cost_INV_wood_type">
             <End Role="INV_wood_type" EntitySet="INV_wood_type" />
@@ -574,6 +698,28 @@
             <End Role="CRM_contract_detail" EntitySet="CRM_contract_detail" />
             <End Role="WIP_workorder" EntitySet="WIP_workorder" />
           </AssociationSet>
+          <EntitySet Name="CRM_delivery_tmp_header" EntityType="XNERPModel.CRM_delivery_tmp_header" />
+          <AssociationSet Name="FK_CRM_delivery_tmp_header_CRM_contract_detail" Association="XNERPModel.FK_CRM_delivery_tmp_header_CRM_contract_detail">
+            <End Role="CRM_contract_detail" EntitySet="CRM_contract_detail" />
+            <End Role="CRM_delivery_tmp_header" EntitySet="CRM_delivery_tmp_header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_delivery_tmp_header_CRM_contract_header" Association="XNERPModel.FK_CRM_delivery_tmp_header_CRM_contract_header">
+            <End Role="CRM_contract_header" EntitySet="CRM_contract_header" />
+            <End Role="CRM_delivery_tmp_header" EntitySet="CRM_delivery_tmp_header" />
+          </AssociationSet>
+          <EntitySet Name="INV_semi" EntityType="XNERPModel.INV_semi" />
+          <AssociationSet Name="FK_INV_semi_INV_inventories" Association="XNERPModel.FK_INV_semi_INV_inventories">
+            <End Role="INV_inventories" EntitySet="INV_inventories" />
+            <End Role="INV_semi" EntitySet="INV_semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_semi_INV_wood_type" Association="XNERPModel.FK_INV_semi_INV_wood_type">
+            <End Role="INV_wood_type" EntitySet="INV_wood_type" />
+            <End Role="INV_semi" EntitySet="INV_semi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INV_semi_SYS_product" Association="XNERPModel.FK_INV_semi_SYS_product">
+            <End Role="SYS_product" EntitySet="SYS_product" />
+            <End Role="INV_semi" EntitySet="INV_semi" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="INV_wood_type">
           <Key>
@@ -601,6 +747,7 @@
           <NavigationProperty Name="INV_labels" Relationship="XNERPModel.INV_wood_typeINV_labels" FromRole="INV_wood_type" ToRole="INV_labels" />
           <NavigationProperty Name="SYS_product_Cost" Relationship="XNERPModel.FK_SYS_product_Cost_INV_wood_type" FromRole="INV_wood_type" ToRole="SYS_product_Cost" />
           <NavigationProperty Name="WIP_workflow" Relationship="XNERPModel.FK_WIP_workflow_INV_wood_type" FromRole="INV_wood_type" ToRole="WIP_workflow" />
+          <NavigationProperty Name="INV_semi" Relationship="XNERPModel.FK_INV_semi_INV_wood_type" FromRole="INV_wood_type" ToRole="INV_semi" />
         </EntityType>
         <EntityType Name="SYS_colors">
           <Key>
@@ -658,6 +805,7 @@
           <NavigationProperty Name="INV_labels" Relationship="XNERPModel.SYS_productINV_labels" FromRole="SYS_product" ToRole="INV_labels" />
           <NavigationProperty Name="SYS_product_Cost" Relationship="XNERPModel.FK_SYS_product_Cost_SYS_product" FromRole="SYS_product" ToRole="SYS_product_Cost" />
           <NavigationProperty Name="WIP_workflow" Relationship="XNERPModel.SYS_productWIP_workflow" FromRole="SYS_product" ToRole="WIP_workflow" />
+          <NavigationProperty Name="INV_semi" Relationship="XNERPModel.FK_INV_semi_SYS_product" FromRole="SYS_product" ToRole="INV_semi" />
         </EntityType>
         <Association Name="FK_SYS_product_SYS_product_area">
           <End Type="XNERPModel.SYS_product_area" Role="SYS_product_area" Multiplicity="0..1" />
@@ -741,6 +889,7 @@
           <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_CRM_contract_detail_SYS_product" FromRole="CRM_contract_detail" ToRole="SYS_product" />
           <Property Name="SendCount" Type="Int32" />
           <NavigationProperty Name="WIP_workorder" Relationship="XNERPModel.CRM_contract_detailWIP_workorder" FromRole="CRM_contract_detail" ToRole="WIP_workorder" />
+          <NavigationProperty Name="CRM_delivery_tmp_header" Relationship="XNERPModel.FK_CRM_delivery_tmp_header_CRM_contract_detail" FromRole="CRM_contract_detail" ToRole="CRM_delivery_tmp_header" />
         </EntityType>
         <EntityType Name="CRM_contract_header">
           <Key>
@@ -778,6 +927,7 @@
           <Property Name="CWStatus" Type="Int32" />
           <NavigationProperty Name="CRM_customers" Relationship="XNERPModel.FK_CRM_contract_header_CRM_customers" FromRole="CRM_contract_header" ToRole="CRM_customers" />
           <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CRM_delivery_tmp_header" Relationship="XNERPModel.FK_CRM_delivery_tmp_header_CRM_contract_header" FromRole="CRM_contract_header" ToRole="CRM_delivery_tmp_header" />
         </EntityType>
         <Association Name="FK_CRM_contract_detail_CRM_contract_header">
           <End Type="XNERPModel.CRM_contract_header" Role="CRM_contract_header" Multiplicity="1" />
@@ -882,6 +1032,7 @@
           <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="delete_flag" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="INV_labels" Relationship="XNERPModel.INV_inventoriesINV_labels" FromRole="INV_inventories" ToRole="INV_labels" />
+          <NavigationProperty Name="INV_semi" Relationship="XNERPModel.FK_INV_semi_INV_inventories" FromRole="INV_inventories" ToRole="INV_semi" />
         </EntityType>
         <Association Name="INV_inventoriesINV_labels">
           <End Type="XNERPModel.INV_inventories" Role="INV_inventories" Multiplicity="0..1" />
@@ -1102,6 +1253,113 @@
             </Principal>
             <Dependent Role="WIP_workorder">
               <PropertyRef Name="CRM_contract_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CRM_delivery_tmp_header">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contract_header_id" Type="Int32" Nullable="false" />
+          <Property Name="contract_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="Int32" Nullable="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <Property Name="label_id" Type="Int32" />
+          <Property Name="OrderNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CW_checked" Type="Boolean" />
+          <Property Name="CZ_checked" Type="Boolean" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="DeliverTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CRM_contract_detail" Relationship="XNERPModel.FK_CRM_delivery_tmp_header_CRM_contract_detail" FromRole="CRM_delivery_tmp_header" ToRole="CRM_contract_detail" />
+          <NavigationProperty Name="CRM_contract_header" Relationship="XNERPModel.FK_CRM_delivery_tmp_header_CRM_contract_header" FromRole="CRM_delivery_tmp_header" ToRole="CRM_contract_header" />
+        </EntityType>
+        <Association Name="FK_CRM_delivery_tmp_header_CRM_contract_detail">
+          <End Type="XNERPModel.CRM_contract_detail" Role="CRM_contract_detail" Multiplicity="1" />
+          <End Type="XNERPModel.CRM_delivery_tmp_header" Role="CRM_delivery_tmp_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_contract_detail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CRM_delivery_tmp_header">
+              <PropertyRef Name="contract_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_delivery_tmp_header_CRM_contract_header">
+          <End Type="XNERPModel.CRM_contract_header" Role="CRM_contract_header" Multiplicity="1" />
+          <End Type="XNERPModel.CRM_delivery_tmp_header" Role="CRM_delivery_tmp_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_contract_header">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CRM_delivery_tmp_header">
+              <PropertyRef Name="contract_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INV_semi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="wood_id" Type="Int32" Nullable="false" />
+          <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="inv_id" Type="Int32" />
+          <Property Name="input_date" Type="DateTime" Precision="3" />
+          <Property Name="input_user_id" Type="Int32" />
+          <Property Name="input_user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="output_date" Type="DateTime" Precision="3" />
+          <Property Name="output_user_id" Type="Int32" />
+          <Property Name="output_user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="created_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delete_flag" Type="Boolean" Nullable="false" />
+          <Property Name="CRM_id" Type="Int32" />
+          <Property Name="WIP_id" Type="Int32" />
+          <Property Name="Work_id" Type="Int32" />
+          <Property Name="length" Type="Int32" />
+          <Property Name="width" Type="Int32" />
+          <Property Name="height" Type="Int32" />
+          <NavigationProperty Name="INV_inventories" Relationship="XNERPModel.FK_INV_semi_INV_inventories" FromRole="INV_semi" ToRole="INV_inventories" />
+          <NavigationProperty Name="INV_wood_type" Relationship="XNERPModel.FK_INV_semi_INV_wood_type" FromRole="INV_semi" ToRole="INV_wood_type" />
+          <NavigationProperty Name="SYS_product" Relationship="XNERPModel.FK_INV_semi_SYS_product" FromRole="INV_semi" ToRole="SYS_product" />
+        </EntityType>
+        <Association Name="FK_INV_semi_INV_inventories">
+          <End Type="XNERPModel.INV_inventories" Role="INV_inventories" Multiplicity="0..1" />
+          <End Type="XNERPModel.INV_semi" Role="INV_semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_inventories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="INV_semi">
+              <PropertyRef Name="inv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_semi_INV_wood_type">
+          <End Type="XNERPModel.INV_wood_type" Role="INV_wood_type" Multiplicity="1" />
+          <End Type="XNERPModel.INV_semi" Role="INV_semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INV_wood_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="INV_semi">
+              <PropertyRef Name="wood_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INV_semi_SYS_product">
+          <End Type="XNERPModel.SYS_product" Role="SYS_product" Multiplicity="1" />
+          <End Type="XNERPModel.INV_semi" Role="INV_semi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="INV_semi">
+              <PropertyRef Name="product_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1412,6 +1670,50 @@
                 <ScalarProperty Name="WIP_contract_id" ColumnName="WIP_contract_id" />
                 <ScalarProperty Name="CRM_contract_detail_id" ColumnName="CRM_contract_detail_id" />
                 <ScalarProperty Name="workorder" ColumnName="workorder" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_delivery_tmp_header">
+            <EntityTypeMapping TypeName="XNERPModel.CRM_delivery_tmp_header">
+              <MappingFragment StoreEntitySet="CRM_delivery_tmp_header">
+                <ScalarProperty Name="DeliverTime" ColumnName="DeliverTime" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="CZ_checked" ColumnName="CZ_checked" />
+                <ScalarProperty Name="CW_checked" ColumnName="CW_checked" />
+                <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+                <ScalarProperty Name="label_id" ColumnName="label_id" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="contract_detail_id" ColumnName="contract_detail_id" />
+                <ScalarProperty Name="contract_header_id" ColumnName="contract_header_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INV_semi">
+            <EntityTypeMapping TypeName="XNERPModel.INV_semi">
+              <MappingFragment StoreEntitySet="INV_semi">
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="Work_id" ColumnName="Work_id" />
+                <ScalarProperty Name="WIP_id" ColumnName="WIP_id" />
+                <ScalarProperty Name="CRM_id" ColumnName="CRM_id" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+                <ScalarProperty Name="created_time" ColumnName="created_time" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="output_user_name" ColumnName="output_user_name" />
+                <ScalarProperty Name="output_user_id" ColumnName="output_user_id" />
+                <ScalarProperty Name="output_date" ColumnName="output_date" />
+                <ScalarProperty Name="input_user_name" ColumnName="input_user_name" />
+                <ScalarProperty Name="input_user_id" ColumnName="input_user_id" />
+                <ScalarProperty Name="input_date" ColumnName="input_date" />
+                <ScalarProperty Name="inv_id" ColumnName="inv_id" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="wood_id" ColumnName="wood_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

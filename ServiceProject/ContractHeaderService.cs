@@ -20,6 +20,38 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public AdminModel GetHTCount()
+        {
+            try { return CHDal.GetHTCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public AdminModel GetFHTCount()
+        {
+            try { return CHDal.GetFHTCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public PriceModel GetXSCount()
+        {
+            try { return CHDal.GetXSCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public PriceModel GetFXSCount()
+        {
+            try { return CHDal.GetFXSCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public ContractModel GetFPageList(SContractHeaderModel SModel)
         {
             try { return CHDal.GetFPageList(SModel); }

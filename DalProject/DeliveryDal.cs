@@ -1,4 +1,5 @@
-﻿using DataBase;
+﻿using Common;
+using DataBase;
 using ModelProject;
 using System;
 using System.Collections.Generic;
@@ -416,7 +417,7 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        //送货列表
+        //工艺品送货列表
         public List<LabelsModel> GetDeliveryList(SLabelsModel SModel)
         {
             DateTime StartTime = Convert.ToDateTime("1999-12-31");
@@ -435,6 +436,7 @@ namespace DalProject
                             where !string.IsNullOrEmpty(SModel.CustomerName) ? p.Contract_Detail.Contract_Header.XNGYP_Customers.Name.Contains(SModel.CustomerName) : true
                             where !string.IsNullOrEmpty(SModel.HTSN) ? p.Contract_Detail.Contract_Header.SN.Contains(SModel.HTSN) : true
                             where SModel.INVId != null && SModel.INVId > 0 ? SModel.INVId == p.XNGYP_INV_Labels.INVId : true
+                            where SModel.Status != null && SModel.Status > 0 ? SModel.Status == p.Status : true
                             where p.DeliverTime > StartTime
                             where p.DeliverTime < EndTime
                             orderby p.CreateTime descending
@@ -454,6 +456,39 @@ namespace DalProject
                                 OrderNum = p.OrderNum,
                                 DeliveryTime = p.DeliverTime,
                                 Status=p.Status,
+                            }).ToList();
+                return List;
+            }
+        }
+        //家具送货列表
+        public List<LabelsModel> GetFDeliveryList(SLabelsModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNERPEntities())
+            {
+                var List = (from p in db.CRM_delivery_tmp_header.Where(k => k.status == false && k.delete_flag==true)
+                            where p.DeliverTime > StartTime
+                            where p.DeliverTime < EndTime
+                            orderby p.DeliverTime descending
+                            select new LabelsModel
+                            {
+                                Id = p.id,
+                                CRM_SN = p.CRM_contract_detail.CRM_contract_header.SN,
+                                ProductName = p.CRM_contract_detail.SYS_product.name,
+                                ProductXL = p.CRM_contract_detail.SYS_product.SYS_product_SN.name,
+                                WoodName = p.CRM_contract_detail.INV_wood_type.name,
+                                CustomerName = p.CRM_contract_detail.CRM_contract_header.CRM_customers.name,
+                                OrderNum = p.OrderNum,
+                                DeliveryTime = p.DeliverTime,
                             }).ToList();
                 return List;
             }
@@ -511,6 +546,51 @@ namespace DalProject
                     }
                 }
                 Models.DePro = ListD;
+            }
+            return Models;
+        }
+
+        //获取当前家具送货的情况
+        public AdminModel GetFDeliveCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNERPEntities())
+            {
+                Models.TotalCount = db.CRM_delivery_tmp_header.Where(k => k.delete_flag == true && k.status == false).Count();
+                Models.YearCount = db.CRM_delivery_tmp_header.Where(k => k.delete_flag == true && k.status == false && k.DeliverTime > YearStartTime && k.DeliverTime<YearEndTime).Count();
+                Models.MonthCount = db.CRM_delivery_tmp_header.Where(k => k.delete_flag == true && k.status == false && k.DeliverTime > MonthStartTime && k.DeliverTime < MonthEndTime).Count();
+                Models.WeekCount = db.CRM_delivery_tmp_header.Where(k => k.delete_flag == true && k.status == false && k.DeliverTime > WeekStartTime && k.DeliverTime < WeekEndTime).Count();
+                Models.TodayCount = db.CRM_delivery_tmp_header.Where(k => k.delete_flag == true && k.status == false && k.DeliverTime > StartTime).Count();
+            }
+            return Models;
+        }
+        //获取当前工艺品送货的情况
+        public AdminModel GetDeliveCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNGYPEntities())
+            {
+                Models.TotalCount = db.XNGYP_Delivery.Where(k => k.DeleteFlag == false && k.Status == 1).Count();
+                Models.YearCount = db.XNGYP_Delivery.Where(k => k.DeleteFlag == false && k.Status == 1 && k.DeliverTime > YearStartTime && k.DeliverTime < YearEndTime).Count();
+                Models.MonthCount = db.XNGYP_Delivery.Where(k => k.DeleteFlag == false && k.Status == 1 && k.DeliverTime > MonthStartTime && k.DeliverTime < MonthEndTime).Count();
+                Models.WeekCount = db.XNGYP_Delivery.Where(k => k.DeleteFlag == false && k.Status == 1 && k.DeliverTime > WeekStartTime && k.DeliverTime < WeekEndTime).Count();
+                Models.TodayCount = db.XNGYP_Delivery.Where(k => k.DeleteFlag == false && k.Status == 1 && k.DeliverTime > StartTime).Count();
             }
             return Models;
         }

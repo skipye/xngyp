@@ -123,12 +123,46 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<LabelsModel> GetFDeliveryList(SLabelsModel SModel)
+        {
+            try
+            {
+                return CDal.GetFDeliveryList(SModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         //打印送货单
         public ContractHeaderModel PrintDelivery(string ListId)
         {
             try
             {
                 return CDal.PrintDelivery(ListId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        //获取当前送货的情况
+        public AdminModel GetFDeliveCount()
+        {
+            try
+            {
+                return CDal.GetFDeliveCount();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public AdminModel GetDeliveCount()
+        {
+            try
+            {
+                return CDal.GetDeliveCount();
             }
             catch (Exception ex)
             {

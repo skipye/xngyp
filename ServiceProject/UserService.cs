@@ -84,5 +84,13 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<CRMItem> GetHRList()
+        {
+            try { return UDal.GetHRList(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

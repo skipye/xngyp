@@ -6,6 +6,7 @@ using System.Text;
 using DataBase;
 using System.Web.Mvc;
 using System.Data;
+using Common;
 
 namespace DalProject
 {
@@ -71,6 +72,48 @@ namespace DalProject
                 Models.HTTotail = List.Sum(k => k.Amount);
                 return Models;
             }
+        }
+        public AdminModel GetHTCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNGYPEntities())
+            {
+                Models.TotalCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1).Count();
+                Models.YearCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > YearStartTime && k.CreateTime < YearEndTime).Count();
+                Models.MonthCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > MonthStartTime && k.CreateTime < MonthEndTime).Count();
+                Models.WeekCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > WeekStartTime && k.CreateTime < WeekEndTime).Count();
+                Models.TodayCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > StartTime).Count();
+            }
+            return Models;
+        }
+        public PriceModel GetXSCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            PriceModel Models = new PriceModel();
+            using (var db = new XNGYPEntities())
+            {
+                Models.TotalCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1).Sum(k => k.Amount)??0;
+                Models.YearCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > YearStartTime && k.CreateTime < YearEndTime).Sum(k => k.Amount) ?? 0;
+                Models.MonthCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > MonthStartTime && k.CreateTime < MonthEndTime).Sum(k => k.Amount) ?? 0;
+                Models.WeekCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > WeekStartTime && k.CreateTime < WeekEndTime).Sum(k => k.Amount) ?? 0;
+                Models.TodayCount = db.Contract_Header.Where(k => k.DeleteFlag == false && k.Status == 1 && k.CreateTime > StartTime).Sum(k => k.Amount) ?? 0;
+            }
+            return Models;
         }
         public DataTable ToExcelOut(SContractHeaderModel SModel)
         {
@@ -209,6 +252,51 @@ namespace DalProject
                         item.RealPrice = db.FR_contract.Where(k => k.contract_id == item.Id).Sum(k => k.amount)??0;
                     }
                 }
+            }
+            return Models;
+        }
+        public AdminModel GetFHTCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            AdminModel Models = new AdminModel();
+            using (var db = new XNERPEntities())
+            {
+                Models.TotalCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1).Count();
+                Models.YearCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > YearStartTime && k.created_time < YearEndTime).Count();
+                Models.MonthCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > MonthStartTime && k.created_time < MonthEndTime).Count();
+                Models.WeekCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > WeekStartTime && k.created_time < WeekEndTime).Count();
+                Models.TodayCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > StartTime).Count();
+            }
+            return Models;
+        }
+        public PriceModel GetFXSCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            PriceModel Models = new PriceModel();
+            using (var db = new XNERPEntities())
+            {
+                var MTabel = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > MonthStartTime && k.created_time < MonthEndTime).Select(k => k.amount);
+                var WTabel = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > WeekStartTime && k.created_time < WeekEndTime).Select(k => k.amount);
+                var DTabel = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > StartTime).Select(k => k.amount);
+                Models.TotalCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1).Sum(k=>k.amount);
+                Models.YearCount = db.CRM_contract_header.Where(k => k.delete_flag == false && k.status == 1 && k.created_time > YearStartTime && k.created_time < YearEndTime).Sum(k => k.amount);
+                Models.MonthCount = MTabel!=null && MTabel.Any()? MTabel.Sum():0;
+                Models.WeekCount = WTabel != null && WTabel.Any() ? WTabel.Sum() : 0;
+                Models.TodayCount = DTabel != null && DTabel.Any() ? DTabel.Sum() : 0;
             }
             return Models;
         }

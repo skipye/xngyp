@@ -17,6 +17,7 @@ namespace DataBase
         public CRM_contract_detail()
         {
             this.WIP_workorder = new HashSet<WIP_workorder>();
+            this.CRM_delivery_tmp_header = new HashSet<CRM_delivery_tmp_header>();
         }
     
         public int id { get; set; }
@@ -48,5 +49,6 @@ namespace DataBase
         public virtual SYS_colors SYS_colors { get; set; }
         public virtual SYS_product SYS_product { get; set; }
         public virtual ICollection<WIP_workorder> WIP_workorder { get; set; }
+        public virtual ICollection<CRM_delivery_tmp_header> CRM_delivery_tmp_header { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace DataBase
         public INV_inventories()
         {
             this.INV_labels = new HashSet<INV_labels>();
+            this.INV_semi = new HashSet<INV_semi>();
         }
     
         public int id { get; set; }
@@ -28,5 +29,6 @@ namespace DataBase
         public bool delete_flag { get; set; }
     
         public virtual ICollection<INV_labels> INV_labels { get; set; }
+        public virtual ICollection<INV_semi> INV_semi { get; set; }
     }
 }

@@ -20,6 +20,22 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public AdminModel GetFLabelsCount()
+        {
+            try { return CDal.GetFLabelsCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public AdminModel GetLabelsCount()
+        {
+            try { return CDal.GetLabelsCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public List<LabelsModel> GetFLabelsList(SLabelsModel SModel)
         {
             try { return CDal.GetFLabelsList(SModel); }

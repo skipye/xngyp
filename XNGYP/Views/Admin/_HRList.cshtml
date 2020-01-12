@@ -1,0 +1,32 @@
+﻿
+@model List<ModelProject.CRMItem>
+@{
+    Layout = null;
+
+}
+	<table class="table table-border table-bordered table-bg mt-20">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">考勤情况（<span class="c-green">当天考勤情况</span>）</th>
+			</tr>
+			<tr class="text-c">
+				<th width="30px">类别</th>
+				<th>上午上班</th>
+				<th>上午下班</th>
+				<th>下午上班</th>
+				<th>下午下班</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr class="text-c">
+					<td>@item.Name</td>
+					<td>@Html.Raw(item.time1 != null ? "<span style='color:#2dbd0c;'>" + Convert.ToDateTime(item.time1).ToString("HH:mm") + "</span>" : "<span style='color:red;'>未打卡")</td>
+					<td>@Html.Raw(item.time2 != null ? "<span style='color:#2dbd0c;'>" + Convert.ToDateTime(item.time2).ToString("HH:mm") + "</span>" : "<span style='color:red;'>未打卡")</td>
+					<td>@Html.Raw(item.time3 != null ? "<span style='color:#2dbd0c;'>" + Convert.ToDateTime(item.time3).ToString("HH:mm") + "</span>" : "<span style='color:red;'>未打卡")</td>
+					<td>@Html.Raw(item.time4 != null ? "<span style='color:#2dbd0c;'>" + Convert.ToDateTime(item.time4).ToString("HH:mm") + "</span>" : "<span style='color:red;'>未打卡")</td>
+				</tr>
+			}
+		</tbody>
+	</table>

@@ -1,0 +1,35 @@
+﻿@model List<ModelProject.WorkFromModel>
+@{
+    Layout = null;
+    int i = 1;
+}
+@Html.Action("_Meta", "Home")
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+				<tr>
+					<th>序号</th>
+					<th>产品</th>
+					<th>工序</th>
+					<th>接单人</th>
+					<th>价格</th>
+				</tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="height:35px;">
+                        <td>@(i)</td>
+                        <td>@item.ProductName </td>
+                        <td>@item.Name</td>
+                        <td>@item.UserName </td>
+                        <td>@item.cost</td>
+                        
+                    </tr>
+                    i++;
+                }
+            </tbody>
+</table>
+
+    }

@@ -49,6 +49,7 @@
     <Compile Include="ImageResult.cs" />
     <Compile Include="ImgProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataTimeType.cs" />
     <Compile Include="StringOperation.cs" />
     <Compile Include="ValidatorCode.cs" />
   </ItemGroup>

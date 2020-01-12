@@ -26,6 +26,38 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public List<FinanceModel> GetFSKList(SContractHeaderModel SModel)
+        {
+            try { return FDal.GetFSKList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public List<FinanceModel> GetSKList(SContractHeaderModel SModel)
+        {
+            try { return FDal.GetSKList(SModel); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public PriceModel GetFSKCount()
+        {
+            try { return FDal.GetFSKCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public PriceModel GetSKCount()
+        {
+            try { return FDal.GetSKCount(); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool AddOrUpdateF(FinanceModel Models)
         {
             try { FDal.AddOrUpdateF(Models); return true; }

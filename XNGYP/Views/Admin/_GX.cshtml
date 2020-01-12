@@ -1,0 +1,56 @@
+﻿@using Common;
+@model ModelProject.GXCountModel
+@{
+    Layout = null;
+
+}
+	<table class="table table-border table-bordered table-bg mt-20">
+		<thead>
+			<tr>
+				<th colspan="3" scope="col">生产情况（<span class="c-green">单位：件</span>）</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>在制品</th>
+				<td onclick="goUrl('家具在制品','@Url.Action("FGXList","Admin",new { GXName=""})')">家具：<span class="c-green">@Model.FGX.TotalCount</span> 件</td>
+				<td onclick="goUrl('工艺品在制品','@Url.Action("GXList","Admin",new { GXName=""})')">工艺品：<span class="c-green">@Model.GX.TotalCount</span> 件</td>
+			</tr>
+			<tr>
+				<th>开料</th>
+				<td onclick="goUrl('家具开料','@Url.Action("FGXList","Admin",new { GXName="家具开料"})')"><span class="c-green">@Model.FGX.KLCount</span> 件</td>
+				<td onclick="goUrl('工艺品开料','@Url.Action("FGXList","Admin",new { GXName="工艺品开料"})')"><span class="c-green">@Model.GX.KLCount</span> 件</td>
+			</tr>
+			<tr>
+				<td>木工前段</td>
+				<td onclick="goUrl('家具木工前段','@Url.Action("FGXList","Admin",new { GXName="木工前段"})')"><span class="c-green">@Model.FGX.MGQCount</span> 件</td>
+				<td onclick="goUrl('工艺品木工前段','@Url.Action("GXList","Admin",new { GXName="木工前段"})')"><span class="c-green">@Model.GX.MGQCount</span> 件</td>
+			</tr>
+			<tr>
+				<td>雕花</td>
+				<td onclick="goUrl('家具雕花','@Url.Action("FGXList","Admin",new { GXName="雕花"})')"><span class="c-green">@Model.FGX.DHCount</span> 件</td>
+				<td onclick="goUrl('工艺品雕花','@Url.Action("GXList","Admin",new { GXName="雕花"})')"><span class="c-green">@Model.GX.DHCount</span> 件</td>
+			</tr>
+			<tr>
+				<td>木工后段</td>
+				<td onclick="goUrl('家具木工后段','@Url.Action("FGXList","Admin",new { GXName="木工后段"})')"><span class="c-green">@Model.FGX.MGHCount</span> 件</td>
+				<td onclick="goUrl('工艺品木工后段','@Url.Action("GXList","Admin",new { GXName="木工后段"})')"><span class="c-green">@Model.GX.MGHCount</span> 件</td>
+			</tr>
+			<tr>
+				<td>刮磨</td>
+				<td onclick="goUrl('家具刮磨','@Url.Action("FGXList","Admin",new { GXName="刮磨"})')"><span class="c-green">@Model.FGX.GMCount</span> 件</td>
+				<td onclick="goUrl('工艺品刮磨','@Url.Action("GXList","Admin",new { GXName="刮磨"})')"><span class="c-green">@Model.GX.GMCount</span> 件</td>
+			</tr>
+			<tr>
+				<td>油漆</td>
+				<td onclick="goUrl('家具油漆','@Url.Action("FGXList","Admin",new { GXName="油漆"})')"><span class="c-green">@Model.FGX.YQCount</span> 件</td>
+				<td onclick="goUrl('工艺品油漆','@Url.Action("GXList","Admin",new { GXName="油漆"})')"><span class="c-green">@Model.GX.YQCount</span> 件</td>
+			</tr>
+			<tr>
+				<td>配件安装</td>
+				<td onclick="goUrl('家具配件安装','@Url.Action("FGXList","Admin",new { GXName="配件安装"})')"><span class="c-green">@Model.FGX.PJACount</span> 件</td>
+				<td onclick="goUrl('工艺品配件安装','@Url.Action("GXList","Admin",new { GXName="配件安装"})')"><span class="c-green">@Model.GX.PJACount</span> 件</td>
+			</tr>
+
+		</tbody>
+	</table>

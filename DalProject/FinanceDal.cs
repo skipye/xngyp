@@ -1,4 +1,5 @@
-﻿using DataBase;
+﻿using Common;
+using DataBase;
 using ModelProject;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,62 @@ namespace DalProject
                             }).ToList();
                 return List;
             }
+        }
+        public List<FinanceModel> GetSKList(SContractHeaderModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNGYPEntities())
+            {
+                var List = (from p in db.XNGYP_FR_Logs
+                            where p.CreateTime > StartTime
+                            where p.CreateTime < EndTime
+                            orderby p.CreateTime descending
+                            select new FinanceModel
+                            {
+                                Id = p.Id,
+                                HTSN = p.HTSN,
+                                Customer = p.Customer,
+                                PayModel = p.PayModel,
+                                operator_name = p.operator_name,
+                                Amount = p.Amount,
+                                Remaks = p.Remaks,
+                                CreateTime = p.CreateTime,
+                            }).ToList();
+                return List;
+            }
+        }
+        public PriceModel GetSKCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            PriceModel Models = new PriceModel();
+            using (var db = new XNGYPEntities())
+            {
+                var MTabel = db.XNGYP_FR_Logs.Where(k => k.CreateTime > MonthStartTime && k.CreateTime < MonthEndTime).Select(k => k.Amount);
+                var WTabel = db.XNGYP_FR_Logs.Where(k => k.CreateTime > WeekStartTime && k.CreateTime < WeekEndTime).Select(k => k.Amount);
+                var DTabel = db.XNGYP_FR_Logs.Where(k => k.CreateTime > StartTime).Select(k => k.Amount);
+                Models.TotalCount = db.XNGYP_FR_Logs.Sum(k => k.Amount);
+                Models.YearCount = db.XNGYP_FR_Logs.Where(k => k.CreateTime > YearStartTime && k.CreateTime < YearEndTime).Sum(k => k.Amount);
+                Models.MonthCount = MTabel != null && MTabel.Any() ? MTabel.Sum() : 0;
+                Models.WeekCount = WTabel != null && WTabel.Any() ? WTabel.Sum() : 0;
+                Models.TodayCount = DTabel != null && DTabel.Any() ? DTabel.Sum() : 0;
+            }
+            return Models;
         }
         public void AddOrUpdateF(FinanceModel Models)
         {
@@ -195,6 +252,62 @@ namespace DalProject
                             }).ToList();
                 return List;
             }
+        }
+        public List<FinanceModel> GetFSKList(SContractHeaderModel SModel)
+        {
+            DateTime StartTime = Convert.ToDateTime("1999-12-31");
+            DateTime EndTime = Convert.ToDateTime("2999-12-31");
+            if (!string.IsNullOrEmpty(SModel.StartTime))
+            {
+                StartTime = Convert.ToDateTime(SModel.StartTime);
+            }
+            if (!string.IsNullOrEmpty(SModel.EndTime))
+            {
+                EndTime = Convert.ToDateTime(SModel.EndTime).AddDays(1);
+            }
+            using (var db = new XNFinanceEntities())
+            {
+                var List = (from p in db.FR_contract_logs
+                            where p.CreateTime > StartTime
+                            where p.CreateTime < EndTime
+                            orderby p.CreateTime descending
+                            select new FinanceModel
+                            {
+                                Id = p.Id,
+                                HTSN = p.HTSN,
+                                Customer = p.Customer,
+                                PayModel = p.PayModel,
+                                operator_name = p.operator_name,
+                                Amount = p.Amount,
+                                Remaks = p.Remaks,
+                                CreateTime = p.CreateTime,
+                            }).ToList();
+                return List;
+            }
+        }
+        public PriceModel GetFSKCount()
+        {
+            DateTime TimeNow = DateTime.Now;
+            DateTime YearStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime YearEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Year, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime MonthEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Month, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekStartTime = Convert.ToDateTime(DataTimeManager.GetTimeStartByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime WeekEndTime = Convert.ToDateTime(DataTimeManager.GetTimeEndByType(DataTimeType.Week, TimeNow).ToString("yyyy-MM-dd"));
+            DateTime StartTime = Convert.ToDateTime(TimeNow.ToString("yyyy-MM-dd"));
+            PriceModel Models = new PriceModel();
+            using (var db = new XNFinanceEntities())
+            {
+                var MTabel = db.FR_contract_logs.Where(k => k.CreateTime > MonthStartTime && k.CreateTime < MonthEndTime).Select(k => k.Amount);
+                var WTabel = db.FR_contract_logs.Where(k => k.CreateTime > WeekStartTime && k.CreateTime < WeekEndTime).Select(k => k.Amount);
+                var DTabel = db.FR_contract_logs.Where(k => k.CreateTime > StartTime).Select(k => k.Amount);
+                Models.TotalCount = db.FR_contract_logs.Sum(k => k.Amount);
+                Models.YearCount = db.FR_contract_logs.Where(k => k.CreateTime > YearStartTime && k.CreateTime < YearEndTime).Sum(k => k.Amount);
+                Models.MonthCount = MTabel != null && MTabel.Any() ? MTabel.Sum() : 0;
+                Models.WeekCount = WTabel != null && WTabel.Any() ? WTabel.Sum() : 0;
+                Models.TodayCount = DTabel != null && DTabel.Any() ? DTabel.Sum() : 0;
+            }
+            return Models;
         }
         //家具订单审核
         public void CWFOrderCheck(string ListId, int CheckedId)

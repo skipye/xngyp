@@ -1,0 +1,35 @@
+﻿@model List<ModelProject.LabelsModel>
+@{
+    Layout = null;
+    int i = 1;
+}
+@Html.Action("_Meta", "Home")
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+				<tr>
+					<th>序号</th>
+					<th>产品</th>
+					<th>材质</th>
+					<th>仓库</th>
+					<th>入库时间</th>
+				</tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="height:35px;">
+                        <td>@(i)</td>
+                        <td>@item.ProductName </td>
+                        <td>@item.WoodName</td>
+                        <td>@item.INVName</td>
+                        <td>@Convert.ToDateTime(item.InputDateTime).ToString("yyyy-MM-dd") </td>
+                        
+                    </tr>
+                    i++;
+                }
+            </tbody>
+</table>
+
+    }

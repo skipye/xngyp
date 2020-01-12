@@ -1,0 +1,33 @@
+﻿@model List<ModelProject.FinanceModel>
+@{
+    Layout = null;
+    int i = 1;
+}
+@Html.Action("_Meta", "Home")
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+				<tr>
+					<th width="20px">序号</th>
+					<th>合同号</th>
+					<th>客户</th>
+					<th>收款</th>
+				</tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="height:35px;">
+                        <td>@(i)</td>
+                        <td>@item.HTSN</td>
+                        <td>@item.Customer</td>
+                        <td>@item.Amount</td>
+                        
+                    </tr>
+                    i++;
+                }
+            </tbody>
+</table>
+
+    }
