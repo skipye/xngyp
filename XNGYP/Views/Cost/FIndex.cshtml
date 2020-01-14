@@ -32,6 +32,9 @@
 					<th>系列</th>
 					<th>产品(ID)</th>
 					<th>材质(ID)</th>
+					<th>长</th>
+					<th>宽</th>
+					<th>高</th>
 					<th>材积</th>
 					<th>木材成本(元)</th>
 					<th>辅料成本(元)</th>
@@ -96,9 +99,9 @@
                         return '<input type="checkbox" value="' + row.Id + '" >';
                     }
                 }, {
-                    targets: 20,
+                    targets: 23,
                     render: function (data, type, row) {
-                        var StrCheck =  '<a href="javascript:void(0);" style="text-decoration:none" class="ml-10" onclick="editwindow(\'成本编辑\',\'/Cost/AddF\', \'' + row.Id + '\', \'800\', \'600\')" title="成本编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
+                        var StrCheck =  '<a href="javascript:void(0);" style="text-decoration:none" onclick="editwindow(\'成本编辑\',\'/Cost/AddF\', \'' + row.Id + '\', \'800\', \'600\')" title="成本编辑"><i class="Hui-iconfont">&#xe6df;</i></a>';
                            
                         
                         return StrCheck;
@@ -117,6 +120,9 @@
                         return data + "(" + row.WoodId + ")";
 					}
 				},
+				{ "data": "Length", "defaultContent": "" },
+				{ "data": "Width", "defaultContent": "" },
+				{ "data": "Height", "defaultContent": "" },
 				{ "data": "Volume", "defaultContent": "" },
                 { "data": "MCPrice", "defaultContent": "","className": "c-primary" },
                 { "data": "FLPrice", "defaultContent": "","className": "c-primary" },

@@ -10,19 +10,22 @@
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
 <div class="page-container">
-    <div class="text-c">
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
-            @Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
-        </span>
+	<div class="text-c">
+		<span class="select-box inline">
+			@Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px", })
+			@Html.DropDownListFor(k => k.FatherId, ArrSecPro, new { @class = "select", @style = "width:150px", })
+		</span>
 		<span class="select-box inline">
 			@Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select" })
 		</span>
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
-        </span>
-        <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
-    </div>
+		<span class="select-box inline">
+			@Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select" })
+		</span>
+		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
+		-
+		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
+		<button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+	</div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
             <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
@@ -62,22 +65,26 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { param["Status"] = 1;search(param); });
+	$(function () {
+		param["StartTime"] = "@Model.StartTime";
+        param["EndTime"] ="@Model.EndTime";
+		param["Status"] = 1; search(param);
+	});
     $("#btnSearch").click(function () {
         //搜索条件
         var ProductSNId = $("#ProductSNId").val().trim();
         var FatherId = $("#FatherId").val().trim();
 		var INVId = $("#INVId").val().trim();
 		var WoodId = $("#WoodId").val().trim();
-        //var StartTime = $("#logmin").val().trim();
-        //var EndTime = $("#logmax").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
         //搜索
         param["ProductSNId"] = ProductSNId;
 		param["INVId"] = INVId;
 		param["WoodId"] = WoodId;
         param["FatherId"] = FatherId;
-        //param["StartTime"] = StartTime;
-        //param["EndTime"] = EndTime;
+        param["StartTime"] = StartTime;
+        param["EndTime"] = EndTime;
         param["Status"] = 1;
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();

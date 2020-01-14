@@ -8,19 +8,22 @@
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
 <div class="page-container">
-    <div class="text-c">
-        @*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select",@style = "width:150px" })
-        </span>
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select",@style = "width:150px" })
-        </span>
-        <span class="select-box inline">
-            @Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select",@style = "width:150px" })
-        </span>
-        <button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
-    </div>
+	<div class="text-c">
+		@*@Html.TextBoxFor(k => k.ProductName, new { @placeholder = "名称", @style = "width:150px", @class = "input-text" })*@
+		<span class="select-box inline">
+			@Html.DropDownListFor(k => k.ProductSNId, Model.XLDroList, new { @class = "select", @style = "width:150px" })
+		</span>
+		<span class="select-box inline">
+			@Html.DropDownListFor(k => k.WoodId, Model.MCDroList, new { @class = "select", @style = "width:150px" })
+		</span>
+		<span class="select-box inline">
+			@Html.DropDownListFor(k => k.INVId, Model.CKDroList, new { @class = "select", @style = "width:150px" })
+		</span>
+		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;" value="@Model.StartTime">
+		-
+		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;" value="@Model.EndTime">
+		<button id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+	</div>
     
     <div class="mt-20 checkmodel">
         @*@Html.Action("PageList","Article")*@
@@ -54,7 +57,8 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { search(param); });
+    $(function () { param["StartTime"] = "@Model.StartTime";
+        param["EndTime"] ="@Model.EndTime";search(param); });
     $("#btnSearch").click(function () {
         //搜索条件
         var INVId = $("#INVId").val().trim();
@@ -63,7 +67,9 @@
         //搜索
         param["INVId"] = INVId;
         param["ProductSNId"] = ProductSNId;
-        param["WoodId"] = WoodId;
+		param["WoodId"] = WoodId;
+		param["StartTime"] = $("#logmin").val().trim();
+        param["EndTime"] = $("#logmax").val().trim();
         //初始化，然后绑定
         $('.table-sort').DataTable().destroy();
         search(param);

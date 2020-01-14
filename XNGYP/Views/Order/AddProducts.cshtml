@@ -299,7 +299,7 @@ $(function(){
 		var ProductId = $("#ProductId").find("option:selected").val();
 		var WoodId = $("#WoodId").find("option:selected").val();
 		$.post("/Cost/GetGYPCCPrice", { ProductId: ProductId, WoodId: WoodId }, function (d) {
-			if (d > 0) { $("#BQPrice").html("当前售价：" + parseFloat(d) * 2.5 + "元"); $("#BQPrice").attr("rel", parseFloat(d) * 2.5); } else { $("#BQPrice").html(""); $("#BQPrice").attr("rel", "");}
+			if (d > 0) { $("#BQPrice").html("当前售价：" + parseFloat(d) * 1.8 + "元"); $("#BQPrice").attr("rel", parseFloat(d) * 1.8); } else { $("#BQPrice").html(""); $("#BQPrice").attr("rel", "");}
 		});
 	}
 	function GetFCCPric() {

@@ -36,6 +36,9 @@ namespace ModelProject
         public decimal? W_BZ { get; set; }
         public decimal? MCFY { get; set; }
         public decimal? RGFY { get; set; }
+        public int? Length { get; set; }
+        public int? Width { get; set; }
+        public int? Height { get; set; }
     }
     public class SCostModel
     {

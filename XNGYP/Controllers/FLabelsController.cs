@@ -17,6 +17,15 @@ namespace XNGYP.Controllers
             Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
             Models.CKDroList = CHSer.GetFCKDrolist(Models.INVId, 4);
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(Models.StartTime))
+            {
+                Models.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-3).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(Models.EndTime))
+            {
+                Models.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
             return View(Models);
         }
         public ActionResult UserIndex(SLabelsModel Models)
@@ -24,6 +33,15 @@ namespace XNGYP.Controllers
             Models.XLDroList = CHSer.GetProFSNDrolist(Models.ProductSNId);
             Models.MCDroList = CHSer.GetWoodDrolist(Models.WoodId);
             Models.CKDroList = CHSer.GetFCKDrolist(Models.INVId,4);
+            DateTime datetime = DateTime.Now;
+            if (string.IsNullOrEmpty(Models.StartTime))
+            {
+                Models.StartTime = datetime.AddDays(1 - datetime.Day).AddMonths(-3).ToString("yyyy-MM-dd");
+            }
+            if (string.IsNullOrEmpty(Models.EndTime))
+            {
+                Models.EndTime = datetime.AddDays(1 - datetime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            }
             return View(Models);
         }
         public ActionResult PageList(SLabelsModel SModels)

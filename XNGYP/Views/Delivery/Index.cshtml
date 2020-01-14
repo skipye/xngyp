@@ -62,7 +62,11 @@
 <script type="text/javascript">
 
     var param = {};
-    $(function () { search(param); });
+	$(function () {
+		param["StartTime"] = "@Model.StartTime";
+		param["EndTime"] = "@Model.EndTime";;
+		search(param);
+	});
     $("#btnSearch").click(function () {
         //搜索条件
         //var CustomerName = $("#CustomerName").val().trim();
@@ -81,7 +85,7 @@
 
     function search(param) {
         $('.table-sort').dataTable({
-            "aaSorting": [[9, "desc"]],//默认第几个排序
+            "aaSorting": [[10, "desc"]],//默认第几个排序
             "bStateSave": false,//状态保存
             "ajax": function (data, callback, settings) {
                 ajaxRequest("post", "/Delivery/PageList", param, function (result) {
