@@ -71,7 +71,7 @@ namespace DalProject
             }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.Contract_Detail.Where(k => k.DeleteFlag == false && k.Contract_Header.Status == 1 && k.Status!=4)
+                var List = (from p in db.Contract_Detail.Where(k => k.DeleteFlag == false && k.Contract_Header.Status == 1 && k.Status<4)
                             where !string.IsNullOrEmpty(SModel.SN) ? p.Contract_Header.SN.Contains(SModel.SN) : true
                             where !string.IsNullOrEmpty(SModel.ProductName) ? p.ProductName.Contains(SModel.ProductName) : true
                             where !string.IsNullOrEmpty(SModel.Customer) ? p.Contract_Header.XNGYP_Customers.Name.Contains(SModel.Customer) : true
@@ -96,7 +96,7 @@ namespace DalProject
                                 Color = p.Color,
                                 Status = p.Status,
                                 Qty = p.Qty,
-                                LabelsCount = db.XNGYP_INV_Labels.Where(k => k.ProductsId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag != 2 && k.DeleteFlag == false).Count(),
+                                LabelsCount = db.XNGYP_INV_Labels.Where(k => k.ProductsId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag != 1 && k.DeleteFlag == false).Count(),
                                 SemiCount = db.XNGYP_INV_Semi.Where(k => k.ProductId == p.ProductId && k.WoodId == p.WoodId && k.Status == 1 && k.Flag != 1 && k.DeleteFlag == false).Count(),
                                 DDOrder=p.Contract_Header.DDOrder,
 
