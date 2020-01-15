@@ -443,7 +443,7 @@ namespace DalProject
 
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Flag != 2 && k.Status==1)
+                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false && k.Flag != 1 && k.Status==1)
                             where SModel.WoodId != null && SModel.WoodId > 0 ? SModel.WoodId == p.WoodId : true
                             where SModel.ProductId != null && SModel.ProductId > 0 ? p.ProductsId == SModel.ProductId : true
                             orderby p.InputDateTime descending
