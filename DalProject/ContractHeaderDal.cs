@@ -29,7 +29,7 @@ namespace DalProject
                 var List = (from p in db.Contract_Header.Where(k => k.DeleteFlag == false)
                             where !string.IsNullOrEmpty(SModel.SN) ? p.SN.Contains(SModel.SN) : true
                             where SModel.CheckState == 1 ? p.Status == SModel.CheckState : true
-                            where SModel.DepartmentId>0 ? p.SaleDepartmentId == SModel.DepartmentId : true
+                            where SModel.DepartmentId>0 ? p.SaleDepartmentId == 357 || p.SaleDepartmentId == 359 || p.SaleDepartmentId == 348: true
                             where SModel.SaleUserId > 0 ? p.SaleUserId == SModel.SaleUserId : true
                             where !string.IsNullOrEmpty(SModel.UserName) ? p.XNGYP_Customers.Name.Contains(SModel.UserName) : true
                             where SModel.FR_flag >= 0 ? p.FRFlag == SModel.FR_flag : true
