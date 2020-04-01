@@ -35,6 +35,7 @@ namespace ModelProject
         public int? Length { get; set; }
         public int? Width { get; set; }
         public int? Height { get; set; }
+        public int? LabelsId { get; set; }
         public string ListId { get; set; }
         public DateTime? CheckDate { get; set; }
         public string CRM_SN { get; set; }
@@ -56,6 +57,7 @@ namespace ModelProject
         public decimal? PersonPrice { get; set; }
         public decimal? CCprice { get; set; }
         public decimal? BQPrice { get; set; }
+        public decimal? SalePrice { get; set; }
     }
     public class SLabelsModel
     {

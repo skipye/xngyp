@@ -176,7 +176,7 @@ namespace DalProject
                     table.CreateTime = DateTime.Now;
                     table.Grade = Models.Grade;
                     table.FatherId = Models.FatherId;
-                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade+ r.Next(100, 1000);
+                    table.ProductSN = Models.ProductXL + Models.ProductSN + Models.WoodNameXL + Models.Grade;
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace DalProject
                         table.WIPContractIid = 0;
                         table.Grade = Models.Grade;
                         table.FatherId = Models.FatherId;
-                        table.ProductSN = Models.ProductXL+Models.ProductSN+Models.WoodNameXL+Models.Grade+ i.ToString("000");
+                        table.ProductSN = Models.ProductXL+Models.ProductSN+Models.WoodNameXL+Models.Grade;
                         db.XNGYP_INV_Labels.Add(table);
                     }
                 }
@@ -416,8 +416,28 @@ namespace DalProject
                     Exceltable.Columns.Add("进库日期", typeof(string));
                     Exceltable.Columns.Add("状态", typeof(string));
                     Exceltable.Columns.Add("所属方式", typeof(string));
+                    Exceltable.Columns.Add("人工成本", typeof(string));
+                    Exceltable.Columns.Add("材料成本", typeof(string));
+                    Exceltable.Columns.Add("辅料成本", typeof(string));
+                    Exceltable.Columns.Add("总成本", typeof(string));
+                    Exceltable.Columns.Add("出厂价", typeof(string));
+                    Exceltable.Columns.Add("标签价", typeof(string));
+                    Exceltable.Columns.Add("数量", typeof(string));
                     foreach (var item in List)
                     {
+                        var n = (from p in db.XNGYP_Products_Price.Where(k => k.WoodId == item.WoodId && k.ProductId == item.ProductId)
+                                 select new CostModel
+                                 {
+                                     PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice + p.PJPrice,
+                                     MCPrice = p.MCPrice,
+                                     FLPrice = p.FLPrice,
+                                     CostCprice = p.CostCprice,
+                                     CCprice=p.CCprice,
+                                 }).FirstOrDefault();
+                        if (n == null)
+                        {
+                            n = new CostModel();
+                        }
                         DataRow row = Exceltable.NewRow();
                         row["标签编码"] = item.SN;
                         row["产品编码"] = item.ProductSN;
@@ -431,7 +451,13 @@ namespace DalProject
                         row["进库日期"] = Convert.ToDateTime(item.InputDateTime).ToString("yyyy-MM-dd"); ;
                         row["状态"] = item.Status != null && item.Status == 2 ? "已出库" : item.Status == 1 ? "已入库" : "未确认";
                         row["所属方式"] = item.flag != null && item.flag == 1 ? "销售产品" : item.flag != null && item.flag == 2 ? "预投产品" : "盘点产品";
-
+                        row["人工成本"] = n.PersonPrice;
+                        row["材料成本"] = n.MCPrice;
+                        row["辅料成本"] = n.FLPrice;
+                        row["总成本"] = n.CostCprice;
+                        row["出厂价"] = n.CCprice;
+                        row["标签价"] = n.CCprice* Convert.ToDecimal(2.5);
+                        row["数量"] = 1;
                         Exceltable.Rows.Add(row);
                     }
                 }

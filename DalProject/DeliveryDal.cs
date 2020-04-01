@@ -229,66 +229,79 @@ namespace DalProject
             }
             using (var db = new XNGYPEntities())
             {
-                var List = (from p in db.XNGYP_INV_Labels.Where(k => k.DeleteFlag == false)
-                            where SModel.ProductSNId != null && SModel.ProductSNId > 0 ? SModel.ProductSNId == p.ProductsSNId : true
-                            where SModel.FatherId != null && SModel.FatherId > 0 ? SModel.FatherId == p.FatherId : true
-                            where SModel.INVId > 0 ? SModel.INVId == p.INVId : true
-                            where !string.IsNullOrEmpty(SModel.ProductName) ? p.XNGYP_Products.name.Contains(SModel.ProductName) : true
-                            where p.CreateTime > StartTime
-                            where p.CreateTime < EndTime
+                var List = (from p in db.XNGYP_Delivery.Where(k => k.DeleteFlag == false && k.Status>=1)
+                            where !string.IsNullOrEmpty(SModel.CustomerName) ? p.Contract_Detail.Contract_Header.XNGYP_Customers.Name.Contains(SModel.CustomerName) : true
+                            where !string.IsNullOrEmpty(SModel.HTSN) ? p.Contract_Detail.Contract_Header.SN.Contains(SModel.HTSN) : true
+                            where SModel.INVId != null && SModel.INVId > 0 ? SModel.INVId == p.XNGYP_INV_Labels.INVId : true
+                            where SModel.Status != null && SModel.Status > 0 ? SModel.Status == p.Status : true
+                            where p.DeliverTime > StartTime
+                            where p.DeliverTime < EndTime
                             orderby p.CreateTime descending
                             select new LabelsModel
                             {
-                                Id = p.Id,
-                                ProductId = p.ProductsId,
-                                ProductName = p.XNGYP_Products.name,
-                                ProductXL = p.XNGYP_Products_SN.name,
-                                Color = p.Color,
-                                WoodName = p.WoodName,
-                                INVId = p.INVId,
-                                INVName = p.INV_Name.Name,
-                                InputDateTime = p.InputDateTime,
-                                SN = p.SN,
-                                Length = p.Length,
-                                Width = p.Width,
-                                Height = p.Height,
-                                WoodId = p.WoodId,
-                                ColorId = p.ColorId,
+                                CRM_SN = p.Contract_Detail.Contract_Header.SN,
+                                CRM_HTId = p.Contract_Detail.Contract_Header.Id,
+                                ProductName = p.XNGYP_INV_Labels.XNGYP_Products.name,
+                                ProductXL = p.XNGYP_INV_Labels.XNGYP_Products.XNGYP_Products_SN.name,
+                                WoodName = p.XNGYP_INV_Labels.WoodName,
+                                INVId = p.XNGYP_INV_Labels.INVId,
+                                INVName = p.XNGYP_INV_Labels.INV_Name.Name,
+                                CreateTime = p.CreateTime,
+                                Color = p.XNGYP_INV_Labels.Color,
+                                CustomerName = p.Contract_Detail.Contract_Header.XNGYP_Customers.Name,
+                                OrderNum = p.OrderNum,
+                                DeliveryTime = p.DeliverTime,
                                 Status = p.Status,
-                                flag = p.Flag,
-                                Grade = p.Grade,
-                                ProductSN = p.ProductSN,
-                                FatherId = p.FatherId,
+                                SalePrice=p.Contract_Detail.Price,
+                                WoodId=p.XNGYP_INV_Labels.WoodId,
+                                ProductId=p.XNGYP_INV_Labels.ProductsId,
                             }).ToList();
-            if (List != null && List.Any())
+                if (List != null && List.Any())
                 {
-                    Exceltable.Columns.Add("标签编码", typeof(string));
-                    Exceltable.Columns.Add("产品编码", typeof(string));
+                    
+                    Exceltable.Columns.Add("合同编号", typeof(string));
+                    Exceltable.Columns.Add("订货人", typeof(string));
                     Exceltable.Columns.Add("产品名称", typeof(string));
+                    Exceltable.Columns.Add("送货单号", typeof(string));
                     Exceltable.Columns.Add("材质", typeof(string));
                     Exceltable.Columns.Add("色号", typeof(string));
-                    Exceltable.Columns.Add("长", typeof(string));
-                    Exceltable.Columns.Add("宽", typeof(string));
-                    Exceltable.Columns.Add("高", typeof(string));
-                    Exceltable.Columns.Add("所入仓库", typeof(string));
-                    Exceltable.Columns.Add("进库日期", typeof(string));
-                    Exceltable.Columns.Add("状态", typeof(string));
-                    Exceltable.Columns.Add("所属方式", typeof(string));
+                    Exceltable.Columns.Add("所出仓库", typeof(string));
+                    Exceltable.Columns.Add("送货日期", typeof(string));
+                    Exceltable.Columns.Add("出售价格", typeof(string));
+                    Exceltable.Columns.Add("人工成本", typeof(string));
+                    Exceltable.Columns.Add("材料成本", typeof(string));
+                    Exceltable.Columns.Add("辅料成本", typeof(string));
+                    Exceltable.Columns.Add("总成本", typeof(string));
+                    Exceltable.Columns.Add("毛利", typeof(string));
                     foreach (var item in List)
                     {
+                        var n = (from p in db.XNGYP_Products_Price.Where(k => k.WoodId == item.WoodId && k.ProductId == item.ProductId)
+                                 select new CostModel
+                                 {
+                                     PersonPrice= p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice + p.PJPrice,
+                                     MCPrice = p.MCPrice,
+                                     FLPrice = p.FLPrice,
+                                     CostCprice = p.CostCprice,
+                                 }).FirstOrDefault();
+                        if (n == null)
+                        {
+                            n = new CostModel();
+                        }
                         DataRow row = Exceltable.NewRow();
-                        row["标签编码"] = item.SN;
-                        row["产品编码"] = item.ProductSN;
+                        row["合同编号"] = item.CRM_SN;
+                        row["订货人"] = item.CustomerName;
                         row["产品名称"] = item.ProductName;
+                        row["送货单号"] = item.OrderNum;
                         row["材质"] = item.WoodName;
                         row["色号"] = item.Color;
-                        row["长"] = item.Length;
-                        row["宽"] = item.Width;
-                        row["高"] = item.Height;
-                        row["所入仓库"] = item.INVName;
-                        row["进库日期"] = Convert.ToDateTime(item.InputDateTime).ToString("yyyy-MM-dd"); ;
-                        row["状态"] = item.Status != null && item.Status == 2 ? "已出库" : item.Status == 1 ? "已入库" : "未确认";
-                        row["所属方式"] = item.flag != null && item.flag == 1 ? "销售产品" : item.flag != null && item.flag == 2 ? "预投产品" : "盘点产品";
+                        row["所出仓库"] = item.INVName;
+                        row["送货日期"] = Convert.ToDateTime(item.DeliveryTime).ToString("yyyy-MM-dd"); 
+                        row["出售价格"] = item.SalePrice;
+                        row["人工成本"] = n.PersonPrice;
+                        row["材料成本"] = n.MCPrice;
+                        row["辅料成本"] = n.FLPrice;
+                        row["总成本"] = n.CostCprice;
+                        row["毛利"] = item.SalePrice - n.CostCprice;
 
                         Exceltable.Rows.Add(row);
                     }

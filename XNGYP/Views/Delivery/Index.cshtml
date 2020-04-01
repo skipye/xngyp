@@ -26,7 +26,7 @@
             <a href="javascript:void(0);" onclick="del(this, '0')" class="btn btn-danger radius" data-url="@Url.Action("Delete","Delivery")"><i class="Hui-iconfont">&#xe6e2;</i>选中取消送货</a>
             <a href="javascript:void(0);" onclick="ConfirmINV(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Check","Delivery")"><i class="Hui-iconfont">&#xe615;</i>选中送货</a>
             <a href="javascript:void(0);" onclick="PrintDelivery(this,'0')" class="btn btn-success radius" data-url="@Url.Action("Print","Delivery")" title="打印送货单"><i class="Hui-iconfont">&#xe615;</i>选中打印</a>
-            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
+            <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出出库表格</a>
         </span>
     </div>
     <div class="mt-20 checkmodel">
@@ -166,12 +166,12 @@
             });
     });
     function toExcelout() {
-        var ProductSNId = $("#ProductSNId").val().trim();
-        var FatherId = $("#FatherId").val().trim();
+        //var ProductSNId = $("#ProductSNId").val().trim();
+        //var FatherId = $("#FatherId").val().trim();
         var INVId = $("#INVId").val().trim();
         var StartTime = $("#logmin").val().trim();
         var EndTime = $("#logmax").val().trim();
-        window.location.href = "/Delivery/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&StartTime=' + StartTime + '&EndTime=' + EndTime;
+        window.location.href = "/Delivery/ToExcelOut?INVId=" + INVId + '&StartTime=' + StartTime + '&EndTime=' + EndTime;
         //$.post(ExcelUrl, {}, function (d) { });
     };
 </script> 

@@ -42,7 +42,7 @@ namespace DalProject
                                 CreateTime=p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
-                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice
+                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice+p.PJPrice,
                             }).ToList();
                 
                 return List;
@@ -80,7 +80,7 @@ namespace DalProject
                                 CreateTime = p.CreateTime,
                                 CCprice = p.CCprice,
                                 CostCprice = p.CostCprice,
-                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice
+                                PersonPrice = p.KLPrice + p.DHPrice + p.MGQPrice + p.MGPrice + p.GMPrice + p.YQPrice + p.PJPrice,
                             }).ToList();
                 if (List != null && List.Any())
                 {
@@ -171,7 +171,7 @@ namespace DalProject
                     table.MGQPrice = Models.MGQPrice;
                     table.CreateTime = DateTime.Now;
                     table.DeleteFlag = false;
-                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGQPrice;
+                    table.CostCprice = table.MCPrice + table.KLPrice + table.DHPrice + table.MGPrice + table.GMPrice + table.YQPrice + table.FLPrice + table.MGQPrice + table.PJPrice;
                     table.CCprice = table.CostCprice * Convert.ToDecimal(1.6);
 
                     var GYPLables = db.XNGYP_INV_Labels.Where(k => k.ProductsId == table.ProductId && k.WoodId == table.WoodId).ToList();
@@ -189,7 +189,6 @@ namespace DalProject
                 db.SaveChanges();
             }
         }
-        //根据文章Id获取内容
         public CostModel GetDetailById(int Id)
         {
             using (var db = new XNGYPEntities())

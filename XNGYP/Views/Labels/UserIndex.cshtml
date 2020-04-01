@@ -164,9 +164,11 @@
      function toExcelout() {
         var ProductSNId = $("#ProductSNId").val().trim();
         var FatherId = $("#FatherId").val().trim();
-         var INVId = $("#INVId").val().trim();
-         var WoodId = $("#WoodId").val().trim();
-        window.location.href = "/Labels/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&WoodId=' + WoodId ;
+        var INVId = $("#INVId").val().trim();
+        var WoodId = $("#WoodId").val().trim();
+        var StartTime = $("#logmin").val().trim();
+        var EndTime = $("#logmax").val().trim();
+        window.location.href = "/Labels/ToExcelOut?ProductSNId=" + ProductSNId + '&FatherId=' + FatherId + '&INVId=' + INVId + '&WoodId=' + WoodId + '&StartTime=' + StartTime+ '&EndTime=' + EndTime;
         //$.post(ExcelUrl, {}, function (d) { });
     };
 </script> 
