@@ -1,8 +1,11 @@
 ﻿@model ModelProject.SLabelsModel
+@using ServiceProject;
 @{
     Layout = null;
     List<SelectListItem> ArrSecPro = new List<SelectListItem>();
     ArrSecPro.Add(new SelectListItem { Text = "请选择二级", Value = "" });
+    UserService USer = new UserService();
+    var Models = USer.GetCurrentUserName();
 }
 @Html.Action("_Meta", "Home")
     <nav class="breadcrumb">
@@ -28,7 +31,9 @@
 	</div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="f-l">
+            @if (Models.UserName == "易艳" || Models.UserName == "叶心峰") { 
             <a href="javascript:void(0);" onclick="toExcelout()" class="btn btn-warning-outline radius"><i class="Hui-iconfont">&#xe644;</i>导出表格</a>
+            }
         </span>
     </div>
     <div class="mt-20 checkmodel">
